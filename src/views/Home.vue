@@ -1,17 +1,16 @@
 <template>
   <div class="home">
-    <OrderN />
-    <OrderS v-if="false" />
+    <Order />
   </div>
 </template>
 
 <script lang="ts">
-import OrderN from '@/components/OrderN.vue';
-import OrderS from '@/components/OrderS.vue';
 import { defineComponent } from 'vue';
+import Order from "@/components/Order.vue";
+
 
 export default defineComponent({
-  components: { OrderN, OrderS },
+  components: { Order },
 });
 </script>
 

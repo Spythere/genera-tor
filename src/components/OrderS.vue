@@ -1,18 +1,18 @@
 <template>
-  <div class="rozkaz rozkaz-n">
     <section class="header">
       <h2 class="flex-center">
         Rozkaz pisemny "S" nr
-        <input type="text" />
+        <input type="text" v-model="order.header.orderNo" />
       </h2>
 
       <div class="flex-row">
         dla
-        <select id="select-header">
+        <select id="select-header" v-model="order.header.for">
           <option value="pociągu">pociągu</option>
           <option value="manewru">manewru</option>
         </select>
-        nr <input type="text" /> dnia <input type="text" /> {{ new Date().getUTCFullYear() }}r.
+        nr <input type="text" v-model="order.header.trainNo" /> dnia <input type="text" v-model="order.header.date" />
+        {{ new Date().getUTCFullYear() }}r.
       </div>
     </section>
 
@@ -23,26 +23,28 @@
             <td>1</td>
             <td>
               zezwalam po otrzymaniu
-              <select id="select-1a">
+              <select id="select-1a" v-model="order.row1.option1">
                 <option value="sygnału">sygnału "nakaz jazdy"</option>
                 <option value="rozkazu">tylko tego rozkazu pisemnego</option>
               </select>
 
               <div style="margin-top: 0.5rem">
-                <input type="checkbox" name="section-1a" id="checkbox-1a" />
+                <input type="checkbox" name="section-1a" id="checkbox-1a" v-model="order.row1.checkbox1a" />
                 <label for="checkbox-1a">
-                  przejechać obok wskazującego sygnał "Stój" semafora wyjazdowego <input type="text" />
+                  przejechać obok wskazującego sygnał "Stój" semafora wyjazdowego
+                  <input type="text" v-model="order.row1.signal1" />
                   <br />
-                  drogowskazowego <input type="text" />
+                  drogowskazowego <input type="text" v-model="order.row1.signal2" />
                   <br />
                   (odnoszącego się do wyjazdu pociągu)
                 </label>
               </div>
               <hr />
               <div style="margin-top: 0.5rem">
-                <input type="checkbox" name="section-1b" id="checkbox-1b" />
+                <input type="checkbox" name="section-1b" id="checkbox-1b" v-model="order.row1.checkbox1b" />
                 <label for="checkbox-1b">
-                  wyjechać z toru nr <input type="text" /> nie posiadającego semafora wyjazdowego
+                  wyjechać z toru nr <input type="text" v-model="order.row1.trackNo" /> nie posiadającego semafora
+                  wyjazdowego
                 </label>
               </div>
             </td>
@@ -53,87 +55,43 @@
             <td>
               zezwalam przejechać obok wskazującego sygnał "Stój" semafora:
 
-              <div>- wjazdowego <input type="text" /></div>
+              <div>- wjazdowego <input type="text" v-model="order.row2.signal1" /></div>
               <div>
-                - drogowskazowego <input type="text" />
+                - drogowskazowego <input type="text" v-model="order.row2.signal2" />
                 <div>&nbsp;&nbsp;(odnoszącego się do wjazdu pociągu)</div>
               </div>
-              <div>- odstępowego <input type="text" /></div>
-              <div>- wjechać z zamkniętego toru nr <input type="text" /> nie posiadającego semafora wjazdowego</div>
+              <div>- odstępowego <input type="text" v-model="order.row2.signal3" /></div>
+              <div>
+                - wjechać z zamkniętego toru nr <input type="text" v-model="order.row2.trackNo" /> nie posiadającego
+                semafora wjazdowego
+              </div>
             </td>
           </tr>
 
           <tr>
             <td>3</td>
             <td>
-              Od <input type="text" /> do <input type="text" /> po torze nr <input type="text" /> ruch pociągów
+              Od <input type="text" v-model="order.row3.from" /> do <input type="text" v-model="order.row3.to" /> po torze nr <input type="text" v-model="order.row3.trackNo" /> ruch pociągów
               prowadzony jest w odstępie posterunków następczych. Wskazania semaforów sbl są nieważne. Zachować
               ostrożność od ostatniego semafora ze wskaźnikiem "W18". Szlak wolny, ostatni pociąg nr
-              <input type="text" /> przybył do <input type="text" /> o godzinie <input type="text" />
+              <input type="text" v-model="order.row3.trainNo" /> przybył do <input type="text" v-model="order.row3.arrivedTo" /> o godzinie <input type="text" v-model="order.row3.hour" />
             </td>
           </tr>
         </tbody>
       </table>
     </section>
-
-    <section class="info">
-      <table class="info-table">
-        <tbody>
-          <tr>
-            <td colspan="4">
-              <input type="text" />
-              <br />
-              stacja
-            </td>
-
-            <td colspan="3">
-              <input type="text" />
-              <br />
-              posterunek
-            </td>
-
-            <td colspan="2">
-              <input type="text" />
-              <br />
-              godz.
-            </td>
-
-            <td colspan="1">
-              <input type="text" />
-              <br />
-              min.
-            </td>
-          </tr>
-
-          <tr>
-            <td colspan="5">
-              <input type="text" />
-              <br />
-              dyżurny ruchu
-            </td>
-
-            <td colspan="5">
-              <input type="text" />
-              <br />
-              z polecenia dyżurnego ruchu
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </div>
 </template>
 
 <script lang="ts">
+import { useStore } from '@/store/store';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   setup() {
-    return {};
+    const store = useStore();
+    return {
+      order: store.orderS,
+    };
   },
 });
 </script>
-
-<style lang="scss" scoped>
-@import '../styles/rozkaz.scss';
-</style>
