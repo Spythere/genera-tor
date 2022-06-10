@@ -1,7 +1,7 @@
 <template>
   <div class="rozkaz">
     <OrderN v-if="orderType == 'N'" />
-    <OrderS v-if="orderType == 'S'"/>
+    <OrderS v-if="orderType == 'S'" />
 
     <section class="info">
       <table class="info-table">
@@ -77,6 +77,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+@import '../styles/global.scss';
+
 .rozkaz {
   width: 500px;
   background-color: white;
@@ -171,5 +173,39 @@ table.info-table {
   }
 
   text-align: center;
+}
+
+tr:not(.chosen) > td.row-content {
+  opacity: 0.45;
+  user-select: none;
+
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+tr.row {
+  &:not(.chosen) {
+    cursor: pointer;
+  }
+
+  &.chosen > .row-number {
+    color: red;
+  }
+
+  &:hover {
+    outline: 3px solid red;
+
+    & td.row-number {
+      color: red;
+    }
+  }
 }
 </style>
