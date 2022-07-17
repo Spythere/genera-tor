@@ -87,8 +87,8 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store/store';
 import { defineComponent } from 'vue';
+import { useStore } from '../store/store';
 
 export default defineComponent({
   setup() {

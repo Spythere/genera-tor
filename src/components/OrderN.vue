@@ -206,8 +206,8 @@
 </template>
 
 <script lang="ts">
-import { useStore } from '@/store/store';
-import { defineComponent, watch } from 'vue';
+import { defineComponent } from 'vue';
+import { useStore } from '../store/store';
 
 export default defineComponent({
   emits: ['generateMessage'],

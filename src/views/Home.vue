@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Order />
+    <OrderVue />
 
     <div class="generated-message">
       Wygenerowana wiadomość:
@@ -12,11 +12,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import Order from '@/components/Order.vue';
-import { useStore } from '@/store/store';
-
+import OrderVue from '../components/Order.vue';
+import { useStore } from '../store/store';
 export default defineComponent({
-  components: { Order },
+  components: { OrderVue },
 
   setup() {
     return {

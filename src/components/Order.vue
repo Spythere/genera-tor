@@ -1,7 +1,7 @@
 <template>
   <div class="rozkaz">
-    <OrderN @generate-message="generateMessage" v-if="orderType == 'N'" />
-    <OrderS v-if="orderType == 'S'" />
+    <OrderNVue @generate-message="generateMessage" v-if="orderType == 'N'" />
+    <OrderSVue v-if="orderType == 'S'" />
 
     <section class="info">
       <table class="info-table">
@@ -53,12 +53,12 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import OrderN from '@/components/OrderN.vue';
-import OrderS from '@/components/OrderS.vue';
-import { useStore } from '@/store/store';
+import { useStore } from '../store/store';
+import OrderNVue from './OrderN.vue';
+import OrderSVue from './OrderS.vue';
 
 export default defineComponent({
-  components: { OrderN, OrderS },
+  components: { OrderNVue, OrderSVue },
 
   data() {
     return {
