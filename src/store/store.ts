@@ -12,6 +12,8 @@ export const useStore = defineStore('store', {
         secondaryDispatcherName: '',
       },
 
+      orderMessage: '',
+
       orderN: {
         header: {
           orderNo: '',
@@ -20,6 +22,7 @@ export const useStore = defineStore('store', {
         },
 
         row1: {
+          enabled: false,
           from: '',
           to: '',
           trackNo: '',
@@ -27,14 +30,24 @@ export const useStore = defineStore('store', {
         },
 
         row2: {
-          option1: 'signal',
+          enabled: false,
+          option1: 'sygnału "Nakaz Jazdy"',
           option2: 'lewy',
           option3: 'lewy',
+          signal1: '',
+          signal2: '',
+          signal3: '',
+          signalType: 'wyjazdowego',
           checkbox: 'checkbox-2a',
+          direction: '',
+          trackNoFrom: '',
+          trackNoTo1: '',
+          trackNoTo2: '',
         },
 
         row3: {
-          option1: 'jazda',
+          enabled: false,
+          option1: 'Jazda',
           option2: 'pociąg',
 
           direction: '',
@@ -45,16 +58,20 @@ export const useStore = defineStore('store', {
         },
 
         row4: {
+          enabled: false,
           trackNo: '',
           optionStation: 'stację',
           stationName: '',
           checkbox: 'checkbox-4a',
+          side: 'lewej',
         },
 
         row5: {
+          enabled: false,
           trackNo: '',
           direction: '',
-          stationOption: 'stację',
+          stationType: 'stację',
+          stationName: '',
           on: '',
         },
       },

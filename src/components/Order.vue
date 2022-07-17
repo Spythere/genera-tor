@@ -1,6 +1,6 @@
 <template>
   <div class="rozkaz">
-    <OrderN v-if="orderType == 'N'" />
+    <OrderN @generate-message="generateMessage" v-if="orderType == 'N'" />
     <OrderS v-if="orderType == 'S'" />
 
     <section class="info">
@@ -62,7 +62,7 @@ export default defineComponent({
 
   data() {
     return {
-      orderType: 'S',
+      orderType: 'N',
     };
   },
 
@@ -70,8 +70,15 @@ export default defineComponent({
     const store = useStore();
 
     return {
+      store,
       info: store.orderInfo,
     };
+  },
+
+  methods: {
+    generateMessage(orderBody: string) {
+      this.store.orderMessage = orderBody;
+    },
   },
 });
 </script>

@@ -1,0 +1,7 @@
+{
+    "orderN": {
+        "header": "Rozkaz pisemny \"N\" nr {0} dla pociągu nr {1} dnia {2} {3}r.",
+        "row1": "1. Od {0} do {1} tor nr {2} jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr {3}",
+        "row2": "2. ZEZWALAM po otrzymaniu ${0}"
+    }
+}
