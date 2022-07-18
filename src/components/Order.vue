@@ -1,6 +1,6 @@
 <template>
   <div class="rozkaz">
-    <OrderNVue @generate-message="generateMessage" v-if="orderType == 'N'" />
+    <OrderNVue v-if="orderType == 'N'" />
     <OrderSVue v-if="orderType == 'S'" />
 
     <section class="info">
@@ -73,12 +73,6 @@ export default defineComponent({
       store,
       info: store.orderInfo,
     };
-  },
-
-  methods: {
-    generateMessage(orderBody: string) {
-      this.store.orderMessage = orderBody;
-    },
   },
 });
 </script>

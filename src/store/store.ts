@@ -16,9 +16,9 @@ export const useStore = defineStore('store', {
 
       orderN: {
         header: {
-          orderNo: '',
+          orderNo: '1',
           trainNo: '',
-          date: '',
+          date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: 'long' }),
         },
 
         row1: {
@@ -114,4 +114,5 @@ export const useStore = defineStore('store', {
     };
   },
 });
+
 

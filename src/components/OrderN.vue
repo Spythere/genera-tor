@@ -206,18 +206,101 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import { useStore } from '../store/store';
 
-export default defineComponent({
-  emits: ['generateMessage'],
+type OrderRowRange = 1 | 2 | 3 | 4 | 5;
 
+export default defineComponent({
   setup() {
     const store = useStore();
+    const order = reactive(store.orderN);
+
+    const rowMethods = [
+      () => {
+        const { header } = order;
+
+        const message = `<i>Rozkaz pisemny "N" nr ${header.orderNo || '_'} dla pociągu nr ${
+          header.trainNo || '_'
+        } dnia ${header.date} ${new Date().getUTCFullYear()}r.</i>`;
+
+        return message;
+      },
+
+      () => {
+        const { row1 } = order;
+
+        const message = `Od ${row1.from || '_'} do ${row1.to || '_'} tor nr ${
+          row1.trackNo || '_'
+        } jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr ${row1.trackNo2 || '_'}`;
+
+        return message;
+      },
+
+      () => {
+        const { row2 } = order;
+
+        let message = `ZEZWALAM po otrzymaniu ${row2.option1 || '_'}`;
+
+        if (row2.checkbox == 'checkbox-2a') {
+          message += ` przejechać obok wskazującego sygnał "Stój" semafora ${row2.signalType || '_'} `;
+
+          if (row2.signalType == 'wyjazdowego') message += row2.signal1;
+          if (row2.signalType == 'drogowskazowego')
+            message += `${row2.signal2 || '_'} (odnoszącego się do wyjazdu pociągu)`;
+          if (row2.signalType == 'wjazdowego') message += `${row2.signal3 || '_'} na post. odg. bez sem. wyjazdowego`;
+
+          message += ` i wyjechać w kierunku ${row2.direction || '_'} na tor szlakowy ${row2.option2 || '_'} nr ${
+            row2.trackNoTo1 || '_'
+          }`;
+        }
+
+        if (row2.checkbox == 'checkbox-2b') {
+          message += ` z toru nr ${
+            row2.trackNoFrom || '_'
+          } nie posiadającego semafora wyjazdowego wyjechać w kierunku ${row2.trackNoTo2 || '_'} na tor szlakowy ${
+            row2.option3 || '_'
+          }`;
+        }
+
+        return message;
+      },
+
+      () => {
+        const { row3 } = order;
+
+        let message = `${row3.option1} pociągu odbędzie się w kierunku: ${row3.direction} do km ${row3.toKilometer} skąd ${row3.option2} ma wrócić po torze lewym nr ${row3.trackNo} najpóźniej o godz. ${row3.untilHour} min. ${row3.untilMin}`;
+
+        return message;
+      },
+
+      () => {
+        const { row4 } = order;
+
+        let message = `WJAZD z toru szlakowego nr ${row4.trackNo} na ${row4.optionStation} ${row4.stationName} odbędzie się po otrzymaniu: `;
+
+        if (row4.checkbox == 'checkbox-4a')
+          message += `sygnału zastępczego "Sz" na osobnym urządzeniu ustawionym z ${row4.side} strony toru`;
+
+        if (row4.checkbox == 'checkbox-4b')
+          message += 'rozkazu pisemnego "N" (doręczonego lub przekazanego przez urządzenia łączności)';
+
+        return message;
+      },
+
+      () => {
+        const { row5 } = order;
+
+        const message = `ZEZWALAM wjechać z toru szlakowego nr ${row5.trackNo} z kierunku ${row5.direction} na ${row5.stationType} ${row5.stationName} i przejechać obok sygnału "Stój" na ${row5.on} `;
+
+        return message;
+      },
+    ];
 
     return {
+      store,
       order: store.orderN,
-      message: store.orderMessage,
+      rowMethods,
     };
   },
 
@@ -230,96 +313,26 @@ export default defineComponent({
     },
   },
 
+  mounted() {
+    this.generateMessage();
+  },
+
   methods: {
     generateMessage() {
-      let message = this.generateHeaderMessage();
+      let message = this.rowMethods[0]();
 
-      if (this.order.row1.enabled) message += this.generate1stRowMessage();
-      if (this.order.row2.enabled) message += this.generate2ndRowMessage();
-      if (this.order.row3.enabled) message += this.generate3rdRowMessage();
-      if (this.order.row4.enabled) message += this.generate4thRowMessage();
-      if (this.order.row5.enabled) message += this.generate5thRowMessage();
+      for (let i = 1; i <= 5; i++) {
+        if (!this.order[`row${i as OrderRowRange}`].enabled) continue;
 
-      this.$emit('generateMessage', message);
-      // const row1Message = `Od ${header.} do tor nr jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr `
-    },
-
-    generateHeaderMessage() {
-      const { header } = this.order;
-
-      const message = `<i>Rozkaz pisemny "N" nr ${header.orderNo || '_'} dla pociągu nr ${header.trainNo || '_'} dnia ${
-        header.date
-      } ${new Date().getUTCFullYear()}r.</i>`;
-
-      return message;
-    },
-
-    generate1stRowMessage() {
-      const { row1 } = this.order;
-
-      const message = ` <b> [ 1 ] </b> Od ${row1.from || '_'} do ${row1.to || '_'} tor nr ${
-        row1.trackNo || '_'
-      } jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr ${row1.trackNo2 || '_'}`;
-
-      return message;
-    },
-
-    generate2ndRowMessage() {
-      const { row2 } = this.order;
-
-      let message = ` <b> [ 2 ] </b> <b>ZEZWALAM</b> po otrzymaniu ${row2.option1 || '_'}`;
-
-      if (row2.checkbox == 'checkbox-2a') {
-        message += ` przejechać obok wskazującego sygnał "Stój" semafora ${row2.signalType || '_'} `;
-
-        if (row2.signalType == 'wyjazdowego') message += row2.signal1;
-        if (row2.signalType == 'drogowskazowego')
-          message += `${row2.signal2 || '_'} (odnoszącego się do wyjazdu pociągu)`;
-        if (row2.signalType == 'wjazdowego') message += `${row2.signal3 || '_'} na post. odg. bez sem. wyjazdowego`;
-
-        message += ` i wyjechać w kierunku ${row2.direction || '_'} na tor szlakowy ${row2.option2 || '_'} nr ${
-          row2.trackNoTo1 || '_'
-        }`;
+        message += ` <b> [ ${i} ] </b> ${this.rowMethods[i]()}`;
       }
 
-      if (row2.checkbox == 'checkbox-2b') {
-        message += ` z toru nr ${row2.trackNoFrom || '_'} nie posiadającego semafora wyjazdowego wyjechać w kierunku ${
-          row2.trackNoTo2 || '_'
-        } na tor szlakowy ${row2.option3 || '_'}`;
-      }
+      this.store.orderMessage = message;
 
-      return message;
     },
 
-    generate3rdRowMessage() {
-      const { row3 } = this.order;
-
-      let message = ` <b> [ 3 ] </b> ${row3.option1} pociągu odbędzie się w kierunku: ${row3.direction} do km ${row3.toKilometer} skąd ${row3.option2} ma wrócić po torze lewym nr ${row3.trackNo} najpóźniej o godz. ${row3.untilHour} min. ${row3.untilMin}`;
-
-      return message;
-    },
-
-    generate4thRowMessage() {
-      const { row4 } = this.order;
-
-      let message = ` <b> [ 4 ] </b> <b>WJAZD</b> z toru szlakowego nr ${row4.trackNo} na ${row4.optionStation} ${row4.stationName} odbędzie się po otrzymaniu: `;
-
-      if (row4.checkbox == 'checkbox-4a')
-        message += `sygnału zastępczego "Sz" na osobnym urządzeniu ustawionym z ${row4.side} strony toru`;
-
-      if (row4.checkbox == 'checkbox-4b')
-        message += 'rozkazu pisemnego "N" (doręczonego lub przekazanego przez urządzenia łączności)';
-
-      return message;
-    },
-
-    generate5thRowMessage() {
-      const { row5 } = this.order;
-
-      const message = ` <b> [ 5 ] </b> <b>ZEZWALAM</b> wjechać z toru szlakowego nr ${row5.trackNo} z kierunku ${row5.direction} na ${row5.stationType} ${row5.stationName} i przejechać obok sygnału "Stój" na ${row5.on} `;
-
-      return message;
-    },
+    generateFooter() {
+    }
   },
 });
 </script>

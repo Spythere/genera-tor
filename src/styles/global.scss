@@ -1,9 +1,35 @@
-$bgCol: #012E40;
-$accentCol: #F28705;
+$bgCol: #313638;
+$accentCol: #0defff;
 
-body, html {
-    padding: 0;
-    margin: 0;
-    min-height: 100vh;
-    
+body,
+html {
+  padding: 0;
+  margin: 0;
+  min-height: 100vh;
+}
+
+button.g-button {
+  outline: 2px solid white;
+  border: none;
+  background: none;
+  color: white;
+
+  text-align: center;
+
+  padding: 0.5em;
+
+  font-size: 1em;
+
+  cursor: pointer;
+  transition: all 150ms ease-in;
+  font-weight: bold;
+
+  &:hover {
+    color: $accentCol;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $accentCol;
+    color: $accentCol;
+  }
 }

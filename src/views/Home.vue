@@ -1,12 +1,21 @@
 <template>
   <div class="home">
-    <OrderVue />
+    <div class="home_container">
+      <div class="order_container">
+        <OrderVue />
+      </div>
 
-    <div class="generated-message">
-      Wygenerowana wiadomość:
-      <div v-html="store.orderMessage"></div>
+      <div class="message_container">
+        <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
+
+        <div class="message_body" v-html="store.orderMessage"></div>
+
+        <div class="message_actions">
+          <button class="g-button" @click="copyMessage">Zapisz ten rozkaz</button>
+          <button class="g-button" @click="copyMessage">Kopiuj wiadomość rozkazu</button>
+        </div>
+      </div>
     </div>
-    <button @click="copyMessage">Kopiuj wiadomość rozkazu</button>
   </div>
 </template>
 
@@ -37,26 +46,57 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
 
+  flex-wrap: wrap;
+
+  min-height: 100vh;
+
   overflow-x: auto;
+
+  .home_container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .order_container {
+    font-size: 0.9rem;
+    margin-right: 0.5em;
+  }
 }
 
-.container {
+.message_container {
+  padding: 0 1em;
+  width: 500px;
+
+  h3 {
+    margin: 0;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  button {
+    margin: 0 0.5em;
+    font-size: 0.85em;
+  }
+}
+
+.message_actions {
   display: flex;
-  align-items: start;
+  justify-content: center;
+  margin-top: 1em;
 }
 
-.generated-message {
-  position: sticky;
-  top: 0;
-
-  padding: 1em 0.5em;
+.message_body {
+  min-height: 250px;
   text-align: justify;
-  margin-left: 1em;
-  width: 450px;
-  height: auto;
 
-  border: 1px solid white;
-  // user-select: none;
+  background-color: #fff;
+  border-radius: 0.5em;
+  color: black;
+  padding: 0.5em;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
 }
 </style>
-
