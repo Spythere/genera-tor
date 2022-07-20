@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
-      chosenOrderType: 'OrderN',
+      chosenOrderType: 'OrderO',
 
       orderFooter: {
         stationName: '',
@@ -16,6 +16,58 @@ export const useStore = defineStore('store', {
 
       orderMessage: '',
       footerMessage: '',
+
+      orderO: {
+        header: {
+          orderNo: '1',
+          trainNo: '',
+          date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: 'long' }),
+        },
+
+        orderList: [
+          {
+            name: '',
+            from: '',
+            to: '',
+            vmax: '',
+            jo: false,
+            reason: '',
+          },
+          {
+            name: '',
+            from: '',
+            to: '',
+            vmax: '',
+            jo: false,
+            reason: '',
+          },
+          {
+            name: '',
+            from: '',
+            to: '',
+            vmax: '',
+            jo: false,
+            reason: '',
+          },
+          {
+            name: '',
+            from: '',
+            to: '',
+            vmax: '',
+            jo: false,
+            reason: '',
+          },
+          {
+            name: '',
+            from: '',
+            to: '',
+            vmax: '',
+            jo: false,
+            reason: '',
+          },
+        ],
+        other: '',
+      },
 
       orderN: {
         header: {
@@ -126,8 +178,4 @@ export const useStore = defineStore('store', {
     };
   },
 });
-
-
-
-
 

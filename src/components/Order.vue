@@ -16,6 +16,7 @@ import { useStore } from '../store/store';
 import OrderNVue from './OrderN.vue';
 import OrderSVue from './OrderS.vue';
 import OrderFooter from './OrderFooter.vue';
+import OrderOVue from './OrderO.vue';
 
 export default defineComponent({
   components: { OrderNVue, OrderSVue, OrderFooter },
@@ -30,11 +31,18 @@ export default defineComponent({
 
   computed: {
     chosenOrderComponent() {
-      return this.store.chosenOrderType == 'OrderS' ? OrderSVue : OrderNVue;
+      switch (this.store.chosenOrderType) {
+        case 'OrderN':
+          return OrderNVue;
+        case 'OrderS':
+          return OrderSVue;
+        case 'OrderO':
+          return OrderOVue;
+        default:
+          return OrderNVue;
+      }
     },
   },
-
-
 });
 </script>
 
@@ -98,7 +106,7 @@ select {
 }
 
 .table-section {
-  table {
+  table.options-table {
     width: 100%;
 
     td:first-child {
