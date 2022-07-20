@@ -91,6 +91,8 @@ import { defineComponent } from 'vue';
 import { useStore } from '../store/store';
 
 export default defineComponent({
+  name: 'OrderS',
+
   setup() {
     const store = useStore();
     return {

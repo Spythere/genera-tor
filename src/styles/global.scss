@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600&display=swap');
+
 $bgCol: #313638;
 $accentCol: #0defff;
 
@@ -6,23 +8,31 @@ html {
   padding: 0;
   margin: 0;
   min-height: 100vh;
+
+  font-family: 'Libre Franklin', sans-serif;
 }
 
-button.g-button {
-  outline: 2px solid white;
+button {
   border: none;
+  outline: none;
   background: none;
-  color: white;
 
-  text-align: center;
-
-  padding: 0.5em;
-
-  font-size: 1em;
+  transition: all 150ms ease-in;
+  font-family: 'Libre Franklin', sans-serif;
 
   cursor: pointer;
-  transition: all 150ms ease-in;
   font-weight: bold;
+  font-size: 1em;
+
+  &.g-button {
+    outline: 2px solid white;
+    background: none;
+    color: white;
+
+    text-align: center;
+
+    padding: 0.5em;
+  }
 
   &:hover {
     color: $accentCol;

@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
+      chosenOrderType: 'OrderN',
+
       orderInfo: {
         stationName: '',
         checkpointName: '',
@@ -80,10 +82,10 @@ export const useStore = defineStore('store', {
         chosenRows: [1],
 
         header: {
-          orderNo: '',
+          orderNo: '1',
           trainNo: '',
           for: 'pociągu',
-          date: '',
+          date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: 'long' }),
         },
 
         row1: {
@@ -114,5 +116,6 @@ export const useStore = defineStore('store', {
     };
   },
 });
+
 
 

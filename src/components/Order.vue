@@ -1,7 +1,8 @@
 <template>
   <div class="rozkaz">
-    <OrderNVue v-if="orderType == 'N'" />
-    <OrderSVue v-if="orderType == 'S'" />
+    <keep-alive>
+      <component :is="chosenOrderComponent"></component>
+    </keep-alive>
 
     <section class="info">
       <table class="info-table">
@@ -60,12 +61,6 @@ import OrderSVue from './OrderS.vue';
 export default defineComponent({
   components: { OrderNVue, OrderSVue },
 
-  data() {
-    return {
-      orderType: 'N',
-    };
-  },
-
   setup() {
     const store = useStore();
 
@@ -74,6 +69,12 @@ export default defineComponent({
       info: store.orderInfo,
     };
   },
+
+  computed: {
+    chosenOrderComponent() {
+      return this.store.chosenOrderType == 'OrderS' ? OrderSVue : OrderNVue;
+    },
+  },
 });
 </script>
 
@@ -81,12 +82,14 @@ export default defineComponent({
 @import '../styles/global.scss';
 
 .rozkaz {
-  width: 500px;
+  max-width: 500px;
   background-color: white;
   color: black;
 
   padding: 0.5em;
   box-shadow: 0 0 15px 2px white;
+
+  font-family: initial;
 
   h2 {
     margin: 0;
@@ -97,6 +100,10 @@ export default defineComponent({
     padding: 0.5em;
     border: 2px solid black;
     border-bottom: none;
+  }
+
+  @media screen and (max-width: 550px) {
+   font-size: 3vw;
   }
 }
 
@@ -125,9 +132,9 @@ input {
 }
 
 select {
-  margin-top: 0.5rem;
-  margin-right: 0.5rem;
-  font-size: 0.8rem;
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+  font-size: 0.8em;
 }
 
 .table-section {

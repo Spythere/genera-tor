@@ -1,4 +1,6 @@
 <template>
+  <SideBar />
+
   <div class="home">
     <div class="home_container">
       <div class="order_container">
@@ -23,8 +25,9 @@
 import { defineComponent } from 'vue';
 import OrderVue from '../components/Order.vue';
 import { useStore } from '../store/store';
+import SideBar from '../components/SideBar.vue';
 export default defineComponent({
-  components: { OrderVue },
+  components: { OrderVue, SideBar },
 
   setup() {
     return {
@@ -44,11 +47,11 @@ export default defineComponent({
 .home {
   display: flex;
   justify-content: center;
-  align-items: center;
 
   flex-wrap: wrap;
 
   min-height: 100vh;
+  padding: 1em;
 
   overflow-x: auto;
 
@@ -57,17 +60,19 @@ export default defineComponent({
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: center;
+    margin-top: 1em;
   }
 
   .order_container {
     font-size: 0.9rem;
     margin-right: 0.5em;
+    margin-bottom: 1em;
   }
 }
 
 .message_container {
   padding: 0 1em;
-  width: 500px;
+  max-width: 500px;
 
   h3 {
     margin: 0;

@@ -212,6 +212,8 @@ import { useStore } from '../store/store';
 type OrderRowRange = 1 | 2 | 3 | 4 | 5;
 
 export default defineComponent({
+  name: 'OrderN',
+  
   setup() {
     const store = useStore();
     const order = reactive(store.orderN);
