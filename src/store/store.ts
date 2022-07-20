@@ -5,7 +5,7 @@ export const useStore = defineStore('store', {
     return {
       chosenOrderType: 'OrderS',
 
-      orderInfo: {
+      orderFooter: {
         stationName: '',
         checkpointName: '',
         hour: '',
@@ -15,6 +15,7 @@ export const useStore = defineStore('store', {
       },
 
       orderMessage: '',
+      footerMessage: '',
 
       orderN: {
         header: {

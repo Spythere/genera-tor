@@ -78,7 +78,8 @@
                   v-model="order.row2.signalType"
                 />
                 <label for="radio-2a-2"
-                  >drogowskazowego <input type="text" v-model="order.row2.signal2" /> (odnoszącego się do wyjazdu pociągu)
+                  >drogowskazowego <input type="text" v-model="order.row2.signal2" /> (odnoszącego się do wyjazdu
+                  pociągu)
                 </label>
                 <br />
                 <input
@@ -106,10 +107,11 @@
               </div>
             </td>
             <td>
-              Od <input type="text" v-model="order.row3.from" /> do <input type="text" v-model="order.row3.to" /> po torze
-              nr <input type="text" v-model="order.row3.trackNo" /> ruch pociągów prowadzony jest w odstępie posterunków
-              następczych. Wskazania semaforów sbl są nieważne. Zachować ostrożność od ostatniego semafora ze wskaźnikiem
-              "W18". Szlak wolny, ostatni pociąg nr <input type="text" v-model="order.row3.trainNo" /> przybył do
+              Od <input type="text" v-model="order.row3.from" /> do <input type="text" v-model="order.row3.to" /> po
+              torze nr <input type="text" v-model="order.row3.trackNo" /> ruch pociągów prowadzony jest w odstępie
+              posterunków następczych. Wskazania semaforów sbl są nieważne. Zachować ostrożność od ostatniego semafora
+              ze wskaźnikiem "W18". Szlak wolny, ostatni pociąg nr
+              <input type="text" v-model="order.row3.trainNo" /> przybył do
               <input type="text" v-model="order.row3.arrivedTo" /> o godzinie
               <input type="text" v-model="order.row3.hour" />
             </td>
@@ -135,6 +137,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import orderFooterMixin from '../mixins/orderFooterMixin';
 import { useStore } from '../store/store';
 
 type OrderRowRange = 1 | 2 | 3 | 4;
@@ -248,7 +251,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-
 textarea {
   width: 95%;
   height: 200px;

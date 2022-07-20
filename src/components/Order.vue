@@ -1,56 +1,12 @@
 <template>
-  <div class="rozkaz">
+  <div class="order">
     <transition name="order-anim" mode="out-in">
       <keep-alive>
-        <component :is="chosenOrderComponent"></component>
+        <component :is="chosenOrderComponent" :key="chosenOrderComponent.name"></component>
       </keep-alive>
     </transition>
 
-    <section class="info">
-      <table class="info-table">
-        <tbody>
-          <tr>
-            <td colspan="4">
-              <input type="text" v-model="info.stationName" />
-              <br />
-              stacja
-            </td>
-
-            <td colspan="3">
-              <input type="text" v-model="info.checkpointName" />
-              <br />
-              posterunek
-            </td>
-
-            <td colspan="2">
-              <input type="text" v-model="info.hour" />
-              <br />
-              godz.
-            </td>
-
-            <td colspan="1">
-              <input type="text" v-model="info.minutes" />
-              <br />
-              min.
-            </td>
-          </tr>
-
-          <tr>
-            <td colspan="5">
-              <input type="text" v-model="info.dispatcherName" />
-              <br />
-              dyżurny ruchu
-            </td>
-
-            <td colspan="5">
-              <input type="text" v-model="info.secondaryDispatcherName" />
-              <br />
-              z polecenia dyżurnego ruchu
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <OrderFooter />
   </div>
 </template>
 
@@ -59,16 +15,16 @@ import { defineComponent } from 'vue';
 import { useStore } from '../store/store';
 import OrderNVue from './OrderN.vue';
 import OrderSVue from './OrderS.vue';
+import OrderFooter from './OrderFooter.vue';
 
 export default defineComponent({
-  components: { OrderNVue, OrderSVue },
+  components: { OrderNVue, OrderSVue, OrderFooter },
 
   setup() {
     const store = useStore();
 
     return {
       store,
-      info: store.orderInfo,
     };
   },
 
@@ -77,13 +33,15 @@ export default defineComponent({
       return this.store.chosenOrderType == 'OrderS' ? OrderSVue : OrderNVue;
     },
   },
+
+
 });
 </script>
 
 <style lang="scss">
 @import '../styles/global.scss';
 
-.rozkaz {
+.order {
   max-width: 500px;
   background-color: white;
   color: black;
@@ -165,24 +123,6 @@ select {
     border: 2px solid black;
     border-collapse: collapse;
   }
-}
-
-table.info-table {
-  border-collapse: collapse;
-  width: 100%;
-  table-layout: fixed;
-
-  td {
-    border: 2px solid black;
-    border-collapse: collapse;
-    padding: 0.35em;
-  }
-
-  input {
-    max-width: 95%;
-  }
-
-  text-align: center;
 }
 
 .order-anim {

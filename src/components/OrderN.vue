@@ -208,6 +208,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
+import orderFooterMixin from '../mixins/orderFooterMixin';
 import { useStore } from '../store/store';
 
 type OrderRowRange = 1 | 2 | 3 | 4 | 5;
@@ -248,7 +249,7 @@ export default defineComponent({
         if (row2.checkbox == 'checkbox-2a') {
           message += ` przejechać obok wskazującego sygnał "Stój" semafora ${row2.signalType || '_'} `;
 
-          if (row2.signalType == 'wyjazdowego') message += row2.signal1 || "_";
+          if (row2.signalType == 'wyjazdowego') message += row2.signal1 || '_';
           if (row2.signalType == 'drogowskazowego')
             message += `${row2.signal2 || '_'} (odnoszącego się do wyjazdu pociągu)`;
           if (row2.signalType == 'wjazdowego') message += `${row2.signal3 || '_'} na post. odg. bez sem. wyjazdowego`;
@@ -336,8 +337,6 @@ export default defineComponent({
 
       this.store.orderMessage = message;
     },
-
-    generateFooter() {},
   },
 });
 </script>

@@ -10,7 +10,7 @@
       <div class="message_container">
         <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
 
-        <div class="message_body" v-html="store.orderMessage"></div>
+        <div class="message_body" v-html="fullOrderMessage"></div>
 
         <div class="message_actions">
           <button class="g-button" @click="copyMessage">Zapisz ten rozkaz</button>
@@ -35,9 +35,15 @@ export default defineComponent({
     };
   },
 
+  computed: {
+    fullOrderMessage() {
+      return this.store.orderMessage + this.store.footerMessage;
+    },
+  },
+
   methods: {
     copyMessage() {
-      navigator.clipboard.writeText(this.store.orderMessage);
+      navigator.clipboard.writeText(this.fullOrderMessage);
     },
   },
 });
@@ -97,7 +103,8 @@ export default defineComponent({
 }
 
 .message_body {
-  min-height: 250px;
+  height: 250px;
+  overflow: auto;
   text-align: justify;
 
   background-color: #fff;
