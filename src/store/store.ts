@@ -3,13 +3,13 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
-      chosenOrderType: 'OrderO',
+      chosenOrderType: 'OrderN',
 
       orderFooter: {
         stationName: '',
         checkpointName: '',
-        hour: '',
-        minutes: '',
+        hour: new Date().toLocaleTimeString('pl-PL', { hour: '2-digit' }),
+        minutes: new Date().toLocaleTimeString('pl-PL', { minute: '2-digit' }),
         dispatcherName: '',
         secondaryDispatcherName: '',
       },
@@ -178,4 +178,5 @@ export const useStore = defineStore('store', {
     };
   },
 });
+
 
