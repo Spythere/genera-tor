@@ -72,7 +72,7 @@ export default defineComponent({
 
 .message_container {
   padding: 0 1em;
-  max-width: 500px;
+  width: 500px;
 
   h3 {
     margin: 0;
@@ -83,6 +83,10 @@ export default defineComponent({
   button {
     margin: 0 0.5em;
     font-size: 0.85em;
+  }
+
+  @media screen and (max-width: 550px) {
+    max-width: 100%;
   }
 }
 

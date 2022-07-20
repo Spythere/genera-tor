@@ -1,8 +1,10 @@
 <template>
   <div class="rozkaz">
-    <keep-alive>
-      <component :is="chosenOrderComponent"></component>
-    </keep-alive>
+    <transition name="order-anim" mode="out-in">
+      <keep-alive>
+        <component :is="chosenOrderComponent"></component>
+      </keep-alive>
+    </transition>
 
     <section class="info">
       <table class="info-table">
@@ -103,7 +105,7 @@ export default defineComponent({
   }
 
   @media screen and (max-width: 550px) {
-   font-size: 3vw;
+    font-size: 3vw;
   }
 }
 
@@ -145,7 +147,6 @@ select {
       width: 10%;
 
       text-align: center;
-      vertical-align: top;
 
       font-weight: bold;
     }
@@ -153,8 +154,9 @@ select {
     td {
       padding: 0.35em;
       text-align: justify;
+      vertical-align: top;
 
-      line-height: 1.4em;
+      line-height: 1.5em;
     }
   }
 
@@ -183,37 +185,15 @@ table.info-table {
   text-align: center;
 }
 
-tr:not(.chosen) > td.row-content {
-  opacity: 0.45;
-  user-select: none;
-
-  position: relative;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
-
-tr.row {
-  &:not(.chosen) {
-    cursor: pointer;
+.order-anim {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 150ms ease-in-out;
   }
 
-  &.chosen > .row-number {
-    color: red;
-  }
-
-  &:hover {
-    outline: 3px solid red;
-
-    & td.row-number {
-      color: red;
-    }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
   }
 }
 </style>

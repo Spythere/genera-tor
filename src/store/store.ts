@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
-      chosenOrderType: 'OrderN',
+      chosenOrderType: 'OrderS',
 
       orderInfo: {
         stationName: '',
@@ -89,15 +89,17 @@ export const useStore = defineStore('store', {
         },
 
         row1: {
-          option1: 'sygnału',
-          checkbox1a: false,
-          checkbox1b: false,
+          enabled: false,
+          option1: 'sygnału "nakaz jazdy"',
+          optionSignal: 'wyjazdowego',
+          radio1: 'radio-1a-1',
           signal1: '',
-          signal2: '',
           trackNo: '',
         },
 
         row2: {
+          enabled: false,
+          signalType: 'wyjazdowego',
           signal1: '',
           signal2: '',
           signal3: '',
@@ -105,6 +107,7 @@ export const useStore = defineStore('store', {
         },
 
         row3: {
+          enabled: false,
           from: '',
           to: '',
           trackNo: '',
@@ -112,10 +115,17 @@ export const useStore = defineStore('store', {
           arrivedTo: '',
           hour: '',
         },
+
+        row4: {
+          enabled: false,
+          content: '',
+        },
       },
     };
   },
 });
+
+
 
 
 
