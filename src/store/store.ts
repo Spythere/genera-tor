@@ -3,7 +3,7 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
-      chosenOrderType: 'OrderS',
+      chosenOrderType: 'OrderN',
 
       orderFooter: {
         stationName: '',
@@ -42,7 +42,8 @@ export const useStore = defineStore('store', {
           signal3: '',
           signalType: 'wyjazdowego',
           checkbox: 'checkbox-2a',
-          direction: '',
+          direction1: '',
+          direction2: '',
           trackNoFrom: '',
           trackNoTo1: '',
           trackNoTo2: '',

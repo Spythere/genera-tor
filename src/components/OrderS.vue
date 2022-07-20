@@ -137,7 +137,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import orderFooterMixin from '../mixins/orderFooterMixin';
 import { useStore } from '../store/store';
 
 type OrderRowRange = 1 | 2 | 3 | 4;

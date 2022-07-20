@@ -84,7 +84,7 @@
                       wyjazdowego</label
                     >
                   </div>
-                  i wyjechać w kierunku <input type="text" v-model="order.row2.direction" /> na tor szlakowy
+                  i wyjechać w kierunku <input type="text" v-model="order.row2.direction1" /> na tor szlakowy
                   <select v-model="order.row2.option2">
                     <option value="lewy">lewy</option>
                     <option value="prawy">prawy</option>
@@ -103,7 +103,7 @@
                 />
                 <label for="checkbox-2b">
                   z toru nr <input type="text" v-model="order.row2.trackNoFrom" /> nie posiadającego semafora
-                  wyjazdowego wyjechać w kierunku <input type="text" /> na tor szlakowy
+                  wyjazdowego wyjechać w kierunku <input type="text" v-model="order.row2.direction2" /> na tor szlakowy
                   <select v-model="order.row2.option3">
                     <option value="lewy">lewy</option>
                     <option value="prawy">prawy</option>
@@ -208,7 +208,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import orderFooterMixin from '../mixins/orderFooterMixin';
 import { useStore } from '../store/store';
 
 type OrderRowRange = 1 | 2 | 3 | 4 | 5;
@@ -254,7 +253,7 @@ export default defineComponent({
             message += `${row2.signal2 || '_'} (odnoszącego się do wyjazdu pociągu)`;
           if (row2.signalType == 'wjazdowego') message += `${row2.signal3 || '_'} na post. odg. bez sem. wyjazdowego`;
 
-          message += ` i wyjechać w kierunku ${row2.direction || '_'} na tor szlakowy ${row2.option2 || '_'} nr ${
+          message += ` i wyjechać w kierunku ${row2.direction1 || '_'} na tor szlakowy ${row2.option2 || '_'} nr ${
             row2.trackNoTo1 || '_'
           }`;
         }
@@ -262,9 +261,9 @@ export default defineComponent({
         if (row2.checkbox == 'checkbox-2b') {
           message += ` z toru nr ${
             row2.trackNoFrom || '_'
-          } nie posiadającego semafora wyjazdowego wyjechać w kierunku ${row2.trackNoTo2 || '_'} na tor szlakowy ${
+          } nie posiadającego semafora wyjazdowego wyjechać w kierunku ${row2.direction2 || '_'} na tor szlakowy ${
             row2.option3 || '_'
-          }`;
+          } nr ${row2.trackNoTo2 || '_'}`;
         }
 
         return message;
@@ -285,10 +284,12 @@ export default defineComponent({
       () => {
         const { row4 } = order;
 
-        let message = `WJAZD z toru szlakowego nr ${row4.trackNo} na ${row4.optionStation} ${row4.stationName} odbędzie się po otrzymaniu: `;
+        let message = `WJAZD z toru szlakowego nr ${row4.trackNo || '_'} na ${row4.optionStation || '_'} ${
+          row4.stationName || '_'
+        } odbędzie się po otrzymaniu: `;
 
         if (row4.checkbox == 'checkbox-4a')
-          message += `sygnału zastępczego "Sz" na osobnym urządzeniu ustawionym z ${row4.side} strony toru`;
+          message += `sygnału zastępczego "Sz" na osobnym urządzeniu ustawionym z ${row4.side || '_'} strony toru`;
 
         if (row4.checkbox == 'checkbox-4b')
           message += 'rozkazu pisemnego "N" (doręczonego lub przekazanego przez urządzenia łączności)';
@@ -299,7 +300,11 @@ export default defineComponent({
       () => {
         const { row5 } = order;
 
-        const message = `ZEZWALAM wjechać z toru szlakowego nr ${row5.trackNo} z kierunku ${row5.direction} na ${row5.stationType} ${row5.stationName} i przejechać obok sygnału "Stój" na ${row5.on} `;
+        const message = `ZEZWALAM wjechać z toru szlakowego nr ${row5.trackNo || '_'} z kierunku ${
+          row5.direction || '_'
+        } na ${row5.stationType || '_'} ${row5.stationName || '_'} i przejechać obok sygnału "Stój" na ${
+          row5.on || '_'
+        } `;
 
         return message;
       },
