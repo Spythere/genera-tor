@@ -56,14 +56,13 @@ export default defineComponent({
 @import '../styles/global.scss';
 
 .sidebar {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 0;
 
+  z-index: 999;
+
   transform: translateY(-50%);
-  width: 50px;
-  max-height: 250px;
-  height: 95vh;
 }
 
 .sidebar_content {
@@ -85,7 +84,8 @@ export default defineComponent({
 
     color: white;
     background-color: #000000aa;
-
+    width: 50px;
+    height: 85px;
 
     .bar {
       position: absolute;
@@ -107,6 +107,30 @@ export default defineComponent({
 
     &:hover {
       cursor: pointer;
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .sidebar {
+    left: 50%;
+    top: 0;
+
+    transform: translate(-50%, 0);
+  }
+
+  .sidebar_content {
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+
+    & > button {
+      height: 50px;
+      width: 60px;
+
+      .bar {
+        width: 100%;
+        height: 4px;
+      }
     }
   }
 }

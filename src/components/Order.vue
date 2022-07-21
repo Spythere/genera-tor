@@ -1,12 +1,13 @@
 <template>
   <div class="order">
-    <transition name="order-anim" mode="out-in">
-      <keep-alive>
-        <component :is="chosenOrderComponent" :key="chosenOrderComponent.name"></component>
-      </keep-alive>
-    </transition>
-
-    <OrderFooter />
+    <div class="order_content">
+      <transition name="order-anim" mode="out-in">
+        <keep-alive>
+          <component :is="chosenOrderComponent" :key="chosenOrderComponent.name"></component>
+        </keep-alive>
+      </transition>
+      <OrderFooter />
+    </div>
   </div>
 </template>
 
@@ -49,15 +50,34 @@ export default defineComponent({
 <style lang="scss">
 @import '../styles/global.scss';
 
+// Order scrollbar
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
 .order {
-  max-width: 500px;
+  max-width: 550px;
   background-color: white;
   color: black;
 
-  padding: 0.5em;
-  box-shadow: 0 0 15px 2px white;
+  max-height: 95vh;
+  overflow-y: auto;
 
-  font-family: initial;
+  font-size: 15px;
+
+  box-shadow: 0 0 15px 2px white;
 
   h2 {
     margin: 0;
@@ -73,6 +93,10 @@ export default defineComponent({
   @media screen and (max-width: 550px) {
     font-size: 3vw;
   }
+}
+
+.order_content {
+  padding: 0.5em;
 }
 
 .flex-row {

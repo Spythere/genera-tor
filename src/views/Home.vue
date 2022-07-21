@@ -51,13 +51,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .home {
-  display: flex;
-  justify-content: center;
-
-  flex-wrap: wrap;
-
   min-height: 100vh;
-  padding: 1em;
 
   overflow-x: auto;
 
@@ -67,17 +61,25 @@ export default defineComponent({
     align-items: flex-start;
     justify-content: center;
     margin-top: 1em;
+
+    @media screen and (max-width: 650px) {
+      margin-top: 60px;
+    }
   }
 
   .order_container {
     font-size: 0.9rem;
     margin-right: 0.5em;
     margin-bottom: 1em;
+
+    @media screen and (max-width: 550px) {
+      margin: 0.5em;
+    }
   }
 }
 
 .message_container {
-  padding: 0 1em;
+  padding: 1em;
   width: 500px;
 
   h3 {
@@ -88,7 +90,6 @@ export default defineComponent({
 
   button {
     margin: 0 0.5em;
-    font-size: 0.85em;
   }
 
   @media screen and (max-width: 550px) {

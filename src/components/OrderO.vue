@@ -23,7 +23,7 @@
     </section>
 
     <section class="order_table">
-      <table>
+      <table cellborder="1">
         <tbody>
           <tr class="tr-header">
             <td width="25%" rowspan="2">
@@ -34,14 +34,14 @@
             <td>do</td>
             <td width="10%" rowspan="2">1) prędkość najwyżej km/h</td>
             <td width="10%" rowspan="2">2) jechać ostrożnie</td>
-            <td width="25%" rowspan="2">z powodu</td>
+            <td width="35%" rowspan="2">z powodu</td>
           </tr>
 
           <tr class="tr-header">
             <td colspan="2">kilometra</td>
           </tr>
 
-          <tr v-for="row in order.orderList">
+          <tr v-for="row in order.orderList" class="tr-data">
             <td>
               <input type="text" v-model="row.name" />
             </td>
@@ -131,8 +131,7 @@ export default defineComponent({
         }
       }
 
-      if(this.order.other)
-        message += `; ${this.order.other}`
+      if (this.order.other) message += `; ${this.order.other}`;
 
       this.store.orderMessage = message;
     },
@@ -161,9 +160,14 @@ th {
   background-color: black;
   margin: 0.5em 0;
 }
+
 .order_table {
   .tr-header td {
     padding: 1em 0.5em;
+  }
+
+  .tr-data td {
+    padding: 0.5em 0;
   }
 
   tbody {
@@ -177,9 +181,9 @@ th {
   }
 
   textarea {
-    resize: none;
-    height: 100%;
-    width: 90%;
+    width: 80%;
+    height: 40px;
+    resize: vertical;
   }
 }
 
@@ -187,14 +191,16 @@ th {
   border-left: 2px solid black;
   border-right: 2px solid black;
 
+  display: flex;
+  flex-direction: column;
   height: 250px;
 
   padding: 0.5em;
 
   textarea {
     resize: vertical;
-    max-height: 220px;
-    width: 98%;
+    height: 220px;
+    width: 95%;
   }
 }
 </style>

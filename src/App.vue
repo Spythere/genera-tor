@@ -8,7 +8,6 @@
 @import './styles/global.scss';
 
 #app {
-  background-color: $bgCol;
   color: white;
 
   min-height: 100vh;

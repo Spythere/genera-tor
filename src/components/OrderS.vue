@@ -249,7 +249,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 textarea {
   width: 95%;
   height: 200px;
