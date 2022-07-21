@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
-      chosenOrderType: 'OrderN',
+      chosenOrderType: 'orderN' as 'orderO' | 'orderS' | 'orderN',
+      orderMode: 'OrderMessage',
 
       orderFooter: {
         stationName: '',
@@ -178,5 +179,6 @@ export const useStore = defineStore('store', {
     };
   },
 });
+
 
 

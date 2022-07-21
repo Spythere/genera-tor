@@ -33,11 +33,11 @@ export default defineComponent({
   computed: {
     chosenOrderComponent() {
       switch (this.store.chosenOrderType) {
-        case 'OrderN':
+        case 'orderN':
           return OrderNVue;
-        case 'OrderS':
+        case 'orderS':
           return OrderSVue;
-        case 'OrderO':
+        case 'orderO':
           return OrderOVue;
         default:
           return OrderNVue;

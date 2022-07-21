@@ -312,7 +312,7 @@ export default defineComponent({
 
     return {
       store,
-      order: store.orderN,
+      order,
       rowMethods,
     };
   },

@@ -1,0 +1,174 @@
+<template>
+  <section class="order-message">
+    <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
+
+    <div class="message_body" v-html="fullOrderMessage"></div>
+
+    <div class="message_actions">
+      <button class="g-button" @click="saveOrder"><img :src="saveIcon" alt="save icon" />Zapisz ten rozkaz</button>
+      <button class="g-button" @click="copyMessage">Kopiuj wiadomość rozkazu</button>
+    </div>
+
+    <transition name="monit-anim">
+      <div class="action_monit" v-if="actionMonit" v-html="actionMonit"></div>
+    </transition>
+  </section>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useStore } from '../store/store';
+
+import saveIcon from '../assets/icon-save.svg';
+import orderStorageMixin from '../mixins/orderStorageMixin';
+
+export default defineComponent({
+  name: 'OrderMessage',
+
+  mixins: [orderStorageMixin],
+
+  data() {
+    return {
+      saveIcon,
+      actionMonit: '',
+      monitTimeout: undefined as number | undefined,
+    };
+  },
+
+  setup() {
+    return {
+      store: useStore(),
+    };
+  },
+
+  computed: {
+    fullOrderMessage() {
+      return this.store.orderMessage + this.store.footerMessage;
+    },
+  },
+
+  methods: {
+    showActionMonit(text: string) {
+      if (this.monitTimeout) {
+        this.actionMonit = '';
+        clearTimeout(this.monitTimeout);
+
+        setTimeout(() => {
+          this.actionMonit = text;
+
+          this.monitTimeout = setTimeout(() => {
+            this.actionMonit = '';
+          }, 5000);
+        }, 300);
+
+        return;
+      }
+
+      this.actionMonit = text;
+
+      this.monitTimeout = setTimeout(() => {
+        this.actionMonit = '';
+      }, 5000);
+    },
+
+    copyMessage() {
+      if (!navigator.clipboard)
+        return this.showActionMonit(
+          'Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/'
+        );
+
+      navigator.clipboard.writeText(this.fullOrderMessage);
+
+      this.showActionMonit(
+        'Skopiowano do <b class="text--accent">schowka</b>! Możesz teraz wkleić treść rozkazu na czacie symulatora!'
+      );
+    },
+
+    saveOrder() {
+      const savedOrderStatus = this.saveOrderToStorage();
+
+      switch (savedOrderStatus) {
+        case -1:
+          this.showActionMonit('<span class="text--warn">Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!</span>');
+          break;
+        case 0:
+          this.showActionMonit('<span class="text--warn">Ostatni zapisany rozkaz jest identyczny z obecnym!</span>');
+          break;
+        case 1:
+          this.showActionMonit('Zapisano treść <b class="text--accent">rozkazu</b> w pamięci przeglądarki!');
+          break;
+
+        default:
+          break;
+      }
+    },
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.order-message {
+  padding: 1em;
+  width: 500px;
+
+  h3 {
+    margin: 0;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+
+  button {
+    margin: 0 0.5em;
+  }
+
+  @media screen and (max-width: 550px) {
+    max-width: 100%;
+  }
+}
+
+.message_body {
+  height: 250px;
+  overflow: auto;
+  text-align: justify;
+
+  background-color: #fff;
+  border-radius: 0.5em;
+  color: black;
+  padding: 0.5em;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.message_actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1em;
+
+  button img {
+    height: 2ch;
+    vertical-align: text-bottom;
+    margin-right: 0.5em;
+  }
+}
+
+.action_monit {
+  text-align: center;
+  padding: 1.5em;
+  font-size: 1.15em;
+}
+
+.monit-anim {
+  &-enter-active,
+  &-leave-active {
+    transition: all 100ms ease-in-out;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+</style>

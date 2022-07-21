@@ -8,14 +8,11 @@
       </div>
 
       <div class="message_container">
-        <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
-
-        <div class="message_body" v-html="fullOrderMessage"></div>
-
-        <div class="message_actions">
-          <button class="g-button" @click="copyMessage">Zapisz ten rozkaz</button>
-          <button class="g-button" @click="copyMessage">Kopiuj wiadomość rozkazu</button>
-        </div>
+        <transition name="order-anim" mode="out-in">
+          <keep-alive>
+            <Component :is="orderModeComponent" />
+          </keep-alive>
+        </transition>
       </div>
     </div>
   </div>
@@ -24,8 +21,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import OrderVue from '../components/Order.vue';
-import { useStore } from '../store/store';
 import SideBar from '../components/SideBar.vue';
+import OrderMessage from '../components/OrderMessage.vue';
+import OrderList from '../components/OrderList.vue';
+import { useStore } from '../store/store';
+
 export default defineComponent({
   components: { OrderVue, SideBar },
 
@@ -36,14 +36,15 @@ export default defineComponent({
   },
 
   computed: {
-    fullOrderMessage() {
-      return this.store.orderMessage + this.store.footerMessage;
-    },
-  },
-
-  methods: {
-    copyMessage() {
-      navigator.clipboard.writeText(this.fullOrderMessage);
+    orderModeComponent() {
+      switch (this.store.orderMode) {
+        case 'OrderMessage':
+          return OrderMessage;
+        case 'OrderList':
+          return OrderList;
+        default:
+          return OrderMessage;
+      }
     },
   },
 });
@@ -63,7 +64,7 @@ export default defineComponent({
     margin-top: 1em;
 
     @media screen and (max-width: 650px) {
-      margin-top: 60px;
+      margin-top: 80px;
     }
   }
 
@@ -76,44 +77,5 @@ export default defineComponent({
       margin: 0.5em;
     }
   }
-}
-
-.message_container {
-  padding: 1em;
-  width: 500px;
-
-  h3 {
-    margin: 0;
-    margin-bottom: 1em;
-    text-align: center;
-  }
-
-  button {
-    margin: 0 0.5em;
-  }
-
-  @media screen and (max-width: 550px) {
-    max-width: 100%;
-  }
-}
-
-.message_actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 1em;
-}
-
-.message_body {
-  height: 250px;
-  overflow: auto;
-  text-align: justify;
-
-  background-color: #fff;
-  border-radius: 0.5em;
-  color: black;
-  padding: 0.5em;
-  user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
 }
 </style>

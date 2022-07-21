@@ -96,7 +96,7 @@ export default defineComponent({
 
     return {
       store,
-      order: store.orderO,
+      order,
       rowMethods,
     };
   },

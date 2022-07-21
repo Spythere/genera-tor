@@ -11,6 +11,11 @@
 
         <div class="bar"></div>
       </button>
+
+      <button class="option-save" @click="toggleOrderMode" :data-selected="store.orderMode == 'OrderList'">
+        <img :src="saveIcon" alt="save icon" />
+        <div class="bar"></div>
+      </button>
     </div>
   </section>
 </template>
@@ -19,20 +24,24 @@
 import { defineComponent } from 'vue';
 import { useStore } from '../store/store';
 
+import saveIcon from '../assets/icon-save.svg';
+
 export default defineComponent({
   data() {
     return {
+      saveIcon,
+
       orderTypeList: [
         {
-          id: 'OrderN',
+          id: 'orderN',
           name: 'N',
         },
         {
-          id: 'OrderS',
+          id: 'orderS',
           name: 'S',
         },
         {
-          id: 'OrderO',
+          id: 'orderO',
           name: 'O',
         },
       ],
@@ -45,8 +54,12 @@ export default defineComponent({
   },
 
   methods: {
-    selectOrderType(type: string) {
+    selectOrderType(type: any) {
       this.store.chosenOrderType = type;
+    },
+
+    toggleOrderMode() {
+      this.store.orderMode = this.store.orderMode == 'OrderMessage' ? 'OrderList' : 'OrderMessage';
     },
   },
 });
@@ -67,7 +80,7 @@ export default defineComponent({
 
 .sidebar_content {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   gap: 0.25em;
 
   font-size: 1.5em;
@@ -111,6 +124,19 @@ export default defineComponent({
   }
 }
 
+button.option-save {
+  background-color: $accentCol;
+
+  img {
+    width: 80%;
+    height: 80%;
+  }
+
+  &[data-selected='true'] .bar {
+    background-color: #111;
+  }
+}
+
 @media screen and (max-width: 650px) {
   .sidebar {
     left: 50%;
@@ -121,10 +147,10 @@ export default defineComponent({
 
   .sidebar_content {
     grid-template-rows: 1fr;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
 
     & > button {
-      height: 50px;
+      height: 60px;
       width: 60px;
 
       .bar {

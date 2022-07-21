@@ -215,7 +215,7 @@ export default defineComponent({
 
     return {
       store,
-      order: store.orderS,
+      order,
       rowMethods,
     };
   },
