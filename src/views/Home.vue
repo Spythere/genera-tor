@@ -77,5 +77,9 @@ export default defineComponent({
       margin: 0.5em;
     }
   }
+
+  .message_container {
+    width: 500px;
+  }
 }
 </style>

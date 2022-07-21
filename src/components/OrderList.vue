@@ -3,25 +3,30 @@
     <h3>Zapisane rozkazy pisemne ({{ localOrderCount }})</h3>
 
     <ul>
-      <li v-for="order in sortedOrderList" @click="selectLocalOrder(order)">
+      <li v-for="order in sortedOrderList">
         <b>
           {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla pociągu nr
           {{ order.orderBody['header']['trainNo'] }}
         </b>
         <br />
         Dodano: {{ new Date(order.createdAt).toLocaleString('pl-PL') }}
+        <br />
+        <button class="g-button" @click="selectLocalOrder(order)">Wybierz</button>
+        <button class="g-button" @click="removeOrder(order)">Usuń</button>
       </li>
     </ul>
   </section>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent } from 'vue';
+import orderStorageMixin from '../mixins/orderStorageMixin';
 import { useStore } from '../store/store';
 import { LocalStorageOrder } from '../types/orderTypes';
 
 export default defineComponent({
   name: 'OrderList',
+  mixins: [orderStorageMixin],
 
   data() {
     return {
@@ -41,26 +46,13 @@ export default defineComponent({
       return `Rozkaz "${orderType.split('order')[1]}"`;
     },
 
-    selectLocalOrder(order: LocalStorageOrder) {
-      this.store.chosenOrderType = order.orderType;
-      const orderBody = JSON.parse(JSON.stringify(order.orderBody));
+    removeOrder(order: LocalStorageOrder) {
+      if (!order) return;
 
-      switch (order.orderType) {
-        case 'orderN':
-          // for (let key in this.store[order.orderType]) {
-          //   (this.store[order.orderType] as any)[key] = orderBody[key];
-          // }
-          // this.store['orderN']['header'] = orderBody['header'];
-          // this.store['orderN']['row1'] = orderBody['row1'];
-          // this.store['orderN']['header'] = orderBody['header'];
-          // this.store['orderN']['header'] = orderBody['header'];
-          // this.store['orderN']['header'] = orderBody['header'];
-          break;
+      this.removeLocalOrder(order);
 
-        default:
-          break;
-      }
-      this.store[order.orderType] = reactive(JSON.parse(JSON.stringify(order.orderBody)));
+      this.localOrderList = this.localOrderList.filter((o) => o.id != order.id);
+      this.localOrderCount = this.localOrderCount - 1;
     },
   },
 
@@ -93,7 +85,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .order-list {
   padding: 1em;
-  width: 500px;
 }
 
 ul {
@@ -114,5 +105,9 @@ li {
   background-color: #222;
 
   cursor: pointer;
+
+  button {
+    margin: 1em 1em 0 0;
+  }
 }
 </style>

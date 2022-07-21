@@ -89,7 +89,9 @@ export default defineComponent({
 
       switch (savedOrderStatus) {
         case -1:
-          this.showActionMonit('<span class="text--warn">Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!</span>');
+          this.showActionMonit(
+            '<span class="text--warn">Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!</span>'
+          );
           break;
         case 0:
           this.showActionMonit('<span class="text--warn">Ostatni zapisany rozkaz jest identyczny z obecnym!</span>');
@@ -109,7 +111,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .order-message {
   padding: 1em;
-  width: 500px;
 
   h3 {
     margin: 0;
@@ -119,10 +120,6 @@ export default defineComponent({
 
   button {
     margin: 0 0.5em;
-  }
-
-  @media screen and (max-width: 550px) {
-    max-width: 100%;
   }
 }
 

@@ -1,6 +1,10 @@
 <template>
   <section class="sidebar">
     <div class="sidebar_content">
+      <button class="option-save" @click="toggleOrderMode" :data-selected="store.orderMode == 'OrderList'">
+        <img :src="saveIcon" alt="save icon" />
+      </button>
+
       <button
         v-for="orderType in orderTypeList"
         :key="orderType.id"
@@ -9,11 +13,6 @@
       >
         {{ orderType.name }}
 
-        <div class="bar"></div>
-      </button>
-
-      <button class="option-save" @click="toggleOrderMode" :data-selected="store.orderMode == 'OrderList'">
-        <img :src="saveIcon" alt="save icon" />
         <div class="bar"></div>
       </button>
     </div>
@@ -96,7 +95,7 @@ export default defineComponent({
     align-items: center;
 
     color: white;
-    background-color: #000000aa;
+    background-color: #00000073;
     width: 50px;
     height: 85px;
 
@@ -125,15 +124,15 @@ export default defineComponent({
 }
 
 button.option-save {
-  background-color: $accentCol;
+  background-color: #000000aa;
 
   img {
     width: 80%;
     height: 80%;
   }
 
-  &[data-selected='true'] .bar {
-    background-color: #111;
+  &[data-selected='true'] {
+    background-color: $accentCol;
   }
 }
 
