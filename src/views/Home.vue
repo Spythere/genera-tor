@@ -90,7 +90,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .home {
   min-height: 100vh;
-
   overflow-x: auto;
 
   .home_container {
@@ -98,10 +97,11 @@ export default defineComponent({
     flex-wrap: wrap;
     align-items: flex-start;
     justify-content: center;
-    margin-top: 1em;
+    padding: 2em 0;
 
     @media screen and (max-width: 650px) {
-      margin-top: 80px;
+      padding-top: 85px;
+      padding-bottom: 5em;
     }
   }
 

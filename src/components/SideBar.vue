@@ -71,7 +71,7 @@ export default defineComponent({
 
 .sidebar_content {
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 0.25em;
 
   font-size: 1.5em;
@@ -138,7 +138,7 @@ button.option-save {
 
   .sidebar_content {
     grid-template-rows: 1fr;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
 
     & > button {
       height: 60px;
