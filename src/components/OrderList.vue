@@ -11,8 +11,8 @@
         <br />
         Dodano: {{ new Date(order.createdAt).toLocaleString('pl-PL') }}
         <br />
-        <button class="g-button" @click="selectLocalOrder(order)">Wybierz</button>
-        <button class="g-button" @click="removeOrder(order)">Usuń</button>
+        <button class="g-button action" @click="selectLocalOrder(order)">Wybierz</button>
+        <button class="g-button action" @click="removeOrder(order)">Usuń</button>
       </li>
     </ul>
   </section>

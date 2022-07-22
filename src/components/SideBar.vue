@@ -1,9 +1,9 @@
 <template>
   <section class="sidebar">
     <div class="sidebar_content">
-      <button class="option-save" @click="toggleOrderMode" :data-selected="store.orderMode == 'OrderList'">
+      <!-- <button class="option-save" @click="toggleOrderMode" :data-selected="store.orderMode == 'OrderList'">
         <img :src="saveIcon" alt="save icon" />
-      </button>
+      </button> -->
 
       <button
         v-for="orderType in orderTypeList"
@@ -23,13 +23,9 @@
 import { defineComponent } from 'vue';
 import { useStore } from '../store/store';
 
-import saveIcon from '../assets/icon-save.svg';
-
 export default defineComponent({
   data() {
     return {
-      saveIcon,
-
       orderTypeList: [
         {
           id: 'orderN',
@@ -55,10 +51,6 @@ export default defineComponent({
   methods: {
     selectOrderType(type: any) {
       this.store.chosenOrderType = type;
-    },
-
-    toggleOrderMode() {
-      this.store.orderMode = this.store.orderMode == 'OrderMessage' ? 'OrderList' : 'OrderMessage';
     },
   },
 });

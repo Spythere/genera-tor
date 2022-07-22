@@ -66,6 +66,7 @@ export default defineComponent({
 
     selectLocalOrder(order: LocalStorageOrder) {
       this.store.chosenOrderType = order.orderType;
+
       const localOrder = JSON.parse(JSON.stringify(order));
       const localOrderBody = localOrder['orderBody'];
       const localOrderFooter = localOrder['orderFooter'];
@@ -105,6 +106,8 @@ export default defineComponent({
       for (let key in this.store.orderFooter) {
         (this.store.orderFooter as any)[key] = localOrderFooter[key];
       }
+
+      this.store.orderMode = 'OrderMessage';
     },
   },
 });

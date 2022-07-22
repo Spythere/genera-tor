@@ -8,6 +8,20 @@
       </div>
 
       <div class="message_container">
+        <div class="message_nav">
+          <span v-for="(action, i) in navActions">
+            <b v-if="i > 0">&bull;</b>
+
+            <button
+              class="g-button option"
+              :data-active="store.orderMode == action.mode"
+              @click="selectOrderMode(action.mode)"
+            >
+              {{ action.value }}
+            </button>
+          </span>
+        </div>
+
         <transition name="order-anim" mode="out-in">
           <keep-alive>
             <Component :is="orderModeComponent" />
@@ -28,6 +42,29 @@ import { useStore } from '../store/store';
 
 export default defineComponent({
   components: { OrderVue, SideBar },
+
+  data() {
+    return {
+      navActions: [
+        {
+          mode: 'OrderMessage',
+          value: 'TREŚĆ ROZKAZU',
+        },
+        {
+          mode: 'OrderList',
+          value: 'ZAPISANE ROZKAZY',
+        },
+      ],
+    };
+  },
+
+  methods: {
+    selectOrderMode(mode: string) {
+      console.log(mode);
+
+      this.store.orderMode = mode;
+    },
+  },
 
   setup() {
     return {
@@ -74,12 +111,18 @@ export default defineComponent({
     margin-bottom: 1em;
 
     @media screen and (max-width: 550px) {
-      margin: 0.5em;
+      margin: 1em;
     }
   }
 
   .message_container {
     width: 500px;
+  }
+
+  .message_nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>

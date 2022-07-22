@@ -26,20 +26,31 @@ button {
   cursor: pointer;
   font-weight: bold;
   font-size: 1em;
+}
 
-  &.g-button {
+button.g-button {
+  text-align: center;
+  color: white;
+
+  &.action {
     outline: 2px solid white;
-    background: none;
-    color: white;
-
-    text-align: center;
-
     padding: 0.5em;
+
+    &:focus-visible {
+      outline: 2px solid $accentCol;
+    }
   }
 
-  &:focus-visible {
-    outline: 2px solid $accentCol;
-    color: $accentCol;
+  &.option {
+    margin: 0 0.25em;
+
+    &:focus-visible {
+      outline: 1px solid $accentCol;
+    }
+
+    &[data-active='true'] {
+      color: $accentCol;
+    }
   }
 }
 

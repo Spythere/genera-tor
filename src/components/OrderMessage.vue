@@ -5,8 +5,8 @@
     <div class="message_body" v-html="fullOrderMessage"></div>
 
     <div class="message_actions">
-      <button class="g-button" @click="saveOrder"><img :src="saveIcon" alt="save icon" />Zapisz ten rozkaz</button>
-      <button class="g-button" @click="copyMessage">Kopiuj wiadomość rozkazu</button>
+      <button class="g-button action" @click="saveOrder"><img :src="saveIcon" alt="save icon" />Zapisz ten rozkaz</button>
+      <button class="g-button action" @click="copyMessage">Kopiuj wiadomość rozkazu</button>
     </div>
 
     <transition name="monit-anim">
