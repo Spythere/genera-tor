@@ -58,7 +58,7 @@ export default defineComponent({
 
   computed: {
     sortedOrderList() {
-      return this.localOrderList.sort((a, b) => a.createdAt - b.createdAt);
+      return this.localOrderList.sort((a, b) => b.createdAt - a.createdAt);
     },
   },
 
