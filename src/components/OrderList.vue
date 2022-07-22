@@ -2,8 +2,8 @@
   <section class="order-list">
     <h3>Zapisane rozkazy pisemne ({{ localOrderCount }})</h3>
 
-    <ul>
-      <li v-for="order in sortedOrderList">
+    <transition-group name="list" tag="ul">
+      <li v-for="order in sortedOrderList" :key="order.id">
         <b>
           {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla pociągu nr
           {{ order.orderBody['header']['trainNo'] }}
@@ -15,7 +15,7 @@
         <button class="g-button action" @click="selectLocalOrder(order)">Wybierz</button>
         <button class="g-button action" @click="removeOrder(order)">Usuń</button>
       </li>
-    </ul>
+    </transition-group>
   </section>
 </template>
 
@@ -84,13 +84,32 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.list {
+  &-move,
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.5s ease;
+  }
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  &-leave-active {
+    position: absolute;
+  }
+}
+
 .order-list {
   padding: 1em;
 }
 
 ul {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 60vh;
+  position: relative;
 }
 
 h3 {
@@ -104,6 +123,7 @@ li {
   padding: 1em;
   margin: 0.5em;
   background-color: #222;
+  width: 100%;
 
   cursor: pointer;
 
