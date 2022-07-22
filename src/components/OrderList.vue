@@ -9,7 +9,8 @@
           {{ order.orderBody['header']['trainNo'] }}
         </b>
         <br />
-        Dodano: {{ new Date(order.createdAt).toLocaleString('pl-PL') }}
+        {{ order.createdAt ? 'Dodano: ' : 'Zaktualizowano: ' }}
+        {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
         <br />
         <button class="g-button action" @click="selectLocalOrder(order)">Wybierz</button>
         <button class="g-button action" @click="removeOrder(order)">Usuń</button>
@@ -58,7 +59,7 @@ export default defineComponent({
 
   computed: {
     sortedOrderList() {
-      return this.localOrderList.sort((a, b) => b.createdAt - a.createdAt);
+      return this.localOrderList.sort((a, b) => (b.createdAt || b.updatedAt!) - (a.createdAt || a.updatedAt!));
     },
   },
 

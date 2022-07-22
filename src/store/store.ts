@@ -4,6 +4,8 @@ export const useStore = defineStore('store', {
   state: () => {
     return {
       chosenOrderType: 'orderN' as 'orderO' | 'orderS' | 'orderN',
+      chosenLocalOrderId: '',
+
       orderMode: 'OrderMessage',
 
       orderFooter: {

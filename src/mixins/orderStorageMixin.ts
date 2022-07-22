@@ -10,29 +10,29 @@ export default defineComponent({
   },
 
   methods: {
-    saveOrderToStorage() {
+    saveLocalOrder() {
       let orderObj: LocalStorageOrder = {
         id: '',
         orderType: this.store.chosenOrderType,
-        orderBody: {},
+        orderBody: this.store[this.store.chosenOrderType],
         orderFooter: this.store.orderFooter,
         createdAt: Date.now(),
       };
 
-      switch (this.store.chosenOrderType) {
-        case 'orderN':
-          orderObj['orderBody'] = this.store.orderN;
-          break;
-        case 'orderS':
-          orderObj['orderBody'] = this.store.orderS;
-          break;
-        case 'orderO':
-          orderObj['orderBody'] = this.store.orderO;
-          break;
+      // switch (this.store.chosenOrderType) {
+      //   case 'orderN':
+      //     orderObj['orderBody'] = this.store.orderN;
+      //     break;
+      //   case 'orderS':
+      //     orderObj['orderBody'] = this.store.orderS;
+      //     break;
+      //   case 'orderO':
+      //     orderObj['orderBody'] = this.store.orderO;
+      //     break;
 
-        default:
-          break;
-      }
+      //   default:
+      //     break;
+      // }
 
       const headerInfo = orderObj['orderBody']['header'];
 
@@ -51,10 +51,31 @@ export default defineComponent({
       }
 
       const nextOrderCount = Number(localOrderCount) + 1;
-      orderObj['id'] = `order-${nextOrderCount}`;
+      const orderId = `order-${nextOrderCount}`;
+      orderObj['id'] = orderId;
 
       localStorage.setItem('orderCount', `${nextOrderCount}`);
-      localStorage.setItem(`order-${nextOrderCount}`, JSON.stringify(orderObj));
+      localStorage.setItem(orderId, JSON.stringify(orderObj));
+
+      this.store.chosenLocalOrderId = orderId;
+      return 1;
+    },
+
+    updateLocalOrder() {
+      if (!this.store.chosenLocalOrderId) return 0;
+      const localOrder = window.localStorage.getItem(this.store.chosenLocalOrderId);
+
+      if (!localOrder) return -1;
+
+      let orderObj: LocalStorageOrder = {
+        id: this.store.chosenLocalOrderId,
+        orderType: this.store.chosenOrderType,
+        orderBody: this.store[this.store.chosenOrderType],
+        orderFooter: this.store.orderFooter,
+        updatedAt: Date.now(),
+      };
+
+      window.localStorage.setItem(this.store.chosenLocalOrderId, JSON.stringify(orderObj));
 
       return 1;
     },
@@ -66,6 +87,7 @@ export default defineComponent({
 
     selectLocalOrder(order: LocalStorageOrder) {
       this.store.chosenOrderType = order.orderType;
+      this.store.chosenLocalOrderId = order.id;
 
       const localOrder = JSON.parse(JSON.stringify(order));
       const localOrderBody = localOrder['orderBody'];

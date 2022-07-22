@@ -5,8 +5,11 @@
     <div class="message_body" v-html="fullOrderMessage"></div>
 
     <div class="message_actions">
-      <button class="g-button action" @click="saveOrder"><img :src="saveIcon" alt="save icon" />Zapisz ten rozkaz</button>
-      <button class="g-button action" @click="copyMessage">Kopiuj wiadomość rozkazu</button>
+      <button class="g-button action" @click="saveOrder">Zapisz nowy rozkaz</button>
+      <button class="g-button action" @click="copyMessage">Kopiuj treść rozkazu</button>
+      <button class="g-button action" :data-disabled="!store.chosenLocalOrderId" @click="updateOrder">
+        Zaktualizuj ten rozkaz
+      </button>
     </div>
 
     <transition name="monit-anim">
@@ -85,7 +88,7 @@ export default defineComponent({
     },
 
     saveOrder() {
-      const savedOrderStatus = this.saveOrderToStorage();
+      const savedOrderStatus = this.saveLocalOrder();
 
       switch (savedOrderStatus) {
         case -1:
@@ -101,6 +104,24 @@ export default defineComponent({
           break;
 
         default:
+          break;
+      }
+    },
+
+    updateOrder() {
+      const updatedOrderStatus = this.updateLocalOrder();
+
+      switch (updatedOrderStatus) {
+        case -1:
+          this.showActionMonit('<span class="text--warn">Wystąpił błąd podczas aktualizowania tego rozkazu! :/</span>');
+          break;
+
+        case 0:
+          this.showActionMonit('<span class="text--warn">Nie wybrałeś żadnego zapisanego rozkazu!</span>');
+          break;
+
+        case 1:
+          this.showActionMonit('Zaktualizowano treść <b class="text--accent">rozkazu</b>!');
           break;
       }
     },
@@ -147,6 +168,11 @@ export default defineComponent({
     height: 2ch;
     vertical-align: text-bottom;
     margin-right: 0.5em;
+  }
+
+  button[data-disabled='true'] {
+    user-select: none;
+    color: #aaa;
   }
 }
 

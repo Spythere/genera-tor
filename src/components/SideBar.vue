@@ -50,6 +50,8 @@ export default defineComponent({
 
   methods: {
     selectOrderType(type: any) {
+      if (type != this.store.chosenOrderType) this.store.chosenLocalOrderId = '';
+      
       this.store.chosenOrderType = type;
     },
   },
