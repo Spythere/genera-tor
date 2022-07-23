@@ -1,6 +1,6 @@
 <template>
   <section class="order-list">
-    <h3>Zapisane rozkazy pisemne ({{ localOrderCount }})</h3>
+    <h3>Zapisane rozkazy pisemne ({{ localOrderList.length }})</h3>
 
     <transition-group name="list" tag="ul">
       <li v-for="order in sortedOrderList" :key="order.id">
@@ -31,7 +31,6 @@ export default defineComponent({
 
   data() {
     return {
-      localOrderCount: 0,
       localOrderList: [] as LocalStorageOrder[],
     };
   },
@@ -53,7 +52,6 @@ export default defineComponent({
       this.removeLocalOrder(order);
 
       this.localOrderList = this.localOrderList.filter((o) => o.id != order.id);
-      this.localOrderCount = this.localOrderCount - 1;
     },
   },
 
@@ -66,8 +64,6 @@ export default defineComponent({
   activated() {
     const localStorage = window.localStorage;
     const orderList = [];
-
-    this.localOrderCount = Number(localStorage.getItem('orderCount')) || 0;
 
     for (let key in localStorage) {
       if (!/^order-/g.test(key)) continue;
