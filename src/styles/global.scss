@@ -15,6 +15,15 @@ html {
   font-weight: 500;
 }
 
+a {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: $accentCol;
+  }
+}
+
 button {
   border: none;
   outline: none;
