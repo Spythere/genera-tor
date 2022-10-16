@@ -68,7 +68,7 @@
                   value="wyjazdowego"
                   v-model="order.row2.signalType"
                 />
-                <label for="radio-2a-1">wyjazdowego <input type="text" v-model="order.row2.signal1" /> </label>
+                <label for="radio-2a-1">wjazdowego <input type="text" v-model="order.row2.signal1" /> </label>
                 <br />
                 <input
                   type="radio"
@@ -178,7 +178,7 @@ export default defineComponent({
 
         switch (row2.signalType) {
           case 'wyjazdowego':
-            message += `wyjazdowego ${row2.signal1 || '_'}`;
+            message += `wjazdowego ${row2.signal1 || '_'}`;
             break;
           case 'drogowskazowego':
             message += `drogowskazowego ${row2.signal2 || '_'}`;
