@@ -20,8 +20,6 @@ export default defineComponent({
       if (footer.dispatcherName) this.store.footerMessage += `, dyżurny ruchu ${footer.dispatcherName}`;
       if (footer.secondaryDispatcherName)
         this.store.footerMessage += `, z polecenia dyżurnego ruchu ${footer.secondaryDispatcherName}`;
-
-      this.store.footerMessage += ' <b>Potwierdzić przyjęcie rozkazu</b>';
     },
   },
 });

@@ -19,6 +19,12 @@ import OrderSVue from './OrderS.vue';
 import OrderFooter from './OrderFooter.vue';
 import OrderOVue from './OrderO.vue';
 
+const orderComponents = {
+  orderN: OrderNVue,
+  orderS: OrderSVue,
+  orderO: OrderOVue,
+};
+
 export default defineComponent({
   components: { OrderNVue, OrderSVue, OrderFooter },
 
@@ -32,16 +38,7 @@ export default defineComponent({
 
   computed: {
     chosenOrderComponent() {
-      switch (this.store.chosenOrderType) {
-        case 'orderN':
-          return OrderNVue;
-        case 'orderS':
-          return OrderSVue;
-        case 'orderO':
-          return OrderOVue;
-        default:
-          return OrderNVue;
-      }
+      return orderComponents[this.store.chosenOrderType];
     },
   },
 });
@@ -121,6 +118,19 @@ input {
   font-size: 0.9em;
   text-align: center;
   color: black;
+
+  &:focus-visible {
+    border-bottom: 2px solid $accentCol;
+  }
+}
+
+input[type='checkbox'],
+input[type='radio'],
+textarea,
+select {
+  &:focus-visible {
+    outline: 2px solid $accentCol;
+  }
 }
 
 select {

@@ -116,6 +116,10 @@ export default defineComponent({
     &:hover {
       cursor: pointer;
     }
+
+    &:focus-visible {
+      background-color: #6d6d6d73;
+    }
   }
 }
 
