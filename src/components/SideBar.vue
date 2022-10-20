@@ -5,6 +5,8 @@
         <img :src="saveIcon" alt="save icon" />
       </button> -->
 
+      <!-- <button @click="store.helperModalOpen = true">?</button> -->
+
       <button
         v-for="orderType in orderTypeList"
         :key="orderType.id"
@@ -51,7 +53,7 @@ export default defineComponent({
   methods: {
     selectOrderType(type: any) {
       if (type != this.store.chosenOrderType) this.store.chosenLocalOrderId = '';
-      
+
       this.store.chosenOrderType = type;
     },
   },

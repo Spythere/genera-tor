@@ -1,0 +1,15 @@
+{
+  "orderS": [
+    "zezwolenie na przejechanie obok semafora wyjazdowego, wskazującego sygnał „Stój”, sygnał wątpliwy, białe światło bądź nieoświetlonego, o ile nie można podać sygnału zastępczego „Sz”",
+    "zezwolenie na wyjazd ze stacji posiadającej semafory wyjazdowe z toru, przy którym nie ma semafora wyjazdowego",
+    "zezwolenie na przejechanie obok semafora wjazdowego, drogowskazowego lub obsługiwanego semafora odstępowego albo tarczy zaporowej, wskazujących sygnał „Stój”, również sygnał wątpliwy, białe światło, bądź nieoświetlonych, o ile nie można podać sygnału zastępczego „Sz”",
+    "zezwolenie na jazdę manewrową taboru w kierunku szlaku, poza ustaloną granicę przetaczania (wskaźnik W 5) lub poza ostatni rozjazd",
+    "zezwolenie na jazdę w przypadku, gdy pojazd trakcyjny znajduje się poza semaforem wskazującym sygnał zezwalający, którego prowadzący pojazd kolejowy nie widzi,",
+    "zezwolenie na dalszą jazdę zatrzymanego pociągu skierowanego na tor prawy, gdy jego czoło minęło semafor z wyświetlonym wskaźnikiem W 24,",
+    "zezwolenie na dalszą jazdę zatrzymanego pociągu, gdy pociąg przejechał i zatrzymał się za semaforem wskazującym sygnał „Stój”",
+    "polecenie jazdy pociągu do określonego kilometra na szlaku jednotorowym, zatrzymania się i powrotu najpóźniej w nakazanym czasie",
+    "polecenie nieprzewidzianego wewnętrznym rozkładem jazdy zatrzymania na szlaku pociągu, z określeniem celu i czasu postoju,",
+    "informację o tym, że w czasie prowadzenia ruchu pociągów w odstępach posterunków następczych sygnały na samoczynnych semaforach odstępowych są nieważne",
+    "informację o unieważnieniu sygnałów na semaforach SBL"
+  ]
+}

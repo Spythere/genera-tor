@@ -1,4 +1,5 @@
 <template>
+  <OrderHelper v-if="store.helperModalOpen" />
   <SideBar />
 
   <div class="home">
@@ -39,9 +40,10 @@ import SideBar from '../components/SideBar.vue';
 import OrderMessage from '../components/OrderMessage.vue';
 import OrderList from '../components/OrderList.vue';
 import { useStore } from '../store/store';
+import OrderHelper from '../components/OrderHelper.vue';
 
 export default defineComponent({
-  components: { OrderVue, SideBar },
+  components: { OrderVue, SideBar, OrderHelper },
 
   data() {
     return {
