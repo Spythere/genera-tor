@@ -1,6 +1,6 @@
 {
   "name": "genera-tor",
-  "version": "0.2.0a",
+  "version": "0.3.0a",
   "private": true,
   "scripts": {
     "dev": "vite --port 8080",
