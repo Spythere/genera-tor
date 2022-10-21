@@ -3,6 +3,7 @@
     <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
 
     <div class="message_body" v-html="fullOrderMessage"></div>
+    <p class="message_info">Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej</p>
 
     <div class="message_actions">
       <button class="g-button action" @click="saveOrder">Zapisz nowy rozkaz</button>
@@ -156,6 +157,11 @@ export default defineComponent({
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+}
+
+.message_info {
+  text-align: center;
+  color: #ccc;
 }
 
 .message_actions {

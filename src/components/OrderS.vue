@@ -28,7 +28,7 @@
             <td>
               zezwalam po otrzymaniu
               <select id="select-1a" v-model="order.row1.option1">
-                <option value='sygnału "nakaz jazdy"'>sygnału "nakaz jazdy"</option>
+                <option :value="`sygnału &quot;nakaz jazdy&quot;`">sygnału "nakaz jazdy"</option>
                 <option value="tylko tego rozkazu pisemnego">tylko tego rozkazu pisemnego</option>
               </select>
               <div style="margin-top: 0.5rem">

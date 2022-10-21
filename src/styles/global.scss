@@ -15,6 +15,10 @@ html {
   font-weight: 500;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 a {
   color: white;
   text-decoration: none;
@@ -111,4 +115,35 @@ ul {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+// Modal
+.g-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-bg {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    cursor: pointer;
+
+    background-color: #000000aa;
+  }
+
+  .modal-content {
+    position: relative;
+    z-index: 1001;
+
+    overflow: auto;
+  }
 }

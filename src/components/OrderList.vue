@@ -3,7 +3,10 @@
     <h3>Zapisane rozkazy pisemne ({{ localOrderList.length }})</h3>
 
     <transition-group name="list" tag="ul">
-      <li v-for="order in sortedOrderList" :key="order.id">
+      <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">Brak zapisanych rozkazów!</li>
+
+      <li v-for="(order, i) in sortedOrderList" :key="order.id">
+        <b class="text--accent">#{{ sortedOrderList.length - i }}&nbsp;</b>
         <b>
           {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla pociągu nr
           {{ order.orderBody['header']['trainNo'] }}
@@ -38,6 +41,7 @@ export default defineComponent({
   setup() {
     return {
       store: useStore(),
+      localStorage: window.localStorage,
     };
   },
 
@@ -84,12 +88,12 @@ export default defineComponent({
   &-move,
   &-enter-active,
   &-leave-active {
-    transition: all 0.5s ease;
+    transition: all 250ms ease;
   }
   &-enter-from,
   &-leave-to {
     opacity: 0;
-    transform: translateX(30px);
+    transform: translateY(30px);
   }
 
   &-leave-active {
@@ -126,5 +130,12 @@ li {
   button {
     margin: 1em 1em 0 0;
   }
+
+  &.no-orders-warning {
+    text-align: center;
+    font-size: 1.2em;
+    cursor: default;
+  }
 }
 </style>
+

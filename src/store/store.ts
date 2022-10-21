@@ -3,6 +3,8 @@ import { defineStore } from 'pinia';
 export const useStore = defineStore('store', {
   state: () => {
     return {
+      helperModalOpen: false,
+
       chosenOrderType: 'orderN' as 'orderO' | 'orderS' | 'orderN',
       chosenLocalOrderId: '',
 

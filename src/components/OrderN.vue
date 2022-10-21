@@ -36,7 +36,7 @@
             <td>
               <strong>ZEZWALAM</strong> po otrzymaniu
               <select id="select-2a" v-model="order.row2.option1">
-                <option value='sygnału "Nakaz Jazdy"'>sygnału "Nakaz Jazdy"</option>
+                <option :value="`sygnału &quot;Nakaz Jazdy&quot;`">sygnału "Nakaz Jazdy"</option>
                 <option value="tylko tego rozkazu pisemnego">tylko tego rozkazu pisemnego</option>
               </select>
               <div style="margin-top: 0.5rem">
