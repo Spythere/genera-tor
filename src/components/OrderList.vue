@@ -5,7 +5,8 @@
     <transition-group name="list" tag="ul">
       <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">Brak zapisanych rozkazów!</li>
 
-      <li v-for="order in sortedOrderList" :key="order.id">
+      <li v-for="(order, i) in sortedOrderList" :key="order.id">
+        <b class="text--accent">#{{ sortedOrderList.length - i }}&nbsp;</b>
         <b>
           {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla pociągu nr
           {{ order.orderBody['header']['trainNo'] }}
@@ -40,6 +41,7 @@ export default defineComponent({
   setup() {
     return {
       store: useStore(),
+      localStorage: window.localStorage,
     };
   },
 
@@ -136,3 +138,4 @@ li {
   }
 }
 </style>
+

@@ -62,8 +62,6 @@ export default defineComponent({
 
   methods: {
     selectOrderMode(mode: string) {
-      console.log(mode);
-
       this.store.orderMode = mode;
     },
   },
@@ -94,12 +92,20 @@ export default defineComponent({
   min-height: 100vh;
   overflow-x: auto;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+
   .home_container {
     display: flex;
     flex-wrap: wrap;
-    align-items: flex-start;
     justify-content: center;
-    padding: 2em 0;
+    gap: 2em 1em;
+    padding: 0.5em;
+
+    width: 100%;
 
     @media screen and (max-width: 650px) {
       padding-top: 85px;
@@ -108,13 +114,8 @@ export default defineComponent({
   }
 
   .order_container {
-    font-size: 0.9rem;
-    margin-right: 0.5em;
-    margin-bottom: 1em;
-
-    @media screen and (max-width: 550px) {
-      margin: 1em;
-    }
+    width: 100%;
+    max-width: 550px;
   }
 
   .message_container {

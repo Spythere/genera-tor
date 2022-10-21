@@ -12,14 +12,19 @@ export default defineComponent({
     generateFooter() {
       const footer = this.store.orderFooter;
 
-      this.store.footerMessage = ' <b>|</b> ';
-      if (footer.stationName) this.store.footerMessage += ` Stacja: ${footer.stationName}`;
-      if (footer.checkpointName) this.store.footerMessage += ` Posterunek: ${footer.checkpointName}`;
-      if (footer.hour) this.store.footerMessage += `, godz. ${footer.hour}`;
-      if (footer.minutes) this.store.footerMessage += ` min. ${footer.minutes}`;
-      if (footer.dispatcherName) this.store.footerMessage += `, dyżurny ruchu ${footer.dispatcherName}`;
+      const messageArray = [];
+
+      if (footer.stationName) messageArray.push(`stacja: ${footer.stationName}`);
+      if (footer.checkpointName) messageArray.push(`posterunek: ${footer.checkpointName}`);
+      if (footer.hour) messageArray.push(`godz. ${footer.hour}`);
+      if (footer.minutes) messageArray.push(`min. ${footer.minutes}`);
+      if (footer.dispatcherName) messageArray.push(`dyżurny ruchu ${footer.dispatcherName}`);
       if (footer.secondaryDispatcherName)
-        this.store.footerMessage += `, z polecenia dyżurnego ruchu ${footer.secondaryDispatcherName}`;
+        messageArray.push(`z polecenia dyżurnego ruchu ${footer.secondaryDispatcherName}`);
+
+      this.store.footerMessage = ` <b>|</b> ${messageArray.join(', ')} <b>|</b> Rozkaz otrzymałem, maszynista: (potwierdzić otrzymanie rozkazu)`;
     },
   },
 });
+
+

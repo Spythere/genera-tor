@@ -65,12 +65,11 @@ export default defineComponent({
 }
 
 .order {
-  max-width: 550px;
   background-color: white;
   color: black;
 
   max-height: 95vh;
-  overflow-y: auto;
+  overflow: auto;
 
   font-size: 15px;
 
@@ -179,3 +178,4 @@ select {
   }
 }
 </style>
+
