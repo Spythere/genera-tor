@@ -106,9 +106,11 @@ export default defineComponent({
 }
 
 ul {
+  max-height: 750px;
+  height: 80vh;
+
   overflow-y: auto;
   overflow-x: hidden;
-  height: 60vh;
   position: relative;
 }
 

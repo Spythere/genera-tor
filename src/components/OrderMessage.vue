@@ -3,7 +3,9 @@
     <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
 
     <div class="message_body" v-html="fullOrderMessage"></div>
-    <p class="message_info">Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej</p>
+    <p class="message_info">
+      Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej
+    </p>
 
     <div class="message_actions">
       <button class="g-button action" @click="saveOrder">Zapisz nowy rozkaz</button>
@@ -25,11 +27,12 @@ import { useStore } from '../store/store';
 
 import saveIcon from '../assets/icon-save.svg';
 import orderStorageMixin from '../mixins/orderStorageMixin';
+import orderFooterMixin from '../mixins/orderFooterMixin';
 
 export default defineComponent({
   name: 'OrderMessage',
 
-  mixins: [orderStorageMixin],
+  mixins: [orderStorageMixin, orderFooterMixin],
 
   data() {
     return {
@@ -75,10 +78,32 @@ export default defineComponent({
       }, 5000);
     },
 
+    verifyHeader() {
+      const header = this.store[this.store.chosenOrderType].header;
+      const fieldsToCorrect = [];
+
+      if (!header.orderNo) fieldsToCorrect.push('numer rozkazu');
+      if (!header.trainNo) fieldsToCorrect.push('numer pociągu / manewru');
+      if (!header.date) fieldsToCorrect.push('data');
+
+      return fieldsToCorrect;
+    },
+
     copyMessage() {
       if (!navigator.clipboard)
         return this.showActionMonit(
           'Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/'
+        );
+
+      const headerFieldsToCorrect = this.verifyHeader();
+      const footerFieldsToCorrect = this.verifyFooter();
+      const fieldsToCorrect = [...headerFieldsToCorrect, ...footerFieldsToCorrect];
+
+      if (fieldsToCorrect.length > 0)
+        return this.showActionMonit(
+          `<span class="text--warn">Przed skopiowaniem wiadomości uzupełnij rubryki: ${fieldsToCorrect.join(
+            ', '
+          )}</span>`
         );
 
       navigator.clipboard.writeText(this.fullOrderMessage);
