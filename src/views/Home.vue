@@ -1,5 +1,5 @@
 <template>
-  <OrderHelper v-if="store.helperModalOpen" />
+  <!-- <OrderHelper v-if="store.helperModalOpen" /> -->
   <SideBar />
 
   <div class="home">

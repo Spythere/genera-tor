@@ -3,14 +3,22 @@
     <div class="modal-bg" @click="store.helperModalOpen = false"></div>
 
     <div class="content modal-content">
-      <h2>Rozkazy pisemne - zastosowania w TD2</h2>
+      <h2>Rozkazy pisemne - najczęstsze przypadki zastosowań w TD2</h2>
 
       <hr />
-      <b>Rozkaz pisemny "S" (dot. semaforów)</b>
-      <p>Rozkaz pisemny "S" jest stosowany w następujących sytuacjach:</p>
 
       <ul>
-        <li v-for="data in orderHelperData.orderS">{{ data }}</li>
+        <li>
+          <b>Przetaczanie (manewr) taboru poza wskaźnik W 5 (granicy przetaczania)</b>
+          <p>
+            Rozkazu <u>nie stosujemy</u> w przypadku wyjazdu taboru na szlak dwutorowy, na którym odbywa się ruch w
+            kierunku zasadniczym, tj. "prawostronnym". Dla wszystkich szlaków jednotorowych lub dwutorowych w sytuacji innej niż wymieniona
+            wykorzystujemy działkę 4. rozkazu pisemnego "S".
+            <br><br>
+            <i>Szczegółowe informacje: instrukcja Ir-1 (R-1) § 12 pkt 4 "Manewry na torach głównych"</i>
+          </p>
+          <button class="g-button action">Wygeneruj treść rozkazu</button>
+        </li>
       </ul>
     </div>
   </div>
@@ -32,6 +40,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/global.scss";
+
 .content {
   width: 100%;
   max-width: 800px;
@@ -42,12 +52,18 @@ export default defineComponent({
   margin: 1em;
   padding: 1em;
   background-color: #2b2b2b;
+}
 
+h2 {
   text-align: center;
 }
 
 ul {
   text-align: left;
-  list-style: inside;
+
+  li b {
+    font-size: 1.1em;
+    color: $accentCol;
+  }
 }
 </style>
