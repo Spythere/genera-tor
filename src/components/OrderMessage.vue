@@ -28,11 +28,12 @@ import { useStore } from '../store/store';
 import saveIcon from '../assets/icon-save.svg';
 import orderStorageMixin from '../mixins/orderStorageMixin';
 import orderFooterMixin from '../mixins/orderFooterMixin';
+import orderValidationMixin from '../mixins/orderValidationMixin';
 
 export default defineComponent({
   name: 'OrderMessage',
 
-  mixins: [orderStorageMixin, orderFooterMixin],
+  mixins: [orderStorageMixin, orderValidationMixin],
 
   data() {
     return {
@@ -78,26 +79,13 @@ export default defineComponent({
       }, 5000);
     },
 
-    verifyHeader() {
-      const header = this.store[this.store.chosenOrderType].header;
-      const fieldsToCorrect = [];
-
-      if (!header.orderNo) fieldsToCorrect.push('numer rozkazu');
-      if (!header.trainNo) fieldsToCorrect.push('numer pociągu / manewru');
-      if (!header.date) fieldsToCorrect.push('data');
-
-      return fieldsToCorrect;
-    },
-
     copyMessage() {
       if (!navigator.clipboard)
         return this.showActionMonit(
           'Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/'
         );
 
-      const headerFieldsToCorrect = this.verifyHeader();
-      const footerFieldsToCorrect = this.verifyFooter();
-      const fieldsToCorrect = [...headerFieldsToCorrect, ...footerFieldsToCorrect];
+      const fieldsToCorrect = this.verifyOrderFields();
 
       if (fieldsToCorrect.length > 0)
         return this.showActionMonit(

@@ -68,12 +68,11 @@ export default defineComponent({
   background-color: white;
   color: black;
 
+  height: 925px;
   max-height: 95vh;
   overflow: auto;
 
   font-size: 15px;
-
-  box-shadow: 0 0 15px 2px white;
 
   h2 {
     margin: 0;

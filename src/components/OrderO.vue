@@ -193,7 +193,7 @@ th {
 
   display: flex;
   flex-direction: column;
-  height: 250px;
+  height: 285px;
 
   padding: 0.5em;
 

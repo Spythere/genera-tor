@@ -1,10 +1,10 @@
 <template>
   <!-- <OrderHelper v-if="store.helperModalOpen" /> -->
-  <SideBar />
 
   <div class="home">
     <div class="home_container">
       <div class="order_container">
+        <SideBar />
         <OrderVue />
       </div>
 
@@ -108,7 +108,7 @@ export default defineComponent({
     width: 100%;
 
     @media screen and (max-width: 650px) {
-      padding-top: 85px;
+      padding-top: 5em;
       padding-bottom: 5em;
     }
   }
@@ -116,6 +116,8 @@ export default defineComponent({
   .order_container {
     width: 100%;
     max-width: 550px;
+    
+    position: relative;
   }
 
   .message_container {

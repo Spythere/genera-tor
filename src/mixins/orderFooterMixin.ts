@@ -9,21 +9,6 @@ export default defineComponent({
   },
 
   methods: {
-    verifyFooter() {
-      const footer = this.store.orderFooter;
-
-      const fieldsToCorrect = [];
-
-      if (!footer.stationName) fieldsToCorrect.push('stacja');
-      if (!footer.checkpointName) fieldsToCorrect.push('posterunek');
-      if (!footer.hour) fieldsToCorrect.push('godzina');
-      if (!footer.minutes) fieldsToCorrect.push('minuta');
-      if (!footer.dispatcherName && !footer.secondaryDispatcherName)
-        fieldsToCorrect.push('dyżurny ruchu (lub z polecenia dyżurnego ruchu)');
-
-      return fieldsToCorrect;
-    },
-
     generateFooter() {
       const footer = this.store.orderFooter;
 
