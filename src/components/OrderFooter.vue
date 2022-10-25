@@ -4,25 +4,25 @@
       <tbody>
         <tr>
           <td colspan="4">
-            <input type="text" v-model="footerInfo.stationName" />
+            <input type="text" v-model="footerInfo.stationName" holder="nazwa stacji" />
             <br />
             stacja
           </td>
 
           <td colspan="3">
-            <input type="text" v-model="footerInfo.checkpointName" />
+            <input type="text" v-model="footerInfo.checkpointName" holder="skrót posterunku" />
             <br />
             posterunek
           </td>
 
           <td colspan="2">
-            <input type="text" v-model="footerInfo.hour" />
+            <input type="text" v-model="footerInfo.hour" holder="godzina" />
             <br />
             godz.
           </td>
 
           <td colspan="1">
-            <input type="text" v-model="footerInfo.minutes" />
+            <input type="text" v-model="footerInfo.minutes" holder="minuta" />
             <br />
             min.
           </td>
@@ -30,13 +30,13 @@
 
         <tr>
           <td colspan="5">
-            <input type="text" v-model="footerInfo.dispatcherName" />
+            <input type="text" v-model="footerInfo.dispatcherName" holder="nick dyżurnego" />
             <br />
             dyżurny ruchu
           </td>
 
           <td colspan="5">
-            <input type="text" v-model="footerInfo.secondaryDispatcherName" />
+            <input type="text" v-model="footerInfo.secondaryDispatcherName" holder="nick osoby uprawnionej*" />
             <br />
             z polecenia dyżurnego ruchu
           </td>

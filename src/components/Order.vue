@@ -120,6 +120,10 @@ input {
   &:focus-visible {
     border-bottom: 2px solid $accentCol;
   }
+
+  &.row-checkbox + input::placeholder {
+    color: red;
+  }
 }
 
 input[type='checkbox'],

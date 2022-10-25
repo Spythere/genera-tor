@@ -3,7 +3,7 @@
     <section class="header">
       <h2 class="flex-center">
         Rozkaz pisemny "S" nr
-        <input type="text" v-model="order.header.orderNo" />
+        <input type="text" v-model="order.header.orderNo" placeholder="nr rozkazu" />
       </h2>
       <div class="flex-row">
         dla
@@ -11,8 +11,8 @@
           <option value="pociągu">pociągu</option>
           <option value="manewru">manewru</option>
         </select>
-        nr <input type="text" v-model="order.header.trainNo" /> dnia <input type="text" v-model="order.header.date" />
-        {{ new Date().getUTCFullYear() }}r.
+        nr <input type="text" v-model="order.header.trainNo" :placeholder="`nr ${order.header.for}`" /> dnia
+        <input type="text" v-model="order.header.date" placeholder="data" /> {{ new Date().getUTCFullYear() }}r.
       </div>
     </section>
     <section class="table-section">
@@ -20,12 +20,17 @@
         <tbody>
           <tr>
             <td>
-              <label for="row-enabled-2">1</label>
+              <label for="row-enabled-1">1</label>
               <div>
-                <input type="checkbox" id="row-enabled-1" v-model="order.row1.enabled" />
+                <input
+                  type="checkbox"
+                  id="row-enabled-1"
+                  v-model="order.row1.enabled"
+                  @click="handleRowCheckboxChange(1)"
+                />
               </div>
             </td>
-            <td>
+            <td ref="row-1">
               zezwalam po otrzymaniu
               <select id="select-1a" v-model="order.row1.option1">
                 <option :value="`sygnału &quot;nakaz jazdy&quot;`">sygnału "nakaz jazdy"</option>
@@ -39,14 +44,14 @@
                     <option value="wyjazdowego">wyjazdowego</option>
                     <option value="drogowskazowego">drogowskazowego</option>
                   </select>
-                  <input type="text" v-model="order.row1.signal1" />
+                  <input type="text" v-model="order.row1.signal1" holder="nazwa sem." />
                   <br />
                 </label>
                 <hr />
                 <input type="radio" name="section-1a" id="radio-1a-2" value="radio-1a-2" v-model="order.row1.radio1" />
                 <label for="radio-1a-2">
-                  wyjechać z toru nr <input type="text" v-model="order.row1.trackNo" /> nie posiadającego semafora
-                  wyjazdowego
+                  wyjechać z toru nr <input type="text" v-model="order.row1.trackNo" holder="nr toru" /> nie
+                  posiadającego semafora wyjazdowego
                 </label>
               </div>
             </td>
@@ -55,10 +60,15 @@
             <td>
               <label for="row-enabled-2">2</label>
               <div>
-                <input type="checkbox" id="row-enabled-2" v-model="order.row2.enabled" />
+                <input
+                  type="checkbox"
+                  id="row-enabled-2"
+                  v-model="order.row2.enabled"
+                  @click="handleRowCheckboxChange(2)"
+                />
               </div>
             </td>
-            <td>
+            <td ref="row-2">
               zezwalam przejechać obok wskazującego sygnał "Stój" semafora:
               <div>
                 <input
@@ -103,10 +113,15 @@
             <td>
               <label for="row-enabled-3">3</label>
               <div>
-                <input type="checkbox" id="row-enabled-3" v-model="order.row3.enabled" />
+                <input
+                  type="checkbox"
+                  id="row-enabled-3"
+                  v-model="order.row3.enabled"
+                  @click="handleRowCheckboxChange(3)"
+                />
               </div>
             </td>
-            <td>
+            <td ref="row-3">
               Od <input type="text" v-model="order.row3.from" /> do <input type="text" v-model="order.row3.to" /> po
               torze nr <input type="text" v-model="order.row3.trackNo" /> ruch pociągów prowadzony jest w odstępie
               posterunków następczych. Wskazania semaforów sbl są nieważne. Zachować ostrożność od ostatniego semafora
@@ -120,10 +135,15 @@
             <td>
               <label for="row-enabled-4">4</label>
               <div>
-                <input type="checkbox" id="row-enabled-4" v-model="order.row4.enabled" />
+                <input
+                  type="checkbox"
+                  id="row-enabled-4"
+                  v-model="order.row4.enabled"
+                  @click="handleRowCheckboxChange(4)"
+                />
               </div>
             </td>
-            <td>
+            <td ref="row-4">
               Inne:
               <br />
               <textarea id="" cols="30" rows="10" v-model="order.row4.content"></textarea>
@@ -245,6 +265,26 @@ export default defineComponent({
 
       this.store.orderMessage = message;
     },
+
+    handleRowCheckboxChange(rowIndex: OrderRowRange) {
+      const isRowEnabled = this.order[`row${rowIndex}`].enabled;
+      const rowRef = this.$refs[`row-${rowIndex}`] as HTMLTableElement;
+
+      if (!isRowEnabled) {
+        rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
+          // node.setAttribute('holder', node.getAttribute('placeholder') || '');
+          // node.removeAttribute('placeholder');
+        });
+
+        return;
+      }
+
+      rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
+        console.log(node.getAttribute('holder'));
+
+        if (node.getAttribute('holder') != null) node.setAttribute('placeholder', node.getAttribute('holder')!);
+      });
+    },
   },
 });
 </script>
@@ -256,3 +296,4 @@ textarea {
   resize: none;
 }
 </style>
+
