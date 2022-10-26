@@ -26,7 +26,7 @@
                   type="checkbox"
                   id="row-enabled-1"
                   v-model="order.row1.enabled"
-                  @click="handleRowCheckboxChange(1)"
+                  @change="handleRowCheckboxChange(1)"
                 />
               </div>
             </td>
@@ -64,7 +64,7 @@
                   type="checkbox"
                   id="row-enabled-2"
                   v-model="order.row2.enabled"
-                  @click="handleRowCheckboxChange(2)"
+                  @change="handleRowCheckboxChange(2)"
                 />
               </div>
             </td>
@@ -117,7 +117,7 @@
                   type="checkbox"
                   id="row-enabled-3"
                   v-model="order.row3.enabled"
-                  @click="handleRowCheckboxChange(3)"
+                  @change="handleRowCheckboxChange(3)"
                 />
               </div>
             </td>
@@ -139,7 +139,7 @@
                   type="checkbox"
                   id="row-enabled-4"
                   v-model="order.row4.enabled"
-                  @click="handleRowCheckboxChange(4)"
+                  @change="handleRowCheckboxChange(4)"
                 />
               </div>
             </td>
@@ -272,17 +272,16 @@ export default defineComponent({
 
       if (!isRowEnabled) {
         rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
-          // node.setAttribute('holder', node.getAttribute('placeholder') || '');
-          // node.removeAttribute('placeholder');
+          node.setAttribute('holder', node.getAttribute('placeholder') || '');
+          node.removeAttribute('placeholder');
         });
 
         return;
       }
 
       rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
-        console.log(node.getAttribute('holder'));
-
         if (node.getAttribute('holder') != null) node.setAttribute('placeholder', node.getAttribute('holder')!);
+        node.removeAttribute('holder');
       });
     },
   },

@@ -26,8 +26,8 @@
               </div>
             </td>
             <td ref="row-1">
-              Od <input type="text" v-model="order.row1.from" holder="stacja / post." /> do
-              <input type="text" v-model="order.row1.to" holder="stacja / post." /> tor nr
+              Od <input type="text" v-model="order.row1.from" holder="nazwa stacji" /> do
+              <input type="text" v-model="order.row1.to" holder="nazwa stacji" /> tor nr
               <input type="text" v-model="order.row1.trackNo" holder="nr toru" /> jest zamknięty, ruch jednotorowy
               dwukierunkowy wprowadzono po torze nr
               <input type="text" v-model="order.row1.trackNo2" holder="nr toru" />
@@ -59,6 +59,7 @@
                   value="checkbox-2a"
                   v-model="order.row2.checkbox"
                   :checked="order.row2.checkbox == 'checkbox-2a'"
+                  @change="handleRowCheckboxChange(2)"
                 />
                 <label for="checkbox-2a">
                   przejechać obok wskazującego sygnał "Stój" semafora
@@ -69,9 +70,16 @@
                       id="radio-2a-1"
                       value="wyjazdowego"
                       v-model="order.row2.signalType"
+                      @change="handleRowCheckboxChange(2)"
                     />
                     <label for="radio-2a-1">
-                      wyjazdowego <input type="text" v-model="order.row2.signal1" holder="nazwa sem." />
+                      wyjazdowego
+                      <input
+                        type="text"
+                        v-model="order.row2.signal1"
+                        holder="nazwa sem."
+                        :radio-checked="order.row2.checkbox == 'checkbox-2a' && order.row2.signalType == 'wyjazdowego'"
+                      />
                     </label>
                     <br />
                     <input
@@ -80,11 +88,19 @@
                       id="radio-2a-2"
                       value="drogowskazowego"
                       v-model="order.row2.signalType"
+                      @change="handleRowCheckboxChange(2)"
                     />
                     <label for="radio-2a-2">
                       drogowskazowego
-                      <input type="text" v-model="order.row2.signal2" holder="nazwa sem." /> (odnoszącego się do
-                      wyjazdu pociągu)
+                      <input
+                        type="text"
+                        v-model="order.row2.signal2"
+                        holder="nazwa sem."
+                        :radio-checked="
+                          order.row2.checkbox == 'checkbox-2a' && order.row2.signalType == 'drogowskazowego'
+                        "
+                      />
+                      (odnoszącego się do wyjazdu pociągu)
                     </label>
                     <br />
                     <input
@@ -93,19 +109,38 @@
                       id="radio-2a-3"
                       value="wjazdowego"
                       v-model="order.row2.signalType"
+                      @change="handleRowCheckboxChange(2)"
                     />
                     <label for="radio-2a-3">
-                      wjazdowego <input type="text" v-model="order.row2.signal3" holder="nazwa sem." /> na post.
-                      odg. bez sem. wyjazdowego
+                      wjazdowego
+                      <input
+                        type="text"
+                        v-model="order.row2.signal3"
+                        holder="nazwa sem."
+                        :radio-checked="order.row2.checkbox == 'checkbox-2a' && order.row2.signalType == 'wjazdowego'"
+                      />
+                      na post. odg. bez sem. wyjazdowego
                     </label>
                   </div>
                   i wyjechać w kierunku
-                  <input type="text" v-model="order.row2.direction1" holder="stacja / post." /> na tor szlakowy
+                  <input
+                    type="text"
+                    v-model="order.row2.direction1"
+                    holder="nazwa stacji"
+                    :radio-checked="order.row2.checkbox == 'checkbox-2a'"
+                  />
+                  na tor szlakowy
                   <select v-model="order.row2.option2">
                     <option value="lewy">lewy</option>
                     <option value="prawy">prawy</option>
                   </select>
-                  nr <input type="text" v-model="order.row2.trackNoTo1" holder="nr toru" />
+                  nr
+                  <input
+                    type="text"
+                    v-model="order.row2.trackNoTo1"
+                    holder="nr toru"
+                    :radio-checked="order.row2.checkbox == 'checkbox-2a'"
+                  />
                 </label>
               </div>
               <div style="margin-top: 0.5rem">
@@ -116,16 +151,35 @@
                   value="checkbox-2b"
                   v-model="order.row2.checkbox"
                   :checked="order.row2.checkbox == 'checkbox-2b'"
+                  @change="handleRowCheckboxChange(2)"
                 />
                 <label for="checkbox-2b">
-                  z toru nr <input type="text" v-model="order.row2.trackNoFrom" holder="nr toru" /> nie
-                  posiadającego semafora wyjazdowego wyjechać w kierunku
-                  <input type="text" v-model="order.row2.direction2" holder="stacja / post." /> na tor szlakowy
+                  z toru nr
+                  <input
+                    type="text"
+                    v-model="order.row2.trackNoFrom"
+                    holder="nr toru"
+                    :radio-checked="order.row2.checkbox == 'checkbox-2b'"
+                  />
+                  nie posiadającego semafora wyjazdowego wyjechać w kierunku
+                  <input
+                    type="text"
+                    v-model="order.row2.direction2"
+                    holder="nazwa stacji"
+                    :radio-checked="order.row2.checkbox == 'checkbox-2b'"
+                  />
+                  na tor szlakowy
                   <select v-model="order.row2.option3">
                     <option value="lewy">lewy</option>
                     <option value="prawy">prawy</option>
                   </select>
-                  nr <input type="text" v-model="order.row2.trackNoTo2" holder="nr toru" />
+                  nr
+                  <input
+                    type="text"
+                    v-model="order.row2.trackNoTo2"
+                    holder="nr toru"
+                    :radio-checked="order.row2.checkbox == 'checkbox-2b'"
+                  />
                 </label>
               </div>
             </td>
@@ -148,7 +202,7 @@
                 <option value="Popychanie">Popychanie</option>
               </select>
               pociągu odbędzie się w kierunku:
-              <input type="text" v-model="order.row3.direction" holder="stacja / post." /> do km
+              <input type="text" v-model="order.row3.direction" holder="nazwa stacji" /> do km
               <input type="text" v-model="order.row3.toKilometer" holder="kilometry" /> skąd
               <select v-model="order.row3.option2">
                 <option value="pociąg">pociąg</option>
@@ -179,8 +233,7 @@
                 <option value="stację">stację</option>
                 <option value="posterunek odgałęźny">posterunek odgałęźny</option>
               </select>
-              <input type="text" v-model="order.row4.stationName" holder="stacja / post." /> odbędzie się po
-              otrzymaniu:
+              <input type="text" v-model="order.row4.stationName" holder="nazwa stacji" /> odbędzie się po otrzymaniu:
               <div style="margin-top: 0.5rem">
                 <input
                   type="radio"
@@ -227,12 +280,12 @@
             <td ref="row-5">
               <strong>ZEZWALAM</strong> wjechać z toru szlakowego nr
               <input type="text" v-model="order.row5.trackNo" holder="nr toru" /> z kierunku
-              <input type="text" v-model="order.row5.direction" holder="stacja / post." /> na
+              <input type="text" v-model="order.row5.direction" holder="nazwa stacji" /> na
               <select v-model="order.row5.stationType">
                 <option value="stację">stację</option>
                 <option value="posterunek odgałęźny">posterunek odgałęźny</option>
               </select>
-              <input type="text" v-model="order.row5.stationName" holder="stacja / post." />
+              <input type="text" v-model="order.row5.stationName" holder="nazwa stacji" />
               i przejechać obok sygnału "Stój" na
               <input type="text" v-model="order.row5.on" holder="nazwa sygnału" />
             </td>
@@ -374,8 +427,10 @@ export default defineComponent({
 
       if (!isRowEnabled) {
         rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
-          node.setAttribute('holder', node.getAttribute('placeholder') || '');
-          node.removeAttribute('placeholder');
+          if (node.getAttribute('placeholder') != null) {
+            node.setAttribute('holder', node.getAttribute('placeholder')!);
+            node.removeAttribute('placeholder');
+          }
         });
 
         return;
@@ -383,7 +438,6 @@ export default defineComponent({
 
       rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
         if (node.getAttribute('holder')) node.setAttribute('placeholder', node.getAttribute('holder')!);
-        node.removeAttribute('holder');
       });
     },
 

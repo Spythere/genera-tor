@@ -138,8 +138,6 @@ export const useStore = defineStore('store', {
       },
 
       orderS: {
-        chosenRows: [1],
-
         header: {
           orderNo: '1',
           trainNo: '',

@@ -9,6 +9,12 @@ export default defineComponent({
   },
 
   methods: {
+    verifyOrder() {
+      const orderMessage = this.store.orderMessage;
+
+      return !/<b>/g.test(orderMessage);
+    },
+
     verifyOrderFields() {
       const header = this.store[this.store.chosenOrderType].header;
       const footer = this.store.orderFooter;
@@ -30,3 +36,4 @@ export default defineComponent({
     },
   },
 });
+

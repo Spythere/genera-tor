@@ -85,6 +85,7 @@ export default defineComponent({
           'Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/'
         );
 
+      // const isOrderValid = this.verifyOrder();
       const fieldsToCorrect = this.verifyOrderFields();
 
       if (fieldsToCorrect.length > 0)
@@ -214,3 +215,4 @@ export default defineComponent({
   }
 }
 </style>
+
