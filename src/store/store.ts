@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
+import { IOrderN, IOrderO, IOrderS, TOrder } from '../types/orderTypes';
 
 export const useStore = defineStore('store', {
   state: () => {
     return {
       helperModalOpen: false,
 
-      chosenOrderType: 'orderN' as 'orderO' | 'orderS' | 'orderN',
+      chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',
 
       orderMode: 'OrderMessage',
@@ -72,7 +73,7 @@ export const useStore = defineStore('store', {
           },
         ],
         other: '',
-      },
+      } as IOrderO,
 
       orderN: {
         header: {
@@ -81,61 +82,59 @@ export const useStore = defineStore('store', {
           date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: 'long' }),
         },
 
-        row1: {
-          enabled: false,
-          from: '',
-          to: '',
-          trackNo: '',
-          trackNo2: '',
-        },
+        rows: [
+          {
+            enabled: false,
+            from: '',
+            to: '',
+            trackNo: '',
+            trackNo2: '',
+          },
+          {
+            enabled: false,
+            option1: 'sygnału "Nakaz Jazdy"',
+            option2: 'lewy',
+            option3: 'lewy',
+            signal1: '',
+            signal2: '',
+            signal3: '',
+            signalType: 'wyjazdowego',
+            checkbox: 'checkbox-2a',
+            direction1: '',
+            direction2: '',
+            trackNoFrom: '',
+            trackNoTo1: '',
+            trackNoTo2: '',
+          },
+          {
+            enabled: false,
+            option1: 'Jazda',
+            option2: 'pociąg',
 
-        row2: {
-          enabled: false,
-          option1: 'sygnału "Nakaz Jazdy"',
-          option2: 'lewy',
-          option3: 'lewy',
-          signal1: '',
-          signal2: '',
-          signal3: '',
-          signalType: 'wyjazdowego',
-          checkbox: 'checkbox-2a',
-          direction1: '',
-          direction2: '',
-          trackNoFrom: '',
-          trackNoTo1: '',
-          trackNoTo2: '',
-        },
-
-        row3: {
-          enabled: false,
-          option1: 'Jazda',
-          option2: 'pociąg',
-
-          direction: '',
-          toKilometer: '',
-          trackNo: '',
-          untilHour: '',
-          untilMin: '',
-        },
-
-        row4: {
-          enabled: false,
-          trackNo: '',
-          optionStation: 'stację',
-          stationName: '',
-          checkbox: 'checkbox-4a',
-          side: 'lewej',
-        },
-
-        row5: {
-          enabled: false,
-          trackNo: '',
-          direction: '',
-          stationType: 'stację',
-          stationName: '',
-          on: '',
-        },
-      },
+            direction: '',
+            toKilometer: '',
+            trackNo: '',
+            untilHour: '',
+            untilMin: '',
+          },
+          {
+            enabled: false,
+            trackNo: '',
+            optionStation: 'stację',
+            stationName: '',
+            checkbox: 'checkbox-4a',
+            side: 'lewej',
+          },
+          {
+            enabled: false,
+            trackNo: '',
+            direction: '',
+            stationType: 'stację',
+            stationName: '',
+            on: '',
+          },
+        ],
+      } as IOrderN,
 
       orderS: {
         header: {
@@ -145,42 +144,42 @@ export const useStore = defineStore('store', {
           date: new Date().toLocaleDateString('pl-PL', { day: '2-digit', month: 'long' }),
         },
 
-        row1: {
-          enabled: false,
-          option1: 'sygnału "nakaz jazdy"',
-          optionSignal: 'wyjazdowego',
-          radio1: 'radio-1a-1',
-          signal1: '',
-          trackNo: '',
-        },
+        rows: [
+          {
+            enabled: false,
+            option1: 'sygnału "nakaz jazdy"',
+            optionSignal: 'wyjazdowego',
+            radio1: 'radio-1a-1',
+            signal1: '',
+            trackNo: '',
+          },
 
-        row2: {
-          enabled: false,
-          signalType: 'wyjazdowego',
-          signal1: '',
-          signal2: '',
-          signal3: '',
-          trackNo: '',
-        },
+          {
+            enabled: false,
+            signalType: 'wyjazdowego',
+            signal1: '',
+            signal2: '',
+            signal3: '',
+            trackNo: '',
+          },
 
-        row3: {
-          enabled: false,
-          from: '',
-          to: '',
-          trackNo: '',
-          trainNo: '',
-          arrivedTo: '',
-          hour: '',
-        },
+          {
+            enabled: false,
+            from: '',
+            to: '',
+            trackNo: '',
+            trainNo: '',
+            arrivedTo: '',
+            hour: '',
+          },
 
-        row4: {
-          enabled: false,
-          content: '',
-        },
-      },
+          {
+            enabled: false,
+            content: '',
+          },
+        ],
+      } as IOrderS,
     };
   },
 });
-
-
 

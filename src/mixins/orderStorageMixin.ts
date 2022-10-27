@@ -19,21 +19,6 @@ export default defineComponent({
         createdAt: Date.now(),
       };
 
-      // switch (this.store.chosenOrderType) {
-      //   case 'orderN':
-      //     orderObj['orderBody'] = this.store.orderN;
-      //     break;
-      //   case 'orderS':
-      //     orderObj['orderBody'] = this.store.orderS;
-      //     break;
-      //   case 'orderO':
-      //     orderObj['orderBody'] = this.store.orderO;
-      //     break;
-
-      //   default:
-      //     break;
-      // }
-
       const headerInfo = orderObj['orderBody']['header'];
 
       if (!headerInfo['orderNo']) return -1;
@@ -128,6 +113,8 @@ export default defineComponent({
       for (let key in this.store.orderFooter) {
         (this.store.orderFooter as any)[key] = localOrderFooter[key];
       }
+
+      console.log(this.store[this.store.chosenOrderType]);
 
       this.store.orderMode = 'OrderMessage';
     },
