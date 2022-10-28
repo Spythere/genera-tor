@@ -335,13 +335,13 @@ export default defineComponent({
       });
     },
 
-    generateMessage() {
+   generateMessage() {
       let message = this.rowMethods[0]();
 
       for (let i = 0; i < 4; i++) {
         if (!this.order.rows[i].enabled) continue;
 
-        message += ` <b> [ ${i + 1} ] </b> ${this.rowMethods[i]()}`;
+        message += ` <b> [ ${i + 1} ] </b> ${this.rowMethods[i + 1]()}`;
       }
 
       this.store.orderMessage = message;
