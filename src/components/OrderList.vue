@@ -5,8 +5,8 @@
     <transition-group name="list" tag="ul">
       <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">Brak zapisanych rozkazów!</li>
 
-      <li v-for="(order, i) in sortedOrderList" :key="order.id">
-        <b class="text--accent">#{{ sortedOrderList.length - i }}&nbsp;</b>
+      <li v-for="order in sortedOrderList" :selected="order.id == store.chosenLocalOrderId" :key="order.id">
+        <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
         <b>
           {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla pociągu nr
           {{ order.orderBody['header']['trainNo'] }}
@@ -84,6 +84,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/global.scss';
+
 .list {
   &-move,
   &-enter-active,
@@ -125,7 +127,6 @@ li {
   padding: 1em;
   margin: 0.5em;
   background-color: #222;
-  width: 100%;
 
   cursor: pointer;
 
@@ -133,6 +134,9 @@ li {
     margin: 1em 1em 0 0;
   }
 
+  &[selected='true'] {
+    outline: 1px solid $accentCol;
+  }
   &.no-orders-warning {
     text-align: center;
     font-size: 1.2em;

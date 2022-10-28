@@ -67,7 +67,9 @@ export default defineComponent({
 
     removeLocalOrder(order: LocalStorageOrder) {
       localStorage.removeItem(order.id);
-      localStorage.setItem('orderCount', (Number(localStorage.getItem('orderCount')) - 1).toString());
+
+      if (this.store.chosenLocalOrderId == order.id) this.store.chosenLocalOrderId = '';
+      // localStorage.setItem('orderCount', (Number(localStorage.getItem('orderCount')) - 1).toString());
     },
 
     selectLocalOrder(order: LocalStorageOrder) {
@@ -113,8 +115,6 @@ export default defineComponent({
       for (let key in this.store.orderFooter) {
         (this.store.orderFooter as any)[key] = localOrderFooter[key];
       }
-
-      console.log(this.store[this.store.chosenOrderType]);
 
       this.store.orderMode = 'OrderMessage';
     },

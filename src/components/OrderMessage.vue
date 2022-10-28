@@ -11,7 +11,8 @@
       <button class="g-button action" @click="saveOrder">Zapisz nowy rozkaz</button>
       <button class="g-button action" @click="copyMessage">Kopiuj treść rozkazu</button>
       <button class="g-button action" :data-disabled="!store.chosenLocalOrderId" @click="updateOrder">
-        Zaktualizuj ten rozkaz
+        Zaktualizuj rozkaz
+        <span class="text--accent">{{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }} </span>
       </button>
     </div>
 
@@ -27,7 +28,6 @@ import { useStore } from '../store/store';
 
 import saveIcon from '../assets/icon-save.svg';
 import orderStorageMixin from '../mixins/orderStorageMixin';
-import orderFooterMixin from '../mixins/orderFooterMixin';
 import orderValidationMixin from '../mixins/orderValidationMixin';
 
 export default defineComponent({
