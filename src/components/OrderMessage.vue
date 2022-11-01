@@ -12,7 +12,9 @@
       <button class="g-button action" @click="copyMessage">Kopiuj treść rozkazu</button>
       <button class="g-button action" :data-disabled="!store.chosenLocalOrderId" @click="updateOrder">
         Zaktualizuj rozkaz
-        <span class="text--accent">{{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }} </span>
+        <span class="text--accent"
+          >{{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }}
+        </span>
       </button>
     </div>
 
@@ -85,12 +87,17 @@ export default defineComponent({
           'Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/'
         );
 
-      // const isOrderValid = this.verifyOrder();
+      const hasAtLeastOneRow = /(\[ \d \])/g.test(this.fullOrderMessage);
+      const hasAllInputsFilled = !/_/g.test(this.fullOrderMessage);
+
+      if (!hasAllInputsFilled) return this.showActionMonit(`<span class="text--warn">Wypełnij puste rubryki rozkazu przed jego skopiowaniem!</span>`);
+      if (!hasAtLeastOneRow) return this.showActionMonit(`<span class="text--warn">Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!</span>`);
+
       const fieldsToCorrect = this.verifyOrderFields();
 
       if (fieldsToCorrect.length > 0)
         return this.showActionMonit(
-          `<span class="text--warn">Przed skopiowaniem wiadomości uzupełnij rubryki: ${fieldsToCorrect.join(
+          `<span class="text--warn">Uzupełnij następujące rubryki na dole rozkazu przed jego skopiowaniem: ${fieldsToCorrect.join(
             ', '
           )}</span>`
         );
@@ -98,7 +105,7 @@ export default defineComponent({
       navigator.clipboard.writeText(this.fullOrderMessage);
 
       this.showActionMonit(
-        'Skopiowano do <b class="text--accent">schowka</b>! Możesz teraz wkleić treść rozkazu na czacie symulatora!'
+        '<b class="text--accent">Skopiowano!</b> Możesz teraz wkleić treść rozkazu na czacie symulatora!'
       );
     },
 

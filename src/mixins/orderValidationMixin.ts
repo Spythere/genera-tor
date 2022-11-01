@@ -9,21 +9,15 @@ export default defineComponent({
   },
 
   methods: {
-    verifyOrder() {
-      const orderMessage = this.store.orderMessage;
-
-      return !/<b>/g.test(orderMessage);
-    },
-
     verifyOrderFields() {
-      const header = this.store[this.store.chosenOrderType].header;
+      // const header = this.store[this.store.chosenOrderType].header;
       const footer = this.store.orderFooter;
 
       const fieldsToCorrect = [];
 
-      if (!header.orderNo) fieldsToCorrect.push('numer rozkazu');
-      if (!header.trainNo) fieldsToCorrect.push('numer pociągu / manewru');
-      if (!header.date) fieldsToCorrect.push('data');
+      // if (!header.orderNo) fieldsToCorrect.push('numer rozkazu');
+      // if (!header.trainNo) fieldsToCorrect.push('numer pociągu / manewru');
+      // if (!header.date) fieldsToCorrect.push('data');
 
       if (!footer.stationName) fieldsToCorrect.push('stacja');
       if (!footer.checkpointName) fieldsToCorrect.push('posterunek');
@@ -36,4 +30,6 @@ export default defineComponent({
     },
   },
 });
+
+
 
