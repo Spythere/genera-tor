@@ -66,7 +66,7 @@ export default defineComponent({
         setTimeout(() => {
           this.actionMonit = text;
 
-          this.monitTimeout = setTimeout(() => {
+          this.monitTimeout = window.setTimeout(() => {
             this.actionMonit = '';
           }, 5000);
         }, 300);
@@ -76,7 +76,7 @@ export default defineComponent({
 
       this.actionMonit = text;
 
-      this.monitTimeout = setTimeout(() => {
+      this.monitTimeout = window.setTimeout(() => {
         this.actionMonit = '';
       }, 5000);
     },
