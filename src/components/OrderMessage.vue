@@ -88,7 +88,7 @@ export default defineComponent({
         );
 
       const hasAtLeastOneRow = /(\[ \d \])/g.test(this.fullOrderMessage);
-      const hasAllInputsFilled = !/_/g.test(this.fullOrderMessage);
+      const hasAllInputsFilled = !/_/g.test(this.store.orderMessage);
 
       if (!hasAllInputsFilled) return this.showActionMonit(`<span class="text--warn">Wypełnij puste rubryki rozkazu przed jego skopiowaniem!</span>`);
       if (!hasAtLeastOneRow) return this.showActionMonit(`<span class="text--warn">Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!</span>`);
