@@ -41,6 +41,8 @@ import OrderMessage from '../components/OrderMessage.vue';
 import OrderList from '../components/OrderList.vue';
 import { useStore } from '../store/store';
 import OrderHelper from '../components/OrderHelper.vue';
+import OrderTrainPicker from '../components/OrderTrainPicker.vue';
+
 
 export default defineComponent({
   components: { OrderVue, SideBar, OrderHelper },
@@ -55,6 +57,10 @@ export default defineComponent({
         {
           mode: 'OrderList',
           value: 'ZAPISANE ROZKAZY',
+        },
+        {
+          mode: 'OrderTrainPicker',
+          value: 'POCIĄGI',
         },
       ],
     };
@@ -79,6 +85,8 @@ export default defineComponent({
           return OrderMessage;
         case 'OrderList':
           return OrderList;
+        case 'OrderTrainPicker':
+          return OrderTrainPicker;
         default:
           return OrderMessage;
       }
@@ -116,7 +124,7 @@ export default defineComponent({
   .order_container {
     width: 100%;
     max-width: 550px;
-    
+
     position: relative;
   }
 
@@ -131,3 +139,4 @@ export default defineComponent({
   }
 }
 </style>
+

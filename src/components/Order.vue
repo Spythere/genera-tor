@@ -96,7 +96,7 @@ export default defineComponent({
 
 .flex-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: flex-end;
 }
 
