@@ -7,7 +7,7 @@
       </h2>
       <div class="flex-row">
         dla pociągu nr <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" /> dnia
-        <input type="text" v-model="order.header.date" placeholder="data" /> {{ new Date().getUTCFullYear() }}r.
+        <input type="text" v-model="order.header.date" placeholder="data" />
       </div>
     </section>
     <section class="table-section">
@@ -296,7 +296,7 @@ export default defineComponent({
 
         const message = `<i>Rozkaz pisemny "N" nr ${header.orderNo || '_'} dla pociągu nr ${
           header.trainNo || '_'
-        } dnia ${header.date} ${new Date().getUTCFullYear()}r.</i>`;
+        } dnia ${header.date}</i>`;
 
         return message;
       },

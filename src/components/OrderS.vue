@@ -12,7 +12,7 @@
           <option value="manewru">manewru</option>
         </select>
         nr <input type="text" v-model="order.header.trainNo" :placeholder="`nr ${order.header.for}`" /> dnia
-        <input type="text" v-model="order.header.date" placeholder="data" /> {{ new Date().getUTCFullYear() }}r.
+        <input type="text" v-model="order.header.date" placeholder="data" />
       </div>
     </section>
     <section class="table-section">
@@ -238,7 +238,7 @@ export default defineComponent({
 
         return `<i>Rozkaz pisemny "S" nr ${header.orderNo || '_'} dla ${header.for || '_'} nr ${
           header.trainNo || '_'
-        } dnia ${header.date || '_'} ${new Date().getUTCFullYear()}r.</i>`;
+        } dnia ${header.date || '_'}</i>`;
       },
 
       () => {
@@ -304,7 +304,7 @@ export default defineComponent({
     };
   },
 
-  activated() {
+activated() {
     this.generateMessage();
   },
 

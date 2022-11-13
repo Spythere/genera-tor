@@ -27,7 +27,7 @@ export const useStore = defineStore('store', {
         header: {
           orderNo: '1',
           trainNo: '',
-          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'long' }),
+          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'numeric', year: 'numeric' }) + "r.",
         },
 
         orderList: [
@@ -79,7 +79,7 @@ export const useStore = defineStore('store', {
         header: {
           orderNo: '1',
           trainNo: '',
-          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'long' }),
+          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'numeric', year: 'numeric' }) + "r.",
         },
 
         rows: [
@@ -141,7 +141,7 @@ export const useStore = defineStore('store', {
           orderNo: '1',
           trainNo: '',
           for: 'pociągu',
-          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'long' }),
+          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'numeric', year: 'numeric' }) + "r.",
         },
 
         rows: [
@@ -182,4 +182,6 @@ export const useStore = defineStore('store', {
     };
   },
 });
+
+
 

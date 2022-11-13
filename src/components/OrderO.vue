@@ -8,7 +8,7 @@
 
       <div class="flex-row" style="padding: 0 0.5em">
         dla pociągu nr <input type="text" v-model="order.header.trainNo" /> dnia
-        <input type="text" v-model="order.header.date" /> {{ new Date().getUTCFullYear() }}r.
+        <input type="text" v-model="order.header.date" />
       </div>
 
       <div class="horizontal-bar"></div>
@@ -90,7 +90,7 @@ export default defineComponent({
 
         return `<i>Rozkaz pisemny "O" nr ${header.orderNo || '_'} dla pociągu nr ${header.trainNo || '_'} dnia ${
           header.date || '_'
-        } ${new Date().getUTCFullYear()}r.</i> <b> [ 1 ] </b> 1) zmniejszyć prędkość jazdy i zachować ostrożność, 2) jechać ostrożnie (j.o.)`;
+        }</i> <b> [ 1 ] </b> 1) zmniejszyć prędkość jazdy i zachować ostrożność, 2) jechać ostrożnie (j.o.)`;
       },
     ];
 
