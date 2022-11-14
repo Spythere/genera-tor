@@ -209,7 +209,7 @@
             <td ref="row-4">
               Inne:
               <br />
-              <textarea id="" cols="30" rows="10" v-model="order.rows[3].content" placeholder="Np.: "></textarea>
+              <textarea id="" cols="30" rows="10" v-model="order.rows[3].content"></textarea>
             </td>
           </tr>
         </tbody>

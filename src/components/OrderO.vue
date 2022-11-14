@@ -3,11 +3,11 @@
     <section class="order_header">
       <h2 class="flex-center" style="padding: 0 0.5em">
         Rozkaz pisemny "O" nr
-        <input type="text" v-model="order.header.orderNo" />
+        <input type="text" v-model="order.header.orderNo" placeholder="nr rozkazu"/>
       </h2>
 
       <div class="flex-row" style="padding: 0 0.5em">
-        dla pociągu nr <input type="text" v-model="order.header.trainNo" /> dnia
+        dla pociągu nr <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" /> dnia
         <input type="text" v-model="order.header.date" />
       </div>
 
