@@ -17,21 +17,21 @@ export interface ISceneryData {
   dispatcherRate: number;
 }
 
-export interface ITrainData {
-  trainNo: number;
-  driverId: number;
-  driverName: string;
-  driverIsSupporter: boolean;
-  dataSignal: string;
-  dataSceneryConnection: string;
-  dataDistance: number;
-  dataCon: string;
-  dataSpeed: number;
-  dataMass: number;
-  dataLength: number;
-  region: string;
-  isOnline: number;
-  lastSeen: number;
-  station?: ISceneryData;
-}
+// export interface ITrainData {
+//   trainNo: number;
+//   driverId: number;
+//   driverName: string;
+//   driverIsSupporter: boolean;
+//   dataSignal: string;
+//   dataSceneryConnection: string;
+//   dataDistance: number;
+//   dataCon: string;
+//   dataSpeed: number;
+//   dataMass: number;
+//   dataLength: number;
+//   region: string;
+//   isOnline: number;
+//   lastSeen: number;
+//   station?: ISceneryData;
+// }
 

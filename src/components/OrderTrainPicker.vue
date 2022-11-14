@@ -22,13 +22,29 @@
     </div>
 
     <div class="content">
-      Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi
+      <b v-if="!selectedSceneryName" class="text--accent"> Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi </b>
 
-      <ul>
-        <li v-for="train in sceneryTrains">
-          {{ train.trainNo }}
-        </li>
-      </ul>
+      <div v-else>
+        <b class="text--accent">Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi</b>
+
+        <p>Gracze bez rozkładu jazdy</p>
+        <ul class="train-list">
+          <li v-for="train in sceneryTrains">
+            <b>{{ train.trainNo }} | {{ train.driverName }}</b>
+          </li>
+
+          <li class="no-trains" v-if="sceneryTrains.length == 0 && selectedSceneryName">Brak graczy na scenerii</li>
+        </ul>
+
+        <p>Aktywne rozkłady jazdy</p>
+        <ul class="train-list">
+          <li v-for="train in sceneryScheduledTrains">
+            <b>{{ train.trainNo }} | {{ train.driverName }}</b>
+          </li>
+
+          <li class="no-trains" v-if="sceneryScheduledTrains.length == 0">Brak aktywnych rozkładów</li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -36,15 +52,15 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import axios from 'axios';
-import { ApiSWDR } from '../types/apiTypes';
-import { ISceneryData, ITrainData } from '../types/dataTypes';
+import { ApiSWDR, ApiStacjownik } from '../types/apiTypes';
+import { ISceneryData } from '../types/dataTypes';
 
 export default defineComponent({
   name: 'order-train-picker',
   data() {
     return {
       sceneriesOnline: [] as ISceneryData[],
-      trainsOnline: [] as ITrainData[],
+      trainsOnline: [] as ApiStacjownik.IActiveTrain[],
 
       selectedSceneryName: null as string | null,
       selectedDispatcherName: null as string | null,
@@ -63,6 +79,10 @@ export default defineComponent({
   },
 
   computed: {
+    selectedSceneryHash() {
+      return this.sceneriesOnline.find((s) => this.selectedSceneryName == s.stationName)?.stationHash;
+    },
+
     sceneriesOnlinePL1() {
       return this.sceneriesOnline.filter((s) => s.region == 'eu' && s.isOnline);
     },
@@ -79,7 +99,18 @@ export default defineComponent({
     },
 
     sceneryTrains() {
-      return this.trainsOnline.filter((t) => t.isOnline && t.station?.stationName == this.selectedSceneryName);
+      return this.trainsOnline.filter(
+        (t) => t.online && t.currentStationName == this.selectedSceneryName && this.selectedSceneryName && !t.timetable
+      );
+    },
+
+    sceneryScheduledTrains() {
+      if (!this.selectedSceneryHash) return [];
+      const hash = this.selectedSceneryHash;
+
+      return this.trainsOnline
+        .filter((t) => t.timetable?.sceneries.includes(hash))
+        .sort((t1, t2) => t1.trainNo - t2.trainNo);
     },
   },
 
@@ -95,47 +126,80 @@ export default defineComponent({
     },
 
     async fetchTrainsOnline() {
-      const data: ApiSWDR.ITrainsOnline = await (
-        await axios.get(`${import.meta.env['VITE_APP_SWDR_URL']}/?method=getTrainsOnline`)
+      const data: ApiStacjownik.IActiveTrain[] = await (
+        await axios.get(`${import.meta.env['VITE_APP_API_URL']}/getActiveTrainList`)
       ).data;
 
-      if (!data.success) return;
+      if (!data) return;
 
-      this.trainsOnline = data.message;
+      this.trainsOnline = data;
     },
   },
 });
 </script>
 
 <style lang="scss" scoped>
+@import '../styles/global.scss';
+
 .order-train-picker {
-  padding: 1em 0;
+  padding: 1em;
+  height: 90vh;
+
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  margin-top: 1em;
 }
 
 .options {
   display: flex;
   width: 100%;
+  gap: 1em;
 
-  padding: 0 2em;
+  select {
+    border: 2px solid white;
+    color: white;
+    font-size: 1em;
+    width: 100%;
+    margin: 0;
+    padding: 0.15em;
+  }
+
+  option {
+    color: black;
+  }
 }
 
 .content {
   margin-top: 1em;
-}
-
-select {
-  border: 2px solid white;
-  color: white;
-  font-size: 1em;
   width: 100%;
+  text-align: center;
+
+  p {
+    margin: 1em 0;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
 }
 
-option {
-  color: black;
+ul.train-list {
+  li {
+    background-color: #111;
+    padding: 0.5em;
+    margin-top: 0.5em;
+
+    cursor: pointer;
+
+    &.no-trains {
+      font-weight: bold;
+      background-color: #222;
+
+      cursor: default;
+    }
+  }
 }
 </style>
 
