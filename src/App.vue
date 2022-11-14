@@ -20,6 +20,10 @@ export default defineComponent({
       appVersion: packageInfo.version,
     };
   },
+
+  created() {
+    document.title = `GeneraTOR ${this.appVersion}`
+  }
 });
 </script>
 

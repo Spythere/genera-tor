@@ -26,15 +26,15 @@
       <table cellborder="1">
         <tbody>
           <tr class="tr-header">
-            <td width="25%" rowspan="2">
+            <td rowspan="2" width="35%">
               Na posterunku, <br />
               na szlaku
             </td>
-            <td>od</td>
-            <td>do</td>
-            <td width="10%" rowspan="2">1) prędkość najwyżej km/h</td>
-            <td width="10%" rowspan="2">2) jechać ostrożnie</td>
-            <td width="35%" rowspan="2">z powodu</td>
+            <td width="20%">od</td>
+            <td width="20%">do</td>
+            <td rowspan="2">1) prędkość najwyżej km/h</td>
+            <td rowspan="2">2) j.o.</td>
+            <td rowspan="2" width="35%">z powodu</td>
           </tr>
 
           <tr class="tr-header">
@@ -43,13 +43,13 @@
 
           <tr v-for="row in order.orderList" class="tr-data">
             <td>
-              <input type="text" v-model="row.name" />
+              <textarea v-model="row.name"></textarea>
             </td>
             <td>
-              <input type="text" v-model="row.from" />
+              <textarea v-model="row.from"></textarea>
             </td>
             <td>
-              <input type="text" v-model="row.to" />
+              <textarea v-model="row.to"></textarea>
             </td>
             <td>
               <input type="text" v-model="row.vmax" />
@@ -65,7 +65,7 @@
       </table>
 
       <div class="order_other">
-        Inne:
+        <span><b>2.</b> Inne:</span>
         <br />
         <textarea v-model="order.other"></textarea>
       </div>
@@ -90,7 +90,7 @@ export default defineComponent({
 
         return `<i>Rozkaz pisemny "O" nr ${header.orderNo || '_'} dla pociągu nr ${header.trainNo || '_'} dnia ${
           header.date || '_'
-        }</i> <b> [ 1 ] </b> 1) zmniejszyć prędkość jazdy i zachować ostrożność, 2) jechać ostrożnie (j.o.)`;
+        }</i>`;
       },
     ];
 
@@ -118,20 +118,28 @@ export default defineComponent({
     generateMessage() {
       let message = this.rowMethods[0]();
 
+      if (this.order.orderList.some((row) => row.name)) message += `<b> [ 1 ] </b>`;
+
+      const rowsMessageList = [];
+
       for (let i = 0; i < this.order.orderList.length; i++) {
         const row = this.order.orderList[i];
+        if (!row.name) continue;
 
-        if (row.name) {
-          message += `; ${row.name || '_'} od ${row.from || '_'} do ${row.to || '_'} kilometra`;
+        let rowMessage = '';
+        rowMessage += ` ${row.name || '_'} od ${row.from || '_'} do ${row.to || '_'} kilometra`;
 
-          if (row.vmax) message += ` prędkość najwyżej ${row.vmax} km/h`;
-          if (row.jo) message += ` jechać ostrożnie`;
+        if (row.vmax) rowMessage += ` prędkość najwyżej ${row.vmax} km/h`;
+        if (row.jo) rowMessage += ` jechać ostrożnie`;
 
-          message += ` z powodu: ${row.reason || '_'}`;
-        }
+        rowMessage += ` z powodu: ${row.reason || '_'}`;
+
+        rowsMessageList.push(rowMessage);
       }
 
-      if (this.order.other) message += `; ${this.order.other}`;
+      message += rowsMessageList.join("; ");
+
+      if (this.order.other) message += ` <b> [ 2 ] </b> Inne: ${this.order.other}`;
 
       this.store.orderMessage = message;
     },
@@ -204,3 +212,4 @@ th {
   }
 }
 </style>
+

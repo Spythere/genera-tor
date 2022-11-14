@@ -98,6 +98,12 @@ export default defineComponent({
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
+
+  margin-top: 0.5em;
+
+  input {
+    max-width: 10em;
+  }
 }
 
 .flex-center {
