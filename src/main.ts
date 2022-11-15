@@ -9,7 +9,7 @@ const intervalMS = 1 * 60 * 1000;
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    console.log('Need refresh');
+    console.log('Need refresh - test');
   },
   onOfflineReady() {
     console.log('Offline ready');
