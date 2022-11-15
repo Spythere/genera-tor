@@ -29,7 +29,7 @@
 
         <p>Gracze bez rozkładu jazdy</p>
         <ul class="train-list">
-          <li v-for="train in sceneryTrains">
+          <li v-for="train in sceneryTrains" @click="fillOrder(train.trainNo)">
             <b>{{ train.trainNo }} | {{ train.driverName }}</b>
           </li>
 
@@ -38,7 +38,7 @@
 
         <p>Aktywne rozkłady jazdy</p>
         <ul class="train-list">
-          <li v-for="train in sceneryScheduledTrains">
+          <li v-for="train in sceneryScheduledTrains" @click="fillOrder(train.trainNo)">
             <b>{{ train.trainNo }} | {{ train.driverName }}</b>
           </li>
 
@@ -54,9 +54,12 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 import { ApiSWDR, ApiStacjownik } from '../types/apiTypes';
 import { ISceneryData } from '../types/dataTypes';
+import { useStore } from '../store/store';
+import { currentFormattedDate } from '../utils/dateUtils';
 
 export default defineComponent({
   name: 'order-train-picker',
+
   data() {
     return {
       sceneriesOnline: [] as ISceneryData[],
@@ -64,12 +67,22 @@ export default defineComponent({
 
       selectedSceneryName: null as string | null,
       selectedDispatcherName: null as string | null,
+
+      refreshInterval: -1,
+      store: useStore(),
     };
   },
 
-  mounted() {
-    this.fetchSceneriesOnline();
-    this.fetchTrainsOnline();
+  activated() {
+    this.fetchData();
+
+    this.refreshInterval = window.setInterval(() => {
+      this.fetchData();
+    }, 5 * 1000);
+  },
+
+  deactivated() {
+    window.clearInterval(this.refreshInterval);
   },
 
   watch: {
@@ -115,6 +128,11 @@ export default defineComponent({
   },
 
   methods: {
+    async fetchData() {
+      this.fetchSceneriesOnline();
+      this.fetchTrainsOnline();
+    },
+
     async fetchSceneriesOnline() {
       const data: ApiSWDR.IStationsOnline = await (
         await axios.get(`${import.meta.env['VITE_APP_SWDR_URL']}/?method=getStationsOnline`)
@@ -133,6 +151,19 @@ export default defineComponent({
       if (!data) return;
 
       this.trainsOnline = data;
+    },
+
+    fillOrder(trainNo: number) {
+      if(!this.selectedDispatcherName || !this.selectedSceneryName) return;
+
+      const chosenOrder = this.store[this.store.chosenOrderType];
+      chosenOrder.header.trainNo = trainNo.toString();
+      chosenOrder.header.date = currentFormattedDate();
+
+      this.store.orderFooter.dispatcherName = this.selectedDispatcherName;
+      this.store.orderFooter.stationName = this.selectedSceneryName;
+
+      this.store.orderMode = 'OrderMessage';
     },
   },
 });
