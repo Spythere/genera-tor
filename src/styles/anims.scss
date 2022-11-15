@@ -1,0 +1,13 @@
+.slide-anim {
+  &-enter-active,
+  &-leave-active {
+    transition: all 125ms ease;
+    transform: translateY(0);
+  }
+
+  &-enter-from,
+  &-leave-to {
+    transform: translateY(100%);
+  }
+}
+
