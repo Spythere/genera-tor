@@ -1,5 +1,3 @@
-import { ISceneryData } from './dataTypes';
-
 export declare module ApiSWDR {
   export interface IStationsOnline {
     success: boolean;

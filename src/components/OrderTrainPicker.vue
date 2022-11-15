@@ -27,13 +27,13 @@
       <div v-else>
         <b class="text--accent">Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi</b>
 
-        <p>Gracze bez rozkładu jazdy</p>
+        <p>Gracze online bez RJ</p>
         <ul class="train-list">
           <li v-for="train in sceneryTrains" @click="fillOrder(train.trainNo)">
             <b>{{ train.trainNo }} | {{ train.driverName }}</b>
           </li>
 
-          <li class="no-trains" v-if="sceneryTrains.length == 0 && selectedSceneryName">Brak graczy na scenerii</li>
+          <li class="no-trains" v-if="sceneryTrains.length == 0 && selectedSceneryName">Brak graczy</li>
         </ul>
 
         <p>Aktywne rozkłady jazdy</p>
@@ -53,16 +53,17 @@
 import { defineComponent } from 'vue';
 import axios from 'axios';
 import { ApiSWDR, ApiStacjownik } from '../types/apiTypes';
-import { ISceneryData } from '../types/dataTypes';
 import { useStore } from '../store/store';
 import { currentFormattedDate } from '../utils/dateUtils';
+import { ISceneryOnline, ISceneryData } from '../types/dataTypes';
 
 export default defineComponent({
   name: 'order-train-picker',
 
   data() {
     return {
-      sceneriesOnline: [] as ISceneryData[],
+      sceneriesData: [] as ISceneryData[],
+      sceneriesOnline: [] as ISceneryOnline[],
       trainsOnline: [] as ApiStacjownik.IActiveTrain[],
 
       selectedSceneryName: null as string | null,
@@ -73,12 +74,16 @@ export default defineComponent({
     };
   },
 
+  created() {
+    this.fetchSceneriesData();
+  },
+
   activated() {
-    this.fetchData();
+    this.fetchOnlineData();
 
     this.refreshInterval = window.setInterval(() => {
-      this.fetchData();
-    }, 5 * 1000);
+      this.fetchOnlineData();
+    }, 35 * 1000);
   },
 
   deactivated() {
@@ -101,7 +106,9 @@ export default defineComponent({
     },
 
     dispatcherNameList() {
-      return [...new Set(this.sceneriesOnlinePL1.map((s) => s.dispatcherName))].sort((a, b) => (a < b ? -1 : 1));
+      return [...new Set(this.sceneriesOnlinePL1.map((s) => s.dispatcherName))].sort((a, b) =>
+        a.toLocaleLowerCase() < b.toLocaleLowerCase() ? -1 : 1
+      );
     },
 
     sceneryNameList() {
@@ -128,7 +135,15 @@ export default defineComponent({
   },
 
   methods: {
-    async fetchData() {
+    async fetchSceneriesData() {
+      const data: ISceneryData[] = await (await axios.get(`${import.meta.env['VITE_APP_API_URL']}/getSceneries`)).data;
+
+      if (!data) return;
+
+      this.sceneriesData = data;
+    },
+
+    async fetchOnlineData() {
       this.fetchSceneriesOnline();
       this.fetchTrainsOnline();
     },
@@ -154,7 +169,7 @@ export default defineComponent({
     },
 
     fillOrder(trainNo: number) {
-      if(!this.selectedDispatcherName || !this.selectedSceneryName) return;
+      if (!this.selectedDispatcherName || !this.selectedSceneryName) return;
 
       const chosenOrder = this.store[this.store.chosenOrderType];
       chosenOrder.header.trainNo = trainNo.toString();

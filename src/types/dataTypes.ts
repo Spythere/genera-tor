@@ -1,4 +1,4 @@
-export interface ISceneryData {
+export interface ISceneryOnline {
   dispatcherId: number;
   dispatcherName: string;
   dispatcherIsSupporter: boolean;
@@ -17,6 +17,21 @@ export interface ISceneryData {
   dispatcherRate: number;
 }
 
+export interface ISceneryData {
+  id: string;
+  name: string;
+  SUP: boolean;
+  authors: string;
+  availability: string;
+  checkpoints: string;
+  controlType: string;
+  lines: string;
+  project: string;
+  reqLevel: number;
+  routes: string;
+  signalType: string;
+  url: string;
+}
 // export interface ITrainData {
 //   trainNo: number;
 //   driverId: number;
@@ -34,4 +49,5 @@ export interface ISceneryData {
 //   lastSeen: number;
 //   station?: ISceneryData;
 // }
+
 
