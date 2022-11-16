@@ -233,7 +233,6 @@ export default defineComponent({
 @import '../styles/global.scss';
 
 .order-train-picker {
-  padding: 1em;
   height: 90vh;
 
   overflow-y: auto;
@@ -241,8 +240,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  margin-top: 1em;
 }
 
 .options {

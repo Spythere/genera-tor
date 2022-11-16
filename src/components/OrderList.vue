@@ -104,22 +104,27 @@ export default defineComponent({
 }
 
 .order-list {
-  padding: 1em;
+  overflow: auto;
 }
 
 ul {
-  max-height: 750px;
-  height: 80vh;
-
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
 }
 
 h3 {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
   margin: 0;
   margin-bottom: 1em;
   text-align: center;
+
+  background-color: #222;
+  padding: 1em;
+  margin-bottom: 0.5em;
 }
 
 li {

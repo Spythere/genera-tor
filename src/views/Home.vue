@@ -130,12 +130,22 @@ export default defineComponent({
 
   .message_container {
     width: 500px;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+
+    height: 95vh;
   }
 
   .message_nav {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 2em;
   }
 }
 </style>

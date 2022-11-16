@@ -82,7 +82,7 @@ footer {
 
 @media screen and (max-width: 500px) {
   #app {
-    font-size: calc(1vw + 0.5rem);
+    font-size: calc(1vw + 0.65rem);
   }
 }
 </style>

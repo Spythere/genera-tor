@@ -153,8 +153,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .order-message {
-  padding: 1em;
-
   h3 {
     margin: 0;
     margin-bottom: 1em;
