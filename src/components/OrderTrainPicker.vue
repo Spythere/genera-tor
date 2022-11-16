@@ -1,24 +1,47 @@
 <template>
   <div class="order-train-picker">
     <div class="options">
-      <select name="dispatcher-select" id="dispatcher-select" v-model="selectedDispatcherName">
-        <option :value="null" disabled>Nick dyżurnego</option>
-        <option v-for="dispatcherName in dispatcherNameList" :value="dispatcherName">
-          {{ dispatcherName }}
-        </option>
-      </select>
+      <label for="dispatcher-select">
+        <select name="dispatcher-select" id="dispatcher-select" v-model="selectedDispatcherName">
+          <option :value="null" disabled>Nick dyżurnego</option>
+          <option v-for="dispatcherName in dispatcherNameList" :value="dispatcherName">
+            {{ dispatcherName }}
+          </option>
+        </select>
+      </label>
 
-      <select
-        name="scenery-select"
-        id="scenery-select"
-        v-model="selectedSceneryName"
-        :disabled="sceneryNameList.length == 0"
-      >
-        <option :value="null" disabled>Sceneria</option>
-        <option :value="sceneryName" v-for="sceneryName in sceneryNameList">
-          {{ sceneryName }}
-        </option>
-      </select>
+      <label for="scenery-select">
+        <select
+          name="scenery-select"
+          id="scenery-select"
+          v-model="selectedSceneryName"
+          :disabled="sceneryNameList.length == 0"
+        >
+          <option :value="null" disabled>Sceneria</option>
+          <option :value="sceneryName" v-for="sceneryName in sceneryNameList">
+            {{ sceneryName }}
+          </option>
+        </select>
+      </label>
+
+      <label for="checkpoint-select">
+        <select
+          name="checkpoint-select"
+          id="checkpoint-select"
+          v-model="selectedCheckpointName"
+          :disabled="sceneryNameList.length == 0"
+        >
+          <option :value="null" disabled>Posterunek</option>
+          <option :value="cp" v-for="cp in checkpointNameList">
+            {{ cp }}
+          </option>
+        </select>
+      </label>
+
+      <label for="fill-checkpoint">
+        <input type="checkbox" name="fill-checkpoint" id="fill-checkpoint" v-model="fillCheckpointName" />
+        Uzupełniaj skrót post.
+      </label>
     </div>
 
     <div class="content">
@@ -54,7 +77,7 @@ import { defineComponent } from 'vue';
 import axios from 'axios';
 import { ApiSWDR, ApiStacjownik } from '../types/apiTypes';
 import { useStore } from '../store/store';
-import { currentFormattedDate } from '../utils/dateUtils';
+import { currentFormattedDate, currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
 import { ISceneryOnline, ISceneryData } from '../types/dataTypes';
 
 export default defineComponent({
@@ -68,6 +91,9 @@ export default defineComponent({
 
       selectedSceneryName: null as string | null,
       selectedDispatcherName: null as string | null,
+      selectedCheckpointName: null as string | null,
+
+      fillCheckpointName: true,
 
       refreshInterval: -1,
       store: useStore(),
@@ -93,6 +119,7 @@ export default defineComponent({
   watch: {
     selectedDispatcherName() {
       this.selectedSceneryName = this.sceneryNameList.length == 0 ? null : this.sceneryNameList[0];
+      this.selectedCheckpointName = this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
     },
   },
 
@@ -116,6 +143,19 @@ export default defineComponent({
         .filter((s) => s.dispatcherName == this.selectedDispatcherName)
         .map((s) => s.stationName)
         .sort((a, b) => (a < b ? -1 : 1));
+    },
+
+    checkpointNameList() {
+      if (!this.selectedSceneryName) return [];
+
+      const name = this.selectedSceneryName;
+      const checkpoints = this.sceneriesData.find(
+        (s) => s.name.toLocaleLowerCase() == name.toLocaleLowerCase()
+      )?.checkpoints;
+
+      if (!checkpoints || checkpoints.length == 0) return [name];
+
+      return checkpoints.split(';');
     },
 
     sceneryTrains() {
@@ -176,7 +216,12 @@ export default defineComponent({
       chosenOrder.header.date = currentFormattedDate();
 
       this.store.orderFooter.dispatcherName = this.selectedDispatcherName;
-      this.store.orderFooter.stationName = this.selectedSceneryName;
+      this.store.orderFooter.stationName = this.selectedCheckpointName?.split(',')[0] || this.selectedSceneryName;
+      this.store.orderFooter.hour = currentFormattedHours();
+      this.store.orderFooter.minutes = currentFormattedMinutes();
+
+      if (this.fillCheckpointName)
+        this.store.orderFooter.checkpointName = this.store.orderFooter.stationName.slice(0, 2);
 
       this.store.orderMode = 'OrderMessage';
     },
@@ -203,7 +248,16 @@ export default defineComponent({
 .options {
   display: flex;
   width: 100%;
+  justify-content: center;
   gap: 1em;
+  flex-wrap: wrap;
+
+  label {
+    width: 45%;
+
+    display: flex;
+    align-items: center;
+  }
 
   select {
     border: 2px solid white;
@@ -212,6 +266,10 @@ export default defineComponent({
     width: 100%;
     margin: 0;
     padding: 0.15em;
+
+    &[disabled] {
+      color: gray;
+    }
   }
 
   option {
