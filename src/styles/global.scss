@@ -143,3 +143,40 @@ ul {
     overflow: auto;
   }
 }
+
+// Checkbox
+label.g-checkbox {
+  display: inline-block;
+  margin: 0.25em 0;
+  cursor: pointer;
+  color: #aaa;
+
+  span::before {
+    content: '';
+    display: inline-block;
+    width: 1ch;
+    height: 1ch;
+
+    background-color: #aaa;
+    border-radius: 50%;
+    margin-right: 0.25em;
+  }
+
+  input {
+    width: 0;
+    opacity: 0;
+
+    &:focus-visible + span {
+      text-decoration: underline;
+    }
+
+    &:checked + span {
+      color: greenyellow;
+
+      &::before {
+        background-color: greenyellow;
+      }
+    }
+  }
+}
+

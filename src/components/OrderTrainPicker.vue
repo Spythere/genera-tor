@@ -38,9 +38,9 @@
         </select>
       </label>
 
-      <label for="fill-checkpoint">
+      <label for="fill-checkpoint" class="g-checkbox">
         <input type="checkbox" name="fill-checkpoint" id="fill-checkpoint" v-model="fillCheckpointName" />
-        Uzupełniaj skrót post.
+        <span> Uzupełniaj skrót post.</span>
       </label>
     </div>
 

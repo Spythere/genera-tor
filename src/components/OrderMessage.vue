@@ -19,7 +19,7 @@
     </div>
 
     <div class="message_checkboxes">
-      <label for="copy-increment">
+      <label for="copy-increment" class="g-checkbox">
         <input
           type="checkbox"
           name="copy-increment"
@@ -27,10 +27,9 @@
           v-model="incrementOnCopy"
           @change="onCheckboxChange"
         />
-        Aktualizuj numer rozkazu po skopiowaniu
+        <span>Aktualizuj numer rozkazu po skopiowaniu</span>
       </label>
-      <br />
-      <label for="save-increment">
+      <label for="save-increment" class="g-checkbox">
         <input
           type="checkbox"
           name="save-increment"
@@ -38,7 +37,7 @@
           v-model="incrementOnSave"
           @change="onCheckboxChange"
         />
-        Aktualizuj numer rokazu po zapisaniu
+        <span>Aktualizuj numer rokazu po zapisaniu</span>
       </label>
     </div>
 
