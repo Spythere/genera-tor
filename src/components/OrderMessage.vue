@@ -37,7 +37,7 @@
           v-model="incrementOnSave"
           @change="onCheckboxChange"
         />
-        <span>Aktualizuj numer rokazu po zapisaniu</span>
+        <span>Aktualizuj numer rozkazu po zapisaniu</span>
       </label>
     </div>
 
