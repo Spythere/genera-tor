@@ -93,7 +93,7 @@ export default defineComponent({
       selectedDispatcherName: null as string | null,
       selectedCheckpointName: null as string | null,
 
-      fillCheckpointName: true,
+      fillCheckpointName: false,
 
       refreshInterval: -1,
       store: useStore(),
@@ -119,6 +119,9 @@ export default defineComponent({
   watch: {
     selectedDispatcherName() {
       this.selectedSceneryName = this.sceneryNameList.length == 0 ? null : this.sceneryNameList[0];
+    },
+
+    selectedSceneryName() {
       this.selectedCheckpointName = this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
     },
   },

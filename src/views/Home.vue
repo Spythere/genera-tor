@@ -43,7 +43,6 @@ import { useStore } from '../store/store';
 import OrderHelper from '../components/OrderHelper.vue';
 import OrderTrainPicker from '../components/OrderTrainPicker.vue';
 
-
 export default defineComponent({
   components: { OrderVue, SideBar, OrderHelper },
 
@@ -116,16 +115,20 @@ export default defineComponent({
     width: 100%;
 
     @media screen and (max-width: 650px) {
-      padding-top: 5em;
-      padding-bottom: 5em;
+      padding: 1em 0.5em;
     }
   }
 
   .order_container {
     width: 100%;
-    max-width: 550px;
+    max-width: 600px;
 
-    position: relative;
+    display: flex;
+    align-items: start;
+
+    @media screen and (max-width: 650px) {
+      flex-direction: column;
+    }
   }
 
   .message_container {

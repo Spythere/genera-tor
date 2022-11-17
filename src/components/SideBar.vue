@@ -63,16 +63,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import '../styles/global.scss';
 
-.sidebar {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  z-index: 999;
-
-  transform: translate(-100%, 0);
-}
-
 .sidebar_content {
   display: grid;
   grid-template-rows: repeat(3, 1fr);
@@ -137,14 +127,6 @@ button.option-save {
 }
 
 @media screen and (max-width: 650px) {
-  .sidebar {
-    left: 50%;
-    top: 0;
-    width: 100%;
-
-    transform: translate(-50%, -100%);
-  }
-
   .sidebar_content {
     display: flex;
     justify-content: space-between;
