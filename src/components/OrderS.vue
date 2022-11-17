@@ -3,7 +3,7 @@
     <section class="header">
       <h2 class="flex-center">
         Rozkaz pisemny "S" nr
-        <input type="text" v-model="order.header.orderNo" placeholder="nr rozkazu" />
+        <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
       </h2>
       <div class="flex-row">
         dla
@@ -304,7 +304,7 @@ export default defineComponent({
     };
   },
 
-activated() {
+  activated() {
     this.generateMessage();
   },
 
@@ -335,7 +335,7 @@ activated() {
       });
     },
 
-   generateMessage() {
+    generateMessage() {
       let message = this.rowMethods[0]();
 
       for (let i = 0; i < 4; i++) {

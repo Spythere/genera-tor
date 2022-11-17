@@ -10,6 +10,18 @@ export default defineComponent({
   },
 
   methods: {
+    saveOrderSetting(key: string, value: string | number | boolean) {
+      window.localStorage.setItem(key, value.toString());
+    },
+
+    getOrderSetting(key: string) {
+      return window.localStorage.getItem(key);
+    },
+
+    removeOrderSetting(key: string) {
+      window.localStorage.removeItem(key);
+    },
+
     saveLocalOrder() {
       let orderObj: LocalStorageOrder = {
         id: '',
@@ -120,3 +132,4 @@ export default defineComponent({
     },
   },
 });
+
