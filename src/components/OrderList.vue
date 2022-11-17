@@ -54,8 +54,9 @@ export default defineComponent({
       if (!order) return;
 
       this.removeLocalOrder(order);
-
       this.localOrderList = this.localOrderList.filter((o) => o.id != order.id);
+
+      if (this.localOrderList.length == 0) this.saveOrderSetting('orderCount', 0);
     },
   },
 
@@ -108,8 +109,7 @@ export default defineComponent({
 }
 
 ul {
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
 }
 
