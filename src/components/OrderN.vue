@@ -3,7 +3,7 @@
     <section class="header" ref="header">
       <h2 class="flex-center">
         Rozkaz pisemny "N" nr
-        <input type="text" v-model="order.header.orderNo" placeholder="nr rozkazu" />
+        <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
       </h2>
       <div class="flex-row">
         dla pociągu nr <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" /> dnia

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { IOrderN, IOrderO, IOrderS, TOrder } from '../types/orderTypes';
+import { currentFormattedDate, currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -14,8 +15,8 @@ export const useStore = defineStore('store', {
       orderFooter: {
         stationName: '',
         checkpointName: '',
-        hour: new Date().toLocaleTimeString('pl-PL', { hour: '2-digit' }),
-        minutes: new Date().toLocaleTimeString('pl-PL', { minute: '2-digit' }),
+        hour: currentFormattedHours(),
+        minutes: currentFormattedMinutes(),
         dispatcherName: '',
         secondaryDispatcherName: '',
       },
@@ -27,7 +28,7 @@ export const useStore = defineStore('store', {
         header: {
           orderNo: '1',
           trainNo: '',
-          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'numeric', year: 'numeric' }) + "r.",
+          date: currentFormattedDate(),
         },
 
         orderList: [
@@ -79,7 +80,7 @@ export const useStore = defineStore('store', {
         header: {
           orderNo: '1',
           trainNo: '',
-          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'numeric', year: 'numeric' }) + "r.",
+          date: currentFormattedDate(),
         },
 
         rows: [
@@ -141,7 +142,7 @@ export const useStore = defineStore('store', {
           orderNo: '1',
           trainNo: '',
           for: 'pociągu',
-          date: new Date().toLocaleDateString('pl-PL', { day: 'numeric', month: 'numeric', year: 'numeric' }) + "r.",
+          date: currentFormattedDate(),
         },
 
         rows: [
@@ -182,6 +183,4 @@ export const useStore = defineStore('store', {
     };
   },
 });
-
-
 

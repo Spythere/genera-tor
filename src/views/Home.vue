@@ -41,6 +41,7 @@ import OrderMessage from '../components/OrderMessage.vue';
 import OrderList from '../components/OrderList.vue';
 import { useStore } from '../store/store';
 import OrderHelper from '../components/OrderHelper.vue';
+import OrderTrainPicker from '../components/OrderTrainPicker.vue';
 
 export default defineComponent({
   components: { OrderVue, SideBar, OrderHelper },
@@ -55,6 +56,10 @@ export default defineComponent({
         {
           mode: 'OrderList',
           value: 'ZAPISANE ROZKAZY',
+        },
+        {
+          mode: 'OrderTrainPicker',
+          value: 'POCIĄGI',
         },
       ],
     };
@@ -79,6 +84,8 @@ export default defineComponent({
           return OrderMessage;
         case 'OrderList':
           return OrderList;
+        case 'OrderTrainPicker':
+          return OrderTrainPicker;
         default:
           return OrderMessage;
       }
@@ -108,26 +115,41 @@ export default defineComponent({
     width: 100%;
 
     @media screen and (max-width: 650px) {
-      padding-top: 5em;
-      padding-bottom: 5em;
+      padding: 1em 0.5em;
     }
   }
 
   .order_container {
     width: 100%;
-    max-width: 550px;
-    
-    position: relative;
+    max-width: 600px;
+
+    display: flex;
+    align-items: start;
+
+    @media screen and (max-width: 650px) {
+      flex-direction: column;
+    }
   }
 
   .message_container {
     width: 500px;
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+
+    height: 95vh;
   }
 
   .message_nav {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 2em;
   }
 }
 </style>
+

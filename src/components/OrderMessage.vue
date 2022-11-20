@@ -18,6 +18,29 @@
       </button>
     </div>
 
+    <div class="message_checkboxes">
+      <label for="copy-increment" class="g-checkbox">
+        <input
+          type="checkbox"
+          name="copy-increment"
+          id="copy-increment"
+          v-model="incrementOnCopy"
+          @change="onCheckboxChange"
+        />
+        <span>Aktualizuj numer rozkazu po skopiowaniu</span>
+      </label>
+      <label for="save-increment" class="g-checkbox">
+        <input
+          type="checkbox"
+          name="save-increment"
+          id="save-increment"
+          v-model="incrementOnSave"
+          @change="onCheckboxChange"
+        />
+        <span>Aktualizuj numer rozkazu po zapisaniu</span>
+      </label>
+    </div>
+
     <transition name="monit-anim">
       <div class="action_monit" v-if="actionMonit" v-html="actionMonit"></div>
     </transition>
@@ -42,6 +65,9 @@ export default defineComponent({
       saveIcon,
       actionMonit: '',
       monitTimeout: undefined as number | undefined,
+
+      incrementOnSave: true,
+      incrementOnCopy: true,
     };
   },
 
@@ -51,6 +77,11 @@ export default defineComponent({
     };
   },
 
+  mounted() {
+    this.incrementOnSave = this.getOrderSetting('save-increment') === 'false' ? false : true;
+    this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'false' ? false : true;
+  },
+
   computed: {
     fullOrderMessage() {
       return this.store.orderMessage + this.store.footerMessage;
@@ -58,6 +89,13 @@ export default defineComponent({
   },
 
   methods: {
+    onCheckboxChange(e: Event) {
+      const checkbox = e.target as HTMLInputElement;
+      console.log(checkbox.id, checkbox.checked);
+
+      this.saveOrderSetting(checkbox.id, checkbox.checked);
+    },
+
     showActionMonit(text: string) {
       if (this.monitTimeout) {
         this.actionMonit = '';
@@ -81,6 +119,12 @@ export default defineComponent({
       }, 5000);
     },
 
+    incrementOrderNo() {
+      const order = this.store[this.store.chosenOrderType];
+
+      order.header.orderNo = (Number(order.header.orderNo) + 1).toString();
+    },
+
     copyMessage() {
       if (!navigator.clipboard)
         return this.showActionMonit(
@@ -90,8 +134,14 @@ export default defineComponent({
       const hasAtLeastOneRow = /(\[ \d \])/g.test(this.fullOrderMessage);
       const hasAllInputsFilled = !/_/g.test(this.store.orderMessage);
 
-      if (!hasAllInputsFilled) return this.showActionMonit(`<span class="text--warn">Wypełnij puste rubryki rozkazu przed jego skopiowaniem!</span>`);
-      if (!hasAtLeastOneRow) return this.showActionMonit(`<span class="text--warn">Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!</span>`);
+      if (!hasAllInputsFilled)
+        return this.showActionMonit(
+          `<span class="text--warn">Wypełnij puste rubryki rozkazu przed jego skopiowaniem!</span>`
+        );
+      if (!hasAtLeastOneRow)
+        return this.showActionMonit(
+          `<span class="text--warn">Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!</span>`
+        );
 
       const fieldsToCorrect = this.verifyOrderFields();
 
@@ -103,6 +153,8 @@ export default defineComponent({
         );
 
       navigator.clipboard.writeText(this.fullOrderMessage);
+
+      if (this.incrementOnCopy) this.incrementOrderNo();
 
       this.showActionMonit(
         '<b class="text--accent">Skopiowano!</b> Możesz teraz wkleić treść rozkazu na czacie symulatora!'
@@ -123,6 +175,8 @@ export default defineComponent({
           break;
         case 1:
           this.showActionMonit('Zapisano treść <b class="text--accent">rozkazu</b> w pamięci przeglądarki!');
+
+          if (this.incrementOnSave) this.incrementOrderNo();
           break;
 
         default:
@@ -153,8 +207,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .order-message {
-  padding: 1em;
-
   h3 {
     margin: 0;
     margin-bottom: 1em;
@@ -201,6 +253,10 @@ export default defineComponent({
     user-select: none;
     color: #aaa;
   }
+}
+
+.message_checkboxes {
+  margin-top: 1em;
 }
 
 .action_monit {
