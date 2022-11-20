@@ -151,6 +151,10 @@ label.g-checkbox {
   cursor: pointer;
   color: #aaa;
 
+  span {
+    transition: color 125ms ease;
+  }
+
   span::before {
     content: '';
     display: inline-block;
@@ -160,6 +164,8 @@ label.g-checkbox {
     background-color: #aaa;
     border-radius: 50%;
     margin-right: 0.25em;
+
+    transition: background-color 125ms ease;
   }
 
   input {
