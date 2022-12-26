@@ -15,10 +15,10 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,png,svg,img}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/stacjownik-api-b9mrc\.ondigitalocean\.app\/api\/getSceneries/i,
+            urlPattern: /^https:\/\/spythere.pl\/\/api\/getSceneries/i,
             handler: 'CacheFirst',
             options: {
-              cacheName: 'sceneries-data-cache',
+              cacheName: 'sceneries-cache',
               expiration: {
                 maxEntries: 250,
                 maxAgeSeconds: 60 * 60 * 24 * 7, // <== 7 days
