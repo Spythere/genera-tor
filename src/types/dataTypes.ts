@@ -20,6 +20,7 @@ export interface ISceneryOnline {
 export interface ISceneryData {
   id: string;
   name: string;
+  abbr: string;
   SUP: boolean;
   authors: string;
   availability: string;
