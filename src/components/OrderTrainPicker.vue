@@ -223,8 +223,11 @@ export default defineComponent({
       this.store.orderFooter.hour = currentFormattedHours();
       this.store.orderFooter.minutes = currentFormattedMinutes();
 
-      if (this.fillCheckpointName)
-        this.store.orderFooter.checkpointName = this.store.orderFooter.stationName.slice(0, 2);
+      if (this.fillCheckpointName) {        
+        const sceneryAbbrev = this.sceneriesData.find(({ name }) => name === this.store.orderFooter.stationName)?.abbr;
+
+        this.store.orderFooter.checkpointName = sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
+      }
 
       this.store.orderMode = 'OrderMessage';
     },
