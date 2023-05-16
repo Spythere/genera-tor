@@ -39,6 +39,10 @@
         />
         <span>Aktualizuj numer rozkazu po zapisaniu</span>
       </label>
+      <label for="update-date" class="g-checkbox">
+        <input type="checkbox" name="update-date" id="update-date" v-model="updateDate" @change="onCheckboxChange" />
+        <span>Aktualizuj godziny przy edycji</span>
+      </label>
     </div>
 
     <transition name="monit-anim">
@@ -54,6 +58,7 @@ import { useStore } from '../store/store';
 import saveIcon from '../assets/icon-save.svg';
 import orderStorageMixin from '../mixins/orderStorageMixin';
 import orderValidationMixin from '../mixins/orderValidationMixin';
+import { currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
 
 export default defineComponent({
   name: 'OrderMessage',
@@ -68,6 +73,7 @@ export default defineComponent({
 
       incrementOnSave: true,
       incrementOnCopy: true,
+      updateDate: true,
     };
   },
 
@@ -78,12 +84,18 @@ export default defineComponent({
   },
 
   mounted() {
-    this.incrementOnSave = this.getOrderSetting('save-increment') === 'false' ? false : true;
-    this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'false' ? false : true;
+    this.incrementOnSave = this.getOrderSetting('save-increment') === 'true';
+    this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'true';
+    this.updateDate = this.getOrderSetting('update-date') === 'true';
   },
 
   computed: {
     fullOrderMessage() {
+      if(this.updateDate) {
+        this.store.orderFooter['hour'] = currentFormattedHours();
+        this.store.orderFooter['minutes'] = currentFormattedMinutes();
+      }
+
       return this.store.orderMessage + this.store.footerMessage;
     },
   },
@@ -91,8 +103,6 @@ export default defineComponent({
   methods: {
     onCheckboxChange(e: Event) {
       const checkbox = e.target as HTMLInputElement;
-      console.log(checkbox.id, checkbox.checked);
-
       this.saveOrderSetting(checkbox.id, checkbox.checked);
     },
 
