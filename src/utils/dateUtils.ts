@@ -3,9 +3,11 @@ export function currentFormattedDate() {
 }
 
 export function currentFormattedMinutes() {
-  return new Date().toLocaleTimeString('pl-PL', { minute: '2-digit' });
+  const date = new Date();
+  return (date.getMinutes() < 10 ? '0' : '') + date.getMinutes();
 }
 
 export function currentFormattedHours() {
   return new Date().toLocaleTimeString('pl-PL', { hour: '2-digit' });
 }
+
