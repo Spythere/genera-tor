@@ -223,8 +223,8 @@
                 <input type="text" v-model="order.rows[3].w5.trackNo" holder="nr szlaku" /> do kilometra
                 <input type="text" v-model="order.rows[3].w5.maxKm" holder="km szlaku" />. Powrót odbędzie się na
                 <select id="select-returnWay" v-model="order.rows[3].w5.returnWay" style="width: 250px">
-                  <option value='sygnał ręczny "Do mnie"'>sygnał ręczny "Do mnie"</option>
-                  <option value='sygnał "Do mnie" przekazany przez urządzenia radiołączności'>
+                  <option :value='`sygnał ręczny "Do mnie"`'>sygnał ręczny "Do mnie"</option>
+                  <option :value='`sygnał "Do mnie" przekazany przez urządzenia radiołączności`'>
                     sygnał "Do mnie" przekazany przez urządzenia radiołączności
                   </option>
                   <option value="sygnał Ms2 podany na tarczy manewrowej">sygnał Ms2 podany na tarczy manewrowej</option>
