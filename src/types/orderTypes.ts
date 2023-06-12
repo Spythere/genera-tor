@@ -110,6 +110,7 @@ export interface IOrderS {
 
       w5: {
         enabled: boolean;
+        borderType: string;
         trackNo: string;
         maxKm: string;
         returnWay: string;
@@ -172,4 +173,5 @@ export interface IOrderO {
 
   other: string;
 }
+
 

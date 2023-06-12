@@ -214,10 +214,15 @@
 
               <div>Inne:</div>
               <div v-if="order.rows[3].w5.enabled">
-                zezwalam na wyjazd poza wskaźnik przetaczania W5 na tor szlakowy nr
-                <input type="text" v-model="order.rows[3].w5.trackNo" holder="nr szlaku" />, maksymalnie do
-                <input type="text" v-model="order.rows[3].w5.maxKm" holder="km szlaku"/> km szlaku. Powrót odbędzie się na
-                <select id="select-returnWay" v-model="order.rows[3].w5.returnWay" style="width: 350px">
+                zezwalam na wyjazd poza
+                <select id="select-borderType" v-model="order.rows[3].w5.borderType">
+                  <option value="wskaźnik przetaczania W5">wskaźnik przetaczania W5</option>
+                  <option value="granicę przetaczania">granicę przetaczania</option>
+                </select>
+                po torze szlakowym nr
+                <input type="text" v-model="order.rows[3].w5.trackNo" holder="nr szlaku" /> do kilometra
+                <input type="text" v-model="order.rows[3].w5.maxKm" holder="km szlaku" />. Powrót odbędzie się na
+                <select id="select-returnWay" v-model="order.rows[3].w5.returnWay" style="width: 250px">
                   <option value='sygnał ręczny "Do mnie"'>sygnał ręczny "Do mnie"</option>
                   <option value='sygnał "Do mnie" przekazany przez urządzenia radiołączności'>
                     sygnał "Do mnie" przekazany przez urządzenia radiołączności
@@ -230,7 +235,7 @@
                   holder="nazwa tarczy"
                   v-if="order.rows[3].w5.returnWay.includes('tarczy')"
                 />
-                do godziny <input type="text" v-model="order.rows[3].w5.maxHour" holder="godzina" />.
+                do godziny <input type="text" v-model="order.rows[3].w5.maxHour" holder="godzina" />
               </div>
 
               <textarea id="" cols="30" rows="10" v-model="order.rows[3].content" v-else></textarea>
@@ -317,12 +322,19 @@ export default defineComponent({
       () => {
         const row = order.rows[3];
 
-        if (row.w5.enabled)
-          return `Inne: zezwalam na wyjazd poza wskaźnik przetaczania W5 na tor szlakowy nr ${
-            row.w5.trackNo || '_'
-          }, maksymalnie do ${row.w5.maxKm || '_'} km szlaku. Powrót odbędzie się na ${row.w5.returnWay || '_'} ${
-            row.w5.returnWay.includes('tarczy') ? row.w5.tmName || '_' : ''
-          } do godziny ${row.w5.maxHour || '_'}`;
+        if (row.w5.enabled) {
+          const { borderType, trackNo, maxHour, maxKm, returnWay, tmName } = row.w5;
+          const textArray = [];
+
+          textArray.push('Inne: zezwalam na wyjazd poza', borderType || '_', 'po torze szlakowym nr', trackNo || '_');
+          if (maxKm) textArray.push(`do kilometra ${maxKm}`);
+          textArray.push('.');
+          textArray.push('Powrót odbędzie się na', returnWay || '_');
+          if (returnWay.includes('tarczy')) textArray.push(tmName || '_');
+          textArray.push(`do godziny ${maxHour || '_'}`);
+
+          return textArray.join(' ').replace(/ \./, '.');
+        }
 
         return `Inne: ${row.content}`;
       },
