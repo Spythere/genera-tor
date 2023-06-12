@@ -56,12 +56,22 @@ button.g-button {
 
   &.option {
     margin: 0 0.25em;
+    padding: 0.25em;
 
     &:focus-visible {
       outline: 1px solid $accentCol;
     }
 
     &[data-active='true'] {
+      color: $accentCol;
+    }
+  }
+
+  &.text {
+    padding: 0;
+    color: #000;
+
+    &:focus-visible {
       color: $accentCol;
     }
   }

@@ -107,6 +107,15 @@ export interface IOrderS {
     {
       enabled: boolean;
       content: string;
+
+      w5: {
+        enabled: boolean;
+        trackNo: string;
+        maxKm: string;
+        returnWay: string;
+        maxHour: string;
+        tmName: string;
+      };
     }
   ];
 }
@@ -163,3 +172,4 @@ export interface IOrderO {
 
   other: string;
 }
+

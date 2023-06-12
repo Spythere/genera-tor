@@ -7,7 +7,7 @@ export const useStore = defineStore('store', {
     return {
       helperModalOpen: false,
 
-      chosenOrderType: 'orderN' as TOrder,
+      chosenOrderType: 'orderS' as TOrder,
       chosenLocalOrderId: '',
 
       orderMode: 'OrderMessage',
@@ -177,10 +177,18 @@ export const useStore = defineStore('store', {
           {
             enabled: false,
             content: '',
+            w5: {
+              enabled: false,
+              maxHour: '',
+              maxKm: '',
+              returnWay: 'sygnał ręczny "Do mnie"',
+              trackNo: '',
+            },
           },
         ],
       } as IOrderS,
     };
   },
 });
+
 
