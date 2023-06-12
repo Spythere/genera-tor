@@ -7,7 +7,7 @@ export const useStore = defineStore('store', {
     return {
       helperModalOpen: false,
 
-      chosenOrderType: 'orderS' as TOrder,
+      chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',
 
       orderMode: 'OrderMessage',
