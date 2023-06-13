@@ -177,10 +177,21 @@ export const useStore = defineStore('store', {
           {
             enabled: false,
             content: '',
+            w5: {
+              enabled: false,
+              maxHour: '',
+              borderType: 'wskaźnik przetaczania W5',
+              tmName: '',
+              maxKm: '',
+              returnWay: 'sygnał ręczny "Do mnie"',
+              trackNo: '',
+            },
           },
         ],
       } as IOrderS,
     };
   },
 });
+
+
 
