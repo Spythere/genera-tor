@@ -101,6 +101,8 @@ export default defineComponent({
   },
 
   created() {
+    this.fillCheckpointName = window.localStorage.getItem('fill-checkpoint') == 'true';
+
     this.fetchSceneriesData();
   },
 
@@ -123,6 +125,10 @@ export default defineComponent({
 
     selectedSceneryName() {
       this.selectedCheckpointName = this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
+    },
+
+    fillCheckpointName(val: boolean) {
+      window.localStorage.setItem('fill-checkpoint', `${val}`);
     },
   },
 
@@ -223,9 +229,8 @@ export default defineComponent({
       this.store.orderFooter.hour = currentFormattedHours();
       this.store.orderFooter.minutes = currentFormattedMinutes();
 
-      if (this.fillCheckpointName) {        
-        const sceneryAbbrev = this.sceneriesData.find(({ name }) => name === this.store.orderFooter.stationName)?.abbr;
-
+      if (this.fillCheckpointName) {
+        const sceneryAbbrev = this.sceneriesData.find(({ name }) => name === this.selectedSceneryName)?.abbr;
         this.store.orderFooter.checkpointName = sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
       }
 
