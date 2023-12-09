@@ -15,7 +15,7 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,png,svg,img}'],
         runtimeCaching: [
           {
-            urlPattern: /^https:\/\/stacjownik.spythere.pl\/\/api\/getSceneries/i,
+            urlPattern: /^https:\/\/stacjownik.spythere.eu\/\/api\/getSceneries/i,
             handler: 'CacheFirst',
             options: {
               cacheName: 'sceneries-cache',
@@ -36,4 +36,3 @@ export default defineConfig({
     }),
   ],
 });
-
