@@ -4,13 +4,18 @@
 
     <div class="message_body" v-html="fullOrderMessage"></div>
     <p class="message_info">
-      Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej
+      Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą
+      przycisków poniżej
     </p>
 
     <div class="message_actions">
       <button class="g-button action" @click="saveOrder">Zapisz nowy rozkaz</button>
       <button class="g-button action" @click="copyMessage">Kopiuj treść rozkazu</button>
-      <button class="g-button action" :data-disabled="!store.chosenLocalOrderId" @click="updateOrder">
+      <button
+        class="g-button action"
+        :data-disabled="!store.chosenLocalOrderId"
+        @click="updateOrder"
+      >
         Zaktualizuj rozkaz
         <span class="text--accent"
           >{{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }}
@@ -40,7 +45,13 @@
         <span>Aktualizuj numer rozkazu po zapisaniu</span>
       </label>
       <label for="update-date" class="g-checkbox">
-        <input type="checkbox" name="update-date" id="update-date" v-model="updateDate" @change="onCheckboxChange" />
+        <input
+          type="checkbox"
+          name="update-date"
+          id="update-date"
+          v-model="updateDate"
+          @change="onCheckboxChange"
+        />
         <span>Aktualizuj godziny przy edycji</span>
       </label>
     </div>
@@ -73,13 +84,13 @@ export default defineComponent({
 
       incrementOnSave: true,
       incrementOnCopy: true,
-      updateDate: true,
+      updateDate: true
     };
   },
 
   setup() {
     return {
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -91,13 +102,17 @@ export default defineComponent({
 
   computed: {
     fullOrderMessage() {
-      if(this.updateDate) {
+      return this.store.orderMessage + this.store.footerMessage;
+    }
+  },
+
+  watch: {
+    fullOrderMessage() {
+      if (this.updateDate) {
         this.store.orderFooter['hour'] = currentFormattedHours();
         this.store.orderFooter['minutes'] = currentFormattedMinutes();
       }
-
-      return this.store.orderMessage + this.store.footerMessage;
-    },
+    }
   },
 
   methods: {
@@ -181,10 +196,14 @@ export default defineComponent({
           );
           break;
         case 0:
-          this.showActionMonit('<span class="text--warn">Ostatni zapisany rozkaz jest identyczny z obecnym!</span>');
+          this.showActionMonit(
+            '<span class="text--warn">Ostatni zapisany rozkaz jest identyczny z obecnym!</span>'
+          );
           break;
         case 1:
-          this.showActionMonit('Zapisano treść <b class="text--accent">rozkazu</b> w pamięci przeglądarki!');
+          this.showActionMonit(
+            'Zapisano treść <b class="text--accent">rozkazu</b> w pamięci przeglądarki!'
+          );
 
           if (this.incrementOnSave) this.incrementOrderNo();
           break;
@@ -199,19 +218,23 @@ export default defineComponent({
 
       switch (updatedOrderStatus) {
         case -1:
-          this.showActionMonit('<span class="text--warn">Wystąpił błąd podczas aktualizowania tego rozkazu! :/</span>');
+          this.showActionMonit(
+            '<span class="text--warn">Wystąpił błąd podczas aktualizowania tego rozkazu! :/</span>'
+          );
           break;
 
         case 0:
-          this.showActionMonit('<span class="text--warn">Nie wybrałeś żadnego zapisanego rozkazu!</span>');
+          this.showActionMonit(
+            '<span class="text--warn">Nie wybrałeś żadnego zapisanego rozkazu!</span>'
+          );
           break;
 
         case 1:
           this.showActionMonit('Zaktualizowano treść <b class="text--accent">rozkazu</b>!');
           break;
       }
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -288,4 +311,3 @@ export default defineComponent({
   }
 }
 </style>
-

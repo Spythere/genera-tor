@@ -22,7 +22,7 @@ import OrderOVue from './OrderO.vue';
 const orderComponents = {
   orderN: OrderNVue,
   orderS: OrderSVue,
-  orderO: OrderOVue,
+  orderO: OrderOVue
 };
 
 export default defineComponent({
@@ -32,15 +32,15 @@ export default defineComponent({
     const store = useStore();
 
     return {
-      store,
+      store
     };
   },
 
   computed: {
     chosenOrderComponent() {
       return orderComponents[this.store.chosenOrderType];
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -187,4 +187,3 @@ select {
   }
 }
 </style>
-

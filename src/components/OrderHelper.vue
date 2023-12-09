@@ -11,11 +11,14 @@
         <li>
           <b>Przetaczanie (manewr) taboru poza wskaźnik W 5 (granicy przetaczania)</b>
           <p>
-            Rozkazu <u>nie stosujemy</u> w przypadku wyjazdu taboru na szlak dwutorowy, na którym odbywa się ruch w
-            kierunku zasadniczym, tj. "prawostronnym". Dla wszystkich szlaków jednotorowych lub dwutorowych w sytuacji innej niż wymieniona
-            wykorzystujemy działkę 4. rozkazu pisemnego "S".
-            <br><br>
-            <i>Szczegółowe informacje: instrukcja Ir-1 (R-1) § 12 pkt 4 "Manewry na torach głównych"</i>
+            Rozkazu <u>nie stosujemy</u> w przypadku wyjazdu taboru na szlak dwutorowy, na którym
+            odbywa się ruch w kierunku zasadniczym, tj. "prawostronnym". Dla wszystkich szlaków
+            jednotorowych lub dwutorowych w sytuacji innej niż wymieniona wykorzystujemy działkę 4.
+            rozkazu pisemnego "S". <br /><br />
+            <i
+              >Szczegółowe informacje: instrukcja Ir-1 (R-1) § 12 pkt 4 "Manewry na torach
+              głównych"</i
+            >
           </p>
           <button class="g-button action">Wygeneruj treść rozkazu</button>
         </li>
@@ -33,14 +36,14 @@ export default defineComponent({
   setup() {
     return {
       store: useStore(),
-      orderHelperData,
+      orderHelperData
     };
-  },
+  }
 });
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/global.scss";
+@import '../styles/global.scss';
 
 .content {
   width: 100%;

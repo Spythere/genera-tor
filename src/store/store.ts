@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia';
 import { IOrderN, IOrderO, IOrderS, TOrder } from '../types/orderTypes';
-import { currentFormattedDate, currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
+import {
+  currentFormattedDate,
+  currentFormattedHours,
+  currentFormattedMinutes
+} from '../utils/dateUtils';
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -18,7 +22,7 @@ export const useStore = defineStore('store', {
         hour: currentFormattedHours(),
         minutes: currentFormattedMinutes(),
         dispatcherName: '',
-        secondaryDispatcherName: '',
+        secondaryDispatcherName: ''
       },
 
       orderMessage: '',
@@ -28,7 +32,7 @@ export const useStore = defineStore('store', {
         header: {
           orderNo: '1',
           trainNo: '',
-          date: currentFormattedDate(),
+          date: currentFormattedDate()
         },
 
         orderList: [
@@ -38,7 +42,7 @@ export const useStore = defineStore('store', {
             to: '',
             vmax: '',
             jo: false,
-            reason: '',
+            reason: ''
           },
           {
             name: '',
@@ -46,7 +50,7 @@ export const useStore = defineStore('store', {
             to: '',
             vmax: '',
             jo: false,
-            reason: '',
+            reason: ''
           },
           {
             name: '',
@@ -54,7 +58,7 @@ export const useStore = defineStore('store', {
             to: '',
             vmax: '',
             jo: false,
-            reason: '',
+            reason: ''
           },
           {
             name: '',
@@ -62,7 +66,7 @@ export const useStore = defineStore('store', {
             to: '',
             vmax: '',
             jo: false,
-            reason: '',
+            reason: ''
           },
           {
             name: '',
@@ -70,17 +74,17 @@ export const useStore = defineStore('store', {
             to: '',
             vmax: '',
             jo: false,
-            reason: '',
-          },
+            reason: ''
+          }
         ],
-        other: '',
+        other: ''
       } as IOrderO,
 
       orderN: {
         header: {
           orderNo: '1',
           trainNo: '',
-          date: currentFormattedDate(),
+          date: currentFormattedDate()
         },
 
         rows: [
@@ -89,7 +93,7 @@ export const useStore = defineStore('store', {
             from: '',
             to: '',
             trackNo: '',
-            trackNo2: '',
+            trackNo2: ''
           },
           {
             enabled: false,
@@ -105,7 +109,7 @@ export const useStore = defineStore('store', {
             direction2: '',
             trackNoFrom: '',
             trackNoTo1: '',
-            trackNoTo2: '',
+            trackNoTo2: ''
           },
           {
             enabled: false,
@@ -116,7 +120,7 @@ export const useStore = defineStore('store', {
             toKilometer: '',
             trackNo: '',
             untilHour: '',
-            untilMin: '',
+            untilMin: ''
           },
           {
             enabled: false,
@@ -124,7 +128,7 @@ export const useStore = defineStore('store', {
             optionStation: 'stację',
             stationName: '',
             checkbox: 'checkbox-4a',
-            side: 'lewej',
+            side: 'lewej'
           },
           {
             enabled: false,
@@ -132,9 +136,9 @@ export const useStore = defineStore('store', {
             direction: '',
             stationType: 'stację',
             stationName: '',
-            on: '',
-          },
-        ],
+            on: ''
+          }
+        ]
       } as IOrderN,
 
       orderS: {
@@ -142,7 +146,7 @@ export const useStore = defineStore('store', {
           orderNo: '1',
           trainNo: '',
           for: 'pociągu',
-          date: currentFormattedDate(),
+          date: currentFormattedDate()
         },
 
         rows: [
@@ -152,7 +156,7 @@ export const useStore = defineStore('store', {
             optionSignal: 'wyjazdowego',
             radio1: 'radio-1a-1',
             signal1: '',
-            trackNo: '',
+            trackNo: ''
           },
 
           {
@@ -161,7 +165,7 @@ export const useStore = defineStore('store', {
             signal1: '',
             signal2: '',
             signal3: '',
-            trackNo: '',
+            trackNo: ''
           },
 
           {
@@ -171,7 +175,7 @@ export const useStore = defineStore('store', {
             trackNo: '',
             trainNo: '',
             arrivedTo: '',
-            hour: '',
+            hour: ''
           },
 
           {
@@ -184,14 +188,11 @@ export const useStore = defineStore('store', {
               tmName: '',
               maxKm: '',
               returnWay: 'sygnał ręczny "Do mnie"',
-              trackNo: '',
-            },
-          },
-        ],
-      } as IOrderS,
+              trackNo: ''
+            }
+          }
+        ]
+      } as IOrderS
     };
-  },
+  }
 });
-
-
-

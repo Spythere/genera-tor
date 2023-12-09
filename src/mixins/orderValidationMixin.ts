@@ -4,7 +4,7 @@ import { useStore } from '../store/store';
 export default defineComponent({
   setup() {
     return {
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -27,9 +27,6 @@ export default defineComponent({
         fieldsToCorrect.push('dyżurny ruchu (lub z polecenia dyżurnego ruchu)');
 
       return fieldsToCorrect;
-    },
-  },
+    }
+  }
 });
-
-
-

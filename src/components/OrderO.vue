@@ -7,7 +7,9 @@
       </h2>
 
       <div class="flex-row" style="padding: 0 0.5em">
-        dla pociągu nr <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" /> dnia
+        dla pociągu nr
+        <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" />
+        dnia
         <input type="text" v-model="order.header.date" />
       </div>
 
@@ -41,7 +43,7 @@
             <td colspan="2">kilometra</td>
           </tr>
 
-          <tr v-for="row in order.orderList" class="tr-data">
+          <tr v-for="row in order.orderList" :key="row.name" class="tr-data">
             <td>
               <textarea v-model="row.name"></textarea>
             </td>
@@ -88,16 +90,16 @@ export default defineComponent({
       () => {
         const { header } = order;
 
-        return `<i>Rozkaz pisemny "O" nr ${header.orderNo || '_'} dla pociągu nr ${header.trainNo || '_'} dnia ${
-          header.date || '_'
-        }</i>`;
-      },
+        return `<i>Rozkaz pisemny "O" nr ${header.orderNo || '_'} dla pociągu nr ${
+          header.trainNo || '_'
+        } dnia ${header.date || '_'}</i>`;
+      }
     ];
 
     return {
       store,
       order,
-      rowMethods,
+      rowMethods
     };
   },
 
@@ -110,8 +112,8 @@ export default defineComponent({
       deep: true,
       handler() {
         this.generateMessage();
-      },
-    },
+      }
+    }
   },
 
   methods: {
@@ -137,13 +139,13 @@ export default defineComponent({
         rowsMessageList.push(rowMessage);
       }
 
-      message += rowsMessageList.join("; ");
+      message += rowsMessageList.join('; ');
 
       if (this.order.other) message += ` <b> [ 2 ] </b> Inne: ${this.order.other}`;
 
       this.store.orderMessage = message;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -212,4 +214,3 @@ th {
   }
 }
 </style>
-

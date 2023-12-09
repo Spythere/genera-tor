@@ -50,5 +50,3 @@ export interface ISceneryData {
 //   lastSeen: number;
 //   station?: ISceneryData;
 // }
-
-

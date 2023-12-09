@@ -3,12 +3,19 @@
     <h3>Zapisane rozkazy pisemne ({{ localOrderList.length }})</h3>
 
     <transition-group name="list" tag="ul">
-      <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">Brak zapisanych rozkazów!</li>
+      <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">
+        Brak zapisanych rozkazów!
+      </li>
 
-      <li v-for="order in sortedOrderList" :selected="order.id == store.chosenLocalOrderId" :key="order.id">
+      <li
+        v-for="order in sortedOrderList"
+        :selected="order.id == store.chosenLocalOrderId"
+        :key="order.id"
+      >
         <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
         <b>
-          {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla pociągu nr
+          {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla
+          pociągu nr
           {{ order.orderBody['header']['trainNo'] }}
         </b>
         <br />
@@ -34,14 +41,14 @@ export default defineComponent({
 
   data() {
     return {
-      localOrderList: [] as LocalStorageOrder[],
+      localOrderList: [] as LocalStorageOrder[]
     };
   },
 
   setup() {
     return {
       store: useStore(),
-      localStorage: window.localStorage,
+      localStorage: window.localStorage
     };
   },
 
@@ -57,13 +64,15 @@ export default defineComponent({
       this.localOrderList = this.localOrderList.filter((o) => o.id != order.id);
 
       if (this.localOrderList.length == 0) this.saveOrderSetting('orderCount', 0);
-    },
+    }
   },
 
   computed: {
     sortedOrderList() {
-      return this.localOrderList.sort((a, b) => (b.createdAt || b.updatedAt!) - (a.createdAt || a.updatedAt!));
-    },
+      return this.localOrderList
+        .slice()
+        .sort((a, b) => (b.createdAt || b.updatedAt!) - (a.createdAt || a.updatedAt!));
+    }
   },
 
   activated() {
@@ -80,7 +89,7 @@ export default defineComponent({
     }
 
     this.localOrderList = orderList;
-  },
+  }
 });
 </script>
 
@@ -149,4 +158,3 @@ li {
   }
 }
 </style>
-

@@ -13,8 +13,10 @@ export const handleOrderPlaceholders = (isRowEnabled: boolean, rowRef: HTMLTable
     if (!node.getAttribute('holder')) return;
     const radioCheckedAttr = node.getAttribute('radio-checked');
 
-    if (radioCheckedAttr == null) return node.setAttribute('placeholder', node.getAttribute('holder')!);
-    if (radioCheckedAttr == 'true') return node.setAttribute('placeholder', node.getAttribute('holder')!);
+    if (radioCheckedAttr == null)
+      return node.setAttribute('placeholder', node.getAttribute('holder')!);
+    if (radioCheckedAttr == 'true')
+      return node.setAttribute('placeholder', node.getAttribute('holder')!);
     if (node.getAttribute('placeholder') == null) return;
 
     node.setAttribute('holder', node.getAttribute('placeholder')!);
