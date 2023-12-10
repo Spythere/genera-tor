@@ -4,7 +4,7 @@ import { useStore } from '../store/store';
 export default defineComponent({
   setup() {
     return {
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -25,7 +25,6 @@ export default defineComponent({
       this.store.footerMessage = ` <b>|</b> ${messageArray.join(
         ', '
       )} <b>|</b> Rozkaz otrzymałem, maszynista: (potwierdzić otrzymanie rozkazu)`;
-    },
-  },
+    }
+  }
 });
-

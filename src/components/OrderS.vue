@@ -11,7 +11,9 @@
           <option value="pociągu">pociągu</option>
           <option value="manewru">manewru</option>
         </select>
-        nr <input type="text" v-model="order.header.trainNo" :placeholder="`nr ${order.header.for}`" /> dnia
+        nr
+        <input type="text" v-model="order.header.trainNo" :placeholder="`nr ${order.header.for}`" />
+        dnia
         <input type="text" v-model="order.header.date" placeholder="data" />
       </div>
     </section>
@@ -184,13 +186,19 @@
               </div>
             </td>
             <td ref="row-3">
-              Od <input type="text" v-model="order.rows[2].from" holder="stacja / post." /> do
-              <input type="text" v-model="order.rows[2].to" holder="stacja / post." /> po torze nr
-              <input type="text" v-model="order.rows[2].trackNo" holder="nr toru" /> ruch pociągów prowadzony jest w
-              odstępie posterunków następczych. Wskazania semaforów sbl są nieważne. Zachować ostrożność od ostatniego
-              semafora ze wskaźnikiem "W18". Szlak wolny, ostatni pociąg nr
-              <input type="text" v-model="order.rows[2].trainNo" holder="nr pociągu" /> przybył do
-              <input type="text" v-model="order.rows[2].arrivedTo" holder="stacja / post." /> o godzinie
+              Od
+              <input type="text" v-model="order.rows[2].from" holder="stacja / post." />
+              do
+              <input type="text" v-model="order.rows[2].to" holder="stacja / post." />
+              po torze nr
+              <input type="text" v-model="order.rows[2].trackNo" holder="nr toru" />
+              ruch pociągów prowadzony jest w odstępie posterunków następczych. Wskazania semaforów
+              sbl są nieważne. Zachować ostrożność od ostatniego semafora ze wskaźnikiem "W18".
+              Szlak wolny, ostatni pociąg nr
+              <input type="text" v-model="order.rows[2].trainNo" holder="nr pociągu" />
+              przybył do
+              <input type="text" v-model="order.rows[2].arrivedTo" holder="stacja / post." />
+              o godzinie
               <input type="text" v-model="order.rows[2].hour" holder="godzina" />
             </td>
           </tr>
@@ -207,8 +215,14 @@
               </div>
             </td>
             <td ref="row-4">
-              <button class="g-button text" @click="order.rows[3].w5.enabled = !order.rows[3].w5.enabled">
-                &gt; <span v-if="!order.rows[3].w5.enabled">Wygeneruj treść na pominięcie wskaźnika W5</span>
+              <button
+                class="g-button text"
+                @click="order.rows[3].w5.enabled = !order.rows[3].w5.enabled"
+              >
+                &gt;
+                <span v-if="!order.rows[3].w5.enabled"
+                  >Wygeneruj treść na pominięcie wskaźnika W5</span
+                >
                 <span v-else>Wpisz treść własnoręcznie</span>
               </button>
 
@@ -220,14 +234,26 @@
                   <option value="granicę przetaczania">granicę przetaczania</option>
                 </select>
                 po torze szlakowym nr
-                <input type="text" v-model="order.rows[3].w5.trackNo" holder="nr szlaku" /> do kilometra
-                <input type="text" v-model="order.rows[3].w5.maxKm" holder="km szlaku" />. Powrót odbędzie się na
-                <select id="select-returnWay" v-model="order.rows[3].w5.returnWay" style="width: 250px">
-                  <option :value='`sygnał ręczny "Do mnie"`'>sygnał ręczny "Do mnie"</option>
-                  <option :value='`sygnał "Do mnie" przekazany przez urządzenia radiołączności`'>
+                <input type="text" v-model="order.rows[3].w5.trackNo" holder="nr szlaku" />
+                do kilometra
+                <input type="text" v-model="order.rows[3].w5.maxKm" holder="km szlaku" />. Powrót
+                odbędzie się na
+                <select
+                  id="select-returnWay"
+                  v-model="order.rows[3].w5.returnWay"
+                  style="width: 250px"
+                >
+                  <option :value="`sygnał ręczny &quot;Do mnie&quot;`">
+                    sygnał ręczny "Do mnie"
+                  </option>
+                  <option
+                    :value="`sygnał &quot;Do mnie&quot; przekazany przez urządzenia radiołączności`"
+                  >
                     sygnał "Do mnie" przekazany przez urządzenia radiołączności
                   </option>
-                  <option value="sygnał Ms2 podany na tarczy manewrowej">sygnał Ms2 podany na tarczy manewrowej</option>
+                  <option value="sygnał Ms2 podany na tarczy manewrowej">
+                    sygnał Ms2 podany na tarczy manewrowej
+                  </option>
                 </select>
                 <input
                   type="text"
@@ -235,7 +261,8 @@
                   holder="nazwa tarczy"
                   v-if="order.rows[3].w5.returnWay.includes('tarczy')"
                 />
-                do godziny <input type="text" v-model="order.rows[3].w5.maxHour" holder="godzina" />
+                do godziny
+                <input type="text" v-model="order.rows[3].w5.maxHour" holder="godzina" />
               </div>
 
               <textarea id="" cols="30" rows="10" v-model="order.rows[3].content" v-else></textarea>
@@ -276,10 +303,13 @@ export default defineComponent({
         let message = `zezwalam po otrzymaniu ${row.option1 || '_'}`;
 
         if (row.radio1 == 'radio-1a-1')
-          message += ` przejechać obok wskazującego sygnał "Stój" semafora ${row.optionSignal || '_'} ${
-            row.signal1 || '_'
-          }`;
-        else message += ` wyjechać z toru nr ${row.trackNo || '_'} nie posiadającego semafora wyjazdowego`;
+          message += ` przejechać obok wskazującego sygnał "Stój" semafora ${
+            row.optionSignal || '_'
+          } ${row.signal1 || '_'}`;
+        else
+          message += ` wyjechać z toru nr ${
+            row.trackNo || '_'
+          } nie posiadającego semafora wyjazdowego`;
 
         return message;
       },
@@ -300,7 +330,9 @@ export default defineComponent({
             message += `odstępowego ${row.signal3 || '_'}`;
             break;
           case 'toru':
-            message += `wjechać z zamkniętego toru nr ${row.trackNo || '_'} nie posiadającego semafora wjazdowego`;
+            message += `wjechać z zamkniętego toru nr ${
+              row.trackNo || '_'
+            } nie posiadającego semafora wjazdowego`;
             break;
 
           default:
@@ -326,7 +358,12 @@ export default defineComponent({
           const { borderType, trackNo, maxHour, maxKm, returnWay, tmName } = row.w5;
           const textArray = [];
 
-          textArray.push('Inne: zezwalam na wyjazd poza', borderType || '_', 'po torze szlakowym nr', trackNo || '_');
+          textArray.push(
+            'Inne: zezwalam na wyjazd poza',
+            borderType || '_',
+            'po torze szlakowym nr',
+            trackNo || '_'
+          );
           if (maxKm) textArray.push(`do kilometra ${maxKm}`);
           textArray.push('.');
           textArray.push('Powrót odbędzie się na', returnWay || '_');
@@ -337,13 +374,13 @@ export default defineComponent({
         }
 
         return `Inne: ${row.content}`;
-      },
+      }
     ];
 
     return {
       store,
       order,
-      rowMethods,
+      rowMethods
     };
   },
 
@@ -360,15 +397,15 @@ export default defineComponent({
       deep: true,
       handler() {
         this.generateMessage();
-      },
+      }
     },
 
     'order.rows': {
       deep: true,
       handler() {
         this.updatePlaceholders();
-      },
-    },
+      }
+    }
   },
 
   methods: {
@@ -397,8 +434,8 @@ export default defineComponent({
       this.$nextTick(() => {
         handleOrderPlaceholders(isRowEnabled, rowRef);
       });
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -409,4 +446,3 @@ textarea {
   resize: none;
 }
 </style>
-

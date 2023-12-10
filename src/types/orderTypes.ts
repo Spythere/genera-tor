@@ -173,5 +173,3 @@ export interface IOrderO {
 
   other: string;
 }
-
-

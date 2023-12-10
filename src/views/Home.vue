@@ -10,7 +10,7 @@
 
       <div class="message_container">
         <div class="message_nav">
-          <span v-for="(action, i) in navActions">
+          <span v-for="(action, i) in navActions" :key="action.mode">
             <b v-if="i > 0">&bull;</b>
 
             <button
@@ -51,29 +51,29 @@ export default defineComponent({
       navActions: [
         {
           mode: 'OrderMessage',
-          value: 'TREŚĆ ROZKAZU',
+          value: 'TREŚĆ ROZKAZU'
         },
         {
           mode: 'OrderList',
-          value: 'ZAPISANE ROZKAZY',
+          value: 'ZAPISANE ROZKAZY'
         },
         {
           mode: 'OrderTrainPicker',
-          value: 'POCIĄGI',
-        },
-      ],
+          value: 'POCIĄGI'
+        }
+      ]
     };
   },
 
   methods: {
     selectOrderMode(mode: string) {
       this.store.orderMode = mode;
-    },
+    }
   },
 
   setup() {
     return {
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -89,8 +89,8 @@ export default defineComponent({
         default:
           return OrderMessage;
       }
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -152,4 +152,3 @@ export default defineComponent({
   }
 }
 </style>
-

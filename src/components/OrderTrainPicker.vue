@@ -4,7 +4,11 @@
       <label for="dispatcher-select">
         <select name="dispatcher-select" id="dispatcher-select" v-model="selectedDispatcherName">
           <option :value="null" disabled>Nick dyżurnego</option>
-          <option v-for="dispatcherName in dispatcherNameList" :value="dispatcherName">
+          <option
+            v-for="dispatcherName in dispatcherNameList"
+            :value="dispatcherName"
+            :key="dispatcherName"
+          >
             {{ dispatcherName }}
           </option>
         </select>
@@ -15,10 +19,10 @@
           name="scenery-select"
           id="scenery-select"
           v-model="selectedSceneryName"
-          :disabled="sceneryNameList.length == 0"
+          :disabled="!sceneryNameList || sceneryNameList.length == 0"
         >
           <option :value="null" disabled>Sceneria</option>
-          <option :value="sceneryName" v-for="sceneryName in sceneryNameList">
+          <option :value="sceneryName" v-for="sceneryName in sceneryNameList" :key="sceneryName">
             {{ sceneryName }}
           </option>
         </select>
@@ -29,43 +33,62 @@
           name="checkpoint-select"
           id="checkpoint-select"
           v-model="selectedCheckpointName"
-          :disabled="sceneryNameList.length == 0"
+          :disabled="!sceneryNameList || sceneryNameList.length == 0"
         >
           <option :value="null" disabled>Posterunek</option>
-          <option :value="cp" v-for="cp in checkpointNameList">
+          <option :value="cp" v-for="cp in checkpointNameList" :key="cp">
             {{ cp }}
           </option>
         </select>
       </label>
 
       <label for="fill-checkpoint" class="g-checkbox">
-        <input type="checkbox" name="fill-checkpoint" id="fill-checkpoint" v-model="fillCheckpointName" />
+        <input
+          type="checkbox"
+          name="fill-checkpoint"
+          id="fill-checkpoint"
+          v-model="fillCheckpointName"
+        />
         <span> Uzupełniaj skrót post.</span>
       </label>
     </div>
 
     <div class="content">
-      <b v-if="!selectedSceneryName" class="text--accent"> Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi </b>
+      <b v-if="!selectedSceneryName" class="text--accent">
+        Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi
+      </b>
 
       <div v-else>
         <b class="text--accent">Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi</b>
 
         <p>Gracze online bez RJ</p>
         <ul class="train-list">
-          <li v-for="train in sceneryTrains" @click="fillOrder(train.trainNo)">
+          <li
+            v-for="train in sceneryTrains"
+            :key="train.trainNo + train.driverName"
+            @click="fillOrder(train.trainNo)"
+          >
             <b>{{ train.trainNo }} | {{ train.driverName }}</b>
           </li>
 
-          <li class="no-trains" v-if="sceneryTrains.length == 0 && selectedSceneryName">Brak graczy</li>
+          <li class="no-trains" v-if="sceneryTrains?.length == 0 && selectedSceneryName">
+            Brak graczy
+          </li>
         </ul>
 
         <p>Aktywne rozkłady jazdy</p>
         <ul class="train-list">
-          <li v-for="train in sceneryScheduledTrains" @click="fillOrder(train.trainNo)">
+          <li
+            v-for="train in sceneryScheduledTrains"
+            :key="train.trainNo + train.driverName"
+            @click="fillOrder(train.trainNo)"
+          >
             <b>{{ train.trainNo }} | {{ train.driverName }}</b>
           </li>
 
-          <li class="no-trains" v-if="sceneryScheduledTrains.length == 0">Brak aktywnych rozkładów</li>
+          <li class="no-trains" v-if="sceneryScheduledTrains?.length == 0">
+            Brak aktywnych rozkładów
+          </li>
         </ul>
       </div>
     </div>
@@ -74,20 +97,23 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import axios from 'axios';
-import { ApiSWDR, ApiStacjownik } from '../types/apiTypes';
 import { useStore } from '../store/store';
-import { currentFormattedDate, currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
-import { ISceneryOnline, ISceneryData } from '../types/dataTypes';
+import {
+  currentFormattedDate,
+  currentFormattedHours,
+  currentFormattedMinutes
+} from '../utils/dateUtils';
+import http from '../http';
+import { ISceneryData } from '../types/dataTypes';
+import { API } from '../types/apiTypes';
 
 export default defineComponent({
   name: 'order-train-picker',
 
   data() {
     return {
-      sceneriesData: [] as ISceneryData[],
-      sceneriesOnline: [] as ISceneryOnline[],
-      trainsOnline: [] as ApiStacjownik.IActiveTrain[],
+      sceneriesData: undefined as ISceneryData[] | undefined,
+      activeData: undefined as API.ActiveData.Response | undefined,
 
       selectedSceneryName: null as string | null,
       selectedDispatcherName: null as string | null,
@@ -96,7 +122,7 @@ export default defineComponent({
       fillCheckpointName: false,
 
       refreshInterval: -1,
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -107,10 +133,10 @@ export default defineComponent({
   },
 
   activated() {
-    this.fetchOnlineData();
+    this.fetchActiveData();
 
     this.refreshInterval = window.setInterval(() => {
-      this.fetchOnlineData();
+      this.fetchActiveData();
     }, 35 * 1000);
   },
 
@@ -120,34 +146,41 @@ export default defineComponent({
 
   watch: {
     selectedDispatcherName() {
+      if (!this.sceneryNameList) return null;
+
       this.selectedSceneryName = this.sceneryNameList.length == 0 ? null : this.sceneryNameList[0];
     },
 
     selectedSceneryName() {
-      this.selectedCheckpointName = this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
+      this.selectedCheckpointName =
+        this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
     },
 
     fillCheckpointName(val: boolean) {
       window.localStorage.setItem('fill-checkpoint', `${val}`);
-    },
+    }
   },
 
   computed: {
     selectedSceneryHash() {
-      return this.sceneriesOnline.find((s) => this.selectedSceneryName == s.stationName)?.stationHash;
+      return this.activeData?.activeSceneries?.find(
+        (s) => this.selectedSceneryName == s.stationName
+      )?.stationHash;
     },
 
     sceneriesOnlinePL1() {
-      return this.sceneriesOnline.filter((s) => s.region == 'eu' && s.isOnline);
+      return this.activeData?.activeSceneries?.filter((s) => s.region == 'eu' && s.isOnline);
     },
 
     dispatcherNameList() {
-      return [...new Set(this.sceneriesOnlinePL1.map((s) => s.dispatcherName))].sort((a, b) =>
+      return [...new Set(this.sceneriesOnlinePL1?.map((s) => s.dispatcherName))].sort((a, b) =>
         a.toLocaleLowerCase() < b.toLocaleLowerCase() ? -1 : 1
       );
     },
 
     sceneryNameList() {
+      if (!this.sceneriesOnlinePL1) return [];
+
       return this.sceneriesOnlinePL1
         .filter((s) => s.dispatcherName == this.selectedDispatcherName)
         .map((s) => s.stationName)
@@ -158,7 +191,7 @@ export default defineComponent({
       if (!this.selectedSceneryName) return [];
 
       const name = this.selectedSceneryName;
-      const checkpoints = this.sceneriesData.find(
+      const checkpoints = this.sceneriesData?.find(
         (s) => s.name.toLocaleLowerCase() == name.toLocaleLowerCase()
       )?.checkpoints;
 
@@ -168,8 +201,12 @@ export default defineComponent({
     },
 
     sceneryTrains() {
-      return this.trainsOnline.filter(
-        (t) => t.online && t.currentStationName == this.selectedSceneryName && this.selectedSceneryName && !t.timetable
+      return this.activeData?.trains?.filter(
+        (t) =>
+          t.online &&
+          t.currentStationName == this.selectedSceneryName &&
+          this.selectedSceneryName &&
+          !t.timetable
       );
     },
 
@@ -177,44 +214,23 @@ export default defineComponent({
       if (!this.selectedSceneryHash) return [];
       const hash = this.selectedSceneryHash;
 
-      return this.trainsOnline
-        .filter((t) => t.timetable?.sceneries.includes(hash))
+      return this.activeData?.trains
+        ?.filter((t) => t.timetable?.sceneries.includes(hash))
         .sort((t1, t2) => t1.trainNo - t2.trainNo);
-    },
+    }
   },
 
   methods: {
     async fetchSceneriesData() {
-      const data: ISceneryData[] = await (await axios.get(`${import.meta.env['VITE_APP_API_URL']}/getSceneries`)).data;
-
-      if (!data) return;
+      const data: ISceneryData[] = (await http.get<ISceneryData[]>('api/getSceneries')).data;
 
       this.sceneriesData = data;
     },
 
-    async fetchOnlineData() {
-      this.fetchSceneriesOnline();
-      this.fetchTrainsOnline();
-    },
+    async fetchActiveData() {
+      const data: API.ActiveData.Response = await (await http.get('api/getActiveData')).data;
 
-    async fetchSceneriesOnline() {
-      const data: ApiSWDR.IStationsOnline = await (
-        await axios.get(`${import.meta.env['VITE_APP_SWDR_URL']}/?method=getStationsOnline`)
-      ).data;
-
-      if (!data.success) return;
-
-      this.sceneriesOnline = data.message;
-    },
-
-    async fetchTrainsOnline() {
-      const data: ApiStacjownik.IActiveTrain[] = await (
-        await axios.get(`${import.meta.env['VITE_APP_API_URL']}/getActiveTrainList`)
-      ).data;
-
-      if (!data) return;
-
-      this.trainsOnline = data;
+      this.activeData = data;
     },
 
     fillOrder(trainNo: number) {
@@ -225,18 +241,22 @@ export default defineComponent({
       chosenOrder.header.date = currentFormattedDate();
 
       this.store.orderFooter.dispatcherName = this.selectedDispatcherName;
-      this.store.orderFooter.stationName = this.selectedCheckpointName?.split(',')[0] || this.selectedSceneryName;
+      this.store.orderFooter.stationName =
+        this.selectedCheckpointName?.split(',')[0] || this.selectedSceneryName;
       this.store.orderFooter.hour = currentFormattedHours();
       this.store.orderFooter.minutes = currentFormattedMinutes();
 
       if (this.fillCheckpointName) {
-        const sceneryAbbrev = this.sceneriesData.find(({ name }) => name === this.selectedSceneryName)?.abbr;
-        this.store.orderFooter.checkpointName = sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
+        const sceneryAbbrev = this.sceneriesData?.find(
+          ({ name }) => name === this.selectedSceneryName
+        )?.abbr;
+        this.store.orderFooter.checkpointName =
+          sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
       }
 
       this.store.orderMode = 'OrderMessage';
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -314,4 +334,3 @@ ul.train-list {
   }
 }
 </style>
-

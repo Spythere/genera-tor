@@ -6,7 +6,9 @@
         <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
       </h2>
       <div class="flex-row">
-        dla pociągu nr <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" /> dnia
+        dla pociągu nr
+        <input type="text" v-model="order.header.trainNo" placeholder="nr pociągu" />
+        dnia
         <input type="text" v-model="order.header.date" placeholder="data" />
       </div>
     </section>
@@ -21,10 +23,13 @@
               </div>
             </td>
             <td ref="row-1">
-              Od <input type="text" v-model="order.rows[0].from" holder="stacja / post." /> do
-              <input type="text" v-model="order.rows[0].to" holder="stacja / post." /> tor nr
-              <input type="text" v-model="order.rows[0].trackNo" holder="nr toru" /> jest zamknięty, ruch jednotorowy
-              dwukierunkowy wprowadzono po torze nr
+              Od
+              <input type="text" v-model="order.rows[0].from" holder="stacja / post." />
+              do
+              <input type="text" v-model="order.rows[0].to" holder="stacja / post." />
+              tor nr
+              <input type="text" v-model="order.rows[0].trackNo" holder="nr toru" />
+              jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr
               <input type="text" v-model="order.rows[0].trackNo2" holder="nr toru" />
             </td>
           </tr>
@@ -69,7 +74,8 @@
                         v-model="order.rows[1].signal1"
                         holder="nazwa sem."
                         :radio-checked="
-                          order.rows[1].checkbox == 'checkbox-2a' && order.rows[1].signalType == 'wyjazdowego'
+                          order.rows[1].checkbox == 'checkbox-2a' &&
+                          order.rows[1].signalType == 'wyjazdowego'
                         "
                       />
                     </label>
@@ -89,7 +95,8 @@
                         v-model="order.rows[1].signal2"
                         holder="nazwa sem."
                         :radio-checked="
-                          order.rows[1].checkbox == 'checkbox-2a' && order.rows[1].signalType == 'drogowskazowego'
+                          order.rows[1].checkbox == 'checkbox-2a' &&
+                          order.rows[1].signalType == 'drogowskazowego'
                         "
                       />
                       (odnoszącego się do wyjazdu pociągu)
@@ -110,7 +117,8 @@
                         v-model="order.rows[1].signal3"
                         holder="nazwa sem."
                         :radio-checked="
-                          order.rows[1].checkbox == 'checkbox-2a' && order.rows[1].signalType == 'wjazdowego'
+                          order.rows[1].checkbox == 'checkbox-2a' &&
+                          order.rows[1].signalType == 'wjazdowego'
                         "
                       />
                       na post. odg. bez sem. wyjazdowego
@@ -191,15 +199,19 @@
                 <option value="Popychanie">Popychanie</option>
               </select>
               pociągu odbędzie się w kierunku:
-              <input type="text" v-model="order.rows[2].direction" holder="stacja / post." /> do km
-              <input type="text" v-model="order.rows[2].toKilometer" holder="kilometry" /> skąd
+              <input type="text" v-model="order.rows[2].direction" holder="stacja / post." />
+              do km
+              <input type="text" v-model="order.rows[2].toKilometer" holder="kilometry" />
+              skąd
               <select v-model="order.rows[2].option2">
                 <option value="pociąg">pociąg</option>
                 <option value="popychacz">popychacz</option>
               </select>
               ma wrócić po torze lewym nr
-              <input type="text" v-model="order.rows[2].trackNo" holder="nr toru" /> najpóźniej o godz.
-              <input type="text" v-model="order.rows[2].untilHour" holder="godzina" /> min.
+              <input type="text" v-model="order.rows[2].trackNo" holder="nr toru" />
+              najpóźniej o godz.
+              <input type="text" v-model="order.rows[2].untilHour" holder="godzina" />
+              min.
               <input type="text" v-model="order.rows[2].untilMin" holder="minuta" />
             </td>
           </tr>
@@ -212,13 +224,14 @@
             </td>
             <td ref="row-4">
               <strong>WJAZD</strong> z toru szlakowego nr
-              <input type="text" v-model="order.rows[3].trackNo" holder="nr toru" /> na
+              <input type="text" v-model="order.rows[3].trackNo" holder="nr toru" />
+              na
               <select v-model="order.rows[3].optionStation">
                 <option value="stację">stację</option>
                 <option value="posterunek odgałęźny">posterunek odgałęźny</option>
               </select>
-              <input type="text" v-model="order.rows[3].stationName" holder="stacja / post." /> odbędzie się po
-              otrzymaniu:
+              <input type="text" v-model="order.rows[3].stationName" holder="stacja / post." />
+              odbędzie się po otrzymaniu:
               <div style="margin-top: 0.5rem">
                 <input
                   type="radio"
@@ -259,8 +272,10 @@
             </td>
             <td ref="row-5">
               <strong>ZEZWALAM</strong> wjechać z toru szlakowego nr
-              <input type="text" v-model="order.rows[4].trackNo" holder="nr toru" /> z kierunku
-              <input type="text" v-model="order.rows[4].direction" holder="stacja / post." /> na
+              <input type="text" v-model="order.rows[4].trackNo" holder="nr toru" />
+              z kierunku
+              <input type="text" v-model="order.rows[4].direction" holder="stacja / post." />
+              na
               <select v-model="order.rows[4].stationType">
                 <option value="stację">stację</option>
                 <option value="posterunek odgałęźny">posterunek odgałęźny</option>
@@ -306,7 +321,9 @@ export default defineComponent({
 
         const message = `Od ${row.from || '_'} do ${row.to || '_'} tor nr ${
           row.trackNo || '_'
-        } jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr ${row.trackNo2 || '_'}`;
+        } jest zamknięty, ruch jednotorowy dwukierunkowy wprowadzono po torze nr ${
+          row.trackNo2 || '_'
+        }`;
 
         return message;
       },
@@ -317,20 +334,25 @@ export default defineComponent({
         let message = `ZEZWALAM po otrzymaniu ${row.option1 || '_'}`;
 
         if (row.checkbox == 'checkbox-2a') {
-          message += ` przejechać obok wskazującego sygnał "Stój" semafora ${row.signalType || '_'} `;
+          message += ` przejechać obok wskazującego sygnał "Stój" semafora ${
+            row.signalType || '_'
+          } `;
 
           if (row.signalType == 'wyjazdowego') message += row.signal1 || '_';
           if (row.signalType == 'drogowskazowego')
             message += `${row.signal2 || '_'} (odnoszącego się do wyjazdu pociągu)`;
-          if (row.signalType == 'wjazdowego') message += `${row.signal3 || '_'} na post. odg. bez sem. wyjazdowego`;
+          if (row.signalType == 'wjazdowego')
+            message += `${row.signal3 || '_'} na post. odg. bez sem. wyjazdowego`;
 
-          message += ` i wyjechać w kierunku ${row.direction1 || '_'} na tor szlakowy ${row.option2 || '_'} nr ${
-            row.trackNoTo1 || '_'
-          }`;
+          message += ` i wyjechać w kierunku ${row.direction1 || '_'} na tor szlakowy ${
+            row.option2 || '_'
+          } nr ${row.trackNoTo1 || '_'}`;
         }
 
         if (row.checkbox == 'checkbox-2b') {
-          message += ` z toru nr ${row.trackNoFrom || '_'} nie posiadającego semafora wyjazdowego wyjechać w kierunku ${
+          message += ` z toru nr ${
+            row.trackNoFrom || '_'
+          } nie posiadającego semafora wyjazdowego wyjechać w kierunku ${
             row.direction2 || '_'
           } na tor szlakowy ${row.option3 || '_'} nr ${row.trackNoTo2 || '_'}`;
         }
@@ -341,11 +363,11 @@ export default defineComponent({
       () => {
         const row = order.rows[2];
 
-        let message = `${row.option1 || '_'} pociągu odbędzie się w kierunku: ${row.direction || '_'} do km ${
-          row.toKilometer || '_'
-        } skąd ${row.option2 || '_'} ma wrócić po torze lewym nr ${row.trackNo || '_'} najpóźniej o godz. ${
-          row.untilHour || '_'
-        } min. ${row.untilMin || '_'}`;
+        let message = `${row.option1 || '_'} pociągu odbędzie się w kierunku: ${
+          row.direction || '_'
+        } do km ${row.toKilometer || '_'} skąd ${row.option2 || '_'} ma wrócić po torze lewym nr ${
+          row.trackNo || '_'
+        } najpóźniej o godz. ${row.untilHour || '_'} min. ${row.untilMin || '_'}`;
 
         return message;
       },
@@ -353,15 +375,18 @@ export default defineComponent({
       () => {
         const row = order.rows[3];
 
-        let message = `WJAZD z toru szlakowego nr ${row.trackNo || '_'} na ${row.optionStation || '_'} ${
-          row.stationName || '_'
-        } odbędzie się po otrzymaniu: `;
+        let message = `WJAZD z toru szlakowego nr ${row.trackNo || '_'} na ${
+          row.optionStation || '_'
+        } ${row.stationName || '_'} odbędzie się po otrzymaniu: `;
 
         if (row.checkbox == 'checkbox-4a')
-          message += `sygnału zastępczego "Sz" na osobnym urządzeniu ustawionym z ${row.side || '_'} strony toru`;
+          message += `sygnału zastępczego "Sz" na osobnym urządzeniu ustawionym z ${
+            row.side || '_'
+          } strony toru`;
 
         if (row.checkbox == 'checkbox-4b')
-          message += 'rozkazu pisemnego "N" (doręczonego lub przekazanego przez urządzenia łączności)';
+          message +=
+            'rozkazu pisemnego "N" (doręczonego lub przekazanego przez urządzenia łączności)';
 
         return message;
       },
@@ -371,16 +396,18 @@ export default defineComponent({
 
         const message = `ZEZWALAM wjechać z toru szlakowego nr ${row.trackNo || '_'} z kierunku ${
           row.direction || '_'
-        } na ${row.stationType || '_'} ${row.stationName || '_'} i przejechać obok sygnału "Stój" na ${row.on || '_'} `;
+        } na ${row.stationType || '_'} ${
+          row.stationName || '_'
+        } i przejechać obok sygnału "Stój" na ${row.on || '_'} `;
 
         return message;
-      },
+      }
     ];
 
     return {
       store,
       order,
-      rowMethods,
+      rowMethods
     };
   },
 
@@ -389,14 +416,14 @@ export default defineComponent({
       deep: true,
       handler() {
         this.generateMessage();
-      },
+      }
     },
     'order.rows': {
       deep: true,
       handler() {
         this.updatePlaceholders();
-      },
-    },
+      }
+    }
   },
 
   mounted() {
@@ -433,8 +460,7 @@ export default defineComponent({
       }
 
       this.store.orderMessage = message;
-    },
-  },
+    }
+  }
 });
 </script>
-

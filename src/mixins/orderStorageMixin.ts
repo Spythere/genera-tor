@@ -5,7 +5,7 @@ import { LocalStorageOrder } from '../types/orderTypes';
 export default defineComponent({
   setup() {
     return {
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -23,12 +23,12 @@ export default defineComponent({
     },
 
     saveLocalOrder() {
-      let orderObj: LocalStorageOrder = {
+      const orderObj: LocalStorageOrder = {
         id: '',
         orderType: this.store.chosenOrderType,
         orderBody: this.store[this.store.chosenOrderType],
         orderFooter: this.store.orderFooter,
-        createdAt: Date.now(),
+        createdAt: Date.now()
       };
 
       const headerInfo = orderObj['orderBody']['header'];
@@ -64,12 +64,12 @@ export default defineComponent({
 
       if (!localOrder) return -1;
 
-      let orderObj: LocalStorageOrder = {
+      const orderObj: LocalStorageOrder = {
         id: this.store.chosenLocalOrderId,
         orderType: this.store.chosenOrderType,
         orderBody: this.store[this.store.chosenOrderType],
         orderFooter: this.store.orderFooter,
-        updatedAt: Date.now(),
+        updatedAt: Date.now()
       };
 
       window.localStorage.setItem(this.store.chosenLocalOrderId, JSON.stringify(orderObj));
@@ -98,8 +98,8 @@ export default defineComponent({
         case 'orderN':
         case 'orderS':
           storeOrderObj = this.store[order.orderType];
-          for (let orderKey in storeOrderObj) {
-            for (let propKey in (storeOrderObj as any)[orderKey]) {
+          for (const orderKey in storeOrderObj) {
+            for (const propKey in (storeOrderObj as any)[orderKey]) {
               (storeOrderObj as any)[orderKey][propKey] = localOrderBody[orderKey][propKey];
             }
           }
@@ -116,7 +116,7 @@ export default defineComponent({
           for (let i = 0; i < storeOrderObj['orderList'].length; i++) {
             const orderItem = storeOrderObj['orderList'][i];
 
-            for (let prop in orderItem) {
+            for (const prop in orderItem) {
               (storeOrderObj['orderList'][i] as any)[prop] = localOrderBody['orderList'][i][prop];
             }
           }
@@ -124,12 +124,11 @@ export default defineComponent({
           break;
       }
 
-      for (let key in this.store.orderFooter) {
+      for (const key in this.store.orderFooter) {
         (this.store.orderFooter as any)[key] = localOrderFooter[key];
       }
 
       this.store.orderMode = 'OrderMessage';
-    },
-  },
+    }
+  }
 });
-

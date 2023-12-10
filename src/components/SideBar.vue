@@ -31,22 +31,22 @@ export default defineComponent({
       orderTypeList: [
         {
           id: 'orderN',
-          name: 'N',
+          name: 'N'
         },
         {
           id: 'orderS',
-          name: 'S',
+          name: 'S'
         },
         {
           id: 'orderO',
-          name: 'O',
-        },
-      ],
+          name: 'O'
+        }
+      ]
     };
   },
   setup() {
     return {
-      store: useStore(),
+      store: useStore()
     };
   },
 
@@ -55,8 +55,8 @@ export default defineComponent({
       if (type != this.store.chosenOrderType) this.store.chosenLocalOrderId = '';
 
       this.store.chosenOrderType = type;
-    },
-  },
+    }
+  }
 });
 </script>
 
@@ -143,4 +143,3 @@ button.option-save {
   }
 }
 </style>
-

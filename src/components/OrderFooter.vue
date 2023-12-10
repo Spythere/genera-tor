@@ -36,7 +36,11 @@
           </td>
 
           <td colspan="5">
-            <input type="text" v-model="footerInfo.secondaryDispatcherName" placeholder="dyżurny (wypełnić jedno)" />
+            <input
+              type="text"
+              v-model="footerInfo.secondaryDispatcherName"
+              placeholder="dyżurny (wypełnić jedno)"
+            />
             <br />
             z polecenia dyżurnego ruchu
           </td>
@@ -59,7 +63,7 @@ export default defineComponent({
 
     return {
       store,
-      footerInfo: store.orderFooter,
+      footerInfo: store.orderFooter
     };
   },
 
@@ -68,9 +72,9 @@ export default defineComponent({
       deep: true,
       handler() {
         this.generateFooter();
-      },
-    },
-  },
+      }
+    }
+  }
 });
 </script>
 
