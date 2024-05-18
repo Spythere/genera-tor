@@ -43,7 +43,7 @@
             <td colspan="2">kilometra</td>
           </tr>
 
-          <tr v-for="row in order.orderList" :key="row.name" class="tr-data">
+          <tr v-for="(row, i) in order.orderList" :key="i" class="tr-data">
             <td>
               <textarea v-model="row.name"></textarea>
             </td>
