@@ -202,7 +202,7 @@
               <input type="text" v-model="order.rows[2].hour" holder="godzina" />
             </td>
           </tr>
-          <tr style="height: 255px">
+          <tr style="height: 270px">
             <td>
               <label for="row-enabled-4">4</label>
               <div>
@@ -265,7 +265,13 @@
                 <input type="text" v-model="order.rows[3].w5.maxHour" holder="godzina" />
               </div>
 
-              <textarea id="" cols="30" rows="10" v-model="order.rows[3].content" v-else></textarea>
+              <textarea
+                v-else
+                class="others"
+                cols="30"
+                rows="10"
+                v-model="order.rows[3].content"
+              ></textarea>
             </td>
           </tr>
         </tbody>
@@ -438,11 +444,3 @@ export default defineComponent({
   }
 });
 </script>
-
-<style lang="scss" scoped>
-textarea {
-  width: 95%;
-  height: 200px;
-  resize: none;
-}
-</style>

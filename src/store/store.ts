@@ -137,6 +137,16 @@ export const useStore = defineStore('store', {
             stationType: 'stację',
             stationName: '',
             on: ''
+          },
+          {
+            enabled: false,
+            content: '',
+            twoWay: {
+              enabled: false,
+              from: '',
+              to: '',
+              trackNo: ''
+            }
           }
         ]
       } as IOrderN,
