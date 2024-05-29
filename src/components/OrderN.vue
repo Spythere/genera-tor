@@ -285,6 +285,46 @@
               <input type="text" v-model="order.rows[4].on" holder="nazwa sygnału" />
             </td>
           </tr>
+          <tr style="height: 270px">
+            <td>
+              <label for="row-enabled-6">6</label>
+              <div>
+                <input type="checkbox" id="row-enabled-6" v-model="order.rows[5].enabled" />
+              </div>
+            </td>
+            <td ref="row-6">
+              <button
+                class="g-button text"
+                @click="order.rows[5].twoWay.enabled = !order.rows[5].twoWay.enabled"
+              >
+                &gt;
+                <span v-if="!order.rows[5].twoWay.enabled">
+                  Wygeneruj treść na wprowadzenie ruchu dwukierunkowego
+                </span>
+                <span v-else>Wpisz treść własnoręcznie</span>
+              </button>
+
+              <div>Inne:</div>
+
+              <div v-if="order.rows[5].twoWay.enabled">
+                od
+                <input type="text" v-model="order.rows[5].twoWay.from" holder="stacja / post." />
+                do
+                <input type="text" v-model="order.rows[5].twoWay.to" holder="stacja / post." />
+                po torze nr
+                <input type="text" v-model="order.rows[5].twoWay.trackNo" holder="nr toru" />
+                wprowadzono ruch dwukierunkowy.
+              </div>
+
+              <textarea
+                v-else
+                class="others"
+                cols="30"
+                rows="10"
+                v-model="order.rows[5].content"
+              ></textarea>
+            </td>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -401,6 +441,17 @@ export default defineComponent({
         } i przejechać obok sygnału "Stój" na ${row.on || '_'} `;
 
         return message;
+      },
+
+      () => {
+        const row = order.rows[5];
+
+        if (row.twoWay.enabled)
+          return `Inne: od ${row.twoWay.from || '_'} do ${row.twoWay.to || '_'} po torze nr ${
+            row.twoWay.trackNo || '_'
+          } wprowadzono ruch dwukierunkowy.`;
+
+        return 'Inne: ' + row.content;
       }
     ];
 
@@ -453,7 +504,7 @@ export default defineComponent({
     generateMessage() {
       let message = this.rowMethods[0]();
 
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < this.order.rows.length; i++) {
         if (!this.order.rows[i].enabled) continue;
 
         message += ` <b> [ ${i + 1} ] </b> ${this.rowMethods[i + 1]()}`;

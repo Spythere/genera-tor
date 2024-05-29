@@ -186,4 +186,10 @@ select {
     opacity: 0;
   }
 }
+
+textarea.others {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+}
 </style>

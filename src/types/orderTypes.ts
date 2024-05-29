@@ -66,6 +66,16 @@ export interface IOrderN {
       stationType: string;
       stationName: string;
       on: string;
+    },
+    {
+      enabled: boolean;
+      content: string;
+      twoWay: {
+        enabled: boolean;
+        from: string;
+        to: string;
+        trackNo: string;
+      };
     }
   ];
 }

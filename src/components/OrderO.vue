@@ -65,13 +65,13 @@
           </tr>
         </tbody>
       </table>
-
-      <div class="order_other">
-        <span><b>2.</b> Inne:</span>
-        <br />
-        <textarea v-model="order.other"></textarea>
-      </div>
     </section>
+
+    <div class="order_other">
+      <span><b>2.</b> Inne:</span>
+      <br />
+      <textarea class="others" cols="30" rows="10" v-model="order.other"></textarea>
+    </div>
   </section>
 </template>
 
@@ -189,10 +189,12 @@ th {
   input {
     width: 80%;
   }
+}
 
+.order_table {
   textarea {
-    width: 80%;
-    height: 40px;
+    width: 90%;
+    min-height: 50px;
     resize: vertical;
   }
 }
@@ -203,14 +205,7 @@ th {
 
   display: flex;
   flex-direction: column;
-  height: 285px;
 
   padding: 0.5em;
-
-  textarea {
-    resize: vertical;
-    height: 220px;
-    width: 95%;
-  }
 }
 </style>
