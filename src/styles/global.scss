@@ -221,12 +221,12 @@ label.g-checkbox {
 [data-tooltip]:hover::after,
 [data-tooltip]:focus::after {
   position: absolute;
-  transform: translateX(10px);
 
   content: attr(data-tooltip);
   color: white;
   background: black;
   padding: 0.5em;
+  margin: 0.25em;
   max-width: 300px;
   z-index: 100;
 }
