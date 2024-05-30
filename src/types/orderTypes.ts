@@ -7,6 +7,7 @@ export interface LocalStorageOrder {
   orderFooter: any;
   createdAt?: number;
   updatedAt?: number;
+  orderVersion?: string;
 }
 
 export interface IOrderN {

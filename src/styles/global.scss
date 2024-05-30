@@ -33,7 +33,9 @@ button {
   outline: none;
   background: none;
 
-  transition: all 150ms ease-in;
+  transition:
+    color 90ms ease-in,
+    border 90ms ease-in;
   font-family: 'Libre Franklin', sans-serif;
 
   cursor: pointer;
@@ -46,20 +48,31 @@ button.g-button {
   color: white;
 
   &.action {
-    outline: 2px solid white;
+    border: 2px solid white;
     padding: 0.5em;
 
     &:focus-visible {
-      outline: 2px solid $accentCol;
+      border: 2px solid $accentCol;
+    }
+
+    &:hover {
+      color: $accentCol;
     }
   }
 
   &.option {
+    position: relative;
     margin: 0 0.25em;
     padding: 0.25em;
 
-    &:focus-visible {
-      outline: 1px solid $accentCol;
+    &:focus-visible::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 2px;
+      background-color: $accentCol;
     }
 
     &[data-active='true'] {
@@ -95,6 +108,10 @@ select {
   padding: 0.1em 0;
   border-radius: 0.3em;
   text-align: center;
+
+  &:hover {
+    border: 2px solid $accentCol;
+  }
 }
 
 // List style
@@ -194,4 +211,22 @@ label.g-checkbox {
       }
     }
   }
+}
+
+// Tooltip
+[data-tooltip] {
+  cursor: pointer;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus::after {
+  position: absolute;
+  transform: translateX(10px);
+
+  content: attr(data-tooltip);
+  color: white;
+  background: black;
+  padding: 0.5em;
+  max-width: 300px;
+  z-index: 100;
 }
