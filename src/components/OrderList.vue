@@ -15,15 +15,25 @@
         <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
         <b>
           {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla
-          pociągu nr
-          {{ order.orderBody['header']['trainNo'] }}
+          pociągu nr {{ order.orderBody['header']['trainNo'] }}
         </b>
+        <span
+          v-if="!order.orderVersion || order.orderVersion != ORDER_VERSION"
+          class="wrong-order-indicator"
+          tabindex="0"
+          data-tooltip="Przestarzała wersja rozkazu! Może generować złe informacje!"
+          >&#9888;
+        </span>
         <br />
         {{ order.createdAt ? 'Dodano: ' : 'Zaktualizowano: ' }}
         {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
-        <br />
-        <button class="g-button action" @click="selectLocalOrder(order)">Wybierz</button>
-        <button class="g-button action" @click="removeOrder(order)">Usuń</button>
+
+        <hr />
+
+        <div class="buttons">
+          <button class="g-button action" @click="selectLocalOrder(order)">Wybierz</button>
+          <button class="g-button action" @click="removeOrder(order)">Usuń</button>
+        </div>
       </li>
     </transition-group>
   </section>
@@ -41,7 +51,8 @@ export default defineComponent({
 
   data() {
     return {
-      localOrderList: [] as LocalStorageOrder[]
+      localOrderList: [] as LocalStorageOrder[],
+      ORDER_VERSION: import.meta.env['VITE_APP_ORDER_VERSION']
     };
   },
 
@@ -117,9 +128,13 @@ export default defineComponent({
   overflow: auto;
 }
 
+hr {
+  border: 1px solid #aaa;
+  height: 0;
+}
+
 ul {
   overflow: hidden;
-  position: relative;
 }
 
 h3 {
@@ -144,17 +159,24 @@ li {
 
   cursor: pointer;
 
-  button {
-    margin: 1em 1em 0 0;
-  }
-
   &[selected='true'] {
     outline: 1px solid $accentCol;
   }
+
   &.no-orders-warning {
     text-align: center;
     font-size: 1.2em;
     cursor: default;
   }
+}
+
+.wrong-order-indicator {
+  color: $accentCol;
+  padding: 0 0.25em;
+}
+
+.buttons {
+  display: flex;
+  gap: 0.5em;
 }
 </style>

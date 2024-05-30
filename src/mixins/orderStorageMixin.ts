@@ -2,6 +2,11 @@ import { defineComponent } from 'vue';
 import { useStore } from '../store/store';
 import { LocalStorageOrder } from '../types/orderTypes';
 
+function alertWrongOrderFormat() {
+  alert('Wystąpił błąd podczas przetwarzania rozkazu! Informacje mogą być niepoprawne!');
+  console.warn('Zły format zapisanego rozkazu!');
+}
+
 export default defineComponent({
   setup() {
     return {
@@ -28,7 +33,8 @@ export default defineComponent({
         orderType: this.store.chosenOrderType,
         orderBody: this.store[this.store.chosenOrderType],
         orderFooter: this.store.orderFooter,
-        createdAt: Date.now()
+        createdAt: Date.now(),
+        orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '1'
       };
 
       const headerInfo = orderObj['orderBody']['header'];
@@ -69,7 +75,8 @@ export default defineComponent({
         orderType: this.store.chosenOrderType,
         orderBody: this.store[this.store.chosenOrderType],
         orderFooter: this.store.orderFooter,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
+        orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '1'
       };
 
       window.localStorage.setItem(this.store.chosenLocalOrderId, JSON.stringify(orderObj));
@@ -84,50 +91,72 @@ export default defineComponent({
       // localStorage.setItem('orderCount', (Number(localStorage.getItem('orderCount')) - 1).toString());
     },
 
-    selectLocalOrder(order: LocalStorageOrder) {
-      this.store.chosenOrderType = order.orderType;
-      this.store.chosenLocalOrderId = order.id;
+    selectLocalOrder(localOrder: LocalStorageOrder) {
+      // const localOrder = JSON.parse(JSON.stringify(order));
+      const { orderBody: localOrderBody, orderFooter: localOrderFooter } = localOrder;
 
-      const localOrder = JSON.parse(JSON.stringify(order));
-      const localOrderBody = localOrder['orderBody'];
-      const localOrderFooter = localOrder['orderFooter'];
+      this.store[localOrder.orderType].header.date = localOrderBody.header.date;
+      this.store[localOrder.orderType].header.orderNo = localOrderBody.header.orderNo;
+      this.store[localOrder.orderType].header.trainNo = localOrderBody.header.trainNo;
 
-      let storeOrderObj;
+      if (localOrder.orderType == 'orderN' || localOrder.orderType == 'orderS') {
+        const currentOrder = this.store[localOrder.orderType];
 
-      switch (order.orderType) {
-        case 'orderN':
-        case 'orderS':
-          storeOrderObj = this.store[order.orderType];
-          for (const orderKey in storeOrderObj) {
-            for (const propKey in (storeOrderObj as any)[orderKey]) {
-              (storeOrderObj as any)[orderKey][propKey] = localOrderBody[orderKey][propKey];
-            }
+        if (localOrderBody.rows.length != currentOrder.rows.length) {
+          alertWrongOrderFormat();
+          return;
+        }
+
+        for (let rowIndex = 0; rowIndex < currentOrder.rows.length; rowIndex++) {
+          const row = currentOrder.rows[rowIndex];
+
+          if (localOrderBody.rows[rowIndex] === undefined) {
+            alertWrongOrderFormat();
+            continue;
           }
 
-          break;
-        case 'orderO':
-          storeOrderObj = this.store[order.orderType];
-
-          storeOrderObj['other'] = localOrderBody['other'];
-          storeOrderObj['header']['date'] = localOrderBody['header']['date'];
-          storeOrderObj['header']['orderNo'] = localOrderBody['header']['orderNo'];
-          storeOrderObj['header']['trainNo'] = localOrderBody['header']['trainNo'];
-
-          for (let i = 0; i < storeOrderObj['orderList'].length; i++) {
-            const orderItem = storeOrderObj['orderList'][i];
-
-            for (const prop in orderItem) {
-              (storeOrderObj['orderList'][i] as any)[prop] = localOrderBody['orderList'][i][prop];
+          for (const rowProp in row) {
+            if (localOrderBody.rows[rowIndex][rowProp] === undefined) {
+              alertWrongOrderFormat();
+              continue;
             }
+
+            (currentOrder.rows[rowIndex] as any)[rowProp] = localOrderBody.rows[rowIndex][rowProp];
+          }
+        }
+      }
+
+      if (localOrder.orderType == 'orderO') {
+        const currentOrder = this.store[localOrder.orderType];
+
+        for (let rowIndex = 0; rowIndex < currentOrder.orderList.length; rowIndex++) {
+          const row = currentOrder.orderList[rowIndex];
+
+          if (localOrderBody.orderList[rowIndex] === undefined) {
+            alertWrongOrderFormat();
+            continue;
           }
 
-          break;
+          for (const rowProp in row) {
+            if (localOrderBody.orderList[rowIndex][rowProp] === undefined) {
+              alertWrongOrderFormat();
+              continue;
+            }
+
+            (currentOrder.orderList[rowIndex] as any)[rowProp] =
+              localOrderBody.orderList[rowIndex][rowProp];
+          }
+        }
+
+        currentOrder.other = localOrderBody.other;
       }
 
       for (const key in this.store.orderFooter) {
         (this.store.orderFooter as any)[key] = localOrderFooter[key];
       }
 
+      this.store.chosenOrderType = localOrder.orderType;
+      this.store.chosenLocalOrderId = localOrder.id;
       this.store.orderMode = 'OrderMessage';
     }
   }
