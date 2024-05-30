@@ -155,8 +155,6 @@ export default defineComponent({
         (this.store.orderFooter as any)[key] = localOrderFooter[key];
       }
 
-      console.log('loading');
-
       this.store.chosenOrderType = localOrder.orderType;
       this.store.chosenLocalOrderId = localOrder.id;
       this.store.orderMode = 'OrderMessage';

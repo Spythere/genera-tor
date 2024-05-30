@@ -21,7 +21,7 @@
           v-if="!order.orderVersion || order.orderVersion != ORDER_VERSION"
           class="wrong-order-indicator"
           tabindex="0"
-          data-tooltip="Niepoprawny format rozkazu, może generować złe informacje!"
+          data-tooltip="Przestarzała wersja rozkazu! Może generować złe informacje!"
           >&#9888;
         </span>
         <br />
