@@ -239,6 +239,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "../styles/global.scss";
+
 .order-message {
   h3 {
     margin: 0;
@@ -254,11 +256,12 @@ export default defineComponent({
 .message_body {
   height: 250px;
   overflow: auto;
+  
+  background-color: $bgColLighter;
+  color: white;
   text-align: justify;
 
-  background-color: #fff;
   border-radius: 0.5em;
-  color: black;
   padding: 0.5em;
   user-select: none;
   -moz-user-select: none;

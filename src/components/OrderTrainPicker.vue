@@ -288,20 +288,16 @@ export default defineComponent({
   }
 
   select {
-    border: 2px solid white;
-    color: white;
+    background-color: $bgColDarker;
+
     font-size: 1em;
     width: 100%;
-    margin: 0;
-    padding: 0.15em;
+
+
 
     &[disabled] {
       color: gray;
     }
-  }
-
-  option {
-    color: black;
   }
 }
 
@@ -319,7 +315,7 @@ export default defineComponent({
 
 ul.train-list {
   li {
-    background-color: #111;
+    background-color: $bgColDarker;
     padding: 0.5em;
     margin-top: 0.5em;
 
@@ -327,7 +323,6 @@ ul.train-list {
 
     &.no-trains {
       font-weight: bold;
-      background-color: #222;
 
       cursor: default;
     }

@@ -1,5 +1,5 @@
 <template>
-  <div class="order">
+  <div class="order dark">
     <div class="order_content">
       <transition name="order-anim" mode="out-in">
         <keep-alive>
@@ -47,28 +47,18 @@ export default defineComponent({
 <style lang="scss">
 @import '../styles/global.scss';
 
-// Order scrollbar
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #fff;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #ccc;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #aaa;
-}
+$darkModeBgCol: $bgColDarker;
+$darkModeTextCol: #eee;
 
 .order {
   background-color: white;
   color: black;
 
-  height: 925px;
+  &.dark {
+    background-color: $darkModeBgCol;
+    color: $darkModeTextCol;
+  }
+
   max-height: 95vh;
   overflow: auto;
 
@@ -79,15 +69,39 @@ export default defineComponent({
     padding: 0;
   }
 
-  .header {
-    padding: 0.5em;
-    border: 2px solid black;
-    border-bottom: none;
+  textarea:focus-visible {
+    outline: 2px solid $accentCol;
+  }
+
+  input[type='checkbox']:focus-visible,
+  input[type='radio']:focus-visible {
+    outline: 2px solid $accentCol;
+  }
+
+  input[type='checkbox'],
+  input[type='radio'],
+  select {
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    font-size: 0.8em;
+    color: black;
+  }
+
+  textarea.others {
+    width: 100%;
+    min-height: 200px;
+    resize: vertical;
   }
 
   @media screen and (max-width: 550px) {
     font-size: 3vw;
   }
+}
+
+.order_header {
+  padding: 0.5em;
+  border: 2px solid black;
+  border-bottom: none;
 }
 
 .order_content {
@@ -112,16 +126,22 @@ export default defineComponent({
   align-items: center;
 }
 
-input {
+.horizontal-bar {
+  width: 100%;
+  height: 2px;
+
+  background-color: black;
+  margin: 0.5em 0;
+}
+
+.order input {
   max-width: 100px;
   background-color: transparent;
   outline: none;
   border: none;
 
-  border-bottom: 2px dotted black;
-  font-size: 0.9em;
   text-align: center;
-  color: black;
+  border-bottom: 2px dotted black;
 
   &:focus-visible {
     border-bottom: 2px solid $accentCol;
@@ -132,23 +152,48 @@ input {
   }
 }
 
-input[type='checkbox'],
-input[type='radio'],
-textarea,
-select {
-  &:focus-visible {
-    outline: 2px solid $accentCol;
+/* Dark mode */
+.order.dark {
+  input {
+    border-color: $darkModeTextCol !important;
+    color: $darkModeTextCol !important;
+
+    &:focus-visible {
+      border-bottom: 2px solid $accentCol !important;
+    }
+
+    &::placeholder {
+      color: #ccc !important;
+    }
+  }
+
+  select {
+    color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol !important;
+  }
+
+  option,
+  textarea {
+    color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol !important;
+    background-color: $bgColDarker !important;
+  }
+
+  .horizontal-bar {
+    background-color: white;
+  }
+
+  .order_header,
+  .order_other,
+  table,
+  tr,
+  td {
+    border-color: $darkModeTextCol !important;
   }
 }
 
-select {
-  margin-top: 0.5em;
-  margin-right: 0.5em;
-  font-size: 0.8em;
-}
-
-.table-section {
-  table.options-table {
+.order_table-container {
+  table {
     width: 100%;
 
     td:first-child {
@@ -185,11 +230,5 @@ select {
   &-leave-to {
     opacity: 0;
   }
-}
-
-textarea.others {
-  width: 100%;
-  min-height: 200px;
-  resize: vertical;
 }
 </style>

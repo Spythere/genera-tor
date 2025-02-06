@@ -1,6 +1,6 @@
 <template>
   <section class="order-n">
-    <section class="header" ref="header">
+    <section class="order_header" ref="header">
       <h2 class="flex-center">
         Rozkaz pisemny "N" nr
         <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
@@ -12,8 +12,9 @@
         <input type="text" v-model="order.header.date" placeholder="data" />
       </div>
     </section>
-    <section class="table-section">
-      <table class="options-table">
+
+    <section class="order_table-container">
+      <table>
         <tbody>
           <tr>
             <td>

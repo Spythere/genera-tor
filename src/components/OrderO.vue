@@ -159,16 +159,6 @@ th {
 
 .order_header {
   padding: 0.5em 0;
-  border: 2px solid black;
-  border-bottom: none;
-}
-
-.horizontal-bar {
-  width: 100%;
-  height: 2px;
-
-  background-color: black;
-  margin: 0.5em 0;
 }
 
 .order_table {

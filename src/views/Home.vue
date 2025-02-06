@@ -138,8 +138,7 @@ export default defineComponent({
     grid-template-rows: auto 1fr;
     overflow: hidden;
 
-    max-height: 95vh;
-    min-height: 600px;
+    height: 95vh;
   }
 
   .message_nav {

@@ -146,7 +146,7 @@ h3 {
   margin-bottom: 1em;
   text-align: center;
 
-  background-color: #222;
+  background-color: $bgColDarker;
   padding: 1em;
   margin-bottom: 0.5em;
 }
@@ -155,7 +155,7 @@ li {
   text-align: left;
   padding: 1em;
   margin: 0.5em;
-  background-color: #222;
+  background-color: $bgColDarker;
 
   cursor: pointer;
 
