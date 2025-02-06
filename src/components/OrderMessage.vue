@@ -24,6 +24,17 @@
     </div>
 
     <div class="message_checkboxes">
+      <label for="dark-mode" class="g-checkbox">
+        <input
+          type="checkbox"
+          name="dark-mode"
+          id="dark-mode"
+          v-model="store.orderDarkMode"
+          @change="onCheckboxChange"
+        />
+        <span>Ciemny motyw rozkazu</span>
+      </label>
+
       <label for="copy-increment" class="g-checkbox">
         <input
           type="checkbox"
@@ -34,6 +45,7 @@
         />
         <span>Aktualizuj numer rozkazu po skopiowaniu</span>
       </label>
+      
       <label for="save-increment" class="g-checkbox">
         <input
           type="checkbox"
@@ -44,6 +56,7 @@
         />
         <span>Aktualizuj numer rozkazu po zapisaniu</span>
       </label>
+
       <label for="update-date" class="g-checkbox">
         <input
           type="checkbox"
@@ -98,6 +111,8 @@ export default defineComponent({
     this.incrementOnSave = this.getOrderSetting('save-increment') === 'true';
     this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'true';
     this.updateDate = this.getOrderSetting('update-date') === 'true';
+    
+    this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
   },
 
   computed: {
@@ -239,7 +254,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import "../styles/global.scss";
+@import '../styles/global.scss';
 
 .order-message {
   h3 {
@@ -256,7 +271,7 @@ export default defineComponent({
 .message_body {
   height: 250px;
   overflow: auto;
-  
+
   background-color: $bgColLighter;
   color: white;
   text-align: justify;
@@ -292,6 +307,8 @@ export default defineComponent({
 }
 
 .message_checkboxes {
+  display: flex;
+  flex-direction: column;
   margin-top: 1em;
 }
 

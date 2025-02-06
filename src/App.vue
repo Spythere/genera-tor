@@ -36,16 +36,11 @@ export default defineComponent({
   data() {
     return {
       appVersion: packageInfo.version,
-      needRefreshTest: false
     };
   },
 
   created() {
     document.title = `GeneraTOR ${this.appVersion}`;
-
-    setTimeout(() => {
-      this.needRefreshTest = true;
-    }, 500);
   }
 });
 </script>

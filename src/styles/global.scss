@@ -194,17 +194,18 @@ label.g-checkbox {
   cursor: pointer;
   color: #aaa;
 
+  user-select: none;
+  -moz-user-select: none;
+
   span {
     transition: color 125ms ease;
   }
 
   span::before {
-    content: '';
+    content: '\2717';
     display: inline-block;
-    width: 1ch;
-    height: 1ch;
 
-    background-color: #aaa;
+    // background-color: #aaa;
     border-radius: 50%;
     margin-right: 0.25em;
 
@@ -223,7 +224,8 @@ label.g-checkbox {
       color: greenyellow;
 
       &::before {
-        background-color: greenyellow;
+        content: '\2713';
+        // background-color: greenyellow;
       }
     }
   }

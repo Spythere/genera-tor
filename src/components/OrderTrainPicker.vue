@@ -2,28 +2,21 @@
   <div class="order-train-picker">
     <div class="options">
       <label for="dispatcher-select">
-        <select name="dispatcher-select" id="dispatcher-select" v-model="selectedDispatcherName">
-          <option :value="null" disabled>Nick dyżurnego</option>
-          <option
-            v-for="dispatcherName in dispatcherNameList"
-            :value="dispatcherName"
-            :key="dispatcherName"
-          >
-            {{ dispatcherName }}
-          </option>
-        </select>
-      </label>
-
-      <label for="scenery-select">
         <select
-          name="scenery-select"
-          id="scenery-select"
-          v-model="selectedSceneryName"
-          :disabled="!sceneryNameList || sceneryNameList.length == 0"
+          name="dispatcher-select"
+          id="dispatcher-select"
+          v-model="selectedSceneryId"
+          @change="selectSceneryOption"
         >
           <option :value="null" disabled>Sceneria</option>
-          <option :value="sceneryName" v-for="sceneryName in sceneryNameList" :key="sceneryName">
-            {{ sceneryName }}
+          <option
+            v-for="scenery in filteredSceneries"
+            :value="`${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}`"
+            :key="scenery.dispatcherName + scenery.stationName"
+          >
+            {{ scenery.stationName }} &bull; {{ scenery.dispatcherName }} [{{
+              getRegionNameById(scenery.region)
+            }}]
           </option>
         </select>
       </label>
@@ -33,7 +26,7 @@
           name="checkpoint-select"
           id="checkpoint-select"
           v-model="selectedCheckpointName"
-          :disabled="!sceneryNameList || sceneryNameList.length == 0"
+          :disabled="!selectedScenery"
         >
           <option :value="null" disabled>Posterunek</option>
           <option :value="cp" v-for="cp in checkpointNameList" :key="cp">
@@ -49,45 +42,45 @@
           id="fill-checkpoint"
           v-model="fillCheckpointName"
         />
-        <span> Uzupełniaj skrót post.</span>
+        <span> Uzupełniaj skrót wybranego posterunku</span>
       </label>
     </div>
 
     <div class="content">
-      <b v-if="!selectedSceneryName" class="text--accent">
+      <b v-if="!selectedSceneryId" class="text--accent">
         Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi
       </b>
 
       <div v-else>
-        <b class="text--accent">Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi</b>
+        <div style="margin-bottom: 0.5em">
+          <h3 style="margin-bottom: 0.5em">Aktywne RJ i gracze na scenerii</h3>
+          <b class="text--accent">Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi</b>
+        </div>
 
-        <p>Gracze online bez RJ</p>
         <ul class="train-list">
           <li
             v-for="train in sceneryTrains"
             :key="train.trainNo + train.driverName"
             @click="fillOrder(train.trainNo)"
           >
-            <b>{{ train.trainNo }} | {{ train.driverName }}</b>
+            <button class="g-button">
+              <span
+                v-if="train.currentStationName == selectedScenery?.stationName"
+                class="online-indicator"
+              ></span>
+
+              <b>
+                {{ train.driverName }} &bull;
+                <span v-if="train.timetable" style="color: gold">{{
+                  train.timetable.category
+                }}</span>
+                {{ train.trainNo }}
+              </b>
+            </button>
           </li>
 
-          <li class="no-trains" v-if="sceneryTrains?.length == 0 && selectedSceneryName">
+          <li class="no-trains" v-if="sceneryTrains?.length == 0 && selectedSceneryId">
             Brak graczy
-          </li>
-        </ul>
-
-        <p>Aktywne rozkłady jazdy</p>
-        <ul class="train-list">
-          <li
-            v-for="train in sceneryScheduledTrains"
-            :key="train.trainNo + train.driverName"
-            @click="fillOrder(train.trainNo)"
-          >
-            <b>{{ train.trainNo }} | {{ train.driverName }}</b>
-          </li>
-
-          <li class="no-trains" v-if="sceneryScheduledTrains?.length == 0">
-            Brak aktywnych rozkładów
           </li>
         </ul>
       </div>
@@ -106,6 +99,7 @@ import {
 import http from '../http';
 import { ISceneryData } from '../types/dataTypes';
 import { API } from '../types/apiTypes';
+import { getRegionNameById } from '../utils/sceneryUtils';
 
 export default defineComponent({
   name: 'order-train-picker',
@@ -115,8 +109,7 @@ export default defineComponent({
       sceneriesData: undefined as ISceneryData[] | undefined,
       activeData: undefined as API.ActiveData.Response | undefined,
 
-      selectedSceneryName: null as string | null,
-      selectedDispatcherName: null as string | null,
+      selectedSceneryId: null as string | null,
       selectedCheckpointName: null as string | null,
 
       fillCheckpointName: false,
@@ -137,7 +130,7 @@ export default defineComponent({
 
     this.refreshInterval = window.setInterval(() => {
       this.fetchActiveData();
-    }, 35 * 1000);
+    }, 25 * 1000);
   },
 
   deactivated() {
@@ -145,82 +138,64 @@ export default defineComponent({
   },
 
   watch: {
-    selectedDispatcherName() {
-      if (!this.sceneryNameList) return null;
-
-      this.selectedSceneryName = this.sceneryNameList.length == 0 ? null : this.sceneryNameList[0];
-    },
-
-    selectedSceneryName() {
-      this.selectedCheckpointName =
-        this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
-    },
-
     fillCheckpointName(val: boolean) {
       window.localStorage.setItem('fill-checkpoint', `${val}`);
     }
   },
 
   computed: {
-    selectedSceneryHash() {
+    selectedScenery() {
       return this.activeData?.activeSceneries?.find(
-        (s) => this.selectedSceneryName == s.stationName
-      )?.stationHash;
-    },
-
-    sceneriesOnlinePL1() {
-      return this.activeData?.activeSceneries?.filter((s) => s.region == 'eu' && s.isOnline);
-    },
-
-    dispatcherNameList() {
-      return [...new Set(this.sceneriesOnlinePL1?.map((s) => s.dispatcherName))].sort((a, b) =>
-        a.toLocaleLowerCase() < b.toLocaleLowerCase() ? -1 : 1
+        (scenery) =>
+          this.selectedSceneryId ==
+          `${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}`
       );
     },
 
-    sceneryNameList() {
-      if (!this.sceneriesOnlinePL1) return [];
-
-      return this.sceneriesOnlinePL1
-        .filter((s) => s.dispatcherName == this.selectedDispatcherName)
-        .map((s) => s.stationName)
-        .sort((a, b) => (a < b ? -1 : 1));
+    filteredSceneries() {
+      return this.activeData?.activeSceneries
+        ?.filter((s) => s.isOnline)
+        .sort((s1, s2) => s1.stationName.localeCompare(s2.stationName));
     },
 
     checkpointNameList() {
-      if (!this.selectedSceneryName) return [];
+      if (!this.selectedScenery) return [];
 
-      const name = this.selectedSceneryName;
-      const checkpoints = this.sceneriesData?.find(
-        (s) => s.name.toLocaleLowerCase() == name.toLocaleLowerCase()
-      )?.checkpoints;
+      const checkpoints =
+        this.sceneriesData?.find((s) => s.name == this.selectedScenery?.stationName)?.checkpoints ??
+        '';
 
-      if (!checkpoints || checkpoints.length == 0) return [name];
+      if (checkpoints.length == 0) return [this.selectedScenery.stationName];
 
       return checkpoints.split(';');
     },
 
     sceneryTrains() {
-      return this.activeData?.trains?.filter(
-        (t) =>
-          t.online &&
-          t.currentStationName == this.selectedSceneryName &&
-          this.selectedSceneryName &&
-          !t.timetable
-      );
-    },
+      if (!this.selectedScenery || !this.activeData?.trains) return [];
 
-    sceneryScheduledTrains() {
-      if (!this.selectedSceneryHash) return [];
-      const hash = this.selectedSceneryHash;
+      const scenery = this.selectedScenery;
 
-      return this.activeData?.trains
-        ?.filter((t) => t.timetable?.sceneries.includes(hash))
-        .sort((t1, t2) => t1.trainNo - t2.trainNo);
+      return this.activeData.trains
+        ?.filter(
+          (t) =>
+            (t.currentStationName == scenery.stationName &&
+              t.region == scenery.region &&
+              (t.online || t.lastSeen < Date.now() - 60000)) ||
+            t.timetable?.path.includes(`${scenery.stationName} ${scenery.stationHash}.sc`)
+        )
+        .sort((t1, t2) => {
+          return (
+            (t2.currentStationName == scenery.stationName ? 1 : -1) -
+              (t1.currentStationName == scenery.stationName ? 1 : -1) ||
+            t1.driverName.localeCompare(t2.driverName)
+          );
+        });
     }
   },
 
   methods: {
+    getRegionNameById,
+
     async fetchSceneriesData() {
       const data: ISceneryData[] = (await http.get<ISceneryData[]>('api/getSceneries')).data;
 
@@ -233,22 +208,27 @@ export default defineComponent({
       this.activeData = data;
     },
 
+    selectSceneryOption() {
+      this.selectedCheckpointName =
+        this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
+    },
+
     fillOrder(trainNo: number) {
-      if (!this.selectedDispatcherName || !this.selectedSceneryName) return;
+      if (!this.selectedScenery) return;
 
       const chosenOrder = this.store[this.store.chosenOrderType];
       chosenOrder.header.trainNo = trainNo.toString();
       chosenOrder.header.date = currentFormattedDate();
 
-      this.store.orderFooter.dispatcherName = this.selectedDispatcherName;
+      this.store.orderFooter.dispatcherName = this.selectedScenery.stationName;
       this.store.orderFooter.stationName =
-        this.selectedCheckpointName?.split(',')[0] || this.selectedSceneryName;
+        this.selectedCheckpointName?.split(',')[0] || this.selectedScenery.stationName;
       this.store.orderFooter.hour = currentFormattedHours();
       this.store.orderFooter.minutes = currentFormattedMinutes();
 
       if (this.fillCheckpointName) {
         const sceneryAbbrev = this.sceneriesData?.find(
-          ({ name }) => name === this.selectedSceneryName
+          ({ name }) => name === this.selectedSceneryId
         )?.abbr;
         this.store.orderFooter.checkpointName =
           sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
@@ -264,27 +244,22 @@ export default defineComponent({
 @import '../styles/global.scss';
 
 .order-train-picker {
-  height: 90vh;
-
-  overflow-y: auto;
-
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
+  padding: 0 0.5em;
 }
 
 .options {
   display: flex;
-  width: 100%;
-  justify-content: center;
-  gap: 1em;
   flex-wrap: wrap;
+  width: 100%;
+  gap: 0.5em;
 
   label {
-    width: 45%;
-
-    display: flex;
-    align-items: center;
+    width: 100%;
+    text-align: center;
   }
 
   select {
@@ -292,8 +267,6 @@ export default defineComponent({
 
     font-size: 1em;
     width: 100%;
-
-
 
     &[disabled] {
       color: gray;
@@ -305,27 +278,41 @@ export default defineComponent({
   margin-top: 1em;
   width: 100%;
   text-align: center;
-
-  p {
-    margin: 1em 0;
-    font-weight: bold;
-    font-size: 1.1em;
-  }
 }
 
 ul.train-list {
-  li {
+  padding: 1px;
+
+  li.no-trains {
+    font-weight: bold;
+    background-color: $bgColDarker;
+    padding: 0.5em;
+    margin-top: 0.5em;
+  }
+
+  li > button {
+    width: 100%;
     background-color: $bgColDarker;
     padding: 0.5em;
     margin-top: 0.5em;
 
-    cursor: pointer;
+    &:hover {
+      background-color: $bgColLighter;
+    }
 
-    &.no-trains {
-      font-weight: bold;
-
-      cursor: default;
+    &:focus-visible {
+      outline: 1px solid $accentCol;
     }
   }
+}
+
+.online-indicator {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  vertical-align: middle;
+  background-color: greenyellow;
+  border-radius: 100%;
+  margin: 0 5px;
 }
 </style>

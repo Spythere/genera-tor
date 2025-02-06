@@ -100,6 +100,7 @@ export declare module API {
       TWR: boolean;
       SKR: boolean;
       sceneries: string[];
+      path: string;
     }
   }
 }

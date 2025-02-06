@@ -1,5 +1,5 @@
 <template>
-  <div class="order dark">
+  <div class="order" :class="{ dark: store.orderDarkMode }">
     <div class="order_content">
       <transition name="order-anim" mode="out-in">
         <keep-alive>
