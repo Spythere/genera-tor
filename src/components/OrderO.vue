@@ -2,7 +2,7 @@
   <section class="order-o">
     <section class="order_header">
       <h2 class="flex-center" style="padding: 0 0.5em">
-        Rozkaz pisemny "O" nr
+        Rozkaz pisemny "O" nr &nbsp;
         <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
       </h2>
 

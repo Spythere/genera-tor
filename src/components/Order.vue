@@ -139,6 +139,7 @@ $darkModeTextCol: #eee;
   background-color: transparent;
   outline: none;
   border: none;
+  font-size: 1em;
 
   text-align: center;
   border-bottom: 2px dotted black;
