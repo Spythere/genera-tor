@@ -1,12 +1,12 @@
 <template>
   <div class="order-train-picker">
     <div class="options">
-      <label for="dispatcher-select">
+      <div class="options-top">
         <select
           name="dispatcher-select"
           id="dispatcher-select"
           v-model="selectedSceneryId"
-          @change="selectSceneryOption"
+          @change="selectOption"
         >
           <option :value="null" disabled>Sceneria</option>
           <option
@@ -14,26 +14,41 @@
             :value="`${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}`"
             :key="scenery.dispatcherName + scenery.stationName"
           >
-            {{ scenery.stationName }} &bull; {{ scenery.dispatcherName }} [{{
-              getRegionNameById(scenery.region)
-            }}]
+            {{ scenery.stationName }} &bull; {{ scenery.dispatcherName }}
           </option>
         </select>
-      </label>
 
-      <label for="checkpoint-select">
         <select
-          name="checkpoint-select"
-          id="checkpoint-select"
-          v-model="selectedCheckpointName"
-          :disabled="!selectedScenery"
+          name="region-select"
+          id="region-select"
+          v-model="selectedRegion"
+          @change="selectOption"
         >
-          <option :value="null" disabled>Posterunek</option>
-          <option :value="cp" v-for="cp in checkpointNameList" :key="cp">
-            {{ cp }}
+          <option :value="null" disabled>Region</option>
+          <option v-for="region in regions" :value="region" :key="region">
+            {{ getRegionNameById(region) }}
           </option>
+          <!-- <option
+                v-for="scenery in filteredSceneries"
+                :value="`${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}`"
+                :key="scenery.dispatcherName + scenery.stationName"
+              >
+                
+              </option> -->
         </select>
-      </label>
+      </div>
+
+      <select
+        name="checkpoint-select"
+        id="checkpoint-select"
+        v-model="selectedCheckpointName"
+        :disabled="!selectedScenery"
+      >
+        <option :value="null" disabled>Posterunek</option>
+        <option :value="cp" v-for="cp in checkpointNameList" :key="cp">
+          {{ cp }}
+        </option>
+      </select>
 
       <label for="fill-checkpoint" class="g-checkbox">
         <input
@@ -111,11 +126,14 @@ export default defineComponent({
 
       selectedSceneryId: null as string | null,
       selectedCheckpointName: null as string | null,
+      selectedRegion: 'eu',
 
       fillCheckpointName: false,
 
       refreshInterval: -1,
-      store: useStore()
+      store: useStore(),
+
+      regions: ['eu', 'cae', 'usw', 'us', 'ru']
     };
   },
 
@@ -148,13 +166,14 @@ export default defineComponent({
       return this.activeData?.activeSceneries?.find(
         (scenery) =>
           this.selectedSceneryId ==
-          `${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}`
+            `${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}` &&
+          this.selectedRegion == scenery.region
       );
     },
 
     filteredSceneries() {
       return this.activeData?.activeSceneries
-        ?.filter((s) => s.isOnline)
+        ?.filter((s) => s.isOnline && s.region == this.selectedRegion)
         .sort((s1, s2) => s1.stationName.localeCompare(s2.stationName));
     },
 
@@ -180,7 +199,7 @@ export default defineComponent({
           (t) =>
             (t.currentStationName == scenery.stationName &&
               t.region == scenery.region &&
-              (t.online || t.lastSeen < Date.now() - 60000)) ||
+              (t.online || t.lastSeen >= Date.now() - 60000)) ||
             t.timetable?.path.includes(`${scenery.stationName} ${scenery.stationHash}.sc`)
         )
         .sort((t1, t2) => {
@@ -208,7 +227,7 @@ export default defineComponent({
       this.activeData = data;
     },
 
-    selectSceneryOption() {
+    selectOption() {
       this.selectedCheckpointName =
         this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
     },
@@ -257,11 +276,6 @@ export default defineComponent({
   width: 100%;
   gap: 0.5em;
 
-  label {
-    width: 100%;
-    text-align: center;
-  }
-
   select {
     background-color: $bgColDarker;
 
@@ -272,6 +286,13 @@ export default defineComponent({
       color: gray;
     }
   }
+}
+
+.options-top {
+  display: grid;
+  grid-template-columns: 3fr auto;
+  gap: 0.5em;
+  width: 100%;
 }
 
 .content {

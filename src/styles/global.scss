@@ -69,8 +69,8 @@ button.g-button {
   text-align: center;
   color: white;
   transition:
-    color 100ms ease-in-out,
-    background-color 100ms ease-in-out;
+    color 100ms ease-in,
+    background-color 100ms ease-in;
 
   &.action {
     background-color: $bgColDarker;
@@ -147,6 +147,10 @@ select {
   &:focus-visible {
     border-color: $accentCol;
   }
+}
+
+option[disabled] {
+  color: #ccc;
 }
 
 // List style
