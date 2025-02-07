@@ -67,7 +67,8 @@ button {
 
 button.g-button {
   text-align: center;
-  color: white;
+  color: inherit;
+  
   transition:
     color 100ms ease-in,
     background-color 100ms ease-in;

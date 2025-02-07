@@ -31,8 +31,8 @@
         <hr />
 
         <div class="buttons">
-          <button class="g-button action" @click="selectLocalOrder(order)">Wybierz</button>
-          <button class="g-button action" @click="removeOrder(order)">Usuń</button>
+          <button class="g-button" @click="selectLocalOrder(order)">Wybierz</button>
+          <button class="g-button" @click="removeOrder(order)">Usuń</button>
         </div>
       </li>
     </transition-group>
@@ -178,5 +178,18 @@ li {
 .buttons {
   display: flex;
   gap: 0.5em;
+
+  button {
+    padding: 0.5em;
+    background-color: $bgColLighter;
+
+    &:hover {
+      background-color: #666;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $accentCol;
+    }
+  }
 }
 </style>

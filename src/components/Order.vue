@@ -170,7 +170,11 @@ $darkModeTextCol: #eee;
 
   select {
     color: $darkModeTextCol !important;
-    border-color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol;
+
+    &:focus-visible {
+      border-color: $accentCol;
+    }
   }
 
   option,
