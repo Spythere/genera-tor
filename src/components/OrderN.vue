@@ -1,8 +1,8 @@
 <template>
   <section class="order-n">
-    <section class="header" ref="header">
+    <section class="order_header" ref="header">
       <h2 class="flex-center">
-        Rozkaz pisemny "N" nr
+        Rozkaz pisemny "N" nr &nbsp;
         <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
       </h2>
       <div class="flex-row">
@@ -12,8 +12,9 @@
         <input type="text" v-model="order.header.date" placeholder="data" />
       </div>
     </section>
-    <section class="table-section">
-      <table class="options-table">
+
+    <section class="order_table-container">
+      <table>
         <tbody>
           <tr>
             <td>

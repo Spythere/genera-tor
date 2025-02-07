@@ -10,6 +10,7 @@ export const useStore = defineStore('store', {
   state: () => {
     return {
       helperModalOpen: false,
+      orderDarkMode: false,
 
       chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',

@@ -2,7 +2,7 @@
   <section class="order-o">
     <section class="order_header">
       <h2 class="flex-center" style="padding: 0 0.5em">
-        Rozkaz pisemny "O" nr
+        Rozkaz pisemny "O" nr &nbsp;
         <input type="number" v-model="order.header.orderNo" placeholder="nr rozkazu" min="1" />
       </h2>
 
@@ -159,16 +159,6 @@ th {
 
 .order_header {
   padding: 0.5em 0;
-  border: 2px solid black;
-  border-bottom: none;
-}
-
-.horizontal-bar {
-  width: 100%;
-  height: 2px;
-
-  background-color: black;
-  margin: 0.5em 0;
 }
 
 .order_table {

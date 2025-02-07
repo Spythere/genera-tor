@@ -132,14 +132,14 @@ export default defineComponent({
   }
 
   .message_container {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
 
     display: grid;
     grid-template-rows: auto 1fr;
-    overflow: hidden;
 
-    max-height: 95vh;
-    min-height: 600px;
+    height: 95vh;
+    overflow: auto;
   }
 
   .message_nav {

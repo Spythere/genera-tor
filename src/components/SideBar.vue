@@ -81,7 +81,7 @@ export default defineComponent({
     align-items: center;
 
     color: white;
-    background-color: #1d1d1d;
+    background-color: $bgColDarker;
     width: 50px;
     height: 85px;
 

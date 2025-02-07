@@ -1,8 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600&display=swap');
 
-$bgCol: #313638;
+$bgCol: #141414;
+$bgColLighter: #292929;
+$bgColDarker: #080808;
 $accentCol: #ff6060;
 $warnCol: #ffe02e;
+$whiteDimmerCol: #ccc;
+
+// Global scrollbar style
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: #333;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
 
 body,
 html {
@@ -15,7 +35,9 @@ html {
   font-weight: 500;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -45,18 +67,22 @@ button {
 
 button.g-button {
   text-align: center;
-  color: white;
+  color: inherit;
+  
+  transition:
+    color 100ms ease-in,
+    background-color 100ms ease-in;
 
   &.action {
-    border: 2px solid white;
+    background-color: $bgColDarker;
     padding: 0.5em;
 
     &:focus-visible {
-      border: 2px solid $accentCol;
+      outline: 2px solid $accentCol;
     }
 
-    &:hover {
-      color: $accentCol;
+    &:hover:not([data-disabled='true']) {
+      background-color: $bgColLighter;
     }
   }
 
@@ -82,7 +108,6 @@ button.g-button {
 
   &.text {
     padding: 0;
-    color: #000;
 
     &:focus-visible {
       color: $accentCol;
@@ -109,9 +134,24 @@ select {
   border-radius: 0.3em;
   text-align: center;
 
-  &:hover {
-    border: 2px solid $accentCol;
+  border: 2px solid #888;
+  color: white;
+  outline: none;
+
+  margin: 0;
+  padding: 0.15em;
+
+  &[disabled] {
+    color: gray;
   }
+
+  &:focus-visible {
+    border-color: $accentCol;
+  }
+}
+
+option[disabled] {
+  color: #ccc;
 }
 
 // List style
@@ -121,23 +161,6 @@ ul {
 
   list-style: none;
   text-align: center;
-}
-
-// Global scrollbar style
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #333;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
 }
 
 // Modal
@@ -178,17 +201,18 @@ label.g-checkbox {
   cursor: pointer;
   color: #aaa;
 
+  user-select: none;
+  -moz-user-select: none;
+
   span {
     transition: color 125ms ease;
   }
 
   span::before {
-    content: '';
+    content: '\2717';
     display: inline-block;
-    width: 1ch;
-    height: 1ch;
 
-    background-color: #aaa;
+    // background-color: #aaa;
     border-radius: 50%;
     margin-right: 0.25em;
 
@@ -207,7 +231,8 @@ label.g-checkbox {
       color: greenyellow;
 
       &::before {
-        background-color: greenyellow;
+        content: '\2713';
+        // background-color: greenyellow;
       }
     }
   }
