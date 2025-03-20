@@ -16,7 +16,8 @@
     "pinia": "^2.1.7",
     "vue": "^3.3.11",
     "vue-i18n": "9.8.0",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-tsc": "^2.2.8"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
