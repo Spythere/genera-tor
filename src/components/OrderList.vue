@@ -105,7 +105,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global.scss';
+@use '../styles/colors';
 
 .list {
   &-move,
@@ -146,7 +146,7 @@ h3 {
   margin-bottom: 1em;
   text-align: center;
 
-  background-color: $bgColDarker;
+  background-color: colors.$bgColDarker;
   padding: 1em;
   margin-bottom: 0.5em;
 }
@@ -155,12 +155,12 @@ li {
   text-align: left;
   padding: 1em;
   margin: 0.5em;
-  background-color: $bgColDarker;
+  background-color: colors.$bgColDarker;
 
   cursor: pointer;
 
   &[selected='true'] {
-    outline: 1px solid $accentCol;
+    outline: 1px solid colors.$accentCol;
   }
 
   &.no-orders-warning {
@@ -171,7 +171,7 @@ li {
 }
 
 .wrong-order-indicator {
-  color: $accentCol;
+  color: colors.$accentCol;
   padding: 0 0.25em;
 }
 
@@ -181,14 +181,14 @@ li {
 
   button {
     padding: 0.5em;
-    background-color: $bgColLighter;
+    background-color: colors.$bgColLighter;
 
     &:hover {
       background-color: #666;
     }
 
     &:focus-visible {
-      outline: 2px solid $accentCol;
+      outline: 2px solid colors.$accentCol;
     }
   }
 }

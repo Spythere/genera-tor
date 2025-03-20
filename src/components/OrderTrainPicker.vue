@@ -260,7 +260,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global.scss';
+@use '../styles/colors';
 
 .order-train-picker {
   display: flex;
@@ -277,7 +277,7 @@ export default defineComponent({
   gap: 0.5em;
 
   select {
-    background-color: $bgColDarker;
+    background-color: colors.$bgColDarker;
 
     font-size: 1em;
     width: 100%;
@@ -306,23 +306,23 @@ ul.train-list {
 
   li.no-trains {
     font-weight: bold;
-    background-color: $bgColDarker;
+    background-color: colors.$bgColDarker;
     padding: 0.5em;
     margin-top: 0.5em;
   }
 
   li > button {
     width: 100%;
-    background-color: $bgColDarker;
+    background-color: colors.$bgColDarker;
     padding: 0.5em;
     margin-top: 0.5em;
 
     &:hover {
-      background-color: $bgColLighter;
+      background-color: colors.$bgColLighter;
     }
 
     &:focus-visible {
-      outline: 1px solid $accentCol;
+      outline: 1px solid colors.$accentCol;
     }
   }
 }

@@ -61,7 +61,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global.scss';
+@use '../styles/colors';
 
 .sidebar_content {
   display: grid;
@@ -81,7 +81,7 @@ export default defineComponent({
     align-items: center;
 
     color: white;
-    background-color: $bgColDarker;
+    background-color: colors.$bgColDarker;
     width: 50px;
     height: 85px;
 
@@ -100,7 +100,7 @@ export default defineComponent({
     &[data-selected='true'] .bar {
       transform: translateX(0);
 
-      background-color: $accentCol;
+      background-color: colors.$accentCol;
     }
 
     &:hover {
@@ -122,7 +122,7 @@ button.option-save {
   }
 
   &[data-selected='true'] {
-    background-color: $accentCol;
+    background-color: colors.$accentCol;
   }
 }
 
