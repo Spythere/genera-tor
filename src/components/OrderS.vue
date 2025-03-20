@@ -60,6 +60,7 @@
                     holder="nazwa sem."
                     :radio-checked="order.rows[0].radio1 == 'radio-1a-1'"
                   />
+                  <span v-if="order.rows[0].optionSignal == 'drogowskazowego'"> (odnoszącego się do wyjazdu pociągu)</span>
                   <br />
                 </label>
                 <hr />
@@ -133,7 +134,7 @@
                     holder="nazwa sem."
                     :radio-checked="order.rows[1].signalType == 'drogowskazowego'"
                   />
-                  (odnoszącego się do wyjazdu pociągu)
+                  (odnoszącego się do wjazdu pociągu)
                 </label>
                 <br />
                 <input
@@ -312,7 +313,7 @@ export default defineComponent({
         if (row.radio1 == 'radio-1a-1')
           message += ` przejechać obok wskazującego sygnał "Stój" semafora ${
             row.optionSignal || '_'
-          } ${row.signal1 || '_'}`;
+          } ${row.signal1 || '_'}${row.optionSignal == 'drogowskazowego' ? ' (odnoszącego się do wyjazdu pociągu)' : ''}`;
         else
           message += ` wyjechać z toru nr ${
             row.trackNo || '_'
@@ -331,7 +332,7 @@ export default defineComponent({
             message += `wjazdowego ${row.signal1 || '_'}`;
             break;
           case 'drogowskazowego':
-            message += `drogowskazowego ${row.signal2 || '_'}`;
+            message += `drogowskazowego ${row.signal2 || '_'} (odnoszącego się do wjazdu pociągu)`;
             break;
           case 'odstępowego':
             message += `odstępowego ${row.signal3 || '_'}`;
