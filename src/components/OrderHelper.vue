@@ -34,16 +34,13 @@ import orderHelperData from '../data/orderHelperData.json';
 
 export default defineComponent({
   setup() {
-    return {
-      store: useStore(),
-      orderHelperData
-    };
+    return { store: useStore(), orderHelperData };
   }
 });
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global.scss';
+@use '../styles/colors';
 
 .content {
   width: 100%;
@@ -66,7 +63,7 @@ ul {
 
   li b {
     font-size: 1.1em;
-    color: $accentCol;
+    color: colors.$accentCol;
   }
 }
 </style>

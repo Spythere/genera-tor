@@ -254,7 +254,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/global.scss';
+@use '../styles/colors';
 
 .order-message {
   h3 {
@@ -272,7 +272,7 @@ export default defineComponent({
   height: 250px;
   overflow: auto;
 
-  background-color: $bgColLighter;
+  background-color: colors.$bgColLighter;
   color: white;
   text-align: justify;
 

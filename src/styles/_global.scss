@@ -1,11 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600&display=swap');
-
-$bgCol: #141414;
-$bgColLighter: #292929;
-$bgColDarker: #080808;
-$accentCol: #ff6060;
-$warnCol: #ffe02e;
-$whiteDimmerCol: #ccc;
+@use 'fonts';
+@use 'colors';
 
 // Global scrollbar style
 ::-webkit-scrollbar {
@@ -29,7 +23,7 @@ html {
   padding: 0;
   margin: 0;
   min-height: 100vh;
-  background-color: $bgCol;
+  background-color: colors.$bgCol;
 
   font-family: 'Libre Franklin', sans-serif;
   font-weight: 500;
@@ -46,7 +40,7 @@ a {
   text-decoration: none;
 
   &:hover {
-    color: $accentCol;
+    color: colors.$accentCol;
   }
 }
 
@@ -68,21 +62,21 @@ button {
 button.g-button {
   text-align: center;
   color: inherit;
-  
+
   transition:
     color 100ms ease-in,
     background-color 100ms ease-in;
 
   &.action {
-    background-color: $bgColDarker;
+    background-color: colors.$bgColDarker;
     padding: 0.5em;
 
     &:focus-visible {
-      outline: 2px solid $accentCol;
+      outline: 2px solid colors.$accentCol;
     }
 
     &:hover:not([data-disabled='true']) {
-      background-color: $bgColLighter;
+      background-color: colors.$bgColLighter;
     }
   }
 
@@ -98,11 +92,11 @@ button.g-button {
       bottom: 0;
       width: 100%;
       height: 2px;
-      background-color: $accentCol;
+      background-color: colors.$accentCol;
     }
 
     &[data-active='true'] {
-      color: $accentCol;
+      color: colors.$accentCol;
     }
   }
 
@@ -110,7 +104,7 @@ button.g-button {
     padding: 0;
 
     &:focus-visible {
-      color: $accentCol;
+      color: colors.$accentCol;
     }
   }
 }
@@ -118,11 +112,11 @@ button.g-button {
 // Text styles
 .text {
   &--accent {
-    color: $accentCol;
+    color: colors.$accentCol;
   }
 
   &--warn {
-    color: $warnCol;
+    color: colors.$warnCol;
   }
 }
 
@@ -146,7 +140,7 @@ select {
   }
 
   &:focus-visible {
-    border-color: $accentCol;
+    border-color: colors.$accentCol;
   }
 }
 

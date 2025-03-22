@@ -23,20 +23,12 @@ import packageInfo from '../package.json';
 
 export default defineComponent({
   setup() {
-    const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({
-      immediate: true
-    });
+    const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({ immediate: true });
 
-    return {
-      offlineReady,
-      needRefresh,
-      updateServiceWorker
-    };
+    return { offlineReady, needRefresh, updateServiceWorker };
   },
   data() {
-    return {
-      appVersion: packageInfo.version,
-    };
+    return { appVersion: packageInfo.version };
   },
 
   created() {
@@ -46,8 +38,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import './styles/global.scss';
-@import './styles/anims.scss';
+@use 'styles/anims';
+@use 'styles/colors';
 
 #app {
   color: white;
@@ -66,7 +58,7 @@ export default defineComponent({
   text-align: center;
 
   width: 100%;
-  background-color: $accentCol;
+  background-color: colors.$accentCol;
 
   cursor: pointer;
 }

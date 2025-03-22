@@ -19,11 +19,7 @@ import OrderSVue from './OrderS.vue';
 import OrderFooter from './OrderFooter.vue';
 import OrderOVue from './OrderO.vue';
 
-const orderComponents = {
-  orderN: OrderNVue,
-  orderS: OrderSVue,
-  orderO: OrderOVue
-};
+const orderComponents = { orderN: OrderNVue, orderS: OrderSVue, orderO: OrderOVue };
 
 export default defineComponent({
   components: { OrderNVue, OrderSVue, OrderFooter },
@@ -31,9 +27,7 @@ export default defineComponent({
   setup() {
     const store = useStore();
 
-    return {
-      store
-    };
+    return { store };
   },
 
   computed: {
@@ -45,9 +39,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import '../styles/global.scss';
+@use '../styles/colors';
 
-$darkModeBgCol: $bgColDarker;
 $darkModeTextCol: #eee;
 
 .order {
@@ -55,7 +48,7 @@ $darkModeTextCol: #eee;
   color: black;
 
   &.dark {
-    background-color: $darkModeBgCol;
+    background-color: colors.$bgColDarker;
     color: $darkModeTextCol;
   }
 
@@ -70,12 +63,12 @@ $darkModeTextCol: #eee;
   }
 
   textarea:focus-visible {
-    outline: 2px solid $accentCol;
+    outline: 2px solid colors.$accentCol;
   }
 
   input[type='checkbox']:focus-visible,
   input[type='radio']:focus-visible {
-    outline: 2px solid $accentCol;
+    outline: 2px solid colors.$accentCol;
   }
 
   input[type='checkbox'],
@@ -145,7 +138,7 @@ $darkModeTextCol: #eee;
   border-bottom: 2px dotted black;
 
   &:focus-visible {
-    border-bottom: 2px solid $accentCol;
+    border-bottom: 2px solid colors.$accentCol;
   }
 
   &.row-checkbox + input::placeholder {
@@ -160,7 +153,7 @@ $darkModeTextCol: #eee;
     color: $darkModeTextCol !important;
 
     &:focus-visible {
-      border-bottom: 2px solid $accentCol !important;
+      border-bottom: 2px solid colors.$accentCol !important;
     }
 
     &::placeholder {
@@ -173,7 +166,7 @@ $darkModeTextCol: #eee;
     border-color: $darkModeTextCol;
 
     &:focus-visible {
-      border-color: $accentCol;
+      border-color: colors.$accentCol;
     }
   }
 
@@ -181,7 +174,7 @@ $darkModeTextCol: #eee;
   textarea {
     color: $darkModeTextCol !important;
     border-color: $darkModeTextCol !important;
-    background-color: $bgColDarker !important;
+    background-color: colors.$bgColDarker !important;
   }
 
   .horizontal-bar {
