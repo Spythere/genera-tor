@@ -143,8 +143,9 @@ export default defineComponent({
     this.fetchSceneriesData();
   },
 
-  activated() {
-    this.fetchActiveData();
+  async activated() {
+    await this.fetchActiveData();
+    this.handleQueries();
 
     this.refreshInterval = window.setInterval(() => {
       this.fetchActiveData();
@@ -254,6 +255,31 @@ export default defineComponent({
       }
 
       this.store.orderMode = 'OrderMessage';
+    },
+
+    handleQueries() {
+      const query = new URLSearchParams(window.location.search);
+
+      const id = query.get('sceneryId');
+
+      if (id) {
+        const [sceneryName, sceneryRegion] = id.split('|');
+
+        this.selectedRegion = sceneryRegion;
+
+        const queryScenery = this.activeData?.activeSceneries?.find(
+          (sc) => sc.stationName == sceneryName && sc.region == sceneryRegion && sc.isOnline
+        );
+
+        if (queryScenery) {
+          this.selectedSceneryId = `${queryScenery.stationName}|${queryScenery.stationHash}|${queryScenery.dispatcherName}|${queryScenery.region}`;
+
+          console.log(this.selectedRegion);
+          this.selectOption();
+
+          this.store.orderMode = 'OrderTrainPicker';
+        }
+      }
     }
   }
 });

@@ -77,6 +77,16 @@ export default defineComponent({
     };
   },
 
+  created() {
+    const query = new URLSearchParams(window.location.search);
+
+    const id = query.get('sceneryId');
+
+    if (id != null) {
+      this.store.orderMode = 'OrderTrainPicker';
+    }
+  },
+
   computed: {
     orderModeComponent() {
       switch (this.store.orderMode) {
