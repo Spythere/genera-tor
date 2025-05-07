@@ -45,7 +45,7 @@
         />
         <span>Aktualizuj numer rozkazu po skopiowaniu</span>
       </label>
-      
+
       <label for="save-increment" class="g-checkbox">
         <input
           type="checkbox"
@@ -111,8 +111,6 @@ export default defineComponent({
     this.incrementOnSave = this.getOrderSetting('save-increment') === 'true';
     this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'true';
     this.updateDate = this.getOrderSetting('update-date') === 'true';
-    
-    this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
   },
 
   computed: {

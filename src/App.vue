@@ -20,19 +20,32 @@
 import { useRegisterSW } from 'virtual:pwa-register/vue';
 import { defineComponent } from 'vue';
 import packageInfo from '../package.json';
+import { useStore } from './store/store';
+import orderStorageMixin from './mixins/orderStorageMixin';
 
 export default defineComponent({
+  mixins: [orderStorageMixin],
+
   setup() {
     const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({ immediate: true });
 
     return { offlineReady, needRefresh, updateServiceWorker };
   },
   data() {
-    return { appVersion: packageInfo.version };
+    return { appVersion: packageInfo.version, store: useStore() };
   },
 
   created() {
     document.title = `GeneraTOR ${this.appVersion}`;
+    this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
+
+    const query = new URLSearchParams(window.location.search);
+
+    const id = query.get('sceneryId');
+
+    if (id != null) {
+      this.store.orderMode = 'OrderTrainPicker';
+    }
   }
 });
 </script>
