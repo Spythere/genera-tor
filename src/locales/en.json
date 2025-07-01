@@ -1,1 +1,63 @@
-{}
+{
+   "locale": {
+      "pl": "POLISH",
+      "en": "ENGLISH"
+   },
+   "navbar": {
+      "order-message": "ORDER MESSAGE",
+      "order-list": "SAVED ORDERS",
+      "order-train-picker": "TRAINS"
+   },
+   "order-message": {
+      "title": "Message to display in the simulator's chatbox:",
+      "info": "Copy or save the content of the generated train order using buttons below:",
+      "button-save": "Save as new order",
+      "button-copy": "Copy the order message",
+      "button-update": "Update the order",
+      "warning-outdated-clipboard": "Oops! Your browser may be a little bit depraceted since it's not supporting saving data to the clipboard! :/",
+      "warning-fill-inputs": "Fill all the empty fields before copying the order!",
+      "warning-add-rows": "Add at least one row before copying the order!",
+      "warning-fill-footer": "Fill the following rows in the order's footer before copying it:",
+      "warning-fill-top": "Fill the order number, train number and date before saving it!",
+      "warning-order-identical": "Last saved order is identical as the current one!",
+      "warning-no-order-selected": "Choose the already saved order first!",
+      "error-update": "An error occurred while saving this order! :/",
+      "success-update-html": "Updated this <b class=\"text--accent\">order's</b> message!",
+      "success-save-html": "Saved <b class=\"text--accent\">order's</b> message in the browser memory!",
+      "success-copy-html": "<b class=\"text--accent\">Success!</b> You may paste the order message in the simulator's chatbox now!"
+   },
+   "order-footer": {
+      "field-stationName": "station",
+      "field-checkpointName": "checkpoint",
+      "field-hour": "hour",
+      "field-minutes": "minute",
+      "field-dispatcherName": "dispatcher",
+      "field-secondaryDispatcherName": "ordering dispatcher",
+      "field-dispatcherOrSecondaryName": "dispatcher (or ordering dispatcher)"
+   },
+   "order-options": {
+      "dark-mode": "Order dark theme",
+      "update-number-on-copy": "Update order number on copy",
+      "update-number-on-save": "Update order number on save",
+      "update-hours": "Update order hour on edit"
+   },
+   "order-list": {
+      "title": "Saved train orders",
+      "order-title": "Order \"{orderName}\" no. {orderNo} for train no. {trainNo}",
+      "no-saved-orders": "No saved orders!",
+      "order-added": "Added:",
+      "order-updated": "Updated:",
+      "button-order-select": "Select",
+      "button-order-remove": "Remove"
+   },
+   "order-train-picker": {
+      "placeholder-scenery-name": "Scenery name",
+      "placeholder-region-name": "Region",
+      "placeholder-checkpoint-name": "Checkpoint name",
+      "autofill-checkpoint-id": "Autofill checkpoint's abbreviation",
+      "info": "Select scenery name to display active trains",
+      "title": "Active timetables and trains on the scenery",
+      "subtitle": "Click on the user below to fill the current order with their information",
+      "no-trains": "No trains to display"
+   }
+}

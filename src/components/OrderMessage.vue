@@ -1,22 +1,25 @@
 <template>
   <section class="order-message">
-    <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
+    <h3>{{ $t('order-message.title') }}</h3>
 
     <div class="message_body" v-html="orderMessagePreview"></div>
     <p class="message_info">
-      Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą
-      przycisków poniżej
+      {{ $t('order-message.info') }}
     </p>
 
     <div class="message_actions">
-      <button class="g-button action" @click="saveOrder">Zapisz nowy rozkaz</button>
-      <button class="g-button action" @click="copyMessage">Kopiuj treść rozkazu</button>
+      <button class="g-button action" @click="saveOrder">
+        {{ $t('order-message.button-save') }}
+      </button>
+      <button class="g-button action" @click="copyMessage">
+        {{ $t('order-message.button-copy') }}
+      </button>
       <button
         class="g-button action"
         :data-disabled="!store.chosenLocalOrderId"
         @click="updateOrder"
       >
-        Zaktualizuj rozkaz
+        {{ $t('order-message.button-update') }}
         <span class="text--accent"
           >{{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }}
         </span>
@@ -32,7 +35,7 @@
           v-model="store.orderDarkMode"
           @change="onCheckboxChange"
         />
-        <span>Ciemny motyw rozkazu</span>
+        <span>{{ $t('order-options.dark-mode') }}</span>
       </label>
 
       <label for="copy-increment" class="g-checkbox">
@@ -43,7 +46,7 @@
           v-model="incrementOnCopy"
           @change="onCheckboxChange"
         />
-        <span>Aktualizuj numer rozkazu po skopiowaniu</span>
+        <span>{{ $t('order-options.update-number-on-copy') }}</span>
       </label>
 
       <label for="save-increment" class="g-checkbox">
@@ -54,7 +57,7 @@
           v-model="incrementOnSave"
           @change="onCheckboxChange"
         />
-        <span>Aktualizuj numer rozkazu po zapisaniu</span>
+        <span>{{ $t('order-options.update-number-on-save') }}</span>
       </label>
 
       <label for="update-date" class="g-checkbox">
@@ -65,7 +68,7 @@
           v-model="updateDate"
           @change="onCheckboxChange"
         />
-        <span>Aktualizuj godziny przy edycji</span>
+        <span>{{ $t('order-options.update-hours') }}</span>
       </label>
     </div>
 
@@ -170,27 +173,25 @@ export default defineComponent({
 
     copyMessage() {
       if (!navigator.clipboard)
-        return this.showActionMonit(
-          'Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/'
-        );
+        return this.showActionMonit(this.$t('order-message.warning-outdated-clipboard'));
 
       const hasAtLeastOneRow = /(\[ \d \])/g.test(this.fullOrderMessage);
       const hasAllInputsFilled = !/_/g.test(this.store.orderMessage);
 
       if (!hasAllInputsFilled)
         return this.showActionMonit(
-          `<span class="text--warn">Wypełnij puste rubryki rozkazu przed jego skopiowaniem!</span>`
+          `<span class="text--warn">${this.$t('order-message.warning-fill-inputs')}</span>`
         );
       if (!hasAtLeastOneRow)
         return this.showActionMonit(
-          `<span class="text--warn">Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!</span>`
+          `<span class="text--warn">${this.$t('order-message.warning-add-rows')}</span>`
         );
 
       const fieldsToCorrect = this.verifyOrderFields();
 
       if (fieldsToCorrect.length > 0)
         return this.showActionMonit(
-          `<span class="text--warn">Uzupełnij następujące rubryki na dole rozkazu przed jego skopiowaniem: ${fieldsToCorrect.join(
+          `<span class="text--warn">${this.$t('order-message.warning-fill-footer')} ${fieldsToCorrect.join(
             ', '
           )}</span>`
         );
@@ -199,9 +200,7 @@ export default defineComponent({
 
       if (this.incrementOnCopy) this.incrementOrderNo();
 
-      this.showActionMonit(
-        '<b class="text--accent">Skopiowano!</b> Możesz teraz wkleić treść rozkazu na czacie symulatora!'
-      );
+      this.showActionMonit(this.$t('order-message.success-copy-html'));
     },
 
     saveOrder() {
@@ -210,18 +209,16 @@ export default defineComponent({
       switch (savedOrderStatus) {
         case -1:
           this.showActionMonit(
-            '<span class="text--warn">Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!</span>'
+            `<span class="text--warn">${this.$t('order-message.warning-fill-top')}</span>`
           );
           break;
         case 0:
           this.showActionMonit(
-            '<span class="text--warn">Ostatni zapisany rozkaz jest identyczny z obecnym!</span>'
+            `<span class="text--warn">${this.$t('order-message.warning-order-identical')}</span>`
           );
           break;
         case 1:
-          this.showActionMonit(
-            'Zapisano treść <b class="text--accent">rozkazu</b> w pamięci przeglądarki!'
-          );
+          this.showActionMonit(this.$t('order-message.success-save-html'));
 
           if (this.incrementOnSave) this.incrementOrderNo();
           break;
@@ -237,18 +234,18 @@ export default defineComponent({
       switch (updatedOrderStatus) {
         case -1:
           this.showActionMonit(
-            '<span class="text--warn">Wystąpił błąd podczas aktualizowania tego rozkazu! :/</span>'
+            `<span class="text--warn">${this.$t('order-message.error-update')}</span>`
           );
           break;
 
         case 0:
           this.showActionMonit(
-            '<span class="text--warn">Nie wybrałeś żadnego zapisanego rozkazu!</span>'
+            `<span class="text--warn">${this.$t('order-message.warning-no-order-selected')}</span>`
           );
           break;
 
         case 1:
-          this.showActionMonit('Zaktualizowano treść <b class="text--accent">rozkazu</b>!');
+          this.showActionMonit(this.$t('order-message.success-update-html'));
           break;
       }
     }

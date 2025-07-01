@@ -9,6 +9,13 @@
       </div>
 
       <div class="message_container">
+        <div class="message_actions">
+          <button class="g-button action icon" @click="switchLanguages">
+            <LanguagesIcon :size="18" />
+            <span style="margin-left: 0.25em">{{ $t('locale.' + store.currentAppLocale) }}</span>
+          </button>
+        </div>
+
         <div class="message_nav">
           <span v-for="(action, i) in navActions" :key="action.mode">
             <b v-if="i > 0">&bull;</b>
@@ -18,7 +25,7 @@
               :data-active="store.orderMode == action.mode"
               @click="selectOrderMode(action.mode)"
             >
-              {{ action.value }}
+              {{ $t(`navbar.${action.value}`) }}
             </button>
           </span>
         </div>
@@ -42,24 +49,26 @@ import OrderList from '../components/OrderList.vue';
 import { useStore } from '../store/store';
 import OrderHelper from '../components/OrderHelper.vue';
 import OrderTrainPicker from '../components/OrderTrainPicker.vue';
+import { LanguagesIcon } from 'lucide-vue-next';
+import StorageManager from "../managers/storageManager";
 
 export default defineComponent({
-  components: { OrderVue, SideBar, OrderHelper },
+  components: { OrderVue, SideBar, OrderHelper, LanguagesIcon },
 
   data() {
     return {
       navActions: [
         {
           mode: 'OrderMessage',
-          value: 'TREŚĆ ROZKAZU'
+          value: 'order-message'
         },
         {
           mode: 'OrderList',
-          value: 'ZAPISANE ROZKAZY'
+          value: 'order-list'
         },
         {
           mode: 'OrderTrainPicker',
-          value: 'POCIĄGI'
+          value: 'order-train-picker'
         }
       ]
     };
@@ -68,6 +77,15 @@ export default defineComponent({
   methods: {
     selectOrderMode(mode: string) {
       this.store.orderMode = mode;
+    },
+
+    switchLanguages() {
+      const lang = this.store.currentAppLocale == 'pl' ? 'en' : 'pl';
+
+      this.$i18n.locale = lang;
+      this.store.currentAppLocale = lang;
+
+      StorageManager.setStringValue('lang', lang);
     }
   },
 
@@ -132,14 +150,21 @@ export default defineComponent({
   }
 
   .message_container {
+    padding: 2px;
+
     width: 100%;
     max-width: 500px;
 
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: auto auto 1fr;
 
     height: 95vh;
     overflow: auto;
+  }
+
+  .message_actions {
+    display: flex;
+    justify-content: center;
   }
 
   .message_nav {
@@ -149,7 +174,7 @@ export default defineComponent({
 
     flex-wrap: wrap;
 
-    margin-bottom: 2em;
+    margin: 0.5em 0;
   }
 }
 </style>

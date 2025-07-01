@@ -1,10 +1,10 @@
 <template>
   <section class="order-list">
-    <h3>Zapisane rozkazy pisemne ({{ localOrderList.length }})</h3>
+    <h3>{{ $t('order-list.title') }} ({{ localOrderList.length }})</h3>
 
     <transition-group name="list" tag="ul">
       <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">
-        Brak zapisanych rozkazów!
+        {{ $t('order-list.no-saved-orders') }}
       </li>
 
       <li
@@ -14,8 +14,13 @@
       >
         <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
         <b>
-          {{ getOrderName(order.orderType) }} nr {{ order.orderBody['header']['orderNo'] }} dla
-          pociągu nr {{ order.orderBody['header']['trainNo'] }}
+          {{
+            $t('order-list.order-title', {
+              orderName: getOrderName(order.orderType),
+              orderNo: order.orderBody['header']['orderNo'],
+              trainNo: order.orderBody['header']['trainNo']
+            })
+          }}
         </b>
         <span
           v-if="!order.orderVersion || order.orderVersion != ORDER_VERSION"
@@ -25,14 +30,18 @@
           >&#9888;
         </span>
         <br />
-        {{ order.createdAt ? 'Dodano: ' : 'Zaktualizowano: ' }}
+        {{ $t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
         {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
 
         <hr />
 
         <div class="buttons">
-          <button class="g-button" @click="selectLocalOrder(order)">Wybierz</button>
-          <button class="g-button" @click="removeOrder(order)">Usuń</button>
+          <button class="g-button" @click="selectLocalOrder(order)">
+            {{ $t('order-list.button-order-select') }}
+          </button>
+          <button class="g-button" @click="removeOrder(order)">
+            {{ $t('order-list.button-order-remove') }}
+          </button>
         </div>
       </li>
     </transition-group>
@@ -65,7 +74,7 @@ export default defineComponent({
 
   methods: {
     getOrderName(orderType: string) {
-      return `Rozkaz "${orderType.split('order')[1]}"`;
+      return orderType.split('order')[1];
     },
 
     removeOrder(order: LocalStorageOrder) {

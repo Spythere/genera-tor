@@ -8,7 +8,9 @@
           v-model="selectedSceneryId"
           @change="selectOption"
         >
-          <option :value="null" disabled>Sceneria</option>
+          <option :value="null" disabled>
+            {{ $t('order-train-picker.placeholder-scenery-name') }}
+          </option>
           <option
             v-for="scenery in filteredSceneries"
             :value="`${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}`"
@@ -24,7 +26,9 @@
           v-model="selectedRegion"
           @change="selectOption"
         >
-          <option :value="null" disabled>Region</option>
+          <option :value="null" disabled>
+            {{ $t('order-train-picker.placeholder-region-name') }}
+          </option>
           <option v-for="region in regions" :value="region" :key="region">
             {{ getRegionNameById(region) }}
           </option>
@@ -44,7 +48,9 @@
         v-model="selectedCheckpointName"
         :disabled="!selectedScenery"
       >
-        <option :value="null" disabled>Posterunek</option>
+        <option :value="null" disabled>
+          {{ $t('order-train-picker.placeholder-checkpoint-name') }}
+        </option>
         <option :value="cp" v-for="cp in checkpointNameList" :key="cp">
           {{ cp }}
         </option>
@@ -57,19 +63,19 @@
           id="fill-checkpoint"
           v-model="fillCheckpointName"
         />
-        <span> Uzupełniaj skrót wybranego posterunku</span>
+        <span> {{ $t('order-train-picker.autofill-checkpoint-id') }}</span>
       </label>
     </div>
 
     <div class="content">
       <b v-if="!selectedSceneryId" class="text--accent">
-        Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi
+        {{ $t('order-train-picker.info') }}
       </b>
 
       <div v-else>
         <div style="margin-bottom: 0.5em">
-          <h3 style="margin-bottom: 0.5em">Aktywne RJ i gracze na scenerii</h3>
-          <b class="text--accent">Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi</b>
+          <h3 style="margin-bottom: 0.5em">{{ $t('order-train-picker.title') }}</h3>
+          <b class="text--accent">{{ $t('order-train-picker.subtitle') }}</b>
         </div>
 
         <ul class="train-list">
@@ -84,18 +90,18 @@
                 class="online-indicator"
               ></span>
 
-              <b>
+              <span>
                 {{ train.driverName }} &bull;
                 <span v-if="train.timetable" style="color: gold">{{
                   train.timetable.category
                 }}</span>
                 {{ train.trainNo }}
-              </b>
+              </span>
             </button>
           </li>
 
           <li class="no-trains" v-if="sceneryTrains?.length == 0 && selectedSceneryId">
-            Brak graczy
+            {{ $t('order-train-picker.no-trains') }}
           </li>
         </ul>
       </div>
@@ -293,7 +299,7 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   overflow: auto;
-  padding: 0 0.5em;
+  padding: 0.5em;
 }
 
 .options {

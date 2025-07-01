@@ -1,1 +1,63 @@
-{}
+{
+   "locale": {
+      "pl": "POLSKI",
+      "en": "ANGIELSKI"
+   },
+   "navbar": {
+      "order-message": "TREŚĆ ROZKAZU",
+      "order-list": "ZAPISANE ROZKAZY",
+      "order-train-picker": "POCIĄGI"
+   },
+   "order-message": {
+      "title": "Wiadomość do wyświetlenia na czacie symulatora:",
+      "info": "Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej:",
+      "button-save": "Zapisz nowy rozkaz",
+      "button-copy": "Kopiuj treść rozkazu",
+      "button-update": "Zaktualizuj rozkaz",
+      "warning-outdated-clipboard": "Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/",
+      "warning-fill-inputs": "Wypełnij puste rubryki rozkazu przed jego skopiowaniem!",
+      "warning-add-rows": "Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!",
+      "warning-fill-footer": "Uzupełnij następujące rubryki na dole rozkazu przed jego skopiowaniem:",
+      "warning-fill-top": "Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!",
+      "warning-order-identical": "Ostatni zapisany rozkaz jest identyczny z obecnym!",
+      "warning-no-order-selected": "Wybierz rozkaz, który chcesz zaktualizować!",
+      "error-update": "Wystąpił błąd podczas aktualizowania tego rozkazu! :/",
+      "success-update-html": "Zaktualizowano treść <b class=\"text--accent\">rozkazu</b>!",
+      "success-save-html": "Zapisano treść <b class=\"text--accent\">rozkazu</b> w pamięci przeglądarki!",
+      "success-copy-html": "<b class=\"text--accent\">Skopiowano!</b> Możesz teraz wkleić treść rozkazu na czacie symulatora!"
+   },
+   "order-footer": {
+      "field-stationName": "stacja",
+      "field-checkpointName": "posterunek",
+      "field-hour": "godzina",
+      "field-minutes": "minuta",
+      "field-dispatcherName": "dyżurny ruchu",
+      "field-secondaryDispatcherName": "z polecenia dyżurnego ruchu",
+      "field-dispatcherOrSecondaryName": "dyżurny ruchu (lub z polecenia dyżurnego ruchu)"
+   },
+   "order-options": {
+      "dark-mode": "Ciemny motyw bloczka rozkazu",
+      "update-number-on-copy": "Aktualizuj numer rozkazu po skopiowaniu",
+      "update-number-on-save": "Aktualizuj numer rozkazu po zapisaniu",
+      "update-hours": "Aktualizuj godziny przy edycji"
+   },
+   "order-list": {
+      "title": "Zapisane rozkazy pisemne",
+      "no-saved-orders": "Brak zapisanych rozkazów!",
+      "order-title": "Rozkaz \"{orderName}\" nr {orderNo} dla pociągu nr {trainNo}",
+      "order-added": "Dodano:",
+      "order-updated": "Zaktualizowano:",
+      "button-order-select": "Wybierz",
+      "button-order-remove": "Usuń"
+   },
+   "order-train-picker": {
+      "placeholder-scenery-name": "Sceneria",
+      "placeholder-region-name": "Region",
+      "placeholder-checkpoint-name": "Posterunek",
+      "autofill-checkpoint-id": "Uzupełniaj skrót wybranego posterunku",
+      "info": "Wybierz dyżurnego oraz scenerię, aby zobaczyć pociągi",
+      "title": "Aktywne RJ i gracze na scenerii",
+      "subtitle": "Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi",
+      "no-trains": "Brak pociągów do wyświetlenia"
+   }
+}
