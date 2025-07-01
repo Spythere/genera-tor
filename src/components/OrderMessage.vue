@@ -2,7 +2,7 @@
   <section class="order-message">
     <h3>Wiadomość do wyświetlenia na czacie symulatora:</h3>
 
-    <div class="message_body" v-html="fullOrderMessage"></div>
+    <div class="message_body" v-html="orderMessagePreview"></div>
     <p class="message_info">
       Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą
       przycisków poniżej
@@ -116,6 +116,11 @@ export default defineComponent({
   computed: {
     fullOrderMessage() {
       return this.store.orderMessage + this.store.footerMessage;
+    },
+
+    // Replace all new line tags with <br> for preview and get rid of the first one (visible only on simulator's chat)
+    orderMessagePreview() {
+      return this.fullOrderMessage.replace(/\n/g, '<br>').replace('<br>', '');
     }
   },
 

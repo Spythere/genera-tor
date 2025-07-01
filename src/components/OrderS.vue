@@ -300,7 +300,7 @@ export default defineComponent({
       () => {
         const { header } = order;
 
-        return `<i>Rozkaz pisemny "S" nr ${header.orderNo || '_'} dla ${header.for || '_'} nr ${
+        return `\n<i><b>Rozkaz pisemny "S" nr ${header.orderNo || '_'}</b> dla ${header.for || '_'} nr ${
           header.trainNo || '_'
         } dnia ${header.date || '_'}</i>`;
       },
@@ -429,7 +429,7 @@ export default defineComponent({
       for (let i = 0; i < 4; i++) {
         if (!this.order.rows[i].enabled) continue;
 
-        message += ` <b> [ ${i + 1} ] </b> ${this.rowMethods[i + 1]()}`;
+        message += `\n--------\n<b>[ ${i + 1} ]</b> ${this.rowMethods[i + 1]()}`;
       }
 
       this.store.orderMessage = message;

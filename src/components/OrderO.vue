@@ -90,7 +90,7 @@ export default defineComponent({
       () => {
         const { header } = order;
 
-        return `<i>Rozkaz pisemny "O" nr ${header.orderNo || '_'} dla pociągu nr ${
+        return `\n<i><b>Rozkaz pisemny "O" nr ${header.orderNo || '_'}</b> dla pociągu nr ${
           header.trainNo || '_'
         } dnia ${header.date || '_'}</i>`;
       }
@@ -120,28 +120,24 @@ export default defineComponent({
     generateMessage() {
       let message = this.rowMethods[0]();
 
-      if (this.order.orderList.some((row) => row.name)) message += `<b> [ 1 ] </b>`;
+      if (this.order.orderList.some((row) => row.name)) message += `\n--------\n<b>[ 1 ]</b>`;
 
-      const rowsMessageList = [];
+      message += '\n1) zmniejszyć prędkość jazdy i zachować ostrożność'
+      message += '\n2) jechać ostrożnie (j.o.)\n'
 
       for (let i = 0; i < this.order.orderList.length; i++) {
         const row = this.order.orderList[i];
         if (!row.name) continue;
 
-        let rowMessage = '';
-        rowMessage += ` ${row.name || '_'} od ${row.from || '_'} do ${row.to || '_'} kilometra`;
+        message += `\n- ${row.name || '_'} od ${row.from || '_'} do ${row.to || '_'} kilometra`;
 
-        if (row.vmax) rowMessage += ` prędkość najwyżej ${row.vmax} km/h`;
-        if (row.jo) rowMessage += ` jechać ostrożnie`;
+        if (row.vmax) message += ` prędkość najwyżej ${row.vmax} km/h`;
+        if (row.jo) message += ` jechać ostrożnie`;
 
-        rowMessage += ` z powodu: ${row.reason || '_'}`;
-
-        rowsMessageList.push(rowMessage);
+        message += ` z powodu: ${row.reason || '_'}`;
       }
 
-      message += rowsMessageList.join('; ');
-
-      if (this.order.other) message += ` <b> [ 2 ] </b> Inne: ${this.order.other}`;
+      if (this.order.other) message += `\n--------\n<b>[ 2 ]</b> Inne: ${this.order.other}`;
 
       this.store.orderMessage = message;
     }

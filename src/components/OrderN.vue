@@ -350,7 +350,7 @@ export default defineComponent({
       () => {
         const { header } = order;
 
-        const message = `<i>Rozkaz pisemny "N" nr ${header.orderNo || '_'} dla pociągu nr ${
+        const message = `\n<i><b>Rozkaz pisemny "N" nr ${header.orderNo || '_'}</b> dla pociągu nr ${
           header.trainNo || '_'
         } dnia ${header.date}</i>`;
 
@@ -508,7 +508,7 @@ export default defineComponent({
       for (let i = 0; i < this.order.rows.length; i++) {
         if (!this.order.rows[i].enabled) continue;
 
-        message += ` <b> [ ${i + 1} ] </b> ${this.rowMethods[i + 1]()}`;
+        message += `\n--------\n<b>[ ${i + 1} ]</b> ${this.rowMethods[i + 1]()}`;
       }
 
       this.store.orderMessage = message;
