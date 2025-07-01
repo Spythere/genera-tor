@@ -22,6 +22,7 @@ import { defineComponent } from 'vue';
 import packageInfo from '../package.json';
 import { useStore } from './store/store';
 import orderStorageMixin from './mixins/orderStorageMixin';
+import StorageManager from './managers/storageManager';
 
 export default defineComponent({
   mixins: [orderStorageMixin],
@@ -31,20 +32,59 @@ export default defineComponent({
 
     return { offlineReady, needRefresh, updateServiceWorker };
   },
+
   data() {
     return { appVersion: packageInfo.version, store: useStore() };
   },
 
   created() {
-    document.title = `GeneraTOR ${this.appVersion}`;
-    this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
+    this.init();
+  },
 
-    const query = new URLSearchParams(window.location.search);
+  methods: {
+    init() {
+      this.loadLang();
+      this.loadSettings();
+      this.handleQueries();
+    },
 
-    const id = query.get('sceneryId');
+    loadSettings() {
+      document.title = `GeneraTOR ${this.appVersion}`;
+      this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
+    },
 
-    if (id != null) {
-      this.store.orderMode = 'OrderTrainPicker';
+    handleQueries() {
+      const query = new URLSearchParams(window.location.search);
+
+      const id = query.get('sceneryId');
+
+      if (id != null) {
+        this.store.orderMode = 'OrderTrainPicker';
+      }
+    },
+
+    changeLang(lang: string) {
+      this.$i18n.locale = lang;
+      this.store.currentAppLocale = lang;
+
+      StorageManager.setStringValue('lang', lang);
+    },
+
+    loadLang() {
+      const storageLang = StorageManager.getStringValue('lang');
+
+      if (storageLang) {
+        this.changeLang(storageLang);
+        return;
+      }
+
+      if (!window.navigator.language) return;
+
+      const naviLanguage = window.navigator.language.toString();
+
+      if (!naviLanguage.startsWith('pl')) {
+        this.changeLang('en');
+      }
     }
   }
 });

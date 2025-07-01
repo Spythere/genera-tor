@@ -9,6 +9,8 @@ import {
 export const useStore = defineStore('store', {
   state: () => {
     return {
+      currentAppLocale: 'pl',
+      
       helperModalOpen: false,
       orderDarkMode: false,
 
