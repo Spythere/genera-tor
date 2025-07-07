@@ -9,6 +9,15 @@ import {
 export const useStore = defineStore('store', {
   state: () => {
     return {
+      currentAppLocale: 'pl',
+      
+      appUpdateData: {
+        version: '',
+        changelog: '',
+        releaseURL: ''
+      },
+      
+      updateCardOpen: false,
       helperModalOpen: false,
       orderDarkMode: false,
 

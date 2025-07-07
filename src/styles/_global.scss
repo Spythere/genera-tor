@@ -107,6 +107,12 @@ button.g-button {
       color: colors.$accentCol;
     }
   }
+
+  &.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 // Text styles

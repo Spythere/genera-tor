@@ -10,17 +10,20 @@
 
       <div class="message_container">
         <div class="message_nav">
-          <span v-for="(action, i) in navActions" :key="action.mode">
-            <b v-if="i > 0">&bull;</b>
+          <button class="g-button icon" @click="switchLanguages">
+            <LanguagesIcon :size="18" />
+            <span style="margin-left: 0.25em">{{ $t('locale.' + store.currentAppLocale) }}</span>
+          </button>
 
-            <button
-              class="g-button option"
-              :data-active="store.orderMode == action.mode"
-              @click="selectOrderMode(action.mode)"
-            >
-              {{ action.value }}
-            </button>
-          </span>
+          <button
+            v-for="(action, i) in navActions"
+            :key="action.mode"
+            class="g-button option"
+            :data-active="store.orderMode == action.mode"
+            @click="selectOrderMode(action.mode)"
+          >
+            {{ $t(`navbar.${action.value}`) }}
+          </button>
         </div>
 
         <transition name="order-anim" mode="out-in">
@@ -42,24 +45,26 @@ import OrderList from '../components/OrderList.vue';
 import { useStore } from '../store/store';
 import OrderHelper from '../components/OrderHelper.vue';
 import OrderTrainPicker from '../components/OrderTrainPicker.vue';
+import { LanguagesIcon } from 'lucide-vue-next';
+import StorageManager from '../managers/storageManager';
 
 export default defineComponent({
-  components: { OrderVue, SideBar, OrderHelper },
+  components: { OrderVue, SideBar, OrderHelper, LanguagesIcon },
 
   data() {
     return {
       navActions: [
         {
           mode: 'OrderMessage',
-          value: 'TREŚĆ ROZKAZU'
+          value: 'order-message'
         },
         {
           mode: 'OrderList',
-          value: 'ZAPISANE ROZKAZY'
+          value: 'order-list'
         },
         {
           mode: 'OrderTrainPicker',
-          value: 'POCIĄGI'
+          value: 'order-train-picker'
         }
       ]
     };
@@ -68,6 +73,15 @@ export default defineComponent({
   methods: {
     selectOrderMode(mode: string) {
       this.store.orderMode = mode;
+    },
+
+    switchLanguages() {
+      const lang = this.store.currentAppLocale == 'pl' ? 'en' : 'pl';
+
+      this.$i18n.locale = lang;
+      this.store.currentAppLocale = lang;
+
+      StorageManager.setStringValue('lang', lang);
     }
   },
 
@@ -95,6 +109,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use '../styles/colors';
+
 .home {
   min-height: 100vh;
   overflow-x: auto;
@@ -104,52 +120,75 @@ export default defineComponent({
   align-items: center;
 
   width: 100%;
+}
 
-  .home_container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2em 1em;
-    padding: 0.5em;
+.home_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2em 1em;
+  padding: 0.5em;
 
-    width: 100%;
+  width: 100%;
 
-    @media screen and (max-width: 650px) {
-      padding: 1em 0.5em;
-    }
+  @media screen and (max-width: 650px) {
+    padding: 1em 0.5em;
+  }
+}
+
+.order_container {
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  align-items: start;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+  }
+}
+
+.message_container {
+  padding: 2px;
+
+  width: 100%;
+  max-width: 500px;
+
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+
+  height: 95vh;
+  overflow: auto;
+}
+
+.message_nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  flex-wrap: wrap;
+
+  margin-bottom: 1.5em;
+}
+
+.message_nav > button {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+
+    transition: all 0.25s;
+
+    background-color: colors.$accentCol;
   }
 
-  .order_container {
+  &[data-active='true']::before {
     width: 100%;
-    max-width: 600px;
-
-    display: flex;
-    align-items: start;
-
-    @media screen and (max-width: 650px) {
-      flex-direction: column;
-    }
-  }
-
-  .message_container {
-    width: 100%;
-    max-width: 500px;
-
-    display: grid;
-    grid-template-rows: auto 1fr;
-
-    height: 95vh;
-    overflow: auto;
-  }
-
-  .message_nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-wrap: wrap;
-
-    margin-bottom: 2em;
   }
 }
 </style>

@@ -4,7 +4,7 @@ import { useStore } from '../store/store';
 export default defineComponent({
   setup() {
     return {
-      store: useStore()
+      store: useStore(),
     };
   },
 

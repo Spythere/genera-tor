@@ -14,7 +14,7 @@ export default defineComponent({
 
       const messageArray = [];
 
-      if (footer.stationName) messageArray.push(`stacja: ${footer.stationName}`);
+      messageArray.push(`stacja: ${footer.stationName ?? ''}`);
       if (footer.checkpointName) messageArray.push(`posterunek: ${footer.checkpointName}`);
       if (footer.hour) messageArray.push(`godz. ${footer.hour}`);
       if (footer.minutes) messageArray.push(`min. ${footer.minutes}`);
@@ -22,9 +22,9 @@ export default defineComponent({
       if (footer.secondaryDispatcherName)
         messageArray.push(`z polecenia dyżurnego ruchu ${footer.secondaryDispatcherName}`);
 
-      this.store.footerMessage = ` <b>|</b> ${messageArray.join(
+      this.store.footerMessage = `\n--------\n${messageArray.join(
         ', '
-      )} <b>|</b> Rozkaz otrzymałem, maszynista: (potwierdzić otrzymanie rozkazu)`;
+      )}\n--------\nRozkaz otrzymałem, maszynista: <i>(potwierdzić otrzymanie rozkazu)</i>`;
     }
   }
 });
