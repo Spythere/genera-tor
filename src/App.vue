@@ -14,7 +14,7 @@
     <footer>
       &copy; <a href="https://td2.info.pl/profile/?u=20777">Spythere</a>
       {{ new Date().getUTCFullYear() }} |
-      <button class="g-button text" @click="store.updateCardOpen = true">v.{{ appVersion }}</button>
+      <button class="g-button text" @click="store.updateCardOpen = true">v{{ appVersion }}</button>
     </footer>
   </div>
 </template>
