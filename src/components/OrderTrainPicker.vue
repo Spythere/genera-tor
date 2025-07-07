@@ -246,7 +246,7 @@ export default defineComponent({
       chosenOrder.header.trainNo = trainNo.toString();
       chosenOrder.header.date = currentFormattedDate();
 
-      this.store.orderFooter.dispatcherName = this.selectedScenery.stationName;
+      this.store.orderFooter.dispatcherName = this.selectedScenery.dispatcherName;
       this.store.orderFooter.stationName =
         this.selectedCheckpointName?.split(',')[0] || this.selectedScenery.stationName;
       this.store.orderFooter.hour = currentFormattedHours();
