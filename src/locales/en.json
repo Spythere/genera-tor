@@ -11,7 +11,7 @@
    "update": {
       "update-available-text": "New GeneraTOR version is available!",
       "update-available-underline": "Click here to update!",
-      "title": "Stacjownik update!",
+      "title": "GeneraTOR update!",
       "confirm": "ROGER THAT!",
       "no-data": "No changelog available!",
       "info-1": "This changelog will be available to see once again after clicking the version number in the footer",
