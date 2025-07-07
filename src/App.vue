@@ -52,9 +52,9 @@ export default defineComponent({
 
   methods: {
     init() {
-      this.checkAppVersion();
       this.loadLang();
       this.loadSettings();
+      this.checkAppVersion();
       this.handleQueries();
     },
 

@@ -109,6 +109,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@use '../styles/colors';
+
 .home {
   min-height: 100vh;
   overflow-x: auto;
@@ -118,54 +120,75 @@ export default defineComponent({
   align-items: center;
 
   width: 100%;
+}
 
-  .home_container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2em 1em;
-    padding: 0.5em;
+.home_container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2em 1em;
+  padding: 0.5em;
 
-    width: 100%;
+  width: 100%;
 
-    @media screen and (max-width: 650px) {
-      padding: 1em 0.5em;
-    }
+  @media screen and (max-width: 650px) {
+    padding: 1em 0.5em;
+  }
+}
+
+.order_container {
+  width: 100%;
+  max-width: 600px;
+
+  display: flex;
+  align-items: start;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+  }
+}
+
+.message_container {
+  padding: 2px;
+
+  width: 100%;
+  max-width: 500px;
+
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+
+  height: 95vh;
+  overflow: auto;
+}
+
+.message_nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25em;
+  flex-wrap: wrap;
+
+  margin-bottom: 1.5em;
+}
+
+.message_nav > button {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    bottom: -3px;
+    left: 0;
+    width: 0;
+    height: 3px;
+
+    transition: all 0.25s;
+
+    background-color: colors.$accentCol;
   }
 
-  .order_container {
+  &[data-active='true']::before {
     width: 100%;
-    max-width: 600px;
-
-    display: flex;
-    align-items: start;
-
-    @media screen and (max-width: 650px) {
-      flex-direction: column;
-    }
-  }
-
-  .message_container {
-    padding: 2px;
-
-    width: 100%;
-    max-width: 500px;
-
-    display: grid;
-    grid-template-rows: auto auto 1fr;
-
-    height: 95vh;
-    overflow: auto;
-  }
-
-  .message_nav {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.25em;
-    flex-wrap: wrap;
-
-    margin-bottom: 1.5em;
   }
 }
 </style>
