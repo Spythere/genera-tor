@@ -3,6 +3,15 @@
       "pl": "POLSKI",
       "en": "ANGIELSKI"
    },
+   "update": {
+      "update-available-text": "Nowa wersja GeneraTORa dostępna!",
+      "update-available-underline": "Kliknij, aby odświeżyć aplikację!",
+      "title": "Aktualizacja GeneraTORa!",
+      "no-data": "Brak dostępnego changelogu!",
+      "confirm": "Przyjąłem!",
+      "info-1": "Ten changelog będzie zawsze dostępny po kliknięciu numeru wersji w stopce strony",
+      "info-2": "Pełny changelog dostępny na <a href='https://github.com/Spythere/genera-tor' target='_blank'>GitHubie projektu</a>"
+   },
    "navbar": {
       "order-message": "TREŚĆ ROZKAZU",
       "order-list": "ZAPISANE ROZKAZY",

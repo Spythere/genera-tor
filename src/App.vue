@@ -1,17 +1,20 @@
 <template>
   <div id="app_wrapper">
+    <UpdateCard />
+
     <router-view />
 
     <transition name="slide-anim">
       <div v-if="needRefresh" class="update-prompt" @click="updateServiceWorker(true)">
-        Nowa wersja GeneraTORa dostępna!
-        <u>Kliknij, aby odświeżyć aplikację!</u>
+        {{ $t('update.update-available-text') }}
+        <u>{{ $t('update.update-available-underline') }}</u>
       </div>
     </transition>
 
     <footer>
       &copy; <a href="https://td2.info.pl/profile/?u=20777">Spythere</a>
-      {{ new Date().getUTCFullYear() }} | v.{{ appVersion }}
+      {{ new Date().getUTCFullYear() }} |
+      <button class="g-button text" @click="store.updateCardOpen = true">v.{{ appVersion }}</button>
     </footer>
   </div>
 </template>
@@ -23,8 +26,14 @@ import packageInfo from '../package.json';
 import { useStore } from './store/store';
 import orderStorageMixin from './mixins/orderStorageMixin';
 import StorageManager from './managers/storageManager';
+import axios from 'axios';
+import UpdateCard from './components/UpdateCard.vue';
+
+const STORAGE_VERSION_KEY = 'app_version';
 
 export default defineComponent({
+  components: { UpdateCard },
+
   mixins: [orderStorageMixin],
 
   setup() {
@@ -43,6 +52,7 @@ export default defineComponent({
 
   methods: {
     init() {
+      this.checkAppVersion();
       this.loadLang();
       this.loadSettings();
       this.handleQueries();
@@ -61,6 +71,30 @@ export default defineComponent({
       if (id != null) {
         this.store.orderMode = 'OrderTrainPicker';
       }
+    },
+
+    async checkAppVersion() {
+      const storageVersion = StorageManager.getStringValue(STORAGE_VERSION_KEY);
+
+      try {
+        const releaseData = await (
+          await axios.get('https://api.github.com/repos/Spythere/genera-tor/releases/latest')
+        ).data;
+
+        if (!releaseData) return;
+
+        this.store.appUpdateData.version = this.appVersion;
+        this.store.appUpdateData.changelog = releaseData.body;
+        this.store.appUpdateData.releaseURL = releaseData.html_url;
+
+        this.store.updateCardOpen =
+          (storageVersion != '' && storageVersion != this.appVersion) ||
+          import.meta.env.VITE_UPDATE_TEST === 'test';
+      } catch (error) {
+        console.error(`Wystąpił błąd podczas pobierania danych z API GitHuba: ${error}`);
+      }
+
+      StorageManager.setStringValue(STORAGE_VERSION_KEY, this.appVersion);
     },
 
     changeLang(lang: string) {
