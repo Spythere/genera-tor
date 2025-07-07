@@ -1,7 +1,7 @@
 {
    "locale": {
-      "pl": "POLSKI",
-      "en": "ANGIELSKI"
+      "pl": "POL",
+      "en": "ENG"
    },
    "update": {
       "update-available-text": "Nowa wersja GeneraTORa dostępna!",
@@ -14,7 +14,7 @@
    },
    "navbar": {
       "order-message": "TREŚĆ ROZKAZU",
-      "order-list": "ZAPISANE ROZKAZY",
+      "order-list": "ZAPISANE ROZ.",
       "order-train-picker": "POCIĄGI"
    },
    "order-message": {

@@ -9,25 +9,21 @@
       </div>
 
       <div class="message_container">
-        <div class="message_actions">
-          <button class="g-button action icon" @click="switchLanguages">
+        <div class="message_nav">
+          <button class="g-button icon" @click="switchLanguages">
             <LanguagesIcon :size="18" />
             <span style="margin-left: 0.25em">{{ $t('locale.' + store.currentAppLocale) }}</span>
           </button>
-        </div>
 
-        <div class="message_nav">
-          <span v-for="(action, i) in navActions" :key="action.mode">
-            <b v-if="i > 0">&bull;</b>
-
-            <button
-              class="g-button option"
-              :data-active="store.orderMode == action.mode"
-              @click="selectOrderMode(action.mode)"
-            >
-              {{ $t(`navbar.${action.value}`) }}
-            </button>
-          </span>
+          <button
+            v-for="(action, i) in navActions"
+            :key="action.mode"
+            class="g-button option"
+            :data-active="store.orderMode == action.mode"
+            @click="selectOrderMode(action.mode)"
+          >
+            {{ $t(`navbar.${action.value}`) }}
+          </button>
         </div>
 
         <transition name="order-anim" mode="out-in">
@@ -50,7 +46,7 @@ import { useStore } from '../store/store';
 import OrderHelper from '../components/OrderHelper.vue';
 import OrderTrainPicker from '../components/OrderTrainPicker.vue';
 import { LanguagesIcon } from 'lucide-vue-next';
-import StorageManager from "../managers/storageManager";
+import StorageManager from '../managers/storageManager';
 
 export default defineComponent({
   components: { OrderVue, SideBar, OrderHelper, LanguagesIcon },
@@ -162,19 +158,14 @@ export default defineComponent({
     overflow: auto;
   }
 
-  .message_actions {
-    display: flex;
-    justify-content: center;
-  }
-
   .message_nav {
     display: flex;
     align-items: center;
     justify-content: center;
-
+    gap: 0.25em;
     flex-wrap: wrap;
 
-    margin: 0.5em 0;
+    margin-bottom: 1.5em;
   }
 }
 </style>
