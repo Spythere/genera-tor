@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Converter } from 'showdown';
 import { useStore } from '../store/store';
 
