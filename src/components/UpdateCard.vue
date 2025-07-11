@@ -21,7 +21,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { Converter } from 'showdown';
 import { useStore } from '../store/store';
 
@@ -32,8 +32,6 @@ const confirmButtonEl = ref<HTMLButtonElement | null>(null);
 watch(
   computed(() => store.updateCardOpen),
   (val) => {
-    console.log(val, confirmButtonEl);
-
     if (val) {
       confirmButtonEl.value?.focus();
     }
