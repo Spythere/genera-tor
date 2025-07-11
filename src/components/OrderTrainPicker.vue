@@ -254,8 +254,9 @@ export default defineComponent({
 
       if (this.fillCheckpointName) {
         const sceneryAbbrev = this.sceneriesData?.find(
-          ({ name }) => name === this.selectedSceneryId
+          ({ name }) => name === this.selectedScenery!.stationName
         )?.abbr;
+
         this.store.orderFooter.checkpointName =
           sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
       }
@@ -280,7 +281,6 @@ export default defineComponent({
         if (queryScenery) {
           this.selectedSceneryId = `${queryScenery.stationName}|${queryScenery.stationHash}|${queryScenery.dispatcherName}|${queryScenery.region}`;
 
-          console.log(this.selectedRegion);
           this.selectOption();
 
           this.store.orderMode = 'OrderTrainPicker';
