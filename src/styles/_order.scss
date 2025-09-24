@@ -1,0 +1,192 @@
+@use 'colors';
+
+$darkModeTextCol: #eee;
+
+.order {
+  width: 100%;
+  background-color: white;
+  color: black;
+
+  &.dark {
+    background-color: colors.$bgColDarker;
+    color: $darkModeTextCol;
+  }
+
+  @media screen and (max-width: 550px) {
+    font-size: 3vw;
+  }
+}
+
+table.order-table {
+  width: 100%;
+  overflow: auto;
+
+  border: 2px solid black;
+  border-collapse: collapse;
+
+  td {
+    border: 2px solid black;
+    border-collapse: collapse;
+    line-height: 1.25em;
+
+    text-align: justify;
+    vertical-align: top;
+  }
+}
+
+input.order-input {
+  max-width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 1em;
+
+  text-align: center;
+  border-bottom: 2px dotted black;
+
+  &:focus-visible {
+    border-bottom: 2px solid colors.$accentCol;
+  }
+
+  &.row-checkbox + input::placeholder {
+    color: red;
+  }
+
+  &[type='checkbox']:focus-visible,
+  &[type='radio']:focus-visible {
+    outline: 2px solid colors.$accentCol;
+  }
+
+  &[type='checkbox'],
+  &[type='radio'] {
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    font-size: 0.8em;
+    color: black;
+  }
+}
+
+label.order-input-label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+select.order-select {
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+  font-size: 0.8em;
+  color: black;
+}
+
+textarea.order-textarea {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid colors.$accentCol;
+  }
+}
+
+// Dark mode
+.order.dark {
+  input.order-input {
+    border-color: $darkModeTextCol !important;
+    color: $darkModeTextCol !important;
+
+    &:focus-visible {
+      border-bottom: 2px solid colors.$accentCol !important;
+    }
+
+    &::placeholder {
+      color: #ccc !important;
+    }
+  }
+
+  select.order-select {
+    color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol;
+
+    &:focus-visible {
+      border-color: colors.$accentCol;
+    }
+  }
+
+  select.order-select option,
+  textarea.order-textarea {
+    color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol !important;
+    background-color: colors.$bgColDarker !important;
+  }
+
+  .horizontal-bar {
+    background-color: white;
+  }
+
+  .order_header,
+  .order_other,
+  table.order-table,
+  tr,
+  td {
+    border-color: $darkModeTextCol !important;
+  }
+}
+
+/* Instruction Checkbox */
+.order-instruction-checkbox {
+  display: block;
+  position: relative;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  & > input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    cursor: pointer;
+
+    &:checked ~ .checkmark:after {
+      content: 'X';
+    }
+
+    &:focus-visible ~ .text {
+      text-decoration: underline;
+      outline: 1px solid black;
+    }
+  }
+
+  .checkmark {
+    display: block;
+    position: relative;
+
+    margin: 0 auto;
+    margin-bottom: 0.35em;
+
+    height: 1.3em;
+    width: 1.3em;
+    background-color: #eee;
+    border: 2px solid black;
+
+    background-color: gold;
+
+    &:after {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &:hover input ~ .checkmark {
+    background-color: #ffe44b;
+  }
+}

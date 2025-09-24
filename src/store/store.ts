@@ -10,19 +10,142 @@ export const useStore = defineStore('store', {
   state: () => {
     return {
       currentAppLocale: 'pl',
-      
+
       appUpdateData: {
         version: '',
         changelog: '',
         releaseURL: ''
       },
-      
+
       updateCardOpen: false,
       helperModalOpen: false,
       orderDarkMode: false,
 
       chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',
+
+      orderData: {
+        header: {
+          A: '',
+          B: '',
+          C: '',
+          D: ''
+        },
+        instructions: [
+          {
+            key: '22',
+            name: '22',
+            active: false,
+            inputFields: {},
+            optionalFieldNames: []
+          },
+          {
+            key: '99',
+            name: '99',
+            active: false,
+            inputFields: {
+              x1: ''
+            },
+            optionalFieldNames: []
+          },
+          {
+            key: '2110',
+            name: '21.10',
+            active: false,
+            inputFields: {
+              track1: '',
+              signalbox1: '',
+              track2: '',
+              signalbox2: '',
+              signal1: '',
+              signal2: '',
+              signal3: ''
+            },
+            optionalFieldNames: ['signal1', 'signal2', 'signal3']
+          },
+          {
+            key: '2115',
+            name: '21.15',
+            active: false,
+            inputFields: {
+              track1: '',
+              signalbox1: '',
+              track2: '',
+              signal1: '',
+              signal2: '',
+              signal3: ''
+            },
+            optionalFieldNames: ['signal1', 'signal2', 'signal3']
+          },
+          {
+            key: '2120',
+            name: '21.20',
+            active: false,
+            inputFields: {
+              track1: '',
+              signalbox1: '',
+              signalbox2: ''
+            }
+          },
+          {
+            key: '2125',
+            name: '21.25',
+            active: false,
+            inputFields: {
+              select1: 'select1-a',
+              signalbox1: '',
+              track1: '',
+              km1: '',
+              hour1: ''
+            },
+            selectFields: {
+              select1: {
+                options: ['select1-a', 'select1-b']
+              }
+            }
+          },
+          {
+            key: '2135',
+            name: '21.35',
+            active: false,
+            inputFields: {
+              track1: '',
+              signalbox1: ''
+            }
+          },
+          {
+            key: '2140',
+            name: '21.40',
+            active: false,
+            inputFields: {
+              signalbox1: '',
+              signalbox2: '',
+              km1: '',
+              other1: ''
+            },
+            optionalFieldNames: ['signalbox2']
+          },
+          {
+            key: '2145',
+            name: '21.45',
+            active: false,
+            inputFields: {
+              signalbox1: '',
+              signal1: ''
+            }
+          },
+          {
+            key: '2150',
+            name: '21.50',
+            active: false,
+            inputFields: {
+              signalbox1: '',
+              signalbox2: '',
+              km1: ''
+            }
+          }
+        ]
+      },
 
       orderMode: 'OrderMessage',
 

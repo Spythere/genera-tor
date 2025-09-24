@@ -4,16 +4,15 @@
   <div class="home">
     <div class="home_container">
       <div class="order_container">
-        <SideBar />
-        <OrderVue />
+        <Order />
       </div>
 
       <div class="message_container">
         <div class="message_nav">
-          <button class="g-button icon" @click="switchLanguages">
+          <!-- <button class="g-button icon" @click="switchLanguages">
             <LanguagesIcon :size="18" />
             <span style="margin-left: 0.25em">{{ $t('locale.' + store.currentAppLocale) }}</span>
-          </button>
+          </button> -->
 
           <button
             v-for="(action, i) in navActions"
@@ -38,18 +37,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import OrderVue from '../components/Order.vue';
+import Order from '../components/Order/Order.vue';
 import SideBar from '../components/SideBar.vue';
 import OrderMessage from '../components/OrderMessage.vue';
 import OrderList from '../components/OrderList.vue';
 import { useStore } from '../store/store';
-import OrderHelper from '../components/OrderHelper.vue';
 import OrderTrainPicker from '../components/OrderTrainPicker.vue';
 import { LanguagesIcon } from 'lucide-vue-next';
 import StorageManager from '../managers/storageManager';
 
 export default defineComponent({
-  components: { OrderVue, SideBar, OrderHelper, LanguagesIcon },
+  components: { Order, SideBar, LanguagesIcon },
 
   data() {
     return {
@@ -137,8 +135,8 @@ export default defineComponent({
 }
 
 .order_container {
-  width: 100%;
-  max-width: 600px;
+  width: 800px;
+  overflow: auto;
 
   display: flex;
   align-items: start;

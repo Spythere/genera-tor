@@ -1,46 +1,37 @@
 <template>
   <div id="app_wrapper">
-    <UpdateCard />
-
-    <router-view />
-
     <transition name="slide-anim">
-      <div v-if="needRefresh" class="update-prompt" @click="updateServiceWorker(true)">
-        {{ $t('update.update-available-text') }}
-        <u>{{ $t('update.update-available-underline') }}</u>
-      </div>
+      <UpdateCard />
     </transition>
 
-    <footer>
-      &copy; <a href="https://td2.info.pl/profile/?u=20777">Spythere</a>
-      {{ new Date().getUTCFullYear() }} |
-      <button class="g-button text" @click="store.updateCardOpen = true">v{{ appVersion }}</button>
-    </footer>
+    <RouterView />
+
+    <transition name="slide-anim">
+      <UpdatePrompt />
+    </transition>
+
+    <AppFooter :version="appVersion" />
   </div>
 </template>
 
 <script lang="ts">
-import { useRegisterSW } from 'virtual:pwa-register/vue';
+import UpdateCard from './components/Global/UpdateCard.vue';
+
 import { defineComponent } from 'vue';
 import packageInfo from '../package.json';
 import { useStore } from './store/store';
 import orderStorageMixin from './mixins/orderStorageMixin';
 import StorageManager from './managers/storageManager';
 import axios from 'axios';
-import UpdateCard from './components/UpdateCard.vue';
+import UpdatePrompt from './components/Global/UpdatePrompt.vue';
+import AppFooter from './components/App/AppFooter.vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 
 export default defineComponent({
-  components: { UpdateCard },
+  components: { UpdateCard, UpdatePrompt, AppFooter },
 
   mixins: [orderStorageMixin],
-
-  setup() {
-    const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({ immediate: true });
-
-    return { offlineReady, needRefresh, updateServiceWorker };
-  },
 
   data() {
     return { appVersion: packageInfo.version, store: useStore() };
