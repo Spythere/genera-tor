@@ -82,9 +82,9 @@
             <!-- For 23.10 only -->
             <template v-slot:text-list v-if="instruction.key == '2310'">
               <i18n-t
+                v-for="(fieldInputs, i) in instruction.listFields"
                 :keypath="`order.${instruction.key}.text-list`"
                 tag="div"
-                v-for="(fieldInputs, i) in instruction.listFields"
               >
                 <template v-slot:bold>
                   <label>

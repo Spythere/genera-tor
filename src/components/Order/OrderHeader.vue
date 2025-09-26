@@ -29,7 +29,7 @@
           </div>
         </td>
       </tr>
-      
+
       <tr>
         <td>
           <div class="header-input-box">
@@ -69,7 +69,7 @@ const store = useStore();
 <style scoped>
 .header-input-box {
   width: 100%;
-  padding: 0 1rem;
+  padding: 0.5em 1em;
 }
 
 .order-input {

@@ -202,23 +202,27 @@
          "signalbox1": "x.2 posterunek",
          "km1": "x.3 km",
          "signalbox2": "x.4 posterunek",
-         "hour1": "x.5 godzina"
+         "hour1": "x.5 godzina",
+         "message-html": "<b>Polecam jazdę po torze zamkniętym</b> nr {0} w kierunku {1} do km {2} zjazd do {3} do godz. {4}"
       },
       "2181": {
          "text": "{bold1}",
-         "bold1": "Tor zamknięty wolny od taboru"
+         "bold1": "Tor zamknięty wolny od taboru",
+         "message-html": "<b>Tor zamknięty wolny od taboru</b> "
       },
       "2182": {
          "text": "{bold1} {train1} w km {km1}",
          "bold1": "Na torze pracuje pociąg",
          "train1": "x.1 numer pociągu",
-         "km1": "x.2 km"
+         "km1": "x.2 km",
+         "message-html": "<b>Na torze pracuje pociąg</b> {0} w km {1}"
       },
       "2183": {
          "text": "{bold1} {train1} do km {km1}",
          "bold1": "Na tor zostanie wyprawiony pociąg",
          "train1": "x.1 numer pociągu",
-         "km1": "x.2 km"
+         "km1": "x.2 km",
+         "message-html": "<b>Na tor zostanie wyprawiony pociąg</b> {0} do km {1}"
       },
       "2185": {
          "text": "{bold1} na tor nr {track1} w km {km1} na szlaku {'|'} {signalbox1} {'|'} {signalbox2}",
@@ -226,7 +230,8 @@
          "track1": "x.1 tor",
          "km1": "x.2 km",
          "signalbox1": "x.3 posterunek",
-         "signalbox2": "x.4 posterunek"
+         "signalbox2": "x.4 posterunek",
+         "message-html": "<b>Zezwalam na wstawienie PSD</b> na tor nr {0} w km {1} na szlaku {'|'} {2} {'|'} {3}"
       },
       "2310": {
          "text": "{bold1}{br}{text-list}",
@@ -239,15 +244,18 @@
          "vmax1": "x.{0} km/h",
          "km1": "x.{0} km",
          "km2": "x.{0} km",
-         "other1": "x.{1} przyczyna"
+         "other1": "x.{1} przyczyna",
+         "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b> <br /> "
       },
       "2311": {
          "text": "{bold1}",
-         "bold1": "Podawać sygnał „Baczność”"
+         "bold1": "Podawać sygnał „Baczność”",
+         "message-html": "<b>Podawać sygnał „Baczność”</b>"
       },
       "2320": {
          "text": "{other2320}",
-         "other2320": "x.96 inne"
+         "other2320": "x.96 inne",
+         "message-html": "Inne: {0}"
       },
       "footer": {
          "V": "V Identyfikator maszynisty",

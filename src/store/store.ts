@@ -292,6 +292,12 @@ export const useStore = defineStore('store', {
             inputFields: {},
             optionalFieldNames: []
           }
+        },
+        footer: {
+          V: '',
+          W: '',
+          Y: '',
+          Z: ''
         }
       },
 
