@@ -142,9 +142,157 @@ export const useStore = defineStore('store', {
               signalbox1: '',
               signalbox2: '',
               km1: ''
+            },
+            optionalFieldNames: ['signalbox2']
+          },
+          {
+            key: '2155',
+            name: '21.55',
+            active: false,
+            inputFields: {
+              signalbox1: '',
+              signalbox2: '',
+              signal1: ''
+            },
+            optionalFieldNames: ['signalbox2']
+          },
+          {
+            key: '2160',
+            name: '21.60',
+            active: false,
+            inputFields: {
+              signalbox1: '',
+              signalbox2: '',
+              signalbox3: '',
+              line1: '',
+              vmax1: ''
+            }
+          },
+          {
+            key: '2165',
+            name: '21.65',
+            active: false,
+            inputFields: {
+              km1: '',
+              km2: ''
+            }
+          },
+          {
+            key: '2170',
+            name: '21.70',
+            active: false,
+            inputFields: {
+              signalbox1: '',
+              signalbox2: '',
+              line1: ''
+            }
+          },
+          {
+            key: '2180',
+            name: '21.80',
+            active: false,
+            inputFields: {
+              track1: '',
+              signalbox1: '',
+              km1: '',
+              signalbox2: '',
+              hour1: ''
+            }
+          },
+          {
+            key: '2181',
+            name: '21.81',
+            active: false,
+            inputFields: {}
+          },
+          {
+            key: '2182',
+            name: '21.82',
+            active: false,
+            inputFields: {
+              train1: '',
+              km1: ''
+            }
+          },
+          {
+            key: '2183',
+            name: '21.83',
+            active: false,
+            inputFields: {
+              train1: '',
+              km1: ''
+            }
+          },
+          {
+            key: '2185',
+            name: '21.85',
+            active: false,
+            inputFields: {
+              track1: '',
+              km1: '',
+              signalbox1: '',
+              signalbox2: ''
+            }
+          },
+          {
+            key: '2310',
+            name: '23.10',
+            active: false,
+            inputFields: {},
+            listFields: [
+              {
+                signalbox1: '',
+                signalbox2: '',
+                track1: '',
+                vmax1: '',
+                km1: '',
+                km2: '',
+                other1: ''
+              },
+              {
+                signalbox1: '',
+                signalbox2: '',
+                track1: '',
+                vmax1: '',
+                km1: '',
+                km2: '',
+                other1: ''
+              },
+              {
+                signalbox1: '',
+                signalbox2: '',
+                track1: '',
+                vmax1: '',
+                km1: '',
+                km2: '',
+                other1: ''
+              }
+            ]
+          },
+          {
+            key: '2311',
+            name: '23.11',
+            active: false,
+            inputFields: {}
+          },
+          {
+            key: '2320',
+            name: '23.20',
+            active: false,
+            inputFields: {
+              other2320: ''
             }
           }
-        ]
+        ],
+        customInstructions: {
+          '2310': {
+            name: '23.10',
+            active: false,
+
+            inputFields: {},
+            optionalFieldNames: []
+          }
+        }
       },
 
       orderMode: 'OrderMessage',

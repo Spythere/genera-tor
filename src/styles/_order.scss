@@ -6,6 +6,8 @@ $darkModeTextCol: #eee;
   width: 100%;
   background-color: white;
   color: black;
+  max-height: 95vh;
+  overflow: auto;
 
   &.dark {
     background-color: colors.$bgColDarker;

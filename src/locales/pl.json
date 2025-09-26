@@ -162,76 +162,92 @@
          "message-html": "<b>Wskazania tarcz ostrzegawczych</b> przejazdowych na posterunku/szlaku {1} / {2} odnoszących się do przejazdu w km {3}, <b>są nieważne. Jazda z prędkością rozkładową.</b>"
       },
       "2155": {
-         "text": "<b>Uszkodzone urządzenia SHP</b> na {0} {1}|{2} odnoszące się do sygnalizatora {3}.",
-         "choice-1-a": "posterunku",
-         "choice-1-b": "szlaku",
-         "x1": "x.1 posterunek",
-         "x2": "x.2 posterunek",
-         "x3": "x.3 sygnalizator"
+         "text": "{bold1} na posterunku/szlaku {signalbox1}{'|'}{signalbox2} odnoszące się do sygnalizatora {signal1}.",
+         "bold1": "Uszkodzone urządzenia SHP",
+         "signalbox1": "x.1 posterunek",
+         "signalbox2": "x.2 posterunek",
+         "signal1": "x.3 sygnalizator",
+         "message-html": "<b>Uszkodzone urządzenia SHP</b> na posterunku/szlaku {0}{'|'}{1} odnoszące się do sygnalizatora {3}"
       },
       "2160": {
-         "text": "<b>Zmiana trasy</b> na odcinku od {0} do {1}, jazda przez {2} linią {3} z prędkością {4}.",
-         "x1": "x.1 posterunek",
-         "x2": "x.2 posterunek",
-         "x3": "x.3 posterunek",
-         "x4": "x.4 linia",
-         "x5": "x.5 km/h"
+         "text": "{bold1} na odcinku od {signalbox1} do {signalbox2}, jazda przez {signalbox3} linią {line1} z prędkością {vmax1}.",
+         "bold1": "Zmiana trasy",
+         "signalbox1": "x.1 posterunek",
+         "signalbox2": "x.2 posterunek",
+         "signalbox3": "x.3 posterunek",
+         "line1": "x.4 linia",
+         "vmax1": "x.5 km/h",
+         "message-html": "<b>Zmiana trasy</b> na odcinku od {0} do {1}, jazda przez {2} linią {3} z prędkością {4}."
       },
       "2165": {
-         "text": "<b>Jazda z opuszczonymi pantografami</b> na odcinku od {0} do {1}.",
-         "x1": "x.1 km",
-         "x2": "x.2 km"
+         "text": "{bold1} na odcinku od {km1} do {km2}.",
+         "bold1": "Jazda z opuszczonymi pantografami",
+         "km1": "x.1 km",
+         "km2": "x.2 km",
+         "message-html": "<b>Jazda z opuszczonymi pantografami</b> na odcinku od {0} do {1}."
       },
       "2170": {
-         "text": "<b>Na odcinku</b> od {0} do {1} linii nr {2} <b>jazda pociągu z łącznością analogową.</b>",
-         "x1": "x.1 posterunek",
-         "x2": "x.2 posterunek",
-         "x3": "x.2 linia"
+         "text": "{bold1} od {signalbox1} do {signalbox2} linii nr {line1}{br}{bold2}",
+         "bold1": "Na odcinku",
+         "bold2": "jazda pociągu z łącznością analogową.",
+         "signalbox1": "x.1 posterunek",
+         "signalbox2": "x.2 posterunek",
+         "line1": "x.3 linia",
+         "message-html": "<b>Na odcinku</b> na odcinku od {0} do {1} linii nr {2} <b>jazda pociągu z łącznością analogową.</b>"
       },
       "2180": {
-         "text": "<b>Polecam jazdę po torze zamkniętym</b> nr {0} w kierunku {1} do km {2} zjazd do {3} do godz. {4}",
-         "x1": "x.1 tor",
-         "x2": "x.2 posterunek",
-         "x3": "x.3 km",
-         "x4": "x.4 posterunek",
-         "x5": "x.5 godzina"
+         "text": "{bold1} nr {track1} w kierunku {signalbox1} do km {km1} zjazd do {signalbox2} do godz. {hour1}",
+         "bold1": "Polecam jazdę po torze zamkniętym",
+         "track1": "x.1 tor",
+         "signalbox1": "x.2 posterunek",
+         "km1": "x.3 km",
+         "signalbox2": "x.4 posterunek",
+         "hour1": "x.5 godzina"
       },
       "2181": {
-         "text": "<b>Tor zamknięty wolny od taboru</b>"
+         "text": "{bold1}",
+         "bold1": "Tor zamknięty wolny od taboru"
       },
       "2182": {
-         "text": "<b>Na torze pracuje pociąg</b> {0} w km {1}",
-         "x1": "x.1 numer pociągu",
-         "x2": "x.2 km"
+         "text": "{bold1} {train1} w km {km1}",
+         "bold1": "Na torze pracuje pociąg",
+         "train1": "x.1 numer pociągu",
+         "km1": "x.2 km"
       },
       "2183": {
-         "text": "<b>Na tor zostanie wyprawiony pociąg</b> {0} do km {1}",
-         "x1": "x.1 numer pociągu",
-         "x2": "x.2 km"
+         "text": "{bold1} {train1} do km {km1}",
+         "bold1": "Na tor zostanie wyprawiony pociąg",
+         "train1": "x.1 numer pociągu",
+         "km1": "x.2 km"
       },
       "2185": {
-         "text": "<b>Zezwalam na wstawienie PSD</b> na tor nr {0} w km {1} na szlaku | {2} | {3}",
-         "x1": "x.1 tor",
-         "x2": "x.2 km",
-         "x3": "x.3 posterunek",
-         "x4": "x.4 posterunek"
+         "text": "{bold1} na tor nr {track1} w km {km1} na szlaku {'|'} {signalbox1} {'|'} {signalbox2}",
+         "bold1": "Zezwalam na wstawienie PSD",
+         "track1": "x.1 tor",
+         "km1": "x.2 km",
+         "signalbox1": "x.3 posterunek",
+         "signalbox2": "x.4 posterunek"
       },
-      "23.10": {
-         "text": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
-         "message-line-2": "<b>Na posterunku/szlaku</b> {0}/{1} tor nr {2} v {3} od {4} do {5} {6}",
-         "x1": "x.{0} posterunek",
-         "x2": "x.{0} posterunek",
-         "x3": "x.{0} tor",
-         "x4": "x.{0} km/h",
-         "x5": "x.{0} km",
-         "x6": "x.{0} km",
-         "x7": "x.{0} przyczyna"
+      "2310": {
+         "text": "{bold1}{br}{text-list}",
+         "bold1": "Nie przekraczać prędkości i zachować ostrożność:",
+         "text-list": "{bold} {signalbox1}/{signalbox2} tor nr {track1} {v} {vmax1} od {km1} do {km2}  {other1}",
+         "bold": "{0}. Na posterunku/szlaku",
+         "signalbox1": "x.{0} posterunek",
+         "signalbox2": "x.{0} posterunek",
+         "track1": "x.{0} tor",
+         "vmax1": "x.{0} km/h",
+         "km1": "x.{0} km",
+         "km2": "x.{0} km",
+         "other1": "x.{1} przyczyna"
       },
-      "23.11": {
-         "text": "<b>Podawać sygnał „Baczność”</b>"
+      "2311": {
+         "text": "{bold1}",
+         "bold1": "Podawać sygnał „Baczność”"
       },
-      "23.20": {
-         "x96": "x.96 inne"
+      "2320": {
+         "text": "{other2320}",
+         "other2320": "x.96 inne"
       },
       "footer": {
          "V": "V Identyfikator maszynisty",

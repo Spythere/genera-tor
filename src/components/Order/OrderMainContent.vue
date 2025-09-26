@@ -50,6 +50,7 @@
 
         <td colspan="3">
           <i18n-t :keypath="`order.${instruction.key}.text`" tag="div">
+            <!-- For all instructions with text directives -->
             <template v-slot:bold1>
               <b>{{ t(`order.${instruction.key}.bold1`) }}</b>
             </template>
@@ -78,6 +79,40 @@
               <br />
             </template>
 
+            <!-- For 23.10 only -->
+            <template v-slot:text-list v-if="instruction.key == '2310'">
+              <i18n-t
+                :keypath="`order.${instruction.key}.text-list`"
+                tag="div"
+                v-for="(fieldInputs, i) in instruction.listFields"
+              >
+                <template v-slot:bold>
+                  <label>
+                    <input type="checkbox" />
+                    <b>{{ t(`order.${instruction.key}.bold`, [i + 1]) }}</b>
+                  </label>
+                </template>
+
+                <template v-slot:v>
+                  <br />
+                  <span style="font-size: 1.5em">v</span>
+                </template>
+
+                <template v-slot:[fieldKey] v-for="(_, fieldKey, j) in fieldInputs">
+                  <input
+                    class="order-input"
+                    :id="`order-${instruction.key}-${fieldKey}`"
+                    :style="{ width: calculateInputWidthByFieldName(fieldKey) }"
+                    v-model="instruction.listFields![i][fieldKey]"
+                    :placeholder="
+                      t(`order.${instruction.key}.${fieldKey}`, [j + 1 + 6 * i, 91 + i])
+                    "
+                  />
+                </template>
+              </i18n-t>
+            </template>
+
+            <!-- For all instructions with input fields -->
             <template v-slot:[fieldKey] v-for="(_, fieldKey) in instruction.inputFields">
               <input
                 class="order-input"
@@ -88,6 +123,7 @@
               />
             </template>
 
+            <!-- For all instructions with select fields -->
             <template v-for="(selectField, fieldKey) in instruction.selectFields" v-slot:[fieldKey]>
               <select
                 class="order-select"
@@ -98,12 +134,6 @@
                   {{ t(`order.${instruction.key}.${value}`) }}
                 </option>
               </select>
-              <!-- <input
-                class="order-input"
-                :id="`order-${instruction.key}-${fieldKey}`"
-                v-model="instruction.optionFields[fieldKey]"
-                :placeholder="t(`order.${instruction.key}.${fieldKey}`)"
-              /> -->
             </template>
           </i18n-t>
         </td>
