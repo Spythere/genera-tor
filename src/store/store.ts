@@ -341,7 +341,7 @@ export const useStore = defineStore('store', {
         }
       },
 
-      orderMode: 'OrderMessage',
+      panelMode: 'OrderMessage',
 
       orderFooter: {
         stationName: '',

@@ -261,7 +261,7 @@ export default defineComponent({
           sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
       }
 
-      this.store.orderMode = 'OrderMessage';
+      this.store.panelMode = 'OrderMessage';
     },
 
     handleQueries() {
@@ -283,7 +283,7 @@ export default defineComponent({
 
           this.selectOption();
 
-          this.store.orderMode = 'OrderTrainPicker';
+          this.store.panelMode = 'OrderTrainPicker';
         }
       }
     }

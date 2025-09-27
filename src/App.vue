@@ -56,7 +56,7 @@ export default defineComponent({
 
     loadSettings() {
       document.title = `GeneraTOR ${this.appVersion}`;
-      this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
+      this.store.orderDarkMode = StorageManager.getBooleanValue('dark-mode');
     },
 
     handleQueries() {
@@ -65,7 +65,7 @@ export default defineComponent({
       const id = query.get('sceneryId');
 
       if (id != null) {
-        this.store.orderMode = 'OrderTrainPicker';
+        this.store.panelMode = 'OrderTrainPicker';
       }
     },
 
@@ -92,8 +92,6 @@ export default defineComponent({
 
       StorageManager.setStringValue(STORAGE_VERSION_KEY, this.appVersion);
     },
-
-    
 
     loadLang() {
       const storageLang = StorageManager.getStringValue('lang');

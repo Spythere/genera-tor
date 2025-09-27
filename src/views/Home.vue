@@ -1,22 +1,17 @@
 <template>
   <div class="home">
-    <div class="home_container">
-      <div class="order_container">
+    <div class="home-container">
+      <div class="order-container">
         <Order />
       </div>
 
-      <div class="message_container">
-        <div class="message_nav">
-          <!-- <button class="g-button icon" @click="switchLanguages">
-            <LanguagesIcon :size="18" />
-            <span style="margin-left: 0.25em">{{ $t('locale.' + store.currentAppLocale) }}</span>
-          </button> -->
-
+      <div class="panel-container">
+        <div class="panel-nav">
           <button
             v-for="(action, i) in navActions"
             :key="action.mode"
             class="g-button option"
-            :data-active="store.orderMode == action.mode"
+            :data-active="store.panelMode == action.mode"
             @click="selectOrderMode(action.mode)"
           >
             {{ $t(`navbar.${action.value}`) }}
@@ -68,7 +63,7 @@ export default defineComponent({
 
   methods: {
     selectOrderMode(mode: string) {
-      this.store.orderMode = mode;
+      this.store.panelMode = mode;
     },
 
     switchLanguages() {
@@ -89,7 +84,7 @@ export default defineComponent({
 
   computed: {
     orderModeComponent() {
-      switch (this.store.orderMode) {
+      switch (this.store.panelMode) {
         case 'OrderMessage':
           return OrderMessage;
         case 'OrderList':
@@ -117,7 +112,7 @@ export default defineComponent({
   width: 100%;
 }
 
-.home_container {
+.home-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -136,7 +131,7 @@ export default defineComponent({
   }
 }
 
-.order_container {
+.order-container {
   max-width: 800px;
 
   display: flex;
@@ -147,7 +142,7 @@ export default defineComponent({
   }
 }
 
-.message_container {
+.panel-container {
   width: 500px;
   padding: 2px;
 
@@ -155,7 +150,7 @@ export default defineComponent({
   grid-template-rows: auto auto 1fr;
 }
 
-.message_nav {
+.panel-nav {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +160,7 @@ export default defineComponent({
   margin-bottom: 1.5em;
 }
 
-.message_nav > button {
+.panel-nav > button {
   position: relative;
 
   &::before {

@@ -67,179 +67,199 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { computed, onMounted, ref, watch } from 'vue';
 import { useStore } from '../store/store';
 
-import saveIcon from '../assets/icon-save.svg';
-import orderStorageMixin from '../mixins/orderStorageMixin';
-import orderValidationMixin from '../mixins/orderValidationMixin';
 import { currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
+import StorageManager from '../managers/storageManager';
+import { LocalStorageOrder } from '../types/orderTypes';
+import { useI18n } from 'vue-i18n';
 
-export default defineComponent({
-  name: 'OrderMessage',
+const { t } = useI18n();
+const store = useStore();
 
-  mixins: [orderStorageMixin, orderValidationMixin],
+const actionMonit = ref('');
+const monitTimeout = ref(0);
 
-  data() {
-    return {
-      saveIcon,
-      actionMonit: '',
-      monitTimeout: undefined as number | undefined,
+const incrementOnSave = ref(true);
+const incrementOnCopy = ref(true);
+const updateDate = ref(true);
 
-      incrementOnSave: true,
-      incrementOnCopy: true,
-      updateDate: true
-    };
-  },
+onMounted(() => {
+  incrementOnSave.value = StorageManager.getBooleanValue('save-increment');
+  incrementOnCopy.value = StorageManager.getBooleanValue('copy-increment');
+  updateDate.value = StorageManager.getBooleanValue('update-date');
+});
 
-  setup() {
-    return {
-      store: useStore()
-    };
-  },
+const orderMessagePreview = computed(() => store.orderMessage);
 
-  mounted() {
-    this.incrementOnSave = this.getOrderSetting('save-increment') === 'true';
-    this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'true';
-    this.updateDate = this.getOrderSetting('update-date') === 'true';
-  },
-
-  computed: {
-    fullOrderMessage() {
-      return this.store.orderMessage + this.store.footerMessage;
-    },
-
-    // Replace all new line tags with <br> for preview and get rid of the first one (visible only on simulator's chat)
-    orderMessagePreview() {
-      return this.fullOrderMessage.replace(/\n/g, '<br>').replace('<br>', '');
-    }
-  },
-
-  watch: {
-    fullOrderMessage() {
-      if (this.updateDate) {
-        this.store.orderFooter['hour'] = currentFormattedHours();
-        this.store.orderFooter['minutes'] = currentFormattedMinutes();
-      }
-    }
-  },
-
-  methods: {
-    onCheckboxChange(e: Event) {
-      const checkbox = e.target as HTMLInputElement;
-      this.saveOrderSetting(checkbox.id, checkbox.checked);
-    },
-
-    showActionMonit(text: string) {
-      if (this.monitTimeout) {
-        this.actionMonit = '';
-        clearTimeout(this.monitTimeout);
-
-        setTimeout(() => {
-          this.actionMonit = text;
-
-          this.monitTimeout = window.setTimeout(() => {
-            this.actionMonit = '';
-          }, 5000);
-        }, 300);
-
-        return;
-      }
-
-      this.actionMonit = text;
-
-      this.monitTimeout = window.setTimeout(() => {
-        this.actionMonit = '';
-      }, 5000);
-    },
-
-    incrementOrderNo() {
-      const order = this.store[this.store.chosenOrderType];
-
-      order.header.orderNo = (Number(order.header.orderNo) + 1).toString();
-    },
-
-    copyMessage() {
-      if (!navigator.clipboard)
-        return this.showActionMonit(this.$t('order-message.warning-outdated-clipboard'));
-
-      const hasAtLeastOneRow = /(\[ \d \])/g.test(this.fullOrderMessage);
-      const hasAllInputsFilled = !/_/g.test(this.store.orderMessage);
-
-      if (!hasAllInputsFilled)
-        return this.showActionMonit(
-          `<span class="text--warn">${this.$t('order-message.warning-fill-inputs')}</span>`
-        );
-      if (!hasAtLeastOneRow)
-        return this.showActionMonit(
-          `<span class="text--warn">${this.$t('order-message.warning-add-rows')}</span>`
-        );
-
-      const fieldsToCorrect = this.verifyOrderFields();
-
-      if (fieldsToCorrect.length > 0)
-        return this.showActionMonit(
-          `<span class="text--warn">${this.$t('order-message.warning-fill-footer')} ${fieldsToCorrect.join(
-            ', '
-          )}</span>`
-        );
-
-      navigator.clipboard.writeText(this.fullOrderMessage);
-
-      if (this.incrementOnCopy) this.incrementOrderNo();
-
-      this.showActionMonit(this.$t('order-message.success-copy-html'));
-    },
-
-    saveOrder() {
-      const savedOrderStatus = this.saveLocalOrder();
-
-      switch (savedOrderStatus) {
-        case -1:
-          this.showActionMonit(
-            `<span class="text--warn">${this.$t('order-message.warning-fill-top')}</span>`
-          );
-          break;
-        case 0:
-          this.showActionMonit(
-            `<span class="text--warn">${this.$t('order-message.warning-order-identical')}</span>`
-          );
-          break;
-        case 1:
-          this.showActionMonit(this.$t('order-message.success-save-html'));
-
-          if (this.incrementOnSave) this.incrementOrderNo();
-          break;
-
-        default:
-          break;
-      }
-    },
-
-    updateOrder() {
-      const updatedOrderStatus = this.updateLocalOrder();
-
-      switch (updatedOrderStatus) {
-        case -1:
-          this.showActionMonit(
-            `<span class="text--warn">${this.$t('order-message.error-update')}</span>`
-          );
-          break;
-
-        case 0:
-          this.showActionMonit(
-            `<span class="text--warn">${this.$t('order-message.warning-no-order-selected')}</span>`
-          );
-          break;
-
-        case 1:
-          this.showActionMonit(this.$t('order-message.success-update-html'));
-          break;
-      }
-    }
+watch(orderMessagePreview, () => {
+  if (updateDate.value == true) {
+    store.orderFooter['hour'] = currentFormattedHours();
+    store.orderFooter['minutes'] = currentFormattedMinutes();
   }
 });
+
+function onCheckboxChange(e: Event) {
+  const checkbox = e.target as HTMLInputElement;
+  StorageManager.setBooleanValue(checkbox.id, checkbox.checked);
+}
+
+function showActionMonit(text: string) {
+  if (monitTimeout.value) {
+    actionMonit.value = '';
+    clearTimeout(monitTimeout.value);
+
+    // setTimeout(() => {
+    actionMonit.value = text;
+
+    monitTimeout.value = window.setTimeout(() => {
+      actionMonit.value = '';
+    }, 5000);
+    // }, 300);
+
+    return;
+  }
+
+  actionMonit.value = text;
+
+  monitTimeout.value = window.setTimeout(() => {
+    actionMonit.value = '';
+  }, 5000);
+}
+
+// TODO
+function incrementOrderNo() {
+  // store.orderData.header.
+  // order.header.orderNo = (Number(order.header.orderNo) + 1).toString();
+}
+
+function copyMessage() {
+  if (!navigator.clipboard) return showActionMonit(t('order-message.warning-outdated-clipboard'));
+
+  const hasAtLeastOneRow = /(\[ \d \])/g.test(orderMessagePreview.value);
+  const hasAllInputsFilled = !/_/g.test(store.orderMessage);
+
+  if (!hasAllInputsFilled)
+    return showActionMonit(
+      `<span class="text--warn">${t('order-message.warning-fill-inputs')}</span>`
+    );
+  if (!hasAtLeastOneRow)
+    return showActionMonit(
+      `<span class="text--warn">${t('order-message.warning-add-rows')}</span>`
+    );
+
+  const fieldsToCorrect = verifyOrderFields();
+
+  if (fieldsToCorrect.length > 0)
+    return showActionMonit(
+      `<span class="text--warn">${t('order-message.warning-fill-footer')} ${fieldsToCorrect.join(
+        ', '
+      )}</span>`
+    );
+
+  navigator.clipboard.writeText(orderMessagePreview.value);
+
+  if (incrementOnCopy) incrementOrderNo();
+
+  showActionMonit(t('order-message.success-copy-html'));
+}
+
+function verifyOrderFields() {
+  // const header = this.store[this.store.chosenOrderType].header;
+  const footer = store.orderFooter;
+
+  const fieldsToCorrect = [];
+
+  // if (!header.orderNo) fieldsToCorrect.push('numer rozkazu');
+  // if (!header.trainNo) fieldsToCorrect.push('numer pociągu / manewru');
+  // if (!header.date) fieldsToCorrect.push('data');
+
+  if (!footer.stationName) fieldsToCorrect.push('stacja');
+  if (!footer.checkpointName) fieldsToCorrect.push('posterunek');
+  if (!footer.hour) fieldsToCorrect.push('godzina');
+  if (!footer.minutes) fieldsToCorrect.push('minuta');
+  if (!footer.dispatcherName && !footer.secondaryDispatcherName)
+    fieldsToCorrect.push('dyżurny ruchu (lub z polecenia dyżurnego ruchu)');
+
+  return fieldsToCorrect;
+}
+
+function saveOrder() {
+  const orderObj: LocalStorageOrder = {
+    id: '',
+    orderType: store.chosenOrderType,
+    orderBody: store[store.chosenOrderType],
+    orderFooter: store.orderFooter,
+    createdAt: Date.now(),
+    orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '3'
+  };
+
+  // const headerInfo = orderObj['orderBody']['header'];
+
+  // if (!headerInfo['orderNo']) return -1;
+  // if (!headerInfo['trainNo']) return -1;
+  // if (!headerInfo['date']) return -1;
+
+  // No header info: -1
+  // showActionMonit(`<span class="text--warn">${t('order-message.warning-fill-top')}</span>`)
+
+  const localStorage = window.localStorage;
+  const localOrderCount = localStorage.getItem('orderCount') || '0';
+
+  if (localOrderCount == '0') localStorage.setItem('orderCount', '0');
+
+  const prevLocalOrder = localStorage.getItem(`order-${Number(localOrderCount)}`);
+
+  if (prevLocalOrder && prevLocalOrder == JSON.stringify(orderObj)) {
+    showActionMonit(
+      `<span class="text--warn">${t('order-message.warning-order-identical')}</span>`
+    );
+    return;
+  }
+
+  const nextOrderCount = Number(localOrderCount) + 1;
+  const orderId = `order-${nextOrderCount}`;
+  orderObj['id'] = orderId;
+
+  localStorage.setItem('orderCount', `${nextOrderCount}`);
+  localStorage.setItem(orderId, JSON.stringify(orderObj));
+
+  store.chosenLocalOrderId = orderId;
+  showActionMonit(t('order-message.success-save-html'));
+
+  if (incrementOnSave) incrementOrderNo();
+}
+
+function updateOrder() {
+  if (!store.chosenLocalOrderId) {
+    showActionMonit(
+      `<span class="text--warn">${t('order-message.warning-no-order-selected')}</span>`
+    );
+
+    return;
+  }
+
+  const localOrder = window.localStorage.getItem(store.chosenLocalOrderId);
+
+  if (!localOrder) {
+    showActionMonit(`<span class="text--warn">${t('order-message.error-update')}</span>`);
+    return;
+  }
+
+  const orderObj: LocalStorageOrder = {
+    id: store.chosenLocalOrderId,
+    orderType: store.chosenOrderType,
+    orderBody: store[store.chosenOrderType],
+    orderFooter: store.orderFooter,
+    updatedAt: Date.now(),
+    orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '1'
+  };
+
+  window.localStorage.setItem(store.chosenLocalOrderId, JSON.stringify(orderObj));
+  showActionMonit(t('order-message.success-update-html'));
+}
 </script>
 
 <style lang="scss" scoped>
