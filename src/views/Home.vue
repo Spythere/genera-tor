@@ -14,13 +14,13 @@
             :data-active="store.panelMode == action.mode"
             @click="selectOrderMode(action.mode)"
           >
-            {{ $t(`navbar.${action.value}`) }}
+            {{ t(`navbar.${action.value}`) }}
           </button>
         </div>
 
         <transition name="order-anim" mode="out-in">
           <keep-alive>
-            <Component :is="orderModeComponent" />
+            <Component :is="panelComponent" />
           </keep-alive>
         </transition>
       </div>
@@ -28,73 +28,48 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { useStore } from '../store/store';
+import { useI18n } from 'vue-i18n';
+
 import Order from '../components/Order/Order.vue';
-import SideBar from '../components/SideBar.vue';
 import OrderMessage from '../components/OrderMessage.vue';
 import OrderList from '../components/OrderList.vue';
-import { useStore } from '../store/store';
 import OrderTrainPicker from '../components/OrderTrainPicker.vue';
-import { LanguagesIcon } from 'lucide-vue-next';
-import StorageManager from '../managers/storageManager';
 
-export default defineComponent({
-  components: { Order, SideBar, LanguagesIcon },
+const { t } = useI18n();
+const store = useStore();
 
-  data() {
-    return {
-      navActions: [
-        {
-          mode: 'OrderMessage',
-          value: 'order-message'
-        },
-        {
-          mode: 'OrderList',
-          value: 'order-list'
-        },
-        {
-          mode: 'OrderTrainPicker',
-          value: 'order-train-picker'
-        }
-      ]
-    };
+const navActions = [
+  {
+    mode: 'OrderMessage',
+    value: 'order-message'
   },
-
-  methods: {
-    selectOrderMode(mode: string) {
-      this.store.panelMode = mode;
-    },
-
-    switchLanguages() {
-      const lang = this.store.currentAppLocale == 'pl' ? 'en' : 'pl';
-
-      this.$i18n.locale = lang;
-      this.store.currentAppLocale = lang;
-
-      StorageManager.setStringValue('lang', lang);
-    }
+  {
+    mode: 'OrderList',
+    value: 'order-list'
   },
+  {
+    mode: 'OrderTrainPicker',
+    value: 'order-train-picker'
+  }
+];
 
-  setup() {
-    return {
-      store: useStore()
-    };
-  },
+function selectOrderMode(mode: string) {
+  store.panelMode = mode;
+}
 
-  computed: {
-    orderModeComponent() {
-      switch (this.store.panelMode) {
-        case 'OrderMessage':
-          return OrderMessage;
-        case 'OrderList':
-          return OrderList;
-        case 'OrderTrainPicker':
-          return OrderTrainPicker;
-        default:
-          return OrderMessage;
-      }
-    }
+const panelComponent = computed(() => {
+  switch (store.panelMode) {
+    case 'OrderMessage':
+      return OrderMessage;
+    case 'OrderList':
+      return OrderList;
+    case 'OrderTrainPicker':
+      return OrderTrainPicker;
+    default:
+      return OrderMessage;
   }
 });
 </script>
