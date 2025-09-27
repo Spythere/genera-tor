@@ -29,10 +29,25 @@ table.order-table {
   td {
     border: 2px solid black;
     border-collapse: collapse;
-    line-height: 1.25em;
 
     text-align: justify;
     vertical-align: top;
+  }
+}
+
+.order-input-box {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 1.25em;
+
+  & > span {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 2em);
+    font-size: 0.8em;
+    width: 100%;
+    text-align: center;
   }
 }
 
@@ -132,63 +147,5 @@ textarea.order-textarea {
   tr,
   td {
     border-color: $darkModeTextCol !important;
-  }
-}
-
-/* Instruction Checkbox */
-.order-instruction-checkbox {
-  display: block;
-  position: relative;
-  text-align: center;
-  cursor: pointer;
-  font-weight: bold;
-
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-
-  & > input {
-    position: absolute;
-    opacity: 0;
-    height: 0;
-    width: 0;
-    cursor: pointer;
-
-    &:checked ~ .checkmark:after {
-      content: 'X';
-    }
-
-    &:focus-visible ~ .text {
-      text-decoration: underline;
-      outline: 1px solid black;
-    }
-  }
-
-  .checkmark {
-    display: block;
-    position: relative;
-
-    margin: 0 auto;
-    margin-bottom: 0.35em;
-
-    height: 1.3em;
-    width: 1.3em;
-    background-color: #eee;
-    border: 2px solid black;
-
-    background-color: gold;
-
-    &:after {
-      position: absolute;
-      content: '';
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-
-  &:hover input ~ .checkmark {
-    background-color: #ffe44b;
   }
 }

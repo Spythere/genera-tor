@@ -37,7 +37,8 @@ export const useStore = defineStore('store', {
             name: '22',
             active: false,
             inputFields: {},
-            optionalFieldNames: []
+            optionalFieldNames: [],
+            textDirectives: []
           },
           {
             key: '99',
@@ -46,7 +47,8 @@ export const useStore = defineStore('store', {
             inputFields: {
               x1: ''
             },
-            optionalFieldNames: []
+            optionalFieldNames: [],
+            textDirectives: []
           },
           {
             key: '2110',
@@ -61,7 +63,8 @@ export const useStore = defineStore('store', {
               signal2: '',
               signal3: ''
             },
-            optionalFieldNames: ['signal1', 'signal2', 'signal3']
+            optionalFieldNames: ['signal1', 'signal2', 'signal3'],
+            textDirectives: ['bold1', 'br']
           },
           {
             key: '2115',
@@ -75,7 +78,8 @@ export const useStore = defineStore('store', {
               signal2: '',
               signal3: ''
             },
-            optionalFieldNames: ['signal1', 'signal2', 'signal3']
+            optionalFieldNames: ['signal1', 'signal2', 'signal3'],
+            textDirectives: ['bold1', 'br']
           },
           {
             key: '2120',
@@ -85,7 +89,9 @@ export const useStore = defineStore('store', {
               track1: '',
               signalbox1: '',
               signalbox2: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['highlight1', 'highlight2', 'underline1', 'br']
           },
           {
             key: '2125',
@@ -102,7 +108,9 @@ export const useStore = defineStore('store', {
               select1: {
                 options: ['select1-a', 'select1-b']
               }
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: []
           },
           {
             key: '2135',
@@ -111,7 +119,9 @@ export const useStore = defineStore('store', {
             inputFields: {
               track1: '',
               signalbox1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2140',
@@ -123,7 +133,8 @@ export const useStore = defineStore('store', {
               km1: '',
               other1: ''
             },
-            optionalFieldNames: ['signalbox2']
+            optionalFieldNames: ['signalbox2'],
+            textDirectives: ['bold1']
           },
           {
             key: '2145',
@@ -132,7 +143,9 @@ export const useStore = defineStore('store', {
             inputFields: {
               signalbox1: '',
               signal1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2150',
@@ -143,7 +156,8 @@ export const useStore = defineStore('store', {
               signalbox2: '',
               km1: ''
             },
-            optionalFieldNames: ['signalbox2']
+            optionalFieldNames: ['signalbox2'],
+            textDirectives: ['bold1', 'br']
           },
           {
             key: '2155',
@@ -154,7 +168,8 @@ export const useStore = defineStore('store', {
               signalbox2: '',
               signal1: ''
             },
-            optionalFieldNames: ['signalbox2']
+            optionalFieldNames: ['signalbox2'],
+            textDirectives: ['bold1']
           },
           {
             key: '2160',
@@ -166,7 +181,9 @@ export const useStore = defineStore('store', {
               signalbox3: '',
               line1: '',
               vmax1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2165',
@@ -175,7 +192,9 @@ export const useStore = defineStore('store', {
             inputFields: {
               km1: '',
               km2: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2170',
@@ -185,7 +204,9 @@ export const useStore = defineStore('store', {
               signalbox1: '',
               signalbox2: '',
               line1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1', 'br']
           },
           {
             key: '2180',
@@ -197,13 +218,17 @@ export const useStore = defineStore('store', {
               km1: '',
               signalbox2: '',
               hour1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2181',
             name: '21.81',
             active: false,
-            inputFields: {}
+            inputFields: {},
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2182',
@@ -212,7 +237,9 @@ export const useStore = defineStore('store', {
             inputFields: {
               train1: '',
               km1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2183',
@@ -221,7 +248,9 @@ export const useStore = defineStore('store', {
             inputFields: {
               train1: '',
               km1: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2185',
@@ -232,7 +261,9 @@ export const useStore = defineStore('store', {
               km1: '',
               signalbox1: '',
               signalbox2: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2310',
@@ -241,39 +272,52 @@ export const useStore = defineStore('store', {
             inputFields: {},
             listFields: [
               {
-                signalbox1: '',
-                signalbox2: '',
-                track1: '',
-                vmax1: '',
-                km1: '',
-                km2: '',
-                other1: ''
+                active: false,
+                values: {
+                  signalbox1: '',
+                  signalbox2: '',
+                  track1: '',
+                  vmax1: '',
+                  km1: '',
+                  km2: '',
+                  other1: ''
+                }
               },
               {
-                signalbox1: '',
-                signalbox2: '',
-                track1: '',
-                vmax1: '',
-                km1: '',
-                km2: '',
-                other1: ''
+                active: false,
+                values: {
+                  signalbox1: '',
+                  signalbox2: '',
+                  track1: '',
+                  vmax1: '',
+                  km1: '',
+                  km2: '',
+                  other1: ''
+                }
               },
               {
-                signalbox1: '',
-                signalbox2: '',
-                track1: '',
-                vmax1: '',
-                km1: '',
-                km2: '',
-                other1: ''
+                active: false,
+                values: {
+                  signalbox1: '',
+                  signalbox2: '',
+                  track1: '',
+                  vmax1: '',
+                  km1: '',
+                  km2: '',
+                  other1: ''
+                }
               }
-            ]
+            ],
+            optionalFieldNames: [],
+            textDirectives: ['bold1', 'br']
           },
           {
             key: '2311',
             name: '23.11',
             active: false,
-            inputFields: {}
+            inputFields: {},
+            optionalFieldNames: [],
+            textDirectives: ['bold1']
           },
           {
             key: '2320',
@@ -281,18 +325,11 @@ export const useStore = defineStore('store', {
             active: false,
             inputFields: {
               other2320: ''
-            }
+            },
+            optionalFieldNames: [],
+            textDirectives: []
           }
         ],
-        customInstructions: {
-          '2310': {
-            name: '23.10',
-            active: false,
-
-            inputFields: {},
-            optionalFieldNames: []
-          }
-        },
         footer: {
           V: '',
           W: '',

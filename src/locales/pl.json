@@ -245,7 +245,8 @@
          "km1": "x.{0} km",
          "km2": "x.{0} km",
          "other1": "x.{1} przyczyna",
-         "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b> <br /> "
+         "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
+         "message-html-list": "<b>{0}. Na posterunku/szlaku</b> {1}/{2} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}"
       },
       "2311": {
          "text": "{bold1}",
