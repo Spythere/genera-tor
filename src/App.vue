@@ -18,99 +18,84 @@
   </div>
 </template>
 
-<script lang="ts">
-import UpdateCard from './components/Global/UpdateCard.vue';
-
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import packageInfo from '../package.json';
-import { useStore } from './store/store';
-import orderStorageMixin from './mixins/orderStorageMixin';
-import StorageManager from './managers/storageManager';
 import axios from 'axios';
+import { useStore } from './store/store';
+
+import UpdateCard from './components/Global/UpdateCard.vue';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
-import AppFooter from './components/App/AppFooter.vue';
 import AppNavbar from './components/App/AppNavbar.vue';
+import StorageManager from './managers/storageManager';
+import { onMounted } from 'vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 
-export default defineComponent({
-  components: { UpdateCard, UpdatePrompt, AppFooter, AppNavbar },
+const store = useStore();
+const appVersion = packageInfo.version;
 
-  mixins: [orderStorageMixin],
-
-  data() {
-    return { appVersion: packageInfo.version, store: useStore() };
-  },
-
-  created() {
-    this.init();
-  },
-
-  methods: {
-    init() {
-      this.loadLang();
-      this.loadSettings();
-      this.checkAppVersion();
-      this.handleQueries();
-    },
-
-    loadSettings() {
-      document.title = `GeneraTOR ${this.appVersion}`;
-      this.store.orderDarkMode = StorageManager.getBooleanValue('dark-mode');
-    },
-
-    handleQueries() {
-      const query = new URLSearchParams(window.location.search);
-
-      const id = query.get('sceneryId');
-
-      if (id != null) {
-        this.store.panelMode = 'OrderTrainPicker';
-      }
-    },
-
-    async checkAppVersion() {
-      const storageVersion = StorageManager.getStringValue(STORAGE_VERSION_KEY);
-
-      try {
-        const releaseData = await (
-          await axios.get('https://api.github.com/repos/Spythere/genera-tor/releases/latest')
-        ).data;
-
-        if (!releaseData) return;
-
-        this.store.appUpdateData.version = this.appVersion;
-        this.store.appUpdateData.changelog = releaseData.body;
-        this.store.appUpdateData.releaseURL = releaseData.html_url;
-
-        this.store.updateCardOpen =
-          (storageVersion != '' && storageVersion != this.appVersion) ||
-          import.meta.env.VITE_UPDATE_TEST === 'test';
-      } catch (error) {
-        console.error(`Wystąpił błąd podczas pobierania danych z API GitHuba: ${error}`);
-      }
-
-      StorageManager.setStringValue(STORAGE_VERSION_KEY, this.appVersion);
-    },
-
-    loadLang() {
-      const storageLang = StorageManager.getStringValue('lang');
-
-      if (storageLang) {
-        this.store.changeLang(storageLang);
-        return;
-      }
-
-      if (!window.navigator.language) return;
-
-      const naviLanguage = window.navigator.language.toString();
-
-      if (!naviLanguage.startsWith('pl')) {
-        this.store.changeLang('en');
-      }
-    }
-  }
+onMounted(() => {
+  loadLang();
+  loadSettings();
+  checkAppVersion();
+  handleQueries();
 });
+
+function loadSettings() {
+  document.title = `GeneraTOR ${appVersion}`;
+  store.orderDarkMode = StorageManager.getBooleanValue('dark-mode');
+}
+
+function handleQueries() {
+  const query = new URLSearchParams(window.location.search);
+
+  const id = query.get('sceneryId');
+
+  if (id != null) {
+    store.panelMode = 'OrderTrainPicker';
+  }
+}
+
+async function checkAppVersion() {
+  const storageVersion = StorageManager.getStringValue(STORAGE_VERSION_KEY);
+
+  try {
+    const releaseData = await (
+      await axios.get('https://api.github.com/repos/Spythere/genera-tor/releases/latest')
+    ).data;
+
+    if (!releaseData) return;
+
+    store.appUpdateData.version = appVersion;
+    store.appUpdateData.changelog = releaseData.body;
+    store.appUpdateData.releaseURL = releaseData.html_url;
+
+    store.updateCardOpen =
+      (storageVersion != '' && storageVersion != appVersion) ||
+      import.meta.env.VITE_UPDATE_TEST === 'test';
+  } catch (error) {
+    console.error(`Wystąpił błąd podczas pobierania danych z API GitHuba: ${error}`);
+  }
+
+  StorageManager.setStringValue(STORAGE_VERSION_KEY, appVersion);
+}
+
+function loadLang() {
+  const storageLang = StorageManager.getStringValue('lang');
+
+  if (storageLang) {
+    store.changeLang(storageLang);
+    return;
+  }
+
+  if (!window.navigator.language) return;
+
+  const naviLanguage = window.navigator.language.toString();
+
+  if (!naviLanguage.startsWith('pl')) {
+    store.changeLang('en');
+  }
+}
 </script>
 
 <style lang="scss">
