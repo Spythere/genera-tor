@@ -1,16 +1,19 @@
 <template>
-  <div id="app_wrapper">
+  <div>
     <transition name="slide-anim">
       <UpdateCard />
     </transition>
-
-    <RouterView />
 
     <transition name="slide-anim">
       <UpdatePrompt />
     </transition>
 
-    <AppFooter :version="appVersion" />
+    <div class="app-body">
+      <AppNavbar />
+      <main>
+        <RouterView />
+      </main>
+    </div>
   </div>
 </template>
 
@@ -25,11 +28,12 @@ import StorageManager from './managers/storageManager';
 import axios from 'axios';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
 import AppFooter from './components/App/AppFooter.vue';
+import AppNavbar from './components/App/AppNavbar.vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 
 export default defineComponent({
-  components: { UpdateCard, UpdatePrompt, AppFooter },
+  components: { UpdateCard, UpdatePrompt, AppFooter, AppNavbar },
 
   mixins: [orderStorageMixin],
 
@@ -121,7 +125,6 @@ export default defineComponent({
 
 #app {
   color: white;
-
   min-height: 100vh;
 }
 

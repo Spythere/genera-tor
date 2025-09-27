@@ -1,6 +1,4 @@
 <template>
-  <!-- <OrderHelper v-if="store.helperModalOpen" /> -->
-
   <div class="home">
     <div class="home_container">
       <div class="order_container">
@@ -110,7 +108,6 @@ export default defineComponent({
 @use '../styles/colors';
 
 .home {
-  min-height: 100vh;
   overflow-x: auto;
 
   display: flex;
@@ -125,9 +122,14 @@ export default defineComponent({
   flex-wrap: wrap;
   justify-content: center;
   gap: 2em 1em;
-  padding: 0.5em;
+  padding: 1em;
 
   width: 100%;
+
+  & > div {
+    max-height: calc(100vh - 5em);
+    overflow: auto;
+  }
 
   @media screen and (max-width: 650px) {
     padding: 1em 0.5em;
@@ -135,8 +137,7 @@ export default defineComponent({
 }
 
 .order_container {
-  width: 800px;
-  overflow: auto;
+  max-width: 800px;
 
   display: flex;
   align-items: start;
@@ -147,16 +148,11 @@ export default defineComponent({
 }
 
 .message_container {
+  width: 500px;
   padding: 2px;
-
-  width: 100%;
-  max-width: 500px;
 
   display: grid;
   grid-template-rows: auto auto 1fr;
-
-  height: 95vh;
-  overflow: auto;
 }
 
 .message_nav {

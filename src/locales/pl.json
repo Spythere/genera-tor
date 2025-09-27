@@ -117,7 +117,7 @@
          "signalbox1": "x.1 posterunek",
          "signalbox2": "x.2 posterunek",
          "track1": "x.3 nr toru",
-         "message-html": "Od {0} do {1} po torze {2} <u><b>wskazania semaforów SBL są nieważne.</b> Zachować ostrożność od semafora ze wskaźnikiem<b>W18.</b></u>"
+         "message-html": "Od {0} do {1} po torze {2} <u><b>wskazania semaforów SBL są nieważne.</b> Zachować ostrożność od semafora ze wskaźnikiem <b>W18.</b></u>"
       },
       "2125": {
          "text": "Zezwalam przejechać za {select1} w kierunku {signalbox1} torem {track1} do km {km1} do godz. {hour1}.",

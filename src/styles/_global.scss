@@ -1,5 +1,6 @@
 @use 'fonts';
 @use 'colors';
+@use 'sass:color';
 
 // Global scrollbar style
 ::-webkit-scrollbar {
@@ -76,7 +77,7 @@ button.g-button {
     }
 
     &:hover:not([data-disabled='true']) {
-      background-color: colors.$bgColLighter;
+      background-color: color.adjust(colors.$bgColDarker, $lightness: 15%);
     }
   }
 
@@ -112,6 +113,10 @@ button.g-button {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    &:focus-visible {
+      outline: 1px solid white;
+    }
   }
 }
 
