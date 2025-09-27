@@ -27,17 +27,6 @@
     </div>
 
     <div class="message_checkboxes">
-      <label for="dark-mode" class="g-checkbox">
-        <input
-          type="checkbox"
-          name="dark-mode"
-          id="dark-mode"
-          v-model="store.orderDarkMode"
-          @change="onCheckboxChange"
-        />
-        <span>{{ $t('order-options.dark-mode') }}</span>
-      </label>
-
       <label for="copy-increment" class="g-checkbox">
         <input
           type="checkbox"
@@ -269,7 +258,7 @@ export default defineComponent({
 }
 
 .message_body {
-  height: 250px;
+  height: 350px;
   overflow: auto;
 
   background-color: colors.$bgColLighter;

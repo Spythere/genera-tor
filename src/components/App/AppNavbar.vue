@@ -3,26 +3,39 @@
     <div class="navbar-brand">
       <img src="/favicon.ico" alt="generator logo" width="30" />
       <b>
-        GeneraTOR <sup>v{{ version }}</sup>
+        Genera<span class="text--accent">TOR</span> <sup class="text--grayed">v{{ version }}</sup>
       </b>
     </div>
 
     <div class="navbar-actions">
-      <button class="g-button action icon">
-        <LucideGlobe :size="20" />
-        <span>POL</span>
+      <button class="g-button action icon" @click="switchDarkMode">
+        <LucideMoon :size="20" v-if="store.orderDarkMode" />
+        <LucideSun :size="20" v-else />
       </button>
 
-      <button class="g-button action icon">
-        <LucideMoon :size="20" />
+      <button class="g-button action icon" @click="switchLang">
+        <LucideGlobe :size="20" />
+        <span>{{ store.currentAppLocale == 'pl' ? 'POL' : 'ENG' }}</span>
       </button>
     </div>
   </nav>
 </template>
 
 <script setup lang="ts">
-import { LucideGlobe, LucideMoon } from 'lucide-vue-next';
+import { LucideGlobe, LucideMoon, LucideSun } from 'lucide-vue-next';
 import { version } from '../../../package.json';
+import { useStore } from '../../store/store';
+
+const store = useStore();
+
+function switchDarkMode() {
+  store.orderDarkMode = !store.orderDarkMode;
+  window.localStorage.setItem('dark-mode', `${store.orderDarkMode}`);
+}
+
+function switchLang() {
+  store.changeLang(store.currentAppLocale == 'pl' ? 'en' : 'pl');
+}
 </script>
 
 <style lang="scss" scoped>

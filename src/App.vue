@@ -10,6 +10,7 @@
 
     <div class="app-body">
       <AppNavbar />
+
       <main>
         <RouterView />
       </main>
@@ -92,18 +93,13 @@ export default defineComponent({
       StorageManager.setStringValue(STORAGE_VERSION_KEY, this.appVersion);
     },
 
-    changeLang(lang: string) {
-      this.$i18n.locale = lang;
-      this.store.currentAppLocale = lang;
-
-      StorageManager.setStringValue('lang', lang);
-    },
+    
 
     loadLang() {
       const storageLang = StorageManager.getStringValue('lang');
 
       if (storageLang) {
-        this.changeLang(storageLang);
+        this.store.changeLang(storageLang);
         return;
       }
 
@@ -112,7 +108,7 @@ export default defineComponent({
       const naviLanguage = window.navigator.language.toString();
 
       if (!naviLanguage.startsWith('pl')) {
-        this.changeLang('en');
+        this.store.changeLang('en');
       }
     }
   }

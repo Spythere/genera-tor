@@ -6,6 +6,9 @@ import {
   currentFormattedMinutes
 } from '../utils/dateUtils';
 
+import StorageManager from '../managers/storageManager';
+import i18n from '../i18n';
+
 export const useStore = defineStore('store', {
   state: () => {
     return {
@@ -528,5 +531,13 @@ export const useStore = defineStore('store', {
         ]
       } as IOrderS
     };
+  },
+  actions: {
+    changeLang(lang: string) {
+      i18n.global.locale.value = lang as typeof i18n.global.locale.value;
+      this.currentAppLocale = lang;
+
+      StorageManager.setStringValue('lang', lang);
+    }
   }
 });
