@@ -1,10 +1,10 @@
 <template>
   <section class="order-list">
-    <h3>{{ $t('order-list.title') }} ({{ localOrderList.length }})</h3>
+    <h3>{{ t('order-list.title') }} ({{ storageOrderList.length }})</h3>
 
     <transition-group name="list" tag="ul">
       <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">
-        {{ $t('order-list.no-saved-orders') }}
+        {{ t('order-list.no-saved-orders') }}
       </li>
 
       <li
@@ -15,10 +15,9 @@
         <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
         <b>
           {{
-            $t('order-list.order-title', {
-              orderName: getOrderName(order.orderType),
-              orderNo: order.orderBody['header']['orderNo'],
-              trainNo: order.orderBody['header']['trainNo']
+            t('order-list.order-title', {
+              id: order.id,
+              trainNo: order.orderData.header.A
             })
           }}
         </b>
@@ -26,21 +25,21 @@
           v-if="!order.orderVersion || order.orderVersion != ORDER_VERSION"
           class="wrong-order-indicator"
           tabindex="0"
-          data-tooltip="Przestarzała wersja rozkazu! Może generować złe informacje!"
+          :data-tooltip="t('order-list.warning-deprecated-version')"
           >&#9888;
         </span>
         <br />
-        {{ $t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
+        {{ t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
         {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
 
         <hr />
 
         <div class="buttons">
           <button class="g-button" @click="selectLocalOrder(order)">
-            {{ $t('order-list.button-order-select') }}
+            {{ t('order-list.button-order-select') }}
           </button>
-          <button class="g-button" @click="removeOrder(order)">
-            {{ $t('order-list.button-order-remove') }}
+          <button class="g-button" @click="removeOrder(order.id)">
+            {{ t('order-list.button-order-remove') }}
           </button>
         </div>
       </li>
@@ -48,68 +47,68 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import orderStorageMixin from '../mixins/orderStorageMixin';
+<script lang="ts" setup>
+import { computed, onActivated, Reactive, reactive } from 'vue';
 import { useStore } from '../store/store';
-import { LocalStorageOrderLegacy } from '../types/orderTypes';
+import { IStorageOrderData, LocalStorageOrderLegacy } from '../types/orderTypes';
+import StorageManager from '../managers/storageManager';
+import { useI18n } from 'vue-i18n';
 
-export default defineComponent({
-  name: 'OrderList',
-  mixins: [orderStorageMixin],
+const { t } = useI18n();
+const store = useStore();
+const storageOrderList = reactive<Reactive<IStorageOrderData[]>>([]);
 
-  data() {
-    return {
-      localOrderList: [] as LocalStorageOrderLegacy[],
-      ORDER_VERSION: import.meta.env['VITE_APP_ORDER_VERSION']
-    };
-  },
+const ORDER_VERSION = import.meta.env['VITE_APP_ORDER_VERSION'];
 
-  setup() {
-    return {
-      store: useStore(),
-      localStorage: window.localStorage
-    };
-  },
+function removeOrder(orderId: string) {
+  StorageManager.removeValue(orderId);
 
-  methods: {
-    getOrderName(orderType: string) {
-      return orderType.split('order')[1];
-    },
+  if (store.chosenLocalOrderId == orderId) store.chosenLocalOrderId = '';
+  storageOrderList.splice(storageOrderList.findIndex((o) => o.id == orderId));
 
-    removeOrder(order: LocalStorageOrderLegacy) {
-      if (!order) return;
+  if (storageOrderList.length == 0) StorageManager.setNumericValue('orderCount', 0);
+}
 
-      this.removeLocalOrder(order);
-      this.localOrderList = this.localOrderList.filter((o) => o.id != order.id);
+function selectLocalOrder(order: IStorageOrderData) {
+  store.orderData = order.orderData;
+}
 
-      if (this.localOrderList.length == 0) this.saveOrderSetting('orderCount', 0);
-    }
-  },
+function isOrderDeprecated(
+  order: IStorageOrderData | LocalStorageOrderLegacy
+): order is LocalStorageOrderLegacy {
+  return 'orderType' in order;
+}
 
-  computed: {
-    sortedOrderList() {
-      return this.localOrderList
-        .slice()
-        .sort((a, b) => (b.createdAt || b.updatedAt!) - (a.createdAt || a.updatedAt!));
-    }
-  },
+const sortedOrderList = computed(() => {
+  return storageOrderList
+    .slice()
+    .sort((a, b) => (b.createdAt || b.updatedAt || 0) - (a.createdAt || a.updatedAt || 0));
+});
 
-  activated() {
-    const localStorage = window.localStorage;
-    const orderList = [];
+onActivated(() => {
+  const localStorage = window.localStorage;
+  const orderList = [];
 
-    for (let key in localStorage) {
-      if (!/^order-/g.test(key)) continue;
+  let deprecatedOrders = 0;
 
-      const orderObj: LocalStorageOrderLegacy = JSON.parse(localStorage[key]);
-      if (!orderObj) continue;
+  for (let key in localStorage) {
+    if (!/^order-/g.test(key)) continue;
 
-      orderList.push(orderObj);
+    const orderObj: IStorageOrderData | LocalStorageOrderLegacy = JSON.parse(localStorage[key]);
+    if (!orderObj) continue;
+
+    if (isOrderDeprecated(orderObj)) {
+      console.warn(`Deprecated order found with ID: ${orderObj.id}`);
+      continue;
     }
 
-    this.localOrderList = orderList;
+    orderList.push(orderObj);
   }
+
+  if (deprecatedOrders != 0) {
+  }
+
+  storageOrderList.push(...orderList);
 });
 </script>
 

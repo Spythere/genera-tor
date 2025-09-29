@@ -13,7 +13,7 @@ export interface LocalStorageOrderLegacy {
 export interface IStorageOrderData {
   id: string;
   orderVersion: string;
-  createdAt: number;
+  createdAt?: number;
   updatedAt?: number;
   orderData: IOrderData;
 }

@@ -27,7 +27,7 @@
       "warning-fill-inputs": "Fill all the empty fields before copying the order!",
       "warning-add-rows": "Add at least one row before copying the order!",
       "warning-fill-footer": "Fill the following rows in the order's footer before copying it:",
-      "warning-fill-top": "Fill the order number, train number and date before saving it!",
+      "warning-fill-top": "Fill at least fields A, B, C and D in the order's header before saving it!",
       "warning-order-identical": "Last saved order is identical as the current one!",
       "warning-no-order-selected": "Choose the already saved order first!",
       "error-update": "An error occurred while saving this order! :/",
@@ -52,12 +52,13 @@
    },
    "order-list": {
       "title": "Saved train orders",
-      "order-title": "Order \"{orderName}\" no. {orderNo} for train no. {trainNo}",
+      "order-title": "Order #{id} for train no. {trainNo}",
       "no-saved-orders": "No saved orders!",
       "order-added": "Added:",
       "order-updated": "Updated:",
       "button-order-select": "Select",
-      "button-order-remove": "Remove"
+      "button-order-remove": "Remove",
+      "warning-deprecated-version": "Deprecated version of the order - may generate incorrect information!"
    },
    "order-train-picker": {
       "placeholder-scenery-name": "Scenery name",

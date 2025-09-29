@@ -27,7 +27,7 @@
       "warning-fill-inputs": "Wypełnij puste rubryki rozkazu przed jego skopiowaniem!",
       "warning-add-rows": "Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!",
       "warning-fill-footer": "Uzupełnij następujące rubryki na dole rozkazu przed jego skopiowaniem:",
-      "warning-fill-top": "Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!",
+      "warning-fill-top": "Wypełnij co najmniej rubryki A, B, C i D w nagłówku rozkazu przed jego zapisaniem!",
       "warning-order-identical": "Ostatni zapisany rozkaz jest identyczny z obecnym!",
       "warning-no-order-selected": "Wybierz rozkaz, który chcesz zaktualizować!",
       "error-update": "Wystąpił błąd podczas aktualizowania tego rozkazu! :/",
@@ -53,11 +53,12 @@
    "order-list": {
       "title": "Zapisane rozkazy pisemne",
       "no-saved-orders": "Brak zapisanych rozkazów!",
-      "order-title": "Rozkaz \"{orderName}\" nr {orderNo} dla pociągu nr {trainNo}",
+      "order-title": "Rozkaz pisemny #{id} dla pociągu nr {trainNo}",
       "order-added": "Dodano:",
       "order-updated": "Zaktualizowano:",
       "button-order-select": "Wybierz",
-      "button-order-remove": "Usuń"
+      "button-order-remove": "Usuń",
+      "warning-deprecated-version": "Przestarzała wersja rozkazu! Może generować złe informacje!"
    },
    "order-train-picker": {
       "placeholder-scenery-name": "Sceneria",

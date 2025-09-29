@@ -62,25 +62,44 @@
     </div>
 
     <transition name="monit-anim">
-      <div class="action_monit" v-if="actionMonit" v-html="actionMonit"></div>
+      <div
+        class="action_monit"
+        v-if="actionMonit.content"
+        v-html="actionMonit.content"
+        :class="{
+          'text--warn': actionMonit.type == 'warning'
+        }"
+      ></div>
     </transition>
   </section>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue';
+import { computed, onMounted, Reactive, reactive, ref, watch } from 'vue';
 import { useStore } from '../store/store';
-
-import { currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
-import StorageManager from '../managers/storageManager';
-import { LocalStorageOrderLegacy } from '../types/orderTypes';
 import { useI18n } from 'vue-i18n';
+
+import StorageManager from '../managers/storageManager';
+import { currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
+import { IStorageOrderData } from '../types/orderTypes';
+
+type TActionMonitType = 'warning' | 'info' | 'success';
+
+interface IActionMonit {
+  type: TActionMonitType;
+  content: string;
+  timeoutId: number | null;
+}
 
 const { t } = useI18n();
 const store = useStore();
 
-const actionMonit = ref('');
-const monitTimeout = ref(0);
+const actionMonit: Reactive<IActionMonit> = reactive({
+  visible: false,
+  type: 'info',
+  content: '',
+  timeoutId: null
+});
 
 const incrementOnSave = ref(true);
 const incrementOnCopy = ref(true);
@@ -106,137 +125,135 @@ function onCheckboxChange(e: Event) {
   StorageManager.setBooleanValue(checkbox.id, checkbox.checked);
 }
 
-function showActionMonit(text: string) {
-  if (monitTimeout.value) {
-    actionMonit.value = '';
-    clearTimeout(monitTimeout.value);
+function showActionMonit(content: string, type: TActionMonitType) {
+  if (actionMonit.timeoutId != null) {
+    actionMonit.content = '';
 
-    // setTimeout(() => {
-    actionMonit.value = text;
+    clearTimeout(actionMonit.timeoutId);
 
-    monitTimeout.value = window.setTimeout(() => {
-      actionMonit.value = '';
-    }, 5000);
-    // }, 300);
+    setTimeout(() => {
+      actionMonit.content = content;
+      actionMonit.type = type;
+
+      actionMonit.timeoutId = window.setTimeout(() => {
+        actionMonit.content = '';
+        actionMonit.timeoutId = null;
+      }, 5000);
+    }, 100);
 
     return;
   }
 
-  actionMonit.value = text;
+  actionMonit.content = content;
+  actionMonit.type = type;
 
-  monitTimeout.value = window.setTimeout(() => {
-    actionMonit.value = '';
+  actionMonit.timeoutId = window.setTimeout(() => {
+    actionMonit.content = '';
+    actionMonit.timeoutId = null;
   }, 5000);
+}
+
+function verifyOrderFields() {
+  const { header, footer } = store.orderData;
+
+  const fieldsToCorrect: string[] = [];
+
+  Object.entries(header).forEach(([k, v]) => {
+    if (v.trim().length == 0) {
+      fieldsToCorrect.push(`order.header.${k}`);
+    }
+  });
+
+  Object.entries(footer).forEach(([k, v]) => {
+    if (v.trim().length == 0) {
+      fieldsToCorrect.push(`order.footer.${k}`);
+    }
+  });
+
+  return fieldsToCorrect;
 }
 
 // TODO
 function incrementOrderNo() {
-  // store.orderData.header.
-  // order.header.orderNo = (Number(order.header.orderNo) + 1).toString();
+  // store.orderData. = (Number(order.header.orderNo) + 1).toString();
 }
 
 function copyMessage() {
-  if (!navigator.clipboard) return showActionMonit(t('order-message.warning-outdated-clipboard'));
+  if (!navigator.clipboard)
+    return showActionMonit(t('order-message.warning-outdated-clipboard'), 'warning');
 
-  const hasAtLeastOneRow = /(\[ \d \])/g.test(orderMessagePreview.value);
-  const hasAllInputsFilled = !/_/g.test(store.orderMessage);
+  // const hasAtLeastOneRow = /(\[ \d \])/g.test(orderMessagePreview.value);
+  // const hasAllInputsFilled = !/_/g.test(store.orderMessage);
 
-  if (!hasAllInputsFilled)
-    return showActionMonit(
-      `<span class="text--warn">${t('order-message.warning-fill-inputs')}</span>`
-    );
-  if (!hasAtLeastOneRow)
-    return showActionMonit(
-      `<span class="text--warn">${t('order-message.warning-add-rows')}</span>`
-    );
+  // if (!hasAllInputsFilled)
+  //   return showActionMonit(
+  //     `${t('order-message.warning-fill-inputs')}`
+  //   );
+  // if (!hasAtLeastOneRow)
+  //   return showActionMonit(
+  //     `${t('order-message.warning-add-rows')}`
+  //   );
 
   const fieldsToCorrect = verifyOrderFields();
 
   if (fieldsToCorrect.length > 0)
     return showActionMonit(
-      `<span class="text--warn">${t('order-message.warning-fill-footer')} ${fieldsToCorrect.join(
-        ', '
-      )}</span>`
+      `${t('order-message.warning-fill-footer')} ${fieldsToCorrect.join(', ')}`,
+      'warning'
     );
 
   navigator.clipboard.writeText(orderMessagePreview.value);
 
   if (incrementOnCopy) incrementOrderNo();
 
-  showActionMonit(t('order-message.success-copy-html'));
-}
-
-function verifyOrderFields() {
-  // const header = this.store[this.store.chosenOrderType].header;
-  const footer = store.orderFooter;
-
-  const fieldsToCorrect = [];
-
-  // if (!header.orderNo) fieldsToCorrect.push('numer rozkazu');
-  // if (!header.trainNo) fieldsToCorrect.push('numer pociągu / manewru');
-  // if (!header.date) fieldsToCorrect.push('data');
-
-  if (!footer.stationName) fieldsToCorrect.push('stacja');
-  if (!footer.checkpointName) fieldsToCorrect.push('posterunek');
-  if (!footer.hour) fieldsToCorrect.push('godzina');
-  if (!footer.minutes) fieldsToCorrect.push('minuta');
-  if (!footer.dispatcherName && !footer.secondaryDispatcherName)
-    fieldsToCorrect.push('dyżurny ruchu (lub z polecenia dyżurnego ruchu)');
-
-  return fieldsToCorrect;
+  showActionMonit(t('order-message.success-copy-html'), 'success');
 }
 
 function saveOrder() {
-  const orderObj: LocalStorageOrderLegacy = {
-    id: '',
-    orderType: store.chosenOrderType,
-    orderBody: store[store.chosenOrderType],
-    orderFooter: store.orderFooter,
-    createdAt: Date.now(),
-    orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '3'
-  };
+  const noHeaderInfo = Object.values(store.orderData.header).some((v) => {
+    return v.trim().length == 0;
+  });
 
-  // const headerInfo = orderObj['orderBody']['header'];
-
-  // if (!headerInfo['orderNo']) return -1;
-  // if (!headerInfo['trainNo']) return -1;
-  // if (!headerInfo['date']) return -1;
-
-  // No header info: -1
-  // showActionMonit(`<span class="text--warn">${t('order-message.warning-fill-top')}</span>`)
-
-  const localStorage = window.localStorage;
-  const localOrderCount = localStorage.getItem('orderCount') || '0';
-
-  if (localOrderCount == '0') localStorage.setItem('orderCount', '0');
-
-  const prevLocalOrder = localStorage.getItem(`order-${Number(localOrderCount)}`);
-
-  if (prevLocalOrder && prevLocalOrder == JSON.stringify(orderObj)) {
-    showActionMonit(
-      `<span class="text--warn">${t('order-message.warning-order-identical')}</span>`
-    );
+  if (noHeaderInfo) {
+    showActionMonit(`${t('order-message.warning-fill-top')}`, 'warning');
     return;
   }
 
-  const nextOrderCount = Number(localOrderCount) + 1;
-  const orderId = `order-${nextOrderCount}`;
-  orderObj['id'] = orderId;
+  const orderDataToSave: IStorageOrderData = {
+    id: '',
+    createdAt: Date.now(),
+    orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '3',
+    orderData: store.orderData
+  };
+
+  const localStorage = window.localStorage;
+  const localOrderCount = StorageManager.getNumericValue('orderCount') || 0;
+
+  if (localOrderCount == 0) StorageManager.setNumericValue('orderCount', 0);
+
+  const prevLocalOrder = StorageManager.getValue(`order-${Number(localOrderCount)}`);
+
+  if (prevLocalOrder && prevLocalOrder == JSON.stringify(orderDataToSave)) {
+    showActionMonit(`${t('order-message.warning-order-identical')}`, 'warning');
+    return;
+  }
+
+  const nextOrderCount = localOrderCount + 1;
+  const nextOrderId = `order-${nextOrderCount}`;
+  orderDataToSave['id'] = nextOrderId;
 
   localStorage.setItem('orderCount', `${nextOrderCount}`);
-  localStorage.setItem(orderId, JSON.stringify(orderObj));
+  localStorage.setItem(nextOrderId, JSON.stringify(orderDataToSave));
 
-  store.chosenLocalOrderId = orderId;
-  showActionMonit(t('order-message.success-save-html'));
+  store.chosenLocalOrderId = nextOrderId;
+  showActionMonit(t('order-message.success-save-html'), 'success');
 
   if (incrementOnSave) incrementOrderNo();
 }
 
 function updateOrder() {
   if (!store.chosenLocalOrderId) {
-    showActionMonit(
-      `<span class="text--warn">${t('order-message.warning-no-order-selected')}</span>`
-    );
+    showActionMonit(`${t('order-message.warning-no-order-selected')}`, 'warning');
 
     return;
   }
@@ -244,21 +261,19 @@ function updateOrder() {
   const localOrder = window.localStorage.getItem(store.chosenLocalOrderId);
 
   if (!localOrder) {
-    showActionMonit(`<span class="text--warn">${t('order-message.error-update')}</span>`);
+    showActionMonit(`${t('order-message.error-update')}`, 'warning');
     return;
   }
 
-  const orderObj: LocalStorageOrderLegacy = {
+  const orderDataToUpdate: IStorageOrderData = {
     id: store.chosenLocalOrderId,
-    orderType: store.chosenOrderType,
-    orderBody: store[store.chosenOrderType],
-    orderFooter: store.orderFooter,
+    orderData: store.orderData,
     updatedAt: Date.now(),
-    orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '1'
+    orderVersion: import.meta.env['VITE_APP_ORDER_VERSION'] || '3'
   };
 
-  window.localStorage.setItem(store.chosenLocalOrderId, JSON.stringify(orderObj));
-  showActionMonit(t('order-message.success-update-html'));
+  window.localStorage.setItem(store.chosenLocalOrderId, JSON.stringify(orderDataToUpdate));
+  showActionMonit(t('order-message.success-update-html'), 'warning');
 }
 </script>
 
