@@ -52,7 +52,7 @@
 import { defineComponent } from 'vue';
 import orderStorageMixin from '../mixins/orderStorageMixin';
 import { useStore } from '../store/store';
-import { LocalStorageOrder } from '../types/orderTypes';
+import { LocalStorageOrderLegacy } from '../types/orderTypes';
 
 export default defineComponent({
   name: 'OrderList',
@@ -60,7 +60,7 @@ export default defineComponent({
 
   data() {
     return {
-      localOrderList: [] as LocalStorageOrder[],
+      localOrderList: [] as LocalStorageOrderLegacy[],
       ORDER_VERSION: import.meta.env['VITE_APP_ORDER_VERSION']
     };
   },
@@ -77,7 +77,7 @@ export default defineComponent({
       return orderType.split('order')[1];
     },
 
-    removeOrder(order: LocalStorageOrder) {
+    removeOrder(order: LocalStorageOrderLegacy) {
       if (!order) return;
 
       this.removeLocalOrder(order);
@@ -102,7 +102,7 @@ export default defineComponent({
     for (let key in localStorage) {
       if (!/^order-/g.test(key)) continue;
 
-      const orderObj: LocalStorageOrder = JSON.parse(localStorage[key]);
+      const orderObj: LocalStorageOrderLegacy = JSON.parse(localStorage[key]);
       if (!orderObj) continue;
 
       orderList.push(orderObj);

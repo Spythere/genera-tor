@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { IOrderN, IOrderO, IOrderS, TOrder } from '../types/orderTypes';
+import { IOrderData, IOrderN, IOrderO, IOrderS, TOrder } from '../types/orderTypes';
 import {
   currentFormattedDate,
   currentFormattedHours,
@@ -23,6 +23,8 @@ export const useStore = defineStore('store', {
       updateCardOpen: false,
       helperModalOpen: false,
       orderDarkMode: false,
+
+      panelMode: 'OrderMessage',
 
       chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',
@@ -339,9 +341,7 @@ export const useStore = defineStore('store', {
           Y: '',
           Z: ''
         }
-      },
-
-      panelMode: 'OrderMessage',
+      } as IOrderData,
 
       orderFooter: {
         stationName: '',

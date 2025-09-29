@@ -1,6 +1,6 @@
 import { defineComponent } from 'vue';
 import { useStore } from '../store/store';
-import { LocalStorageOrder } from '../types/orderTypes';
+import { LocalStorageOrderLegacy } from '../types/orderTypes';
 
 function alertWrongOrderFormat() {
   alert('Wystąpił błąd podczas przetwarzania rozkazu! Informacje mogą być niepoprawne!');
@@ -15,14 +15,14 @@ export default defineComponent({
   },
 
   methods: {
-    removeLocalOrder(order: LocalStorageOrder) {
+    removeLocalOrder(order: LocalStorageOrderLegacy) {
       localStorage.removeItem(order.id);
 
       if (this.store.chosenLocalOrderId == order.id) this.store.chosenLocalOrderId = '';
       // localStorage.setItem('orderCount', (Number(localStorage.getItem('orderCount')) - 1).toString());
     },
 
-    selectLocalOrder(localOrder: LocalStorageOrder) {
+    selectLocalOrder(localOrder: LocalStorageOrderLegacy) {
       // const localOrder = JSON.parse(JSON.stringify(order));
       const { orderBody: localOrderBody, orderFooter: localOrderFooter } = localOrder;
 

@@ -73,7 +73,7 @@ import { useStore } from '../store/store';
 
 import { currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
 import StorageManager from '../managers/storageManager';
-import { LocalStorageOrder } from '../types/orderTypes';
+import { LocalStorageOrderLegacy } from '../types/orderTypes';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -187,7 +187,7 @@ function verifyOrderFields() {
 }
 
 function saveOrder() {
-  const orderObj: LocalStorageOrder = {
+  const orderObj: LocalStorageOrderLegacy = {
     id: '',
     orderType: store.chosenOrderType,
     orderBody: store[store.chosenOrderType],
@@ -248,7 +248,7 @@ function updateOrder() {
     return;
   }
 
-  const orderObj: LocalStorageOrder = {
+  const orderObj: LocalStorageOrderLegacy = {
     id: store.chosenLocalOrderId,
     orderType: store.chosenOrderType,
     orderBody: store[store.chosenOrderType],
