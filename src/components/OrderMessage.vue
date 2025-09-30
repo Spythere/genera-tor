@@ -196,22 +196,38 @@ function copyMessage() {
   if (!navigator.clipboard)
     return showActionMonit(t('order-message.warning-outdated-clipboard'), 'warning');
 
-  // const hasAtLeastOneRow = /(\[ \d \])/g.test(orderMessagePreview.value);
-  // const hasAllInputsFilled = !/_/g.test(store.orderMessage);
-
-  // if (!hasAllInputsFilled)
-  //   return showActionMonit(
-  //     `${t('order-message.warning-fill-inputs')}`
-  //   );
-  // if (!hasAtLeastOneRow)
-  //   return showActionMonit(
-  //     `${t('order-message.warning-add-rows')}`
-  //   );
-
   const fieldsToCorrect = verifyOrderFields();
 
   if (fieldsToCorrect.length > 0)
     return showActionMonit(t('order-message.warning-fill-missing'), 'warning');
+
+  const activeInstructions = store.orderData.instructions.filter((v) => v.active);
+
+  if (activeInstructions.length == 0) {
+    return showActionMonit(t('order-message.warning-add-instruction'), 'warning');
+  }
+
+  const hasAllInputsFilled = activeInstructions.every((v) => {
+    let isInstructionFilled = false;
+
+    isInstructionFilled = Object.values(v.inputFields).every((field) => field.trim().length != 0);
+
+    if (v.listFields) {
+      if (!v.listFields.some((field) => field.active)) return false;
+
+      isInstructionFilled = v.listFields
+        .filter((field) => field.active)
+        .every((field) =>
+          Object.values(field.values).every((fieldValue) => fieldValue.trim().length != 0)
+        );
+    }
+
+    return isInstructionFilled;
+  });
+
+  if (!hasAllInputsFilled) {
+    return showActionMonit(t('order-message.warning-fill-inputs'), 'warning');
+  }
 
   navigator.clipboard.writeText(orderMessagePreview.value);
 

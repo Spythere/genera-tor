@@ -26,7 +26,7 @@
       "button-reset": "Wyczyść rozkaz",
       "warning-outdated-clipboard": "Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/",
       "warning-fill-inputs": "Wypełnij puste rubryki rozkazu przed jego skopiowaniem!",
-      "warning-add-rows": "Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!",
+      "warning-add-instruction": "Dodaj co najmniej jedną instrukcję rozkazu przed jego skopiowaniem!",
       "warning-fill-missing": "Uzupełnij rubryki w nagłówku i stopce rozkazu przed jego skopiowaniem!",
       "warning-fill-top": "Wypełnij co najmniej rubryki A, B, C i D w nagłówku rozkazu przed jego zapisaniem!",
       "warning-order-identical": "Ostatni zapisany rozkaz jest identyczny z obecnym!",
