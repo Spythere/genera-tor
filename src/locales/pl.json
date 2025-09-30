@@ -23,6 +23,7 @@
       "button-save": "Zapisz nowy rozkaz",
       "button-copy": "Kopiuj treść rozkazu",
       "button-update": "Zaktualizuj rozkaz",
+      "button-reset": "Wyczyść rozkaz",
       "warning-outdated-clipboard": "Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/",
       "warning-fill-inputs": "Wypełnij puste rubryki rozkazu przed jego skopiowaniem!",
       "warning-add-rows": "Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!",

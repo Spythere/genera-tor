@@ -76,7 +76,6 @@ function removeOrder(orderId: string) {
   StorageManager.removeValue(orderId);
 
   if (store.chosenLocalOrderId == orderId) store.chosenLocalOrderId = '';
-  console.log(storageOrderList);
 
   const orderIndex = storageOrderList.findIndex((o) => o.id == orderId);
   if (orderIndex != -1) storageOrderList.splice(orderIndex, 1);

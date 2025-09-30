@@ -23,6 +23,7 @@
       "button-save": "Save as new order",
       "button-copy": "Copy the order message",
       "button-update": "Update the order",
+      "button-reset": "Reset the order",
       "warning-outdated-clipboard": "Oops! Your browser may be a little bit depraceted since it's not supporting saving data to the clipboard! :/",
       "warning-fill-inputs": "Fill all the empty fields before copying the order!",
       "warning-add-rows": "Add at least one row before copying the order!",
