@@ -107,22 +107,6 @@ function loadLang() {
   min-height: 100vh;
 }
 
-.update-prompt {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  padding: 0.5em;
-
-  font-weight: bold;
-
-  text-align: center;
-
-  width: 100%;
-  background-color: colors.$accentCol;
-
-  cursor: pointer;
-}
-
 footer {
   text-align: center;
   padding: 0.5em 0;
