@@ -16,7 +16,6 @@
         <b>
           {{
             t('order-list.order-title', {
-              id: order.id,
               trainNo: order.orderData.header.A
             })
           }}
@@ -28,9 +27,22 @@
           :data-tooltip="t('order-list.warning-deprecated-version')"
           >&#9888;
         </span>
-        <br />
-        {{ t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
-        {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
+
+        <div>
+          {{
+            t('order-list.order-subtitle', [
+              order.orderData.instructions
+                .filter((v) => v.active)
+                .map((v) => v.name)
+                .join(', ')
+            ])
+          }}
+        </div>
+
+        <div>
+          {{ t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
+          {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
+        </div>
 
         <hr />
 
@@ -48,7 +60,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onActivated, Reactive, reactive } from 'vue';
+import { computed, onActivated, onMounted, Reactive, reactive } from 'vue';
 import { useStore } from '../store/store';
 import { IStorageOrderData, LocalStorageOrderLegacy } from '../types/orderTypes';
 import StorageManager from '../managers/storageManager';
@@ -64,13 +76,29 @@ function removeOrder(orderId: string) {
   StorageManager.removeValue(orderId);
 
   if (store.chosenLocalOrderId == orderId) store.chosenLocalOrderId = '';
-  storageOrderList.splice(storageOrderList.findIndex((o) => o.id == orderId));
+  console.log(storageOrderList);
+
+  const orderIndex = storageOrderList.findIndex((o) => o.id == orderId);
+  if (orderIndex != -1) storageOrderList.splice(orderIndex, 1);
 
   if (storageOrderList.length == 0) StorageManager.setNumericValue('orderCount', 0);
 }
 
 function selectLocalOrder(order: IStorageOrderData) {
-  store.orderData = order.orderData;
+  Object.entries(order.orderData.header).forEach(([k, v]) => {
+    (store.orderData['header'] as any)[k] = v;
+  });
+
+  Object.entries(order.orderData.footer).forEach(([k, v]) => {
+    (store.orderData['footer'] as any)[k] = v;
+  });
+
+  Object.entries(order.orderData.instructions).forEach(([k, v]) => {
+    (store.orderData['instructions'] as any)[k] = v;
+  });
+
+  store.panelMode = 'OrderMessage';
+  store.chosenLocalOrderId = order.id;
 }
 
 function isOrderDeprecated(
@@ -108,6 +136,7 @@ onActivated(() => {
   if (deprecatedOrders != 0) {
   }
 
+  storageOrderList.length = 0;
   storageOrderList.push(...orderList);
 });
 </script>
