@@ -249,6 +249,12 @@ function verifyOrderFields() {
   return true;
 }
 
+function hasHeaderFieldsComplete() {
+  return Object.values(store.orderData.header).every((v) => {
+    return v.trim().length != 0;
+  });
+}
+
 // TODO
 function incrementOrderNo() {
   // store.orderData. = (Number(order.header.orderNo) + 1).toString();
@@ -270,12 +276,8 @@ function copyMessage() {
 }
 
 function saveOrder() {
-  const noHeaderInfo = Object.values(store.orderData.header).some((v) => {
-    return v.trim().length == 0;
-  });
-
-  if (noHeaderInfo) {
-    showActionMonit(`${t('order-message.warning-fill-top')}`, 'warning');
+  if (!hasHeaderFieldsComplete()) {
+    showActionMonit(`${t('order-message.warning-fill-top-save')}`, 'warning');
     return;
   }
 
@@ -322,15 +324,19 @@ function saveOrder() {
 
 function updateOrder() {
   if (!store.chosenLocalOrderId) {
-    showActionMonit(`${t('order-message.warning-no-order-selected')}`, 'warning');
+    showActionMonit(t('order-message.warning-no-order-selected'), 'warning');
+    return;
+  }
 
+  if (!hasHeaderFieldsComplete()) {
+    showActionMonit(t('order-message.warning-fill-top-update'), 'warning');
     return;
   }
 
   const localOrder = window.localStorage.getItem(store.chosenLocalOrderId);
 
   if (!localOrder) {
-    showActionMonit(`${t('order-message.error-update')}`, 'warning');
+    showActionMonit(t('order-message.error-update'), 'warning');
     return;
   }
 
