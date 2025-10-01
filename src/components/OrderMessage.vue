@@ -168,23 +168,85 @@ function showActionMonit(content: string, type: TActionMonitType) {
 }
 
 function verifyOrderFields() {
-  const { header, footer } = store.orderData;
-
   const fieldsToCorrect: string[] = [];
 
-  Object.entries(header).forEach(([k, v]) => {
-    if (v.trim().length == 0) {
-      fieldsToCorrect.push(k);
+  for (let headerKey in store.orderData.header) {
+    if (store.orderData.header[headerKey as keyof IOrderHeader].trim() == '') {
+      fieldsToCorrect.push(headerKey);
     }
-  });
+  }
 
-  Object.entries(footer).forEach(([k, v]) => {
-    if (v.trim().length == 0) {
-      fieldsToCorrect.push(k);
+  for (let footerKey in store.orderData.footer) {
+    if (store.orderData.footer[footerKey as keyof IOrderFooter].trim() == '') {
+      fieldsToCorrect.push(footerKey);
     }
-  });
+  }
 
-  return fieldsToCorrect;
+  // Are header & footer fields check
+  if (fieldsToCorrect.length > 0) {
+    showActionMonit(t('order-message.warning-fill-missing'), 'warning');
+    return false;
+  }
+
+  // Active instructions' fields check
+  let hasAllInputsFilled = true,
+    hasNoActiveInstructions = true;
+
+  for (const instructionKey in store.orderData.instructions) {
+    const instruction = store.orderData.instructions[instructionKey];
+
+    if (!instruction.active) continue;
+
+    hasNoActiveInstructions = false;
+
+    for (const fieldKey in instruction.inputFields) {
+      const fieldValue = instruction.inputFields[fieldKey];
+
+      if (fieldValue.trim() == '') {
+        hasAllInputsFilled = false;
+        break;
+      }
+    }
+
+    if (instruction.listFields) {
+      let hasAtLeastOneActive = false;
+
+      for (const listFieldKey in instruction.listFields) {
+        const listField = instruction.listFields[listFieldKey];
+
+        if (listField.active == false) continue;
+
+        hasAtLeastOneActive = true;
+
+        for (const fieldKey in listField.values) {
+          const fieldValue = listField.values[fieldKey];
+
+          if (fieldValue.trim() == '') {
+            hasAllInputsFilled = false;
+            break;
+          }
+        }
+      }
+
+      if (!hasAtLeastOneActive) {
+        hasAllInputsFilled = false;
+        break;
+      }
+    }
+  }
+
+  // Active instructions check
+  if (hasNoActiveInstructions) {
+    showActionMonit(t('order-message.warning-add-instruction'), 'warning');
+    return false;
+  }
+
+  if (!hasAllInputsFilled) {
+    showActionMonit(t('order-message.warning-fill-inputs'), 'warning');
+    return false;
+  }
+
+  return true;
 }
 
 // TODO
@@ -196,38 +258,9 @@ function copyMessage() {
   if (!navigator.clipboard)
     return showActionMonit(t('order-message.warning-outdated-clipboard'), 'warning');
 
-  const fieldsToCorrect = verifyOrderFields();
+  const areFieldsCorrect = verifyOrderFields();
 
-  if (fieldsToCorrect.length > 0)
-    return showActionMonit(t('order-message.warning-fill-missing'), 'warning');
-
-  const activeInstructions = store.orderData.instructions.filter((v) => v.active);
-
-  if (activeInstructions.length == 0) {
-    return showActionMonit(t('order-message.warning-add-instruction'), 'warning');
-  }
-
-  const hasAllInputsFilled = activeInstructions.every((v) => {
-    let isInstructionFilled = false;
-
-    isInstructionFilled = Object.values(v.inputFields).every((field) => field.trim().length != 0);
-
-    if (v.listFields) {
-      if (!v.listFields.some((field) => field.active)) return false;
-
-      isInstructionFilled = v.listFields
-        .filter((field) => field.active)
-        .every((field) =>
-          Object.values(field.values).every((fieldValue) => fieldValue.trim().length != 0)
-        );
-    }
-
-    return isInstructionFilled;
-  });
-
-  if (!hasAllInputsFilled) {
-    return showActionMonit(t('order-message.warning-fill-inputs'), 'warning');
-  }
+  if (!areFieldsCorrect) return;
 
   navigator.clipboard.writeText(orderMessagePreview.value);
 
