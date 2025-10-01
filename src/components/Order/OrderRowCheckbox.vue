@@ -43,7 +43,7 @@ const instructionObject = computed(() => store.orderData.instructions[props.rowI
     cursor: pointer;
 
     &:checked ~ .checkmark:after {
-      content: 'X';
+      content: '\d7';
     }
 
     &:focus-visible ~ .text {
@@ -58,18 +58,19 @@ const instructionObject = computed(() => store.orderData.instructions[props.rowI
 
     margin: 0 auto;
 
-    height: 1.3em;
-    width: 1.3em;
+    height: 20px;
+    width: 20px;
     background-color: #eee;
     border: 2px solid black;
 
     background-color: gold;
 
     &:after {
-      position: absolute;
       content: '';
+      position: absolute;
       top: 50%;
       left: 50%;
+      font-size: 20px;
       transform: translate(-50%, -50%);
     }
   }
