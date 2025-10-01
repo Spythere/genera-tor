@@ -1,7 +1,7 @@
 <template>
   <label class="order-instruction-checkbox">
     <input type="checkbox" v-model="instructionObject.active" />
-    <div class="checkmark"></div>
+    <div class="checkmark" :class="{ dark: store.orderDarkMode }"></div>
     <div class="text">{{ instructionObject.name }}</div>
   </label>
 </template>
@@ -64,6 +64,10 @@ const instructionObject = computed(() => store.orderData.instructions[props.rowI
     border: 2px solid black;
 
     background-color: gold;
+
+    &.dark {
+      color: black;
+    }
 
     &:after {
       content: '';
