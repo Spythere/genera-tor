@@ -290,11 +290,21 @@ function saveOrder() {
 
   if (localOrderCount == 0) StorageManager.setNumericValue('orderCount', 0);
 
-  const prevLocalOrder = StorageManager.getValue(`order-${Number(localOrderCount)}`);
+  const prevLocalOrder = StorageManager.getValue(`order-${localOrderCount}`);
 
-  if (prevLocalOrder && prevLocalOrder == JSON.stringify(orderDataToSave)) {
-    showActionMonit(t('order-message.warning-order-identical'), 'warning');
-    return;
+  if (prevLocalOrder) {
+    try {
+      const prevOrderObj = JSON.parse(prevLocalOrder) as IStorageOrderData;
+
+      if (JSON.stringify(prevOrderObj.orderData) == JSON.stringify(orderDataToSave.orderData)) {
+        showActionMonit(t('order-message.warning-order-identical'), 'warning');
+        return;
+      }
+    } catch (error) {
+      console.error(
+        `Ups! An error occured when trying to parse previous local order (count: ${localOrderCount})`
+      );
+    }
   }
 
   const nextOrderCount = localOrderCount + 1;
