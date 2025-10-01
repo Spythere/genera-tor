@@ -34,8 +34,9 @@
       <!-- From 21.10 -->
       <tr
         v-for="(instruction, i) in store.orderData.instructions.slice(2)"
-        :style="{
-          'background-color': instruction.key.startsWith('218') ? '#eeece1' : 'inherit'
+        :class="{
+          'bg-lighter': instruction.key.startsWith('218'),
+          dark: store.orderDarkMode
         }"
       >
         <td width="10%" class="order-instruction-number">
@@ -175,6 +176,14 @@ function calculateInputWidthByFieldName(fieldName: string) {
     padding: 0.25em 1em;
     line-height: 2em;
     text-align: justify;
+  }
+
+  tr.bg-lighter {
+    background-color: #eeece1;
+  }
+
+  tr.bg-lighter.dark {
+    background-color: #111;
   }
 }
 
