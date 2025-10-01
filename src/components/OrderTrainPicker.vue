@@ -6,7 +6,7 @@
           name="dispatcher-select"
           id="dispatcher-select"
           v-model="selectedSceneryId"
-          @change="selectOption"
+          @change="selectCheckpointOption"
         >
           <option :value="null" disabled>
             {{ $t('order-train-picker.placeholder-scenery-name') }}
@@ -24,7 +24,7 @@
           name="region-select"
           id="region-select"
           v-model="selectedRegion"
-          @change="selectOption"
+          @change="selectCheckpointOption"
         >
           <option :value="null" disabled>
             {{ $t('order-train-picker.placeholder-region-name') }}
@@ -61,7 +61,8 @@
           type="checkbox"
           name="fill-checkpoint"
           id="fill-checkpoint"
-          v-model="fillCheckpointName"
+          v-model="autofillCheckpointName"
+          @change="onAutofillChange()"
         />
         <span> {{ $t('order-train-picker.autofill-checkpoint-id') }}</span>
       </label>
@@ -82,7 +83,7 @@
           <li
             v-for="train in sceneryTrains"
             :key="train.trainNo + train.driverName"
-            @click="fillOrder(train.trainNo)"
+            @click="fillOrderData(train)"
           >
             <button class="g-button">
               <span
@@ -109,186 +110,182 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { useStore } from '../store/store';
-import {
-  currentFormattedDate,
-  currentFormattedHours,
-  currentFormattedMinutes
-} from '../utils/dateUtils';
+
 import http from '../http';
 import { ISceneryData } from '../types/dataTypes';
 import { API } from '../types/apiTypes';
 import { getRegionNameById } from '../utils/sceneryUtils';
+import { computed, onActivated, onDeactivated, onMounted, ref } from 'vue';
+import StorageManager from '../managers/storageManager';
 
-export default defineComponent({
-  name: 'order-train-picker',
+const store = useStore();
+const regions = ['eu', 'cae', 'usw', 'us', 'ru'];
+const refreshInterval = ref(-1);
 
-  data() {
-    return {
-      sceneriesData: undefined as ISceneryData[] | undefined,
-      activeData: undefined as API.ActiveData.Response | undefined,
+let sceneriesData = ref<ISceneryData[] | null>(null);
+let activeData = ref<API.ActiveData.Response | null>(null);
 
-      selectedSceneryId: null as string | null,
-      selectedCheckpointName: null as string | null,
-      selectedRegion: 'eu',
+const selectedSceneryId = ref<string | null>(null);
+const selectedCheckpointName = ref<string | null>(null);
+const selectedRegion = ref('eu');
 
-      fillCheckpointName: false,
+const autofillCheckpointName = ref(false);
 
-      refreshInterval: -1,
-      store: useStore(),
+onMounted(() => {
+  autofillCheckpointName.value = StorageManager.getBooleanValue('fill-checkpoint');
+  fetchSceneriesData();
+});
 
-      regions: ['eu', 'cae', 'usw', 'us', 'ru']
-    };
-  },
+onActivated(async () => {
+  await fetchActiveData();
+  handleQueries();
 
-  created() {
-    this.fillCheckpointName = window.localStorage.getItem('fill-checkpoint') == 'true';
+  window.clearInterval(refreshInterval.value);
 
-    this.fetchSceneriesData();
-  },
+  refreshInterval.value = window.setInterval(() => {
+    fetchActiveData();
+  }, 25000);
+});
 
-  async activated() {
-    await this.fetchActiveData();
-    this.handleQueries();
+onDeactivated(() => {
+  window.clearInterval(refreshInterval.value);
+});
 
-    this.refreshInterval = window.setInterval(() => {
-      this.fetchActiveData();
-    }, 25 * 1000);
-  },
+const selectedScenery = computed(() => {
+  if (activeData.value == null) return null;
 
-  deactivated() {
-    window.clearInterval(this.refreshInterval);
-  },
+  return (
+    activeData.value.activeSceneries?.find(
+      (scenery) =>
+        selectedSceneryId.value ==
+          `${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}` &&
+        selectedRegion.value == scenery.region
+    ) ?? null
+  );
+});
 
-  watch: {
-    fillCheckpointName(val: boolean) {
-      window.localStorage.setItem('fill-checkpoint', `${val}`);
-    }
-  },
+const filteredSceneries = computed(() => {
+  return activeData.value?.activeSceneries
+    ?.filter((s) => s.isOnline && s.region == selectedRegion.value)
+    .sort((s1, s2) => s1.stationName.localeCompare(s2.stationName));
+});
 
-  computed: {
-    selectedScenery() {
-      return this.activeData?.activeSceneries?.find(
-        (scenery) =>
-          this.selectedSceneryId ==
-            `${scenery.stationName}|${scenery.stationHash}|${scenery.dispatcherName}|${scenery.region}` &&
-          this.selectedRegion == scenery.region
+const checkpointNameList = computed(() => {
+  if (!selectedScenery.value) return [];
+
+  const checkpoints =
+    sceneriesData.value?.find((s) => s.name == selectedScenery.value?.stationName)?.checkpoints ??
+    '';
+
+  if (checkpoints.length == 0) return [selectedScenery.value.stationName];
+
+  return checkpoints.split(';');
+});
+
+const sceneryTrains = computed(() => {
+  if (!selectedScenery.value || !activeData.value?.trains) return [];
+
+  const scenery = selectedScenery.value;
+
+  return activeData.value.trains
+    ?.filter(
+      (t) =>
+        (t.currentStationName == scenery.stationName &&
+          t.region == scenery.region &&
+          (t.online || t.lastSeen >= Date.now() - 60000)) ||
+        t.timetable?.path.includes(`${scenery.stationName} ${scenery.stationHash}.sc`)
+    )
+    .sort((t1, t2) => {
+      return (
+        (t2.currentStationName == scenery.stationName ? 1 : -1) -
+          (t1.currentStationName == scenery.stationName ? 1 : -1) ||
+        t1.driverName.localeCompare(t2.driverName)
       );
-    },
+    });
+});
 
-    filteredSceneries() {
-      return this.activeData?.activeSceneries
-        ?.filter((s) => s.isOnline && s.region == this.selectedRegion)
-        .sort((s1, s2) => s1.stationName.localeCompare(s2.stationName));
-    },
+async function fetchSceneriesData() {
+  const data = (await http.get<ISceneryData[]>('api/getSceneries')).data;
 
-    checkpointNameList() {
-      if (!this.selectedScenery) return [];
+  sceneriesData.value = data ?? null;
+}
 
-      const checkpoints =
-        this.sceneriesData?.find((s) => s.name == this.selectedScenery?.stationName)?.checkpoints ??
-        '';
+async function fetchActiveData() {
+  const data = (await http.get<API.ActiveData.Response>('api/getActiveData')).data;
 
-      if (checkpoints.length == 0) return [this.selectedScenery.stationName];
+  activeData.value = data ?? null;
+}
 
-      return checkpoints.split(';');
-    },
+function selectCheckpointOption() {
+  selectedCheckpointName.value =
+    checkpointNameList.value.length == 0 ? null : checkpointNameList.value[0];
+}
 
-    sceneryTrains() {
-      if (!this.selectedScenery || !this.activeData?.trains) return [];
+function onAutofillChange() {
+  StorageManager.setBooleanValue('fill-checkpoint', autofillCheckpointName.value);
+}
 
-      const scenery = this.selectedScenery;
+function fillOrderData(train: API.ActiveTrains.Data) {
+  if (!selectedScenery.value) return;
 
-      return this.activeData.trains
-        ?.filter(
-          (t) =>
-            (t.currentStationName == scenery.stationName &&
-              t.region == scenery.region &&
-              (t.online || t.lastSeen >= Date.now() - 60000)) ||
-            t.timetable?.path.includes(`${scenery.stationName} ${scenery.stationHash}.sc`)
-        )
-        .sort((t1, t2) => {
-          return (
-            (t2.currentStationName == scenery.stationName ? 1 : -1) -
-              (t1.currentStationName == scenery.stationName ? 1 : -1) ||
-            t1.driverName.localeCompare(t2.driverName)
-          );
-        });
-    }
-  },
+  const scenery = selectedScenery.value;
 
-  methods: {
-    getRegionNameById,
+  store.orderData.header.A = train.trainNo.toString();
+  store.orderData.header.C = train.currentStationName;
+  store.orderData.header.D = scenery.stationName;
 
-    async fetchSceneriesData() {
-      const data: ISceneryData[] = (await http.get<ISceneryData[]>('api/getSceneries')).data;
+  store.orderData.footer.V = train.driverName;
+  store.orderData.footer.W = scenery.dispatcherName;
+  store.orderData.footer.Z = scenery.stationName + Date.now().toString();
 
-      this.sceneriesData = data;
-    },
+  // store.orderData.header
 
-    async fetchActiveData() {
-      const data: API.ActiveData.Response = await (await http.get('api/getActiveData')).data;
+  // const chosenOrder = store[this.store.chosenOrderType];
+  // chosenOrder.header.trainNo = trainNo.toString();
+  // chosenOrder.header.date = currentFormattedDate();
 
-      this.activeData = data;
-    },
+  // store.orderFooter.dispatcherName = selectedScenery.dispatcherName;
+  // store.orderFooter.stationName =
+  //   selectedCheckpointName?.split(',')[0] || selectedScenery.stationName;
+  // store.orderFooter.hour = currentFormattedHours();
+  // store.orderFooter.minutes = currentFormattedMinutes();
 
-    selectOption() {
-      this.selectedCheckpointName =
-        this.checkpointNameList.length == 0 ? null : this.checkpointNameList[0];
-    },
+  if (autofillCheckpointName.value) {
+    const sceneryAbbrev = sceneriesData.value?.find(
+      ({ name }) => name === selectedScenery!.value?.stationName
+    )?.abbr;
 
-    fillOrder(trainNo: number) {
-      if (!this.selectedScenery) return;
+    // store.orderFooter.checkpointName = sceneryAbbrev || store.orderFooter.stationName.slice(0, 2);
+  }
 
-      const chosenOrder = this.store[this.store.chosenOrderType];
-      chosenOrder.header.trainNo = trainNo.toString();
-      chosenOrder.header.date = currentFormattedDate();
+  store.panelMode = 'OrderMessage';
+}
 
-      this.store.orderFooter.dispatcherName = this.selectedScenery.dispatcherName;
-      this.store.orderFooter.stationName =
-        this.selectedCheckpointName?.split(',')[0] || this.selectedScenery.stationName;
-      this.store.orderFooter.hour = currentFormattedHours();
-      this.store.orderFooter.minutes = currentFormattedMinutes();
+function handleQueries() {
+  const query = new URLSearchParams(window.location.search);
 
-      if (this.fillCheckpointName) {
-        const sceneryAbbrev = this.sceneriesData?.find(
-          ({ name }) => name === this.selectedScenery!.stationName
-        )?.abbr;
+  const id = query.get('sceneryId');
 
-        this.store.orderFooter.checkpointName =
-          sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
-      }
+  if (id) {
+    const [sceneryName, sceneryRegion] = id.split('|');
 
-      this.store.panelMode = 'OrderMessage';
-    },
+    selectedRegion.value = sceneryRegion;
 
-    handleQueries() {
-      const query = new URLSearchParams(window.location.search);
+    const queryScenery = activeData.value?.activeSceneries?.find(
+      (sc) => sc.stationName == sceneryName && sc.region == sceneryRegion && sc.isOnline
+    );
 
-      const id = query.get('sceneryId');
+    if (queryScenery) {
+      selectedSceneryId.value = `${queryScenery.stationName}|${queryScenery.stationHash}|${queryScenery.dispatcherName}|${queryScenery.region}`;
 
-      if (id) {
-        const [sceneryName, sceneryRegion] = id.split('|');
+      selectCheckpointOption();
 
-        this.selectedRegion = sceneryRegion;
-
-        const queryScenery = this.activeData?.activeSceneries?.find(
-          (sc) => sc.stationName == sceneryName && sc.region == sceneryRegion && sc.isOnline
-        );
-
-        if (queryScenery) {
-          this.selectedSceneryId = `${queryScenery.stationName}|${queryScenery.stationHash}|${queryScenery.dispatcherName}|${queryScenery.region}`;
-
-          this.selectOption();
-
-          this.store.panelMode = 'OrderTrainPicker';
-        }
-      }
+      store.panelMode = 'OrderTrainPicker';
     }
   }
-});
+}
 </script>
 
 <style lang="scss" scoped>
