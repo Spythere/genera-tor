@@ -13,9 +13,9 @@
       "info-2": "Pełny changelog dostępny na <a href='https://github.com/Spythere/genera-tor' target='_blank'>GitHubie projektu</a>"
    },
    "navbar": {
-      "order-message": "TREŚĆ ROZKAZU",
-      "order-list": "ZAPISANE ROZ.",
-      "order-train-picker": "POCIĄGI"
+      "OrderMessagePanel": "TREŚĆ ROZKAZU",
+      "OrderListPanel": "ZAPISANE ROZKAZY",
+      "OrderTrainPickerPanel": "POCIĄGI"
    },
    "order-message": {
       "title": "Wiadomość do wyświetlenia na czacie symulatora:",

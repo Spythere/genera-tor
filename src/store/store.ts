@@ -8,6 +8,7 @@ import {
 
 import StorageManager from '../managers/storageManager';
 import i18n from '../i18n';
+import { TPanelMode } from '../types/dataTypes';
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -24,7 +25,7 @@ export const useStore = defineStore('store', {
       helperModalOpen: false,
       orderDarkMode: false,
 
-      panelMode: 'OrderMessage',
+      panelMode: 'OrderMessagePanel' as TPanelMode,
 
       chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',

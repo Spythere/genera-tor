@@ -61,10 +61,10 @@
 
 <script lang="ts" setup>
 import { computed, onActivated, onMounted, Reactive, reactive } from 'vue';
-import { useStore } from '../store/store';
-import { IStorageOrderData, LocalStorageOrderLegacy } from '../types/orderTypes';
-import StorageManager from '../managers/storageManager';
 import { useI18n } from 'vue-i18n';
+import { useStore } from '../../store/store';
+import { IStorageOrderData, LocalStorageOrderLegacy } from '../../types/orderTypes';
+import StorageManager from '../../managers/storageManager';
 
 const { t } = useI18n();
 const store = useStore();
@@ -96,7 +96,7 @@ function selectLocalOrder(order: IStorageOrderData) {
     (store.orderData['instructions'] as any)[k] = v;
   });
 
-  store.panelMode = 'OrderMessage';
+  store.panelMode = 'OrderMessagePanel';
   store.chosenLocalOrderId = order.id;
 }
 
@@ -141,7 +141,7 @@ onActivated(() => {
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .list {
   &-move,

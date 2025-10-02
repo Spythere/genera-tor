@@ -52,7 +52,7 @@ function handleQueries() {
   const id = query.get('sceneryId');
 
   if (id != null) {
-    store.panelMode = 'OrderTrainPicker';
+    store.panelMode = 'OrderTrainPickerPanel';
   }
 }
 

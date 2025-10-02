@@ -111,14 +111,13 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from '../store/store';
-
-import http from '../http';
-import { ISceneryData } from '../types/dataTypes';
-import { API } from '../types/apiTypes';
-import { getRegionNameById } from '../utils/sceneryUtils';
-import { computed, onActivated, onDeactivated, onMounted, ref } from 'vue';
-import StorageManager from '../managers/storageManager';
+import { ref, onMounted, onActivated, onDeactivated, computed } from 'vue';
+import http from '../../http';
+import { useStore } from '../../store/store';
+import { API } from '../../types/apiTypes';
+import { ISceneryData } from '../../types/dataTypes';
+import StorageManager from '../../managers/storageManager';
+import { getRegionNameById } from '../../utils/sceneryUtils';
 
 const store = useStore();
 const regions = ['eu', 'cae', 'usw', 'us', 'ru'];
@@ -238,29 +237,13 @@ function fillOrderData(train: API.ActiveTrains.Data) {
 
   store.orderData.footer.V = train.driverName;
   store.orderData.footer.W = scenery.dispatcherName;
-  store.orderData.footer.Z = scenery.stationName + Date.now().toString();
 
-  // store.orderData.header
+  const sceneryAbbrev = sceneriesData.value
+    ? (sceneriesData.value.find(({ name }) => name === scenery.stationName)?.abbr ?? null)
+    : null;
 
-  // const chosenOrder = store[this.store.chosenOrderType];
-  // chosenOrder.header.trainNo = trainNo.toString();
-  // chosenOrder.header.date = currentFormattedDate();
-
-  // store.orderFooter.dispatcherName = selectedScenery.dispatcherName;
-  // store.orderFooter.stationName =
-  //   selectedCheckpointName?.split(',')[0] || selectedScenery.stationName;
-  // store.orderFooter.hour = currentFormattedHours();
-  // store.orderFooter.minutes = currentFormattedMinutes();
-
-  if (autofillCheckpointName.value) {
-    const sceneryAbbrev = sceneriesData.value?.find(
-      ({ name }) => name === selectedScenery!.value?.stationName
-    )?.abbr;
-
-    // store.orderFooter.checkpointName = sceneryAbbrev || store.orderFooter.stationName.slice(0, 2);
-  }
-
-  store.panelMode = 'OrderMessage';
+  store.orderData.footer.Z = `${sceneryAbbrev || scenery.stationName} ${StorageManager.getNumericValue('orderCount') || 1}`;
+  store.panelMode = 'OrderMessagePanel';
 }
 
 function handleQueries() {
@@ -282,14 +265,14 @@ function handleQueries() {
 
       selectCheckpointOption();
 
-      store.panelMode = 'OrderTrainPicker';
+      store.panelMode = 'OrderTrainPickerPanel';
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .order-train-picker {
   display: flex;

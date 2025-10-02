@@ -4,9 +4,9 @@
       "en": "ENG"
    },
    "navbar": {
-      "order-message": "ORDER MESSAGE",
-      "order-list": "SAVED ORDERS",
-      "order-train-picker": "TRAINS"
+      "OrderMessagePanel": "ORDER MESSAGE",
+      "OrderListPanel": "SAVED ORDERS",
+      "OrderTrainPickerPanel": "TRAINS"
    },
    "update": {
       "update-available-text": "New GeneraTOR version is available!",

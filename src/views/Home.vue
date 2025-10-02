@@ -9,12 +9,12 @@
         <div class="panel-nav">
           <button
             v-for="(action, i) in navActions"
-            :key="action.mode"
+            :key="action"
             class="g-button option"
-            :data-active="store.panelMode == action.mode"
-            @click="selectOrderMode(action.mode)"
+            :data-active="store.panelMode == action"
+            @click="selectOrderMode(action)"
           >
-            {{ t(`navbar.${action.value}`) }}
+            {{ t(`navbar.${action}`) }}
           </button>
         </div>
 
@@ -34,42 +34,29 @@ import { useStore } from '../store/store';
 import { useI18n } from 'vue-i18n';
 
 import Order from '../components/Order/Order.vue';
-import OrderMessage from '../components/OrderMessage.vue';
-import OrderList from '../components/OrderList.vue';
-import OrderTrainPicker from '../components/OrderTrainPicker.vue';
+import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
+import OrderListPanel from '../components/Panels/OrderListPanel.vue';
+import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
+import { TPanelMode } from '../types/dataTypes';
 
 const { t } = useI18n();
 const store = useStore();
 
-const navActions = [
-  {
-    mode: 'OrderMessage',
-    value: 'order-message'
-  },
-  {
-    mode: 'OrderList',
-    value: 'order-list'
-  },
-  {
-    mode: 'OrderTrainPicker',
-    value: 'order-train-picker'
-  }
-];
+const navActions: TPanelMode[] = ['OrderListPanel', 'OrderMessagePanel', 'OrderTrainPickerPanel'];
 
-function selectOrderMode(mode: string) {
+function selectOrderMode(mode: TPanelMode) {
   store.panelMode = mode;
 }
 
 const panelComponent = computed(() => {
   switch (store.panelMode) {
-    case 'OrderMessage':
-      return OrderMessage;
-    case 'OrderList':
-      return OrderList;
-    case 'OrderTrainPicker':
-      return OrderTrainPicker;
+    case 'OrderListPanel':
+      return OrderListPanel;
+    case 'OrderTrainPickerPanel':
+      return OrderTrainPickerPanel;
+    case 'OrderMessagePanel':
     default:
-      return OrderMessage;
+      return OrderMessagePanel;
   }
 });
 </script>

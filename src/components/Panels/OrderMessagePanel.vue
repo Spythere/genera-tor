@@ -86,12 +86,12 @@
 
 <script lang="ts" setup>
 import { computed, onMounted, Reactive, reactive, ref, watch } from 'vue';
-import { useStore } from '../store/store';
 import { useI18n } from 'vue-i18n';
 
-import StorageManager from '../managers/storageManager';
-import { IOrderFooter, IOrderHeader, IStorageOrderData } from '../types/orderTypes';
 import { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave } from 'lucide-vue-next';
+import { useStore } from '../../store/store';
+import { IOrderHeader, IOrderFooter, IStorageOrderData } from '../../types/orderTypes';
+import StorageManager from '../../managers/storageManager';
 
 type TActionMonitType = 'warning' | 'info' | 'success';
 
@@ -380,7 +380,7 @@ function resetOrder() {
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .order-message {
   h3 {
