@@ -41,11 +41,18 @@ function generateMessage() {
   messageHtml += '-------------<br />';
 
   const headerData = store.orderData['header'];
+  const headerDateString = headerData['B']
+    ? new Date(headerData['B']).toLocaleDateString('pl-PL', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+      })
+    : '';
 
-  messageHtml += `${t('order.header.A')}: ${headerData['A']}<br />`;
-  messageHtml += `${t('order.header.B')}: ${headerData['B']}<br />`;
-  messageHtml += `${t('order.header.C')}: ${headerData['C']}<br />`;
-  messageHtml += `${t('order.header.D')}: ${headerData['D']}<br />`;
+  messageHtml += `${t('order.header.A')}: ${headerData['A'] || '---'}<br />`;
+  messageHtml += `${t('order.header.B')}: ${headerDateString || '---'}<br />`;
+  messageHtml += `${t('order.header.C')}: ${headerData['C'] || '---'}<br />`;
+  messageHtml += `${t('order.header.D')}: ${headerData['D'] || '---'}<br />`;
 
   const instructions = store.orderData['instructions'];
 
