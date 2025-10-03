@@ -42,7 +42,7 @@ import { TPanelMode } from '../types/dataTypes';
 const { t } = useI18n();
 const store = useStore();
 
-const navActions: TPanelMode[] = ['OrderListPanel', 'OrderMessagePanel', 'OrderTrainPickerPanel'];
+const navActions: TPanelMode[] = ['OrderMessagePanel', 'OrderListPanel', 'OrderTrainPickerPanel'];
 
 function selectOrderMode(mode: TPanelMode) {
   store.panelMode = mode;
@@ -75,29 +75,28 @@ const panelComponent = computed(() => {
 }
 
 .home-container {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 800px 500px;
   justify-content: center;
   gap: 2em 1em;
   padding: 1em;
-
   width: 100%;
 
   & > div {
-    max-height: calc(100vh - 5em);
+    height: calc(100vh - 5em);
     overflow: auto;
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: auto;
     padding: 1em 0.5em;
   }
 }
 
 .order-container {
-  max-width: 800px;
-
   display: flex;
   align-items: start;
+  max-width: 800px;
 
   @media screen and (max-width: 650px) {
     flex-direction: column;
@@ -105,8 +104,8 @@ const panelComponent = computed(() => {
 }
 
 .panel-container {
-  width: 500px;
   padding: 2px;
+  max-width: 800px;
 
   display: grid;
   grid-template-rows: auto auto 1fr;

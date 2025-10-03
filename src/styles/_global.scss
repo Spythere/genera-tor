@@ -2,23 +2,6 @@
 @use 'colors';
 @use 'sass:color';
 
-// Global scrollbar style
-::-webkit-scrollbar {
-  width: 15px;
-}
-
-::-webkit-scrollbar-track {
-  background: #333;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
 body,
 html {
   padding: 0;

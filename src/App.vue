@@ -111,10 +111,4 @@ footer {
   text-align: center;
   padding: 0.5em 0;
 }
-
-@media screen and (max-width: 500px) {
-  #app {
-    font-size: calc(1vw + 0.65rem);
-  }
-}
 </style>
