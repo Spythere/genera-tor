@@ -23,7 +23,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'prompt',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,img}'],
+        globPatterns: ['**/*.{js,css,html,png,svg,img,woff2}'],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/stacjownik.spythere.eu\/\/api\/getSceneries/i,
