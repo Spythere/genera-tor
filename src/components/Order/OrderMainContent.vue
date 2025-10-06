@@ -108,7 +108,7 @@
                     <input
                       v-model="listItem.active"
                       type="checkbox"
-                      :id="`order-${instruction.key}-checkbox`"
+                      :id="`order-${instruction.key}-checkbox-${i}`"
                     />
                     &nbsp;
                     <b>{{ t(`order.${instruction.key}.bold`, [i + 1]) }}</b>

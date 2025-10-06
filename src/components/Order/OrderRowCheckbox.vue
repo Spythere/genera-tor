@@ -1,6 +1,10 @@
 <template>
   <label class="order-instruction-checkbox">
-    <input type="checkbox" v-model="instructionObject.active" />
+    <input
+      type="checkbox"
+      v-model="instructionObject.active"
+      :id="`instruction-checkbox-${instructionObject.name}`"
+    />
     <div class="checkmark" :class="{ dark: store.orderDarkMode }"></div>
     <div class="text">{{ instructionObject.name }}</div>
   </label>
