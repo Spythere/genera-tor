@@ -15,6 +15,7 @@
               class="order-input"
               id="header-A"
               v-model="store.orderData.header.A"
+              :placeholder="t('order.header.A-placeholder')"
             />
             <label class="order-input-label" for="header-A">{{ t('order.header.A') }}</label>
           </div>
@@ -40,6 +41,7 @@
               class="order-input"
               id="header-C"
               v-model="store.orderData.header.C"
+              :placeholder="t('order.header.C-placeholder')"
             />
             <label class="order-input-label" for="header-C">{{ t('order.header.C') }}</label>
           </div>
@@ -51,6 +53,7 @@
               class="order-input"
               id="header-D"
               v-model="store.orderData.header.D"
+              :placeholder="t('order.header.D-placeholder')"
             />
             <label class="order-input-label" for="header-D">{{ t('order.header.D') }}</label>
           </div>

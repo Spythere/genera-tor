@@ -83,6 +83,10 @@ input.order-input {
     font-size: 0.8em;
     color: black;
   }
+
+  &::placeholder {
+    font-size: 0.85em;
+  }
 }
 
 label.order-input-label {

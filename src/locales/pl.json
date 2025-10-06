@@ -77,9 +77,12 @@
       "title": "Rozkaz pisemny",
       "header": {
          "A": "A Nr pociągu {'|'} składu manewrowego",
+         "A-placeholder": "Numer pociągu lub manewru",
          "B": "B Data",
          "C": "C Lokalizacja pociągu {'|'} składu manewrowego",
-         "D": "D Lokalizacja nadawcy"
+         "C-placeholder": "Nazwa posterunku lub szlaku",
+         "D": "D Lokalizacja nadawcy",
+         "D-placeholder": "Nazwa posterunku"
       },
       "22": {
          "text": "Dotyczy jazdy torem lewym",
@@ -264,9 +267,13 @@
       },
       "footer": {
          "V": "V Identyfikator maszynisty",
+         "V-placeholder": "Nick maszynisty",
          "W": "W Identyfikator nadawcy",
+         "W-placeholder": "Nick dyżurnego",
          "Y": "Y Godzina",
-         "Z": "Z Identyfikator rozkazu pisemnego"
+         "Y-placeholder": "Godzina w formacie HH:MM np. 09:25",
+         "Z": "Z Identyfikator rozkazu pisemnego",
+         "Z-placeholder": "RD-(nr rozkazu)-(hash sc.)-(2 ostatnie cyfry roku)"
       }
    }
 }

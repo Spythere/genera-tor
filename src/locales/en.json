@@ -77,9 +77,12 @@
       "title": "Train order",
       "header": {
          "A": "A Nr pociągu {'|'} składu manewrowego",
+         "A-placeholder": "Numer pociągu lub manewru",
          "B": "B Data",
          "C": "C Lokalizacja pociągu {'|'} składu manewrowego",
-         "D": "D Lokalizacja nadawcy"
+         "C-placeholder": "Nazwa posterunku lub szlaku",
+         "D": "D Lokalizacja nadawcy",
+         "D-placeholder": "Nazwa posterunku"
       },
       "22": {
          "text": "Dotyczy jazdy torem lewym",

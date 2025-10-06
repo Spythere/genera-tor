@@ -9,6 +9,7 @@
               class="order-input"
               id="footer-V"
               v-model="store.orderData.footer.V"
+              placeholder="Nick maszynisty"
             />
             <label class="order-input-label" for="footer-V">{{ t('order.footer.V') }}</label>
           </div>
@@ -20,6 +21,7 @@
               class="order-input"
               id="footer-W"
               v-model="store.orderData.footer.W"
+              placeholder="Nick dyżurnego"
             />
             <label class="order-input-label" for="footer-W">{{ t('order.footer.W') }}</label>
           </div>
@@ -34,6 +36,7 @@
               class="order-input"
               id="footer-Y"
               v-model="store.orderData.footer.Y"
+              placeholder="Godzina w formacie HH:MM"
             />
             <label class="order-input-label" for="footer-Y">{{ t('order.footer.Y') }}</label>
           </div>
@@ -45,6 +48,7 @@
               class="order-input"
               id="footer-Z"
               v-model="store.orderData.footer.Z"
+              placeholder="RD-(nr rozkazu)-(hash sc.)-(2 ostatnie cyfry roku)"
             />
             <label class="order-input-label" for="footer-Z">{{ t('order.footer.Z') }}</label>
           </div>
