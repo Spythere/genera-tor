@@ -1,4 +1,7 @@
-// For use inside OrderS and OrderN
+export const getOrderFullId = (orderNumber: string, sceneryHash: string) => {
+  return `RD-${orderNumber}-${sceneryHash}-${new Date().getUTCFullYear().toString().slice(2)}`;
+};
+
 export const handleOrderPlaceholders = (isRowEnabled: boolean, rowRef: HTMLTableElement) => {
   rowRef.querySelectorAll('input[type="text"]').forEach((node) => {
     if (!isRowEnabled) {
