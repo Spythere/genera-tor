@@ -1,4 +1,4 @@
-export const getOrderFullId = (orderNumber: string, sceneryHash: string) => {
+export const getOrderFullId = (orderNumber: number, sceneryHash: string) => {
   return `RD-${orderNumber}-${sceneryHash}-${new Date().getUTCFullYear().toString().slice(2)}`;
 };
 

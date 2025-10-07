@@ -118,6 +118,7 @@ import { API } from '../../types/apiTypes';
 import { ISceneryData } from '../../types/dataTypes';
 import StorageManager from '../../managers/storageManager';
 import { getRegionNameById } from '../../utils/sceneryUtils';
+import { getOrderFullId } from '../../utils/orderUtils';
 
 const store = useStore();
 const regions = ['eu', 'cae', 'usw', 'us', 'ru'];
@@ -238,11 +239,14 @@ function fillOrderData(train: API.ActiveTrains.Data) {
   store.orderData.footer.V = train.driverName;
   store.orderData.footer.W = scenery.dispatcherName;
 
-  const sceneryAbbrev = sceneriesData.value
-    ? (sceneriesData.value.find(({ name }) => name === scenery.stationName)?.abbr ?? null)
-    : null;
+  const idData = store.orderData.footer.Z.split('-');
 
-  store.orderData.footer.Z = `${sceneryAbbrev || scenery.stationName} ${StorageManager.getNumericValue('orderCount') || 1}`;
+  if (idData.length != 4) {
+    store.orderData.footer.Z = getOrderFullId(0, scenery.stationHash);
+  } else {
+    store.orderData.footer.Z = getOrderFullId(Number(idData[1]) || 0, scenery.stationHash);
+  }
+
   store.panelMode = 'OrderMessagePanel';
 }
 

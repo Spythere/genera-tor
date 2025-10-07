@@ -92,6 +92,7 @@ import { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave } from 'lucide-vu
 import { useStore } from '../../store/store';
 import { IOrderHeader, IOrderFooter, IStorageOrderData } from '../../types/orderTypes';
 import StorageManager from '../../managers/storageManager';
+import { getOrderFullId } from '../../utils/orderUtils';
 
 type TActionMonitType = 'warning' | 'info' | 'success';
 
@@ -255,9 +256,15 @@ function hasHeaderFieldsComplete() {
   });
 }
 
-// TODO
 function incrementOrderNo() {
-  // store.orderData. = (Number(order.header.orderNo) + 1).toString();
+  const idData = store.orderData.footer.Z.split('-');
+
+  if (idData.length == 4) {
+    const sceneryHash = idData[2];
+    let orderNumber = Number(idData[1]) || 0;
+
+    store.orderData.footer.Z = getOrderFullId(++orderNumber, sceneryHash);
+  }
 }
 
 function copyMessage() {
@@ -270,7 +277,7 @@ function copyMessage() {
 
   navigator.clipboard.writeText(orderMessagePreview.value);
 
-  if (incrementOnCopy) incrementOrderNo();
+  if (incrementOnCopy.value) incrementOrderNo();
 
   showActionMonit(t('order-message.success-copy-html'), 'success');
 }
@@ -319,7 +326,7 @@ function saveOrder() {
   store.chosenLocalOrderId = nextOrderId;
   showActionMonit(t('order-message.success-save-html'), 'success');
 
-  if (incrementOnSave) incrementOrderNo();
+  if (incrementOnSave.value) incrementOrderNo();
 }
 
 function updateOrder() {
