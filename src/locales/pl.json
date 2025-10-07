@@ -103,7 +103,7 @@
          "signal1": "x.5 sygnalizator",
          "signal2": "x.6 sygnalizator",
          "signal3": "x.7 sygnalizator",
-         "message-html": "<b>Zezwalam na wyjazd</b> z toru nr {0} z {1} na tor nr {2} w kierunku {3}. <br /> Pominięcie sygnałów stój {4} i {5} i {6}"
+         "message-html": "<b>Zezwalam na wyjazd</b> z toru nr {0} z {1} na tor nr {2} w kierunku {3}. Pominięcie sygnałów stój {4} i {5} i {6}"
       },
       "2115": {
          "text": "{bold1} z toru nr {track1} do {signalbox1} na tor nr {track2} {br} Pominięcie sygnałów {signal1} i {signal2} i {signal3}",
@@ -114,7 +114,7 @@
          "signal1": "x.4 sygnalizator",
          "signal2": "x.5 sygnalizator",
          "signal3": "x.6 sygnalizator",
-         "message-html": "<b>Zezwalam na wjazd</b> z toru nr {0} do {1} na tor nr {2} <br /> Pominięcie sygnałów {3} i {4} i {5}"
+         "message-html": "<b>Zezwalam na wjazd</b> z toru nr {0} do {1} na tor nr {2}. Pominięcie sygnałów {3} i {4} i {5}"
       },
       "2120": {
          "text": "Od {signalbox1} do {signalbox2} po torze {track1} {br} {highlight1} {br} {underline1}{highlight2}.",
@@ -124,7 +124,7 @@
          "signalbox1": "x.1 posterunek",
          "signalbox2": "x.2 posterunek",
          "track1": "x.3 nr toru",
-         "message-html": "Od {0} do {1} po torze {2} <u><b>wskazania semaforów SBL są nieważne.</b> Zachować ostrożność od semafora ze wskaźnikiem <b>W18.</b></u>"
+         "message-html": "Od {0} do {1} po torze {2} <b>wskazania semaforów SBL są nieważne.</b> Zachować ostrożność od semafora ze wskaźnikiem <b>W18.</b>"
       },
       "2125": {
          "text": "Zezwalam przejechać za {select1} w kierunku {signalbox1} torem {track1} do km {km1} do godz. {hour1}.",

@@ -96,9 +96,9 @@ function generateMessage() {
   const footerData = store.orderData['footer'];
 
   messageHtml += '-------------<br />';
-  messageHtml += `${t('order.footer.V')}: ${footerData['V'] || '---'} | `;
+  messageHtml += `${t('order.footer.V')}: ${footerData['V'] || '---'}<br />`;
   messageHtml += `${t('order.footer.W')}: ${footerData['W'] || '---'}<br />`;
-  messageHtml += `${t('order.footer.Y')}: ${footerData['Y'] || '---'} | `;
+  messageHtml += `${t('order.footer.Y')}: ${footerData['Y'] || '---'}<br />`;
   messageHtml += `${t('order.footer.Z')}: ${footerData['Z'] || '---'}<br />`;
 
   store.orderMessage = messageHtml;

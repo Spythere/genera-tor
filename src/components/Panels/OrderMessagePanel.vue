@@ -275,7 +275,9 @@ function copyMessage() {
 
   if (!areFieldsCorrect) return;
 
-  navigator.clipboard.writeText(orderMessagePreview.value);
+  const simulatorChatMessage = '\n' + orderMessagePreview.value.replace(/<br \/>/g, '\n');
+
+  navigator.clipboard.writeText(simulatorChatMessage);
 
   if (incrementOnCopy.value) incrementOrderNo();
 
