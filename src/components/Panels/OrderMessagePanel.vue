@@ -203,7 +203,7 @@ function verifyOrderFields() {
     for (const fieldKey in instruction.inputFields) {
       const fieldValue = instruction.inputFields[fieldKey];
 
-      if (fieldValue.trim() == '') {
+      if (fieldValue.trim() == '' && !instruction.optionalFieldNames.includes(fieldKey)) {
         hasAllInputsFilled = false;
         break;
       }

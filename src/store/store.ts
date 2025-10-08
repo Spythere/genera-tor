@@ -156,7 +156,7 @@ export const useStore = defineStore('store', {
               km1: ''
             },
             optionalFieldNames: ['signalbox2'],
-            textDirectives: ['bold1', 'br']
+            textDirectives: ['bold1', 'br', 'bold2']
           },
           {
             key: '2155',

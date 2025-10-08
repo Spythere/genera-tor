@@ -150,7 +150,7 @@
          "signalbox2": "x.2 posterunek",
          "km1": "x.3 km",
          "other1": "x.96 inne",
-         "message-html": "<b>Zatrzymanie pociągu</b> na posterunku/szlaku {0} {'|'} {1} w km {2} celem {3}"
+         "message-html": "<b>Zatrzymanie pociągu</b> na posterunku {0} w km {2} celem {3} | <b>Zatrzymanie pociągu</b> na szlaku {0} {'|'} {1} w km {2} celem {3} | <b>Zatrzymanie pociągu</b> na szlaku {0} {'|'} {1} w km {2} celem {3}"
       },
       "2145": {
          "text": "Na {signalbox1} na sygnalizatorze {signal1} {bold1}",
@@ -166,7 +166,7 @@
          "signalbox1": "x.1 posterunek",
          "signalbox2": "x.2 posterunek",
          "km1": "x.3 km",
-         "message-html": "<b>Wskazania tarcz ostrzegawczych</b> przejazdowych na posterunku/szlaku {1} / {2} odnoszących się do przejazdu w km {3}, <b>są nieważne. Jazda z prędkością rozkładową.</b>"
+         "message-html": "<b>Wskazania tarcz ostrzegawczych</b> przejazdowych na posterunku/szlaku {1} / {2} odnoszących się do przejazdu w km {3} <b>są nieważne. Jazda z prędkością rozkładową.</b>"
       },
       "2155": {
          "text": "{bold1} na posterunku/szlaku {signalbox1}{'|'}{signalbox2} odnoszące się do sygnalizatora {signal1}.",

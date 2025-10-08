@@ -71,7 +71,10 @@ function generateMessage() {
 
         messageHtml += `<b>[${value.name}]</b> ${t(
           localeKey + '.message-html',
-          messageValues
+          messageValues,
+          Object.keys(value.inputFields).filter(
+            (k) => value.optionalFieldNames.includes(k) && value.inputFields[k].trim() != ''
+          ).length
         )}<br />`;
 
         if (value.key == '2310' && value.listFields) {
