@@ -86,7 +86,13 @@ function generateMessage() {
               return itemFieldKey || '---';
             });
 
-            messageHtml += t(`${localeKey}.message-html-list`, [i + 1, ...listItemValues]);
+            messageHtml += t(
+              `${localeKey}.message-html-list`,
+              [i + 1, ...listItemValues],
+              Object.keys(listItem.values).filter(
+                (k) => listItem.values[k].trim() != '' && k.startsWith('signalbox')
+              ).length
+            );
             messageHtml += '<br />';
           });
         }

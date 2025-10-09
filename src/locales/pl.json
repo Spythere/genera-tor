@@ -166,7 +166,7 @@
          "signalbox1": "x.1 posterunek",
          "signalbox2": "x.2 posterunek",
          "km1": "x.3 km",
-         "message-html": "<b>Wskazania tarcz ostrzegawczych</b> przejazdowych na posterunku/szlaku {1} / {2} odnoszących się do przejazdu w km {3} <b>są nieważne. Jazda z prędkością rozkładową.</b>"
+         "message-html": "<b>Wskazania tarcz ostrzegawczych</b> przejazdowych na posterunku {0} odnoszących się do przejazdu w km {1} <b>są nieważne. Jazda z prędkością rozkładową.</b> | <b>Wskazania tarcz ostrzegawczych</b> przejazdowych na szlaku {0} / {1} odnoszących się do przejazdu w km {2} <b>są nieważne. Jazda z prędkością rozkładową.</b> | <b>Wskazania tarcz ostrzegawczych</b> przejazdowych na szlaku {0} / {1} odnoszących się do przejazdu w km {2} <b>są nieważne. Jazda z prędkością rozkładową.</b>"
       },
       "2155": {
          "text": "{bold1} na posterunku/szlaku {signalbox1}{'|'}{signalbox2} odnoszące się do sygnalizatora {signal1}.",
@@ -174,7 +174,7 @@
          "signalbox1": "x.1 posterunek",
          "signalbox2": "x.2 posterunek",
          "signal1": "x.3 sygnalizator",
-         "message-html": "<b>Uszkodzone urządzenia SHP</b> na posterunku/szlaku {0}{'|'}{1} odnoszące się do sygnalizatora {3}"
+         "message-html": "<b>Uszkodzone urządzenia SHP</b> na posterunku {0} odnoszące się do sygnalizatora {2}|<b>Uszkodzone urządzenia SHP</b> na szlaku {0} {'|'} {1} odnoszące się do sygnalizatora {2}|<b>Uszkodzone urządzenia SHP</b> na szlaku {0} {'|'} {1} odnoszące się do sygnalizatora {2}"
       },
       "2160": {
          "text": "{bold1} na odcinku od {signalbox1} do {signalbox2}, jazda przez {signalbox3} linią {line1} z prędkością {vmax1}.",
@@ -232,13 +232,13 @@
          "message-html": "<b>Na tor zostanie wyprawiony pociąg</b> {0} do km {1}"
       },
       "2185": {
-         "text": "{bold1} na tor nr {track1} w km {km1} na szlaku {'|'} {signalbox1} {'|'} {signalbox2}",
+         "text": "{bold1} na tor nr {track1} w km {km1} na szlaku {signalbox1} {'|'} {signalbox2}",
          "bold1": "Zezwalam na wstawienie PSD",
          "track1": "x.1 tor",
          "km1": "x.2 km",
          "signalbox1": "x.3 posterunek",
          "signalbox2": "x.4 posterunek",
-         "message-html": "<b>Zezwalam na wstawienie PSD</b> na tor nr {0} w km {1} na szlaku {'|'} {2} {'|'} {3}"
+         "message-html": "<b>Zezwalam na wstawienie PSD</b> na tor nr {0} w km {1} na szlaku {2} {'|'} {3}"
       },
       "2310": {
          "text": "{bold1}{br}{text-list}",
@@ -253,7 +253,7 @@
          "km2": "x.{0} km",
          "other1": "x.{1} przyczyna",
          "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
-         "message-html-list": "<b>{0}. Na posterunku/szlaku</b> {1}/{2} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}"
+         "message-html-list": "<b>{0}. Na posterunku</b> {1} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na posterunku</b> {1} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na szlaku</b> {1}/{2} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}"
       },
       "2311": {
          "text": "{bold1}",

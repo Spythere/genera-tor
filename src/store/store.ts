@@ -85,9 +85,9 @@ export const useStore = defineStore('store', {
             name: '21.20',
             active: false,
             inputFields: {
-              track1: '',
               signalbox1: '',
-              signalbox2: ''
+              signalbox2: '',
+              track1: ''
             },
             optionalFieldNames: [],
             textDirectives: ['highlight1', 'highlight2', 'underline1', 'br']
