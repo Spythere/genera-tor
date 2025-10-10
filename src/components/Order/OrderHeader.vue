@@ -2,7 +2,7 @@
   <table class="order-table">
     <tbody>
       <tr>
-        <td style="padding: 0.25em">
+        <td style="padding: 0.25em" colspan="2">
           <b>{{ t('order.title') }}</b>
         </td>
       </tr>
