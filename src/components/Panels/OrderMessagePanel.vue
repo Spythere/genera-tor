@@ -26,7 +26,7 @@
         <LucidePencil />
         {{ $t('order-message.button-update') }}
         <span class="text--accent">
-          {{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }}
+          {{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[2]}` }}
         </span>
       </button>
 
@@ -317,11 +317,11 @@ function saveOrder() {
     orderData: store.orderData
   };
 
-  const localOrderCount = StorageManager.getNumericValue('orderCount') || 0;
+  const localOrderCount = StorageManager.getNumericValue('orderCountV3') || 0;
 
-  if (localOrderCount == 0) StorageManager.setNumericValue('orderCount', 0);
+  if (localOrderCount == 0) StorageManager.setNumericValue('orderCountV3', 0);
 
-  const prevLocalOrder = StorageManager.getValue(`order-${localOrderCount}`);
+  const prevLocalOrder = StorageManager.getValue(`order-v3-${localOrderCount}`);
 
   if (prevLocalOrder) {
     try {
@@ -339,10 +339,10 @@ function saveOrder() {
   }
 
   const nextOrderCount = localOrderCount + 1;
-  const nextOrderId = `order-${nextOrderCount}`;
+  const nextOrderId = `order-v3-${nextOrderCount}`;
   orderDataToSave['id'] = nextOrderId;
 
-  StorageManager.setNumericValue('orderCount', nextOrderCount);
+  StorageManager.setNumericValue('orderCountV3', nextOrderCount);
   StorageManager.setValue(nextOrderId, JSON.stringify(orderDataToSave));
 
   store.chosenLocalOrderId = nextOrderId;

@@ -55,7 +55,7 @@
    },
    "order-list": {
       "title": "Saved train orders",
-      "order-title": "Train order for train no. {trainNo}",
+      "order-title": "Train order for no. {trainNo}",
       "order-subtitle": "Selected instructions: {0}",
       "no-saved-orders": "No saved orders!",
       "order-added": "Added:",

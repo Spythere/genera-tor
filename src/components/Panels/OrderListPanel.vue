@@ -12,7 +12,7 @@
         :selected="order.id == store.chosenLocalOrderId"
         :key="order.id"
       >
-        <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
+        <b class="text--accent">#{{ order.id.split('-')[2] }}&nbsp;</b>
         <b>
           {{
             t('order-list.order-title', {
@@ -80,7 +80,7 @@ function removeOrder(orderId: string) {
   const orderIndex = storageOrderList.findIndex((o) => o.id == orderId);
   if (orderIndex != -1) storageOrderList.splice(orderIndex, 1);
 
-  if (storageOrderList.length == 0) StorageManager.setNumericValue('orderCount', 0);
+  if (storageOrderList.length == 0) StorageManager.setNumericValue('orderCountV3', 0);
 }
 
 function selectLocalOrder(order: IStorageOrderData) {
@@ -116,10 +116,8 @@ onActivated(() => {
   const localStorage = window.localStorage;
   const orderList = [];
 
-  let deprecatedOrders = 0;
-
   for (let key in localStorage) {
-    if (!/^order-/g.test(key)) continue;
+    if (!/^order-v3/g.test(key)) continue;
 
     const orderObj: IStorageOrderData | LocalStorageOrderLegacy = JSON.parse(localStorage[key]);
     if (!orderObj) continue;
@@ -130,9 +128,6 @@ onActivated(() => {
     }
 
     orderList.push(orderObj);
-  }
-
-  if (deprecatedOrders != 0) {
   }
 
   storageOrderList.length = 0;
