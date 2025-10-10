@@ -168,7 +168,23 @@ function showActionMonit(content: string, type: TActionMonitType) {
   }, 5000);
 }
 
-function verifyOrderFields() {
+function checkConflicts() {
+  if (
+    store.orderData.instructions
+      .filter((i) => i.key == '2110' || i.key == '2115')
+      .every((i) => i.active)
+  ) {
+    showActionMonit(
+      t('order-message.warning-conflicting-instructions', ['21.10', '21.15']),
+      'warning'
+    );
+    return true;
+  }
+
+  return false;
+}
+
+function areOrderFieldsCorrect() {
   const fieldsToCorrect: string[] = [];
 
   for (let headerKey in store.orderData.header) {
@@ -183,7 +199,11 @@ function verifyOrderFields() {
     }
   }
 
-  // Are header & footer fields check
+  const areConflicting = checkConflicts();
+
+  if (areConflicting) return false;
+
+  // Header & footer fields check
   if (fieldsToCorrect.length > 0) {
     showActionMonit(t('order-message.warning-fill-missing'), 'warning');
     return false;
@@ -271,7 +291,7 @@ function copyMessage() {
   if (!navigator.clipboard)
     return showActionMonit(t('order-message.warning-outdated-clipboard'), 'warning');
 
-  const areFieldsCorrect = verifyOrderFields();
+  const areFieldsCorrect = areOrderFieldsCorrect();
 
   if (!areFieldsCorrect) return;
 

@@ -32,6 +32,7 @@
       "warning-fill-top-update": "Wypełnij co najmniej rubryki A, B, C i D w nagłówku rozkazu przed jego zaktualizowaniem!",
       "warning-order-identical": "Ostatni zapisany rozkaz jest identyczny z obecnym!",
       "warning-no-order-selected": "Wybierz rozkaz, który chcesz zaktualizować!",
+      "warning-conflicting-instructions": "Instrukcje {0} i {1} nie mogą znajdować się na tym samym rozkazie jednocześnie!",
       "error-update": "Wystąpił błąd podczas aktualizowania tego rozkazu! :/",
       "success-update-html": "Zaktualizowano treść <b class=\"text--accent\">rozkazu</b>!",
       "success-save-html": "Zapisano treść <b class=\"text--accent\">rozkazu</b> w pamięci przeglądarki!",
