@@ -141,7 +141,7 @@
          "bold1": "Zezwalam na kontynuacje jazdy",
          "track1": "x.1 tor",
          "signalbox1": "x.2 posterunek",
-         "message-html": "<b>Zezwalam na kontynuacje jazdy</b> po torze {0} w kierunku {1}"
+         "message-html": "<b>Zezwalam na kontynuacje jazdy</b> po torze nr {0} w kierunku {1}"
       },
       "2140": {
          "text": "{bold1} na posterunku/szlaku {signalbox1}{'|'}{signalbox2} w km {km1} celem {other1}",
@@ -153,7 +153,7 @@
          "message-html": "<b>Zatrzymanie pociągu</b> na posterunku {0} w km {2} celem {3} | <b>Zatrzymanie pociągu</b> na szlaku {0} {'|'} {1} w km {2} celem {3} | <b>Zatrzymanie pociągu</b> na szlaku {0} {'|'} {1} w km {2} celem {3}"
       },
       "2145": {
-         "text": "Na {signalbox1} na sygnalizatorze {signal1} {bold1}",
+         "text": "Na {signalbox1} na sygnalizatorze {signal1}{br}{bold1}",
          "bold1": "sygnał zezwalający jest nieważny, zatrzymać pociąg przed tym sygnalizatorem.",
          "signalbox1": "x.1 posterunek",
          "signal1": "x.2 sygnalizator",
@@ -253,7 +253,7 @@
          "km2": "x.{0} km",
          "other1": "x.{1} przyczyna",
          "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
-         "message-html-list": "<b>{0}. Na posterunku</b> {1} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na posterunku</b> {1} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na szlaku</b> {1}/{2} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}"
+         "message-html-list": "<b>{0}. Na posterunku</b> {1} tor nr {3} v{4}km/h od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na posterunku</b> {1} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na szlaku</b> {1}/{2} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}"
       },
       "2311": {
          "text": "{bold1}",

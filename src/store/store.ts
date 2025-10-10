@@ -144,7 +144,7 @@ export const useStore = defineStore('store', {
               signal1: ''
             },
             optionalFieldNames: [],
-            textDirectives: ['bold1']
+            textDirectives: ['bold1', 'br']
           },
           {
             key: '2150',
@@ -205,7 +205,7 @@ export const useStore = defineStore('store', {
               line1: ''
             },
             optionalFieldNames: [],
-            textDirectives: ['bold1', 'br']
+            textDirectives: ['bold1', 'br', 'bold2']
           },
           {
             key: '2180',
