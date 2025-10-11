@@ -13,8 +13,8 @@
       "info-2": "Pełny changelog dostępny na <a href='https://github.com/Spythere/genera-tor' target='_blank'>GitHubie projektu</a>"
    },
    "navbar": {
-      "OrderMessagePanel": "TREŚĆ ROZKAZU",
-      "OrderListPanel": "ZAPISANE ROZKAZY",
+      "OrderMessagePanel": "WIADOMOŚĆ",
+      "OrderListPanel": "ZAPISANE",
       "OrderTrainPickerPanel": "POCIĄGI"
    },
    "order-message": {

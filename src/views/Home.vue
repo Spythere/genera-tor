@@ -8,13 +8,33 @@
       <div class="panel-container">
         <div class="panel-nav">
           <button
-            v-for="(action, i) in navActions"
-            :key="action"
-            class="g-button option"
-            :data-active="store.panelMode == action"
-            @click="selectOrderMode(action)"
+            key="OrderMessagePanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderMessagePanel'"
+            @click="selectOrderMode('OrderMessagePanel')"
           >
-            {{ t(`navbar.${action}`) }}
+            <MessageSquareTextIcon :size="20" />
+            {{ t(`navbar.OrderMessagePanel`) }}
+          </button>
+
+          <button
+            key="OrderListPanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderListPanel'"
+            @click="selectOrderMode('OrderListPanel')"
+          >
+            <BookMarkedIcon :size="20" />
+            {{ t(`navbar.OrderListPanel`) }}
+          </button>
+
+          <button
+            key="OrderTrainPickerPanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderTrainPickerPanel'"
+            @click="selectOrderMode('OrderTrainPickerPanel')"
+          >
+            <TrainFrontIcon :size="20" />
+            {{ t(`navbar.OrderTrainPickerPanel`) }}
           </button>
         </div>
 
@@ -38,11 +58,10 @@ import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
 import OrderListPanel from '../components/Panels/OrderListPanel.vue';
 import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
 import { TPanelMode } from '../types/dataTypes';
+import { BookMarkedIcon, MessageSquareTextIcon, TrainFrontIcon } from 'lucide-vue-next';
 
 const { t } = useI18n();
 const store = useStore();
-
-const navActions: TPanelMode[] = ['OrderMessagePanel', 'OrderListPanel', 'OrderTrainPickerPanel'];
 
 function selectOrderMode(mode: TPanelMode) {
   store.panelMode = mode;
@@ -113,8 +132,8 @@ const panelComponent = computed(() => {
 
 .panel-nav {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: 0.25em;
   flex-wrap: wrap;
 
@@ -124,17 +143,34 @@ const panelComponent = computed(() => {
 .panel-nav > button {
   position: relative;
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  min-width: 8em;
+  padding: 0.25em 0.5em;
+
+  &:focus-visible {
+    outline: 1px solid white;
+  }
+
   &::before {
     position: absolute;
     content: '';
     bottom: -3px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
     width: 0;
     height: 3px;
 
     transition: all 0.25s;
 
     background-color: colors.$accentCol;
+  }
+
+  &[data-active='true'] {
+    color: colors.$accentCol;
   }
 
   &[data-active='true']::before {

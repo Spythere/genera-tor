@@ -4,8 +4,8 @@
       "en": "ENG"
    },
    "navbar": {
-      "OrderMessagePanel": "ORDER MESSAGE",
-      "OrderListPanel": "SAVED ORDERS",
+      "OrderMessagePanel": "MESSAGE",
+      "OrderListPanel": "SAVED",
       "OrderTrainPickerPanel": "TRAINS"
    },
    "update": {
