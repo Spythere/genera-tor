@@ -62,7 +62,8 @@
       "order-updated": "Updated:",
       "button-order-select": "Select",
       "button-order-remove": "Remove",
-      "warning-deprecated-version": "Deprecated version of the order - may generate incorrect information!"
+      "warning-deprecated-version": "Deprecated version of the order - may generate incorrect information!",
+      "warning-removed-deprecated-orders": "Removed deprecated train orders ({count}) due to their replacement with a new format in Polish railway!"
    },
    "order-train-picker": {
       "placeholder-scenery-name": "Scenery name",

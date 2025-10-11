@@ -114,16 +114,18 @@ const sortedOrderList = computed(() => {
 
 onActivated(() => {
   const localStorage = window.localStorage;
-  const orderList = [];
+  const orderList: IStorageOrderData[] = [];
 
+  let deprecatedOrders: string[] = [];
   for (let key in localStorage) {
-    if (!/^order-v3/g.test(key)) continue;
+    if (!/^order-/g.test(key)) continue;
 
     const orderObj: IStorageOrderData | LocalStorageOrderLegacy = JSON.parse(localStorage[key]);
     if (!orderObj) continue;
 
     if (isOrderDeprecated(orderObj)) {
       console.warn(`Deprecated order found with ID: ${orderObj.id}`);
+      deprecatedOrders.push(key);
       continue;
     }
 
@@ -132,6 +134,15 @@ onActivated(() => {
 
   storageOrderList.length = 0;
   storageOrderList.push(...orderList);
+
+  if (deprecatedOrders.length > 0) {
+    window.alert(
+      t('order-list.warning-removed-deprecated-orders', { count: deprecatedOrders.length })
+    );
+
+    deprecatedOrders.forEach((orderKey) => StorageManager.removeValue(orderKey));
+    StorageManager.removeValue('orderCount');
+  }
 });
 </script>
 
@@ -152,6 +163,7 @@ onActivated(() => {
 
   &-leave-active {
     position: absolute;
+    width: 100%;
   }
 }
 
@@ -166,6 +178,7 @@ hr {
 
 ul {
   overflow: hidden;
+  position: relative;
 }
 
 h3 {

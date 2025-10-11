@@ -62,7 +62,8 @@
       "order-updated": "Zaktualizowano:",
       "button-order-select": "Wybierz",
       "button-order-remove": "Usuń",
-      "warning-deprecated-version": "Przestarzała wersja rozkazu! Może generować złe informacje!"
+      "warning-deprecated-version": "Przestarzała wersja rozkazu! Może generować złe informacje!",
+      "warning-removed-deprecated-orders": "Usunięto nieaktualne rozkazy pisemne ({count}) w związku z wejściem w życie ich nowego formatu!"
    },
    "order-train-picker": {
       "placeholder-scenery-name": "Sceneria",
