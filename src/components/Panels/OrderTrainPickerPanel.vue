@@ -55,17 +55,6 @@
           {{ cp }}
         </option>
       </select>
-
-      <label for="fill-checkpoint" class="g-checkbox">
-        <input
-          type="checkbox"
-          name="fill-checkpoint"
-          id="fill-checkpoint"
-          v-model="autofillCheckpointName"
-          @change="onAutofillChange()"
-        />
-        <span> {{ $t('order-train-picker.autofill-checkpoint-id') }}</span>
-      </label>
     </div>
 
     <div class="content">
@@ -131,10 +120,7 @@ const selectedSceneryId = ref<string | null>(null);
 const selectedCheckpointName = ref<string | null>(null);
 const selectedRegion = ref('eu');
 
-const autofillCheckpointName = ref(false);
-
 onMounted(() => {
-  autofillCheckpointName.value = StorageManager.getBooleanValue('fill-checkpoint');
   fetchSceneriesData();
 });
 
@@ -223,10 +209,6 @@ function selectCheckpointOption() {
     checkpointNameList.value.length == 0 ? null : checkpointNameList.value[0];
 }
 
-function onAutofillChange() {
-  StorageManager.setBooleanValue('fill-checkpoint', autofillCheckpointName.value);
-}
-
 function fillOrderData(train: API.ActiveTrains.Data) {
   if (!selectedScenery.value) return;
 
@@ -234,7 +216,7 @@ function fillOrderData(train: API.ActiveTrains.Data) {
 
   store.orderData.header.A = train.trainNo.toString();
   store.orderData.header.C = train.currentStationName;
-  store.orderData.header.D = scenery.stationName;
+  store.orderData.header.D = selectedCheckpointName.value || scenery.stationName;
 
   store.orderData.footer.V = train.driverName;
   store.orderData.footer.W = scenery.dispatcherName;

@@ -82,9 +82,9 @@
          "A-placeholder": "Train / shunting composition number",
          "B": "B Date",
          "C": "C Location of train {'|'} Location of shunting composition",
-         "C-placeholder": "Line or post name",
+         "C-placeholder": "Name of the post / line / scenery",
          "D": "D Location of issuer",
-         "D-placeholder": "Post name"
+         "D-placeholder": "Name of the post / scenery"
       },
       "22": {
          "text": "Applies to left-track traffic",

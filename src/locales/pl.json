@@ -82,9 +82,9 @@
          "A-placeholder": "Numer pociągu lub manewru",
          "B": "B Data",
          "C": "C Lokalizacja pociągu {'|'} składu manewrowego",
-         "C-placeholder": "Nazwa posterunku lub szlaku",
+         "C-placeholder": "Nazwa posterunku / szlaku / scenerii",
          "D": "D Lokalizacja nadawcy",
-         "D-placeholder": "Nazwa posterunku"
+         "D-placeholder": "Nazwa posterunku / scenerii"
       },
       "22": {
          "text": "Dotyczy jazdy torem lewym",
