@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onActivated, onMounted, Reactive, reactive } from 'vue';
+import { computed, onActivated, Reactive, reactive } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from '../../store/store';
 import { IStorageOrderData, LocalStorageOrderLegacy } from '../../types/orderTypes';

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app_wrapper">
     <transition name="slide-anim">
       <UpdateCard />
     </transition>
@@ -9,7 +9,7 @@
     </transition>
 
     <div class="app-body">
-      <AppNavbar />
+      <Navbar />
 
       <main>
         <RouterView />
@@ -25,9 +25,9 @@ import { useStore } from './store/store';
 
 import UpdateCard from './components/Global/UpdateCard.vue';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
-import AppNavbar from './components/App/AppNavbar.vue';
 import StorageManager from './managers/storageManager';
 import { onMounted } from 'vue';
+import Navbar from './components/App/Navbar.vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 
@@ -107,8 +107,9 @@ function loadLang() {
   min-height: 100vh;
 }
 
-footer {
-  text-align: center;
-  padding: 0.5em 0;
+@media screen and (max-width: 500px) {
+  #app {
+    font-size: calc(1vw + 0.65rem);
+  }
 }
 </style>

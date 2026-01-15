@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import { useRegisterSW } from 'virtual:pwa-register/vue';
 
-const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({ immediate: true });
+const { needRefresh, updateServiceWorker } = useRegisterSW({ immediate: true });
 </script>
 
 <style lang="scss" scoped>

@@ -105,7 +105,6 @@ import http from '../../http';
 import { useStore } from '../../store/store';
 import { API } from '../../types/apiTypes';
 import { ISceneryData } from '../../types/dataTypes';
-import StorageManager from '../../managers/storageManager';
 import { getRegionNameById } from '../../utils/sceneryUtils';
 import { getOrderFullId } from '../../utils/orderUtils';
 

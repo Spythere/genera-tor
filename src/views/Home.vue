@@ -11,7 +11,7 @@
             key="OrderMessagePanel"
             class="g-button"
             :data-active="store.panelMode == 'OrderMessagePanel'"
-            @click="selectOrderMode('OrderMessagePanel')"
+            @click="selectPanelMode('OrderMessagePanel')"
           >
             <MessageSquareTextIcon :size="20" />
             {{ t(`navbar.OrderMessagePanel`) }}
@@ -21,7 +21,7 @@
             key="OrderListPanel"
             class="g-button"
             :data-active="store.panelMode == 'OrderListPanel'"
-            @click="selectOrderMode('OrderListPanel')"
+            @click="selectPanelMode('OrderListPanel')"
           >
             <BookMarkedIcon :size="20" />
             {{ t(`navbar.OrderListPanel`) }}
@@ -31,7 +31,7 @@
             key="OrderTrainPickerPanel"
             class="g-button"
             :data-active="store.panelMode == 'OrderTrainPickerPanel'"
-            @click="selectOrderMode('OrderTrainPickerPanel')"
+            @click="selectPanelMode('OrderTrainPickerPanel')"
           >
             <TrainFrontIcon :size="20" />
             {{ t(`navbar.OrderTrainPickerPanel`) }}
@@ -50,20 +50,19 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { useStore } from '../store/store';
 import { useI18n } from 'vue-i18n';
-
-import Order from '../components/Order/Order.vue';
+import { useStore } from '../store/store';
 import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
 import OrderListPanel from '../components/Panels/OrderListPanel.vue';
 import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
-import { TPanelMode } from '../types/dataTypes';
 import { BookMarkedIcon, MessageSquareTextIcon, TrainFrontIcon } from 'lucide-vue-next';
+import { TPanel } from '../types/orderTypes';
+import Order from '../components/Order/Order.vue';
 
-const { t } = useI18n();
 const store = useStore();
+const { t } = useI18n();
 
-function selectOrderMode(mode: TPanelMode) {
+function selectPanelMode(mode: TPanel) {
   store.panelMode = mode;
 }
 
@@ -101,42 +100,32 @@ const panelComponent = computed(() => {
   padding: 1em;
   width: 100%;
 
-  & > div {
-    height: calc(100vh - 5em);
-    overflow: auto;
-  }
-
   @media screen and (max-width: 1350px) {
     grid-template-columns: auto;
     padding: 1em 0.5em;
   }
 }
 
-.order-container {
-  display: flex;
-  align-items: start;
-  max-width: 800px;
-
-  @media screen and (max-width: 650px) {
-    flex-direction: column;
-  }
+.order-container,
+.panel-container {
+  height: calc(100vh - 5em);
+  overflow: auto;
 }
 
 .panel-container {
-  padding: 2px;
-  max-width: 800px;
-
   display: grid;
   grid-template-rows: auto auto 1fr;
+
+  padding: 2px;
+  max-width: 800px;
 }
 
 .panel-nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.25em;
   flex-wrap: wrap;
-
+  gap: 0.25em;
   margin-bottom: 1.5em;
 }
 
