@@ -157,7 +157,7 @@ export default defineComponent({
 
       this.store.chosenOrderType = localOrder.orderType;
       this.store.chosenLocalOrderId = localOrder.id;
-      this.store.orderMode = 'OrderMessage';
+      this.store.panelMode = 'OrderMessagePanel';
     }
   }
 });

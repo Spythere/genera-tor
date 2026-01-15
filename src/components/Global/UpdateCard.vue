@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
 import { Converter } from 'showdown';
-import { useStore } from '../store/store';
+import { useStore } from '../../store/store';
 
 const converter = new Converter();
 const store = useStore();

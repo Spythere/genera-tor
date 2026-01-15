@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from '../store/store';
+import { useStore } from '../../store/store';
 
 export default defineComponent({
   data() {
@@ -61,11 +61,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .sidebar_content {
-  display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 0.25em;
 
   font-size: 1.5em;
@@ -128,8 +128,7 @@ button.option-save {
 
 @media screen and (max-width: 650px) {
   .sidebar_content {
-    display: flex;
-    justify-content: space-between;
+    flex-direction: row;
 
     & > button {
       height: 40px;

@@ -60,7 +60,9 @@
                     holder="nazwa sem."
                     :radio-checked="order.rows[0].radio1 == 'radio-1a-1'"
                   />
-                  <span v-if="order.rows[0].optionSignal == 'drogowskazowego'"> (odnoszącego się do wyjazdu pociągu)</span>
+                  <span v-if="order.rows[0].optionSignal == 'drogowskazowego'">
+                    (odnoszącego się do wyjazdu pociągu)</span
+                  >
                   <br />
                 </label>
                 <hr />
@@ -284,8 +286,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { handleOrderPlaceholders } from '../handlers/orderPlaceholderHandler';
-import { useStore } from '../store/store';
+import { handleOrderPlaceholders } from '../../handlers/orderPlaceholderHandler';
+import { useStore } from '../../store/store';
 
 type TOrderRows = 1 | 2 | 3 | 4;
 

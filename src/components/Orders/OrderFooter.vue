@@ -52,8 +52,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import orderFooterMixin from '../mixins/orderFooterMixin';
-import { useStore } from '../store/store';
+import orderFooterMixin from '../../mixins/orderFooterMixin';
+import { useStore } from '../../store/store';
 
 export default defineComponent({
   mixins: [orderFooterMixin],

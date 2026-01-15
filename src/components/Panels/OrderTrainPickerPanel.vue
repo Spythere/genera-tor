@@ -111,16 +111,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from '../store/store';
+import http from '../../http';
+import { useStore } from '../../store/store';
+import { API } from '../../types/apiTypes';
+import { ISceneryData } from '../../types/dataTypes';
 import {
   currentFormattedDate,
   currentFormattedHours,
   currentFormattedMinutes
-} from '../utils/dateUtils';
-import http from '../http';
-import { ISceneryData } from '../types/dataTypes';
-import { API } from '../types/apiTypes';
-import { getRegionNameById } from '../utils/sceneryUtils';
+} from '../../utils/dateUtils';
+import { getRegionNameById } from '../../utils/sceneryUtils';
 
 export default defineComponent({
   name: 'order-train-picker',
@@ -261,7 +261,7 @@ export default defineComponent({
           sceneryAbbrev || this.store.orderFooter.stationName.slice(0, 2);
       }
 
-      this.store.orderMode = 'OrderMessage';
+      this.store.panelMode = 'OrderMessagePanel';
     },
 
     handleQueries() {
@@ -283,7 +283,7 @@ export default defineComponent({
 
           this.selectOption();
 
-          this.store.orderMode = 'OrderTrainPicker';
+          this.store.panelMode = 'OrderTrainPickerPanel';
         }
       }
     }
@@ -292,7 +292,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .order-train-picker {
   display: flex;

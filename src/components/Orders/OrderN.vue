@@ -334,8 +334,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { useStore } from '../store/store';
-import { handleOrderPlaceholders } from '../handlers/orderPlaceholderHandler';
+import { handleOrderPlaceholders } from '../../handlers/orderPlaceholderHandler';
+import { useStore } from '../../store/store';
 
 type TOrderRows = 1 | 2 | 3 | 4 | 5;
 

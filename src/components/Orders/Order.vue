@@ -1,28 +1,33 @@
 <template>
-  <div class="order" :class="{ dark: store.orderDarkMode }">
-    <div class="order_content">
-      <transition name="order-anim" mode="out-in">
-        <keep-alive>
-          <component :is="chosenOrderComponent" :key="chosenOrderComponent.name"></component>
-        </keep-alive>
-      </transition>
-      <OrderFooter />
+  <div class="order-container">
+    <OrderSideBar />
+
+    <div class="order" :class="{ dark: store.orderDarkMode }">
+      <div class="order_content">
+        <transition name="order-anim" mode="out-in">
+          <keep-alive>
+            <component :is="chosenOrderComponent" :key="chosenOrderComponent.name"></component>
+          </keep-alive>
+        </transition>
+        <OrderFooter />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from '../store/store';
-import OrderNVue from './OrderN.vue';
-import OrderSVue from './OrderS.vue';
+import { useStore } from '../../store/store';
+import OrderN from './OrderN.vue';
+import OrderS from './OrderS.vue';
+import OrderO from './OrderO.vue';
 import OrderFooter from './OrderFooter.vue';
-import OrderOVue from './OrderO.vue';
+import OrderSideBar from './OrderSideBar.vue';
 
-const orderComponents = { orderN: OrderNVue, orderS: OrderSVue, orderO: OrderOVue };
+const orderComponents = { orderN: OrderN, orderS: OrderS, orderO: OrderO };
 
 export default defineComponent({
-  components: { OrderNVue, OrderSVue, OrderFooter },
+  components: { OrderN, OrderO, OrderS, OrderFooter, OrderSideBar },
 
   setup() {
     const store = useStore();
@@ -39,21 +44,31 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@use '../styles/colors';
+@use '../../styles/colors';
 
 $darkModeTextCol: #eee;
+
+.order-container {
+  display: flex;
+  align-items: start;
+  max-width: 800px;
+
+  @media screen and (max-width: 650px) {
+    flex-direction: column;
+  }
+}
 
 .order {
   background-color: white;
   color: black;
 
+  height: calc(100vh - 5em);
+  overflow: auto;
+
   &.dark {
     background-color: colors.$bgColDarker;
     color: $darkModeTextCol;
   }
-
-  max-height: 95vh;
-  overflow: auto;
 
   font-size: 15px;
 

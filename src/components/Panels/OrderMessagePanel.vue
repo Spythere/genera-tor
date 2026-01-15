@@ -8,36 +8,33 @@
     </p>
 
     <div class="message_actions">
-      <button class="g-button action" @click="saveOrder">
+      <button class="g-button action icon" @click="saveOrder">
+        <LucideSave />
         {{ $t('order-message.button-save') }}
       </button>
-      <button class="g-button action" @click="copyMessage">
+
+      <button class="g-button action icon" @click="copyMessage">
+        <LucideCopy />
         {{ $t('order-message.button-copy') }}
       </button>
+
       <button
-        class="g-button action"
+        class="g-button action icon"
         :data-disabled="!store.chosenLocalOrderId"
         @click="updateOrder"
       >
+        <LucidePencil />
         {{ $t('order-message.button-update') }}
-        <span class="text--accent"
-          >{{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[1]}` }}
-        </span>
+        <span class="text--accent" v-if="store.chosenLocalOrderId">#{{ store.chosenLocalOrderId.split('-')[1] }} </span>
+      </button>
+
+      <button class="g-button action icon" @click="resetOrder">
+        <LucideRotateCcw />
+        {{ $t('order-message.button-reset') }}
       </button>
     </div>
 
     <div class="message_checkboxes">
-      <label for="dark-mode" class="g-checkbox">
-        <input
-          type="checkbox"
-          name="dark-mode"
-          id="dark-mode"
-          v-model="store.orderDarkMode"
-          @change="onCheckboxChange"
-        />
-        <span>{{ $t('order-options.dark-mode') }}</span>
-      </label>
-
       <label for="copy-increment" class="g-checkbox">
         <input
           type="checkbox"
@@ -80,23 +77,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from '../store/store';
-
-import saveIcon from '../assets/icon-save.svg';
-import orderStorageMixin from '../mixins/orderStorageMixin';
-import orderValidationMixin from '../mixins/orderValidationMixin';
-import { currentFormattedHours, currentFormattedMinutes } from '../utils/dateUtils';
+import orderStorageMixin from '../../mixins/orderStorageMixin';
+import orderValidationMixin from '../../mixins/orderValidationMixin';
+import { useStore } from '../../store/store';
+import { currentFormattedHours, currentFormattedMinutes } from '../../utils/dateUtils';
+import { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave } from 'lucide-vue-next';
 
 export default defineComponent({
   name: 'OrderMessage',
+  components: { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave },
 
   mixins: [orderStorageMixin, orderValidationMixin],
 
   data() {
     return {
-      saveIcon,
       actionMonit: '',
-      monitTimeout: undefined as number | undefined,
+      monitTimeout: null as number | null,
 
       incrementOnSave: true,
       incrementOnCopy: true,
@@ -143,25 +139,20 @@ export default defineComponent({
     },
 
     showActionMonit(text: string) {
-      if (this.monitTimeout) {
+      if (this.monitTimeout != null) {
         this.actionMonit = '';
         clearTimeout(this.monitTimeout);
 
         setTimeout(() => {
           this.actionMonit = text;
-
-          this.monitTimeout = window.setTimeout(() => {
-            this.actionMonit = '';
-          }, 5000);
-        }, 300);
-
-        return;
+        }, 100);
+      } else {
+        this.actionMonit = text;
       }
-
-      this.actionMonit = text;
 
       this.monitTimeout = window.setTimeout(() => {
         this.actionMonit = '';
+        this.monitTimeout = null;
       }, 5000);
     },
 
@@ -248,13 +239,44 @@ export default defineComponent({
           this.showActionMonit(this.$t('order-message.success-update-html'));
           break;
       }
+    },
+
+    resetOrder() {
+      const order = this.store[this.store.chosenOrderType];
+
+      // TODO
+
+      // Object.keys(store.orderData.header).forEach((k) => {
+      //   store.orderData['header'][k as keyof IOrderHeader] = '';
+      // });
+
+      // Object.keys(store.orderData.footer).forEach((k) => {
+      //   store.orderData['footer'][k as keyof IOrderFooter] = '';
+      // });
+
+      // store.orderData.instructions.forEach((instruction) => {
+      //   instruction.active = false;
+
+      //   Object.keys(instruction.inputFields).forEach((k) => {
+      //     instruction.inputFields[k] = '';
+      //   });
+
+      //   if (instruction.listFields) {
+      //     instruction.listFields.forEach((field) => {
+      //       Object.keys(field.values).forEach((k) => {
+      //         field.active = false;
+      //         field.values[k] = '';
+      //       });
+      //     });
+      //   }
+      // });
     }
   }
 });
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .order-message {
   h3 {
@@ -289,10 +311,13 @@ export default defineComponent({
 }
 
 .message_actions {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5em;
+
+  button.icon {
+    gap: 0.5em;
+  }
 
   button img {
     height: 2ch;
