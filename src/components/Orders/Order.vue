@@ -53,7 +53,7 @@ $darkModeTextCol: #eee;
   align-items: start;
   max-width: 800px;
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 1150px) {
     flex-direction: column;
   }
 }
@@ -62,7 +62,7 @@ $darkModeTextCol: #eee;
   background-color: white;
   color: black;
 
-  height: calc(100vh - 5em);
+  max-height: calc(100vh - 5em);
   overflow: auto;
 
   &.dark {
