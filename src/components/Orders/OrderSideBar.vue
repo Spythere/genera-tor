@@ -126,7 +126,7 @@ button.option-save {
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 1150px) {
   .sidebar_content {
     flex-direction: row;
 

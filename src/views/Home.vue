@@ -100,7 +100,7 @@ const panelComponent = computed(() => {
   padding: 1em;
   width: 100%;
 
-  @media screen and (max-width: 1350px) {
+  @media screen and (max-width: 1150px) {
     grid-template-columns: auto;
     padding: 1em 0.5em;
   }
