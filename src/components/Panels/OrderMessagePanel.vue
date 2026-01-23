@@ -255,6 +255,8 @@ export default defineComponent({
 @use '../../styles/colors';
 
 .order-message {
+  overflow: auto;
+
   h3 {
     margin: 0;
     margin-bottom: 1em;
@@ -267,8 +269,7 @@ export default defineComponent({
 }
 
 .message_body {
-  height: 250px;
-  overflow: auto;
+  height: 350px;
 
   background-color: colors.$bgColLighter;
   color: white;
