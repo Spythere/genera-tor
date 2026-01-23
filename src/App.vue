@@ -65,6 +65,7 @@ export default defineComponent({
       }
 
       this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
+      document.documentElement.setAttribute('data-theme', this.store.orderDarkMode ? 'dark' : 'light');
     },
 
     handleQueries() {
