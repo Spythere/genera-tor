@@ -20,8 +20,8 @@
   "order-message": {
     "title": "Message to display in the simulator's chatbox:",
     "info": "Copy or save the content of the generated train order using buttons below:",
-    "button-save": "Save new",
-    "button-copy": "Copy message",
+    "button-save": "Save as new",
+    "button-copy": "Copy the message",
     "button-update": "Update",
     "button-reset": "Reset",
     "warning-outdated-clipboard": "Oops! Your browser may be a little bit depraceted since it's not supporting saving data to the clipboard! :/",
