@@ -25,7 +25,9 @@
       >
         <LucidePencil />
         {{ $t('order-message.button-update') }}
-        <span class="text--accent" v-if="store.chosenLocalOrderId">#{{ store.chosenLocalOrderId.split('-')[1] }} </span>
+        <span class="text--accent" v-if="store.chosenLocalOrderId"
+          >#{{ store.chosenLocalOrderId.split('-')[1] }}
+        </span>
       </button>
 
       <button class="g-button action icon" @click="resetOrder">
@@ -82,6 +84,7 @@ import orderValidationMixin from '../../mixins/orderValidationMixin';
 import { useStore } from '../../store/store';
 import { currentFormattedHours, currentFormattedMinutes } from '../../utils/dateUtils';
 import { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave } from 'lucide-vue-next';
+import { setOrderToDefault } from '../../utils/orderUtils';
 
 export default defineComponent({
   name: 'OrderMessage',
@@ -242,34 +245,7 @@ export default defineComponent({
     },
 
     resetOrder() {
-      const order = this.store[this.store.chosenOrderType];
-
-      // TODO
-
-      // Object.keys(store.orderData.header).forEach((k) => {
-      //   store.orderData['header'][k as keyof IOrderHeader] = '';
-      // });
-
-      // Object.keys(store.orderData.footer).forEach((k) => {
-      //   store.orderData['footer'][k as keyof IOrderFooter] = '';
-      // });
-
-      // store.orderData.instructions.forEach((instruction) => {
-      //   instruction.active = false;
-
-      //   Object.keys(instruction.inputFields).forEach((k) => {
-      //     instruction.inputFields[k] = '';
-      //   });
-
-      //   if (instruction.listFields) {
-      //     instruction.listFields.forEach((field) => {
-      //       Object.keys(field.values).forEach((k) => {
-      //         field.active = false;
-      //         field.values[k] = '';
-      //       });
-      //     });
-      //   }
-      // });
+      setOrderToDefault(this.store[this.store.chosenOrderType]);
     }
   }
 });
