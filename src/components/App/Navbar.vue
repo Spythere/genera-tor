@@ -2,9 +2,14 @@
   <nav class="app-navbar">
     <div class="navbar-brand">
       <img src="/favicon.ico" alt="generator logo" width="30" />
-      <b>
-        Genera<span class="text--accent">TOR</span> <sup class="text--grayed">v{{ version }}</sup>
-      </b>
+      <div>
+        <b>
+          Genera<span class="text--accent">TOR</span>
+          <sup class="text--grayed">v{{ version }}</sup>
+        </b>
+
+        <b class="brand-author">&nbsp;by Spythere</b>
+      </div>
     </div>
 
     <div class="navbar-actions">
@@ -31,6 +36,7 @@ const store = useStore();
 function switchDarkMode() {
   store.orderDarkMode = !store.orderDarkMode;
   window.localStorage.setItem('dark-mode', `${store.orderDarkMode}`);
+  document.documentElement.setAttribute('data-theme', store.orderDarkMode ? 'dark' : 'light');
 }
 
 function switchLang() {
@@ -58,6 +64,11 @@ function switchLang() {
   sup {
     font-size: 0.75em;
   }
+}
+
+.brand-author {
+  font-size: 0.8em;
+  color: #aaa;
 }
 
 .navbar-actions {

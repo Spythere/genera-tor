@@ -115,6 +115,7 @@ const panelComponent = computed(() => {
 .panel-container {
   display: grid;
   grid-template-rows: auto auto 1fr;
+  color-scheme: dark;
 
   padding: 2px;
   max-width: 800px;
