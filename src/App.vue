@@ -47,6 +47,7 @@ export default defineComponent({
   methods: {
     init() {
       this.loadLang();
+      this.setupDarkMode();
       this.loadSettings();
       this.checkAppVersion();
       this.handleQueries();
@@ -54,6 +55,15 @@ export default defineComponent({
 
     loadSettings() {
       document.title = `GeneraTOR ${this.appVersion}`;
+    },
+
+    setupDarkMode() {
+      if (this.getOrderSetting('dark-mode') === null) {
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        this.saveOrderSetting('dark-mode', prefersDarkMode);
+      }
+
       this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
     },
 
