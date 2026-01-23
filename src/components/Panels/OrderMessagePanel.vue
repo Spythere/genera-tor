@@ -412,6 +412,8 @@ function resetOrder() {
 @use '../../styles/colors';
 
 .order-message {
+  overflow: auto;
+
   h3 {
     margin: 0;
     margin-bottom: 1em;
