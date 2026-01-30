@@ -110,9 +110,9 @@ export default defineComponent({
   },
 
   mounted() {
-    this.incrementOnSave = this.getOrderSetting('save-increment') === 'true';
-    this.incrementOnCopy = this.getOrderSetting('copy-increment') === 'true';
-    this.updateDate = this.getOrderSetting('update-date') === 'true';
+    this.incrementOnSave = this.getOrderSetting('save-increment') !== 'false';
+    this.incrementOnCopy = this.getOrderSetting('copy-increment') !== 'false';
+    this.updateDate = this.getOrderSetting('update-date') !== 'false';
   },
 
   computed: {

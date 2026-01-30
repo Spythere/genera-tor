@@ -144,7 +144,7 @@ export default defineComponent({
   },
 
   created() {
-    this.fillCheckpointName = window.localStorage.getItem('fill-checkpoint') == 'true';
+    this.fillCheckpointName = window.localStorage.getItem('fill-checkpoint') !== 'false';
 
     this.fetchSceneriesData();
   },
