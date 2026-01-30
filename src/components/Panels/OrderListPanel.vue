@@ -50,9 +50,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import orderStorageMixin from '../mixins/orderStorageMixin';
-import { useStore } from '../store/store';
-import { LocalStorageOrder } from '../types/orderTypes';
+import orderStorageMixin from '../../mixins/orderStorageMixin';
+import { useStore } from '../../store/store';
+import { LocalStorageOrder } from '../../types/orderTypes';
 
 export default defineComponent({
   name: 'OrderList',
@@ -114,7 +114,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .list {
   &-move,

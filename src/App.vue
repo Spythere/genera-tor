@@ -1,46 +1,40 @@
 <template>
   <div id="app_wrapper">
-    <UpdateCard />
-
-    <router-view />
-
     <transition name="slide-anim">
-      <div v-if="needRefresh" class="update-prompt" @click="updateServiceWorker(true)">
-        {{ $t('update.update-available-text') }}
-        <u>{{ $t('update.update-available-underline') }}</u>
-      </div>
+      <UpdateCard />
     </transition>
 
-    <footer>
-      &copy; <a href="https://td2.info.pl/profile/?u=20777">Spythere</a>
-      {{ new Date().getUTCFullYear() }} |
-      <button class="g-button text" @click="store.updateCardOpen = true">v{{ appVersion }}</button>
-    </footer>
+    <transition name="slide-anim">
+      <UpdatePrompt />
+    </transition>
+
+    <div class="app-body">
+      <Navbar />
+
+      <main>
+        <RouterView />
+      </main>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { useRegisterSW } from 'virtual:pwa-register/vue';
 import { defineComponent } from 'vue';
-import packageInfo from '../package.json';
-import { useStore } from './store/store';
+import UpdateCard from './components/Global/UpdateCard.vue';
 import orderStorageMixin from './mixins/orderStorageMixin';
-import StorageManager from './managers/storageManager';
+import { useStore } from './store/store';
+import packageInfo from '../package.json';
 import axios from 'axios';
-import UpdateCard from './components/UpdateCard.vue';
+import StorageManager from './managers/storageManager';
+import Navbar from './components/App/Navbar.vue';
+import UpdatePrompt from './components/Global/UpdatePrompt.vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 
 export default defineComponent({
-  components: { UpdateCard },
+  components: { UpdateCard, UpdatePrompt, Navbar },
 
   mixins: [orderStorageMixin],
-
-  setup() {
-    const { offlineReady, needRefresh, updateServiceWorker } = useRegisterSW({ immediate: true });
-
-    return { offlineReady, needRefresh, updateServiceWorker };
-  },
 
   data() {
     return { appVersion: packageInfo.version, store: useStore() };
@@ -53,6 +47,7 @@ export default defineComponent({
   methods: {
     init() {
       this.loadLang();
+      this.setupDarkMode();
       this.loadSettings();
       this.checkAppVersion();
       this.handleQueries();
@@ -60,7 +55,17 @@ export default defineComponent({
 
     loadSettings() {
       document.title = `GeneraTOR ${this.appVersion}`;
+    },
+
+    setupDarkMode() {
+      if (this.getOrderSetting('dark-mode') === null) {
+        const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        this.saveOrderSetting('dark-mode', prefersDarkMode);
+      }
+
       this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
+      document.documentElement.setAttribute('data-theme', this.store.orderDarkMode ? 'dark' : 'light');
     },
 
     handleQueries() {
@@ -69,7 +74,7 @@ export default defineComponent({
       const id = query.get('sceneryId');
 
       if (id != null) {
-        this.store.orderMode = 'OrderTrainPicker';
+        this.store.panelMode = 'OrderTrainPickerPanel';
       }
     },
 
@@ -130,29 +135,7 @@ export default defineComponent({
 
 #app {
   color: white;
-
   min-height: 100vh;
-}
-
-.update-prompt {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  padding: 0.5em;
-
-  font-weight: bold;
-
-  text-align: center;
-
-  width: 100%;
-  background-color: colors.$accentCol;
-
-  cursor: pointer;
-}
-
-footer {
-  text-align: center;
-  padding: 0.5em 0;
 }
 
 @media screen and (max-width: 500px) {

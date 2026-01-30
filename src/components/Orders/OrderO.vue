@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { useStore } from '../store/store';
+import { useStore } from '../../store/store';
 
 export default defineComponent({
   name: 'OrderO',
@@ -122,10 +122,9 @@ export default defineComponent({
 
       if (this.order.orderList.some((row) => row.name)) {
         message += `\n--------\n<b>[ 1 ]</b>`;
-        message += '\n1) zmniejszyć prędkość jazdy i zachować ostrożność'
-        message += '\n2) jechać ostrożnie (j.o.)\n'
+        message += '\n1) zmniejszyć prędkość jazdy i zachować ostrożność';
+        message += '\n2) jechać ostrożnie (j.o.)\n';
       }
-
 
       for (let i = 0; i < this.order.orderList.length; i++) {
         const row = this.order.orderList[i];

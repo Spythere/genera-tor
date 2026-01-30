@@ -2,33 +2,45 @@
   <!-- <OrderHelper v-if="store.helperModalOpen" /> -->
 
   <div class="home">
-    <div class="home_container">
-      <div class="order_container">
-        <SideBar />
-        <OrderVue />
-      </div>
+    <div class="home-container">
+      <Order />
 
-      <div class="message_container">
-        <div class="message_nav">
-          <button class="g-button icon" @click="switchLanguages">
-            <LanguagesIcon :size="18" />
-            <span style="margin-left: 0.25em">{{ $t('locale.' + store.currentAppLocale) }}</span>
+      <div class="panel-container">
+        <div class="panel-nav">
+          <button
+            key="OrderMessagePanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderMessagePanel'"
+            @click="selectPanelMode('OrderMessagePanel')"
+          >
+            <MessageSquareTextIcon :size="20" />
+            {{ t(`navbar.OrderMessagePanel`) }}
           </button>
 
           <button
-            v-for="(action, i) in navActions"
-            :key="action.mode"
-            class="g-button option"
-            :data-active="store.orderMode == action.mode"
-            @click="selectOrderMode(action.mode)"
+            key="OrderListPanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderListPanel'"
+            @click="selectPanelMode('OrderListPanel')"
           >
-            {{ $t(`navbar.${action.value}`) }}
+            <BookMarkedIcon :size="20" />
+            {{ t(`navbar.OrderListPanel`) }}
+          </button>
+
+          <button
+            key="OrderTrainPickerPanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderTrainPickerPanel'"
+            @click="selectPanelMode('OrderTrainPickerPanel')"
+          >
+            <TrainFrontIcon :size="20" />
+            {{ t(`navbar.OrderTrainPickerPanel`) }}
           </button>
         </div>
 
         <transition name="order-anim" mode="out-in">
           <keep-alive>
-            <Component :is="orderModeComponent" />
+            <Component :is="panelComponent" />
           </keep-alive>
         </transition>
       </div>
@@ -36,74 +48,34 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import OrderVue from '../components/Order.vue';
-import SideBar from '../components/SideBar.vue';
-import OrderMessage from '../components/OrderMessage.vue';
-import OrderList from '../components/OrderList.vue';
+<script lang="ts" setup>
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useStore } from '../store/store';
-import OrderHelper from '../components/OrderHelper.vue';
-import OrderTrainPicker from '../components/OrderTrainPicker.vue';
-import { LanguagesIcon } from 'lucide-vue-next';
-import StorageManager from '../managers/storageManager';
+import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
+import OrderListPanel from '../components/Panels/OrderListPanel.vue';
+import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
+import SideBar from '../components/App/SideBar.vue';
+import Order from '../components/Orders/Order.vue';
+import { BookMarkedIcon, MessageSquareTextIcon, TrainFrontIcon } from 'lucide-vue-next';
+import { TPanel } from '../types/orderTypes';
 
-export default defineComponent({
-  components: { OrderVue, SideBar, OrderHelper, LanguagesIcon },
+const store = useStore();
+const { t } = useI18n();
 
-  data() {
-    return {
-      navActions: [
-        {
-          mode: 'OrderMessage',
-          value: 'order-message'
-        },
-        {
-          mode: 'OrderList',
-          value: 'order-list'
-        },
-        {
-          mode: 'OrderTrainPicker',
-          value: 'order-train-picker'
-        }
-      ]
-    };
-  },
+function selectPanelMode(mode: TPanel) {
+  store.panelMode = mode;
+}
 
-  methods: {
-    selectOrderMode(mode: string) {
-      this.store.orderMode = mode;
-    },
-
-    switchLanguages() {
-      const lang = this.store.currentAppLocale == 'pl' ? 'en' : 'pl';
-
-      this.$i18n.locale = lang;
-      this.store.currentAppLocale = lang;
-
-      StorageManager.setStringValue('lang', lang);
-    }
-  },
-
-  setup() {
-    return {
-      store: useStore()
-    };
-  },
-
-  computed: {
-    orderModeComponent() {
-      switch (this.store.orderMode) {
-        case 'OrderMessage':
-          return OrderMessage;
-        case 'OrderList':
-          return OrderList;
-        case 'OrderTrainPicker':
-          return OrderTrainPicker;
-        default:
-          return OrderMessage;
-      }
-    }
+const panelComponent = computed(() => {
+  switch (store.panelMode) {
+    case 'OrderListPanel':
+      return OrderListPanel;
+    case 'OrderTrainPickerPanel':
+      return OrderTrainPickerPanel;
+    case 'OrderMessagePanel':
+    default:
+      return OrderMessagePanel;
   }
 });
 </script>
@@ -112,7 +84,6 @@ export default defineComponent({
 @use '../styles/colors';
 
 .home {
-  min-height: 100vh;
   overflow-x: auto;
 
   display: flex;
@@ -122,69 +93,71 @@ export default defineComponent({
   width: 100%;
 }
 
-.home_container {
-  display: flex;
-  flex-wrap: wrap;
+.home-container {
+  display: grid;
+  grid-template-columns: 600px 500px;
   justify-content: center;
   gap: 2em 1em;
-  padding: 0.5em;
-
+  padding: 1em;
   width: 100%;
 
-  @media screen and (max-width: 650px) {
+  @media screen and (max-width: 1150px) {
+    grid-template-columns: auto;
     padding: 1em 0.5em;
   }
 }
 
-.order_container {
-  width: 100%;
-  max-width: 600px;
-
-  display: flex;
-  align-items: start;
-
-  @media screen and (max-width: 650px) {
-    flex-direction: column;
-  }
-}
-
-.message_container {
-  padding: 2px;
-
-  width: 100%;
-  max-width: 500px;
-
+.panel-container {
   display: grid;
   grid-template-rows: auto auto 1fr;
+  color-scheme: dark;
 
-  height: 95vh;
+  padding: 2px;
+  max-width: 800px;
+  height: calc(100vh - 5em);
   overflow: auto;
 }
 
-.message_nav {
+.panel-nav {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 0.25em;
+  align-items: center;
   flex-wrap: wrap;
-
+  gap: 0.25em;
   margin-bottom: 1.5em;
 }
 
-.message_nav > button {
+.panel-nav > button {
   position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+  min-width: 8em;
+  padding: 0.25em 0.5em;
+
+  &:focus-visible {
+    outline: 1px solid white;
+  }
 
   &::before {
     position: absolute;
     content: '';
     bottom: -3px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
     width: 0;
     height: 3px;
 
     transition: all 0.25s;
 
     background-color: colors.$accentCol;
+  }
+
+  &[data-active='true'] {
+    color: colors.$accentCol;
   }
 
   &[data-active='true']::before {

@@ -1,22 +1,24 @@
 import { defineStore } from 'pinia';
-import { IOrderN, IOrderO, IOrderS, TOrder } from '../types/orderTypes';
+import { IOrderN, IOrderO, IOrderS, TOrder, TPanel } from '../types/orderTypes';
 import {
   currentFormattedDate,
   currentFormattedHours,
   currentFormattedMinutes
 } from '../utils/dateUtils';
+import i18n from '../i18n';
+import StorageManager from '../managers/storageManager';
 
 export const useStore = defineStore('store', {
   state: () => {
     return {
       currentAppLocale: 'pl',
-      
+
       appUpdateData: {
         version: '',
         changelog: '',
         releaseURL: ''
       },
-      
+
       updateCardOpen: false,
       helperModalOpen: false,
       orderDarkMode: false,
@@ -24,7 +26,7 @@ export const useStore = defineStore('store', {
       chosenOrderType: 'orderN' as TOrder,
       chosenLocalOrderId: '',
 
-      orderMode: 'OrderMessage',
+      panelMode: 'OrderMessagePanel' as TPanel,
 
       orderFooter: {
         stationName: '',
@@ -214,5 +216,13 @@ export const useStore = defineStore('store', {
         ]
       } as IOrderS
     };
+  },
+  actions: {
+    changeLang(lang: string) {
+      i18n.global.locale.value = lang as typeof i18n.global.locale.value;
+      this.currentAppLocale = lang;
+
+      StorageManager.setStringValue('lang', lang);
+    }
   }
 });

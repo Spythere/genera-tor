@@ -29,18 +29,17 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { useStore } from '../store/store';
-import orderHelperData from '../data/orderHelperData.json';
+import { useStore } from '../../store/store';
 
 export default defineComponent({
   setup() {
-    return { store: useStore(), orderHelperData };
+    return { store: useStore() };
   }
 });
 </script>
 
 <style lang="scss" scoped>
-@use '../styles/colors';
+@use '../../styles/colors';
 
 .content {
   width: 100%;
