@@ -1,5 +1,6 @@
 @use 'fonts';
 @use 'colors';
+@use 'sass:color';
 
 [data-theme='dark'] {
   color-scheme: dark;
