@@ -16,8 +16,9 @@ export const useStore = defineStore('store', {
         releaseURL: ''
       },
 
-      helperModalOpen: false,
+      isMigrationInfoOpen: false,
       updateCardOpen: false,
+      helperModalOpen: false,
       orderDarkMode: false,
 
       panelMode: 'OrderMessagePanel' as TPanelMode,
