@@ -19,6 +19,7 @@ export const useStore = defineStore('store', {
         releaseURL: ''
       },
 
+      isMigrationInfoOpen: false,
       updateCardOpen: false,
       helperModalOpen: false,
       orderDarkMode: false,

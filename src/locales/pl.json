@@ -69,5 +69,10 @@
     "title": "Aktywne RJ i gracze na scenerii",
     "subtitle": "Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi",
     "no-trains": "Brak pociągów do wyświetlenia"
+  },
+  "migrate-info": {
+    "line-1": "GeneraTOR zostaje przeniesiony na nową domenę - {0}! Możesz korzystać z obecnej strony, jednak nie będzie ona otrzymywać już aktualizacji i w przyszłości zostanie wyłączona!",
+    "link": "https://generator-td2.spythere.eu/",
+    "accept-btn": "PRZYJĄŁEM!"
   }
 }

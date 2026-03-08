@@ -8,6 +8,10 @@
       <UpdatePrompt />
     </transition>
 
+    <transition name="slide-anim">
+      <MigrationInfo v-if="store.isMigrationInfoOpen" />
+    </transition>
+
     <div class="app-body">
       <Navbar />
 
@@ -28,11 +32,12 @@ import axios from 'axios';
 import StorageManager from './managers/storageManager';
 import Navbar from './components/App/Navbar.vue';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
+import MigrationInfo from './components/Global/MigrationInfo.vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 
 export default defineComponent({
-  components: { UpdateCard, UpdatePrompt, Navbar },
+  components: { UpdateCard, UpdatePrompt, Navbar, MigrationInfo },
 
   mixins: [orderStorageMixin],
 
@@ -49,6 +54,7 @@ export default defineComponent({
       this.loadLang();
       this.setupDarkMode();
       this.loadSettings();
+      this.handleMigrationInfo();
       this.checkAppVersion();
       this.handleQueries();
     },
@@ -65,7 +71,10 @@ export default defineComponent({
       }
 
       this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
-      document.documentElement.setAttribute('data-theme', this.store.orderDarkMode ? 'dark' : 'light');
+      document.documentElement.setAttribute(
+        'data-theme',
+        this.store.orderDarkMode ? 'dark' : 'light'
+      );
     },
 
     handleQueries() {
@@ -124,6 +133,20 @@ export default defineComponent({
       if (!naviLanguage.startsWith('pl')) {
         this.changeLang('en');
       }
+    },
+
+    handleMigrationInfo() {
+      // Show only on old domain
+      if (location.hostname !== 'generator-td2.web.app' && location.hostname != 'localhost') return;
+
+      const showInfo = localStorage.getItem('showMigrationInfo');
+
+      // Do not show if already acknowledged
+      if (showInfo === 'false') return;
+
+      setTimeout(() => {
+        this.store.isMigrationInfoOpen = true;
+      }, 2000);
     }
   }
 });
