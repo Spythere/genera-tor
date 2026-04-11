@@ -101,7 +101,6 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onActivated, onDeactivated, computed } from 'vue';
-import http from '../../http';
 import { useStore } from '../../store/store';
 import { API } from '../../types/apiTypes';
 import { ISceneryData } from '../../types/dataTypes';
