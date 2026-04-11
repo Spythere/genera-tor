@@ -28,7 +28,6 @@ import UpdateCard from './components/Global/UpdateCard.vue';
 import orderStorageMixin from './mixins/orderStorageMixin';
 import { useStore } from './store/store';
 import packageInfo from '../package.json';
-import axios from 'axios';
 import StorageManager from './managers/storageManager';
 import Navbar from './components/App/Navbar.vue';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
@@ -91,9 +90,13 @@ export default defineComponent({
       const storageVersion = StorageManager.getStringValue(STORAGE_VERSION_KEY);
 
       try {
-        const releaseData = await (
-          await axios.get('https://api.github.com/repos/Spythere/genera-tor/releases/latest')
-        ).data;
+        const releaseResponse = await fetch(
+          'https://api.github.com/repos/Spythere/genera-tor/releases/latest'
+        );
+
+        if (!releaseResponse.ok) return;
+
+        const releaseData = await releaseResponse.json();
 
         if (!releaseData) return;
 

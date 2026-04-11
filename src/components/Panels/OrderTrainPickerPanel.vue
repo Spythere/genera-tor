@@ -111,7 +111,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import http from '../../http';
 import { useStore } from '../../store/store';
 import { API } from '../../types/apiTypes';
 import { ISceneryData } from '../../types/dataTypes';
@@ -223,13 +222,27 @@ export default defineComponent({
     getRegionNameById,
 
     async fetchSceneriesData() {
-      const data: ISceneryData[] = (await http.get<ISceneryData[]>('api/getSceneries')).data;
+      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/getSceneries`);
+
+      if (!response.ok) {
+        this.sceneriesData = undefined;
+        return;
+      }
+
+      const data: ISceneryData[] = await response.json();
 
       this.sceneriesData = data;
     },
 
     async fetchActiveData() {
-      const data: API.ActiveData.Response = await (await http.get('api/getActiveData')).data;
+      const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/getActiveData`);
+
+      if (!response.ok) {
+        this.activeData = undefined;
+        return;
+      }
+
+      const data: API.ActiveData.Response = await response.json();
 
       this.activeData = data;
     },
