@@ -5,7 +5,7 @@
       <div>
         <b>
           Genera<span class="text--accent">TOR</span>
-          <sup class="text--grayed">v{{ version }}</sup>
+          <sup>v{{ version }}</sup>
         </b>
 
         <b class="brand-author">&nbsp;by Spythere</b>

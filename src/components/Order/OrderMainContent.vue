@@ -34,6 +34,7 @@
       <!-- From 21.10 -->
       <tr
         v-for="(instruction, i) in store.orderData.instructions.slice(2)"
+        :key="i"
         :class="{
           'bg-lighter': instruction.key.startsWith('218'),
           dark: store.orderDarkMode
@@ -46,7 +47,11 @@
         <td colspan="3">
           <i18n-t :keypath="`order.${instruction.key}.text`" tag="div" scope="global">
             <!-- For text directives (<b>, <u>, <br> etc.) -->
-            <template v-slot:[directive] v-for="directive in instruction.textDirectives">
+            <template
+              v-for="directive in instruction.textDirectives"
+              v-slot:[directive]
+              :key="directive"
+            >
               <b v-if="directive.startsWith('bold')">
                 {{ t(`order.${instruction.key}.${directive}`) }}
               </b>
@@ -60,7 +65,11 @@
             </template>
 
             <!-- For all instructions with input fields -->
-            <template v-slot:[fieldKey] v-for="(_, fieldKey) in instruction.inputFields">
+            <template
+              v-slot:[fieldKey]
+              v-for="(_, fieldKey) in instruction.inputFields"
+              :key="fieldKey"
+            >
               <textarea
                 v-if="fieldKey == 'other2320'"
                 v-model="instruction.inputFields[fieldKey]"
@@ -83,13 +92,17 @@
             </template>
 
             <!-- For all instructions with select fields -->
-            <template v-for="(selectField, fieldKey) in instruction.selectFields" v-slot:[fieldKey]>
+            <template
+              v-for="(selectField, fieldKey) in instruction.selectFields"
+              v-slot:[fieldKey]
+              :key="fieldKey"
+            >
               <select
+                v-model="instruction.inputFields[fieldKey]"
                 class="order-select"
                 :id="`order-${instruction.key}-${fieldKey}`"
-                v-model="instruction.inputFields[fieldKey]"
               >
-                <option :value="value" v-for="value in selectField.options">
+                <option :value="value" v-for="value in selectField.options" :key="fieldKey + value">
                   {{ t(`order.${instruction.key}.${value}`) }}
                 </option>
               </select>
@@ -99,6 +112,7 @@
             <template v-slot:text-list v-if="instruction.key == '2310'">
               <i18n-t
                 v-for="(listItem, i) in instruction.listFields"
+                :key="i"
                 :keypath="`order.${instruction.key}.text-list`"
                 tag="div"
                 scope="global"
@@ -120,7 +134,11 @@
                   <span style="font-size: 1.5em">v</span>
                 </template>
 
-                <template v-slot:[fieldKey] v-for="(_, fieldKey, j) in listItem.values">
+                <template
+                  v-slot:[fieldKey]
+                  v-for="(_, fieldKey, j) in listItem.values"
+                  :key="fieldKey"
+                >
                   <label class="order-input-box">
                     <input
                       v-model="instruction.listFields![i]['values'][fieldKey]"

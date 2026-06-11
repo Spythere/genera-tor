@@ -115,5 +115,161 @@ function generateMessage() {
 </script>
 
 <style lang="scss">
-@use '../../styles/order';
+@use '@/styles/colors';
+
+$darkModeTextCol: #eee;
+
+.order {
+  width: 100%;
+  background-color: white;
+  color: black;
+  height: 100%;
+  overflow: auto;
+
+  &.dark {
+    background-color: colors.$bgColDarker;
+    color: $darkModeTextCol;
+  }
+
+  @media screen and (max-width: 550px) {
+    font-size: 0.85em;
+  }
+}
+
+table.order-table {
+  width: 100%;
+  overflow: auto;
+  table-layout: fixed;
+  min-width: 750px;
+
+  border: 2px solid black;
+  border-collapse: collapse;
+
+  td {
+    border: 2px solid black;
+    border-collapse: collapse;
+
+    text-align: justify;
+    vertical-align: top;
+  }
+}
+
+.order-input-box {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 1.25em;
+
+  & > span {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 2em);
+    font-size: 0.8em;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+input.order-input {
+  max-width: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 1em;
+
+  text-align: center;
+  border-bottom: 2px dotted black;
+
+  &:focus-visible {
+    border-bottom: 2px solid colors.$accentCol;
+  }
+
+  &.row-checkbox + input::placeholder {
+    color: red;
+  }
+
+  &[type='checkbox']:focus-visible,
+  &[type='radio']:focus-visible {
+    outline: 2px solid colors.$accentCol;
+  }
+
+  &[type='checkbox'],
+  &[type='radio'] {
+    margin-top: 0.5em;
+    margin-right: 0.5em;
+    font-size: 0.8em;
+    color: black;
+  }
+
+  &::placeholder {
+    font-size: 0.85em;
+  }
+}
+
+label.order-input-label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+}
+
+select.order-select {
+  margin-top: 0.5em;
+  margin-right: 0.5em;
+  font-size: 0.8em;
+  color: black;
+}
+
+textarea.order-textarea {
+  width: 100%;
+  min-height: 200px;
+  resize: vertical;
+
+  &:focus-visible {
+    outline: 2px solid colors.$accentCol;
+  }
+}
+
+// Dark mode
+.order.dark {
+  input.order-input {
+    border-color: $darkModeTextCol !important;
+    color: $darkModeTextCol !important;
+
+    &:focus-visible {
+      border-bottom: 2px solid colors.$accentCol !important;
+    }
+
+    &::placeholder {
+      color: #ccc !important;
+    }
+  }
+
+  select.order-select {
+    color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol;
+
+    &:focus-visible {
+      border-color: colors.$accentCol;
+    }
+  }
+
+  select.order-select option,
+  textarea.order-textarea {
+    color: $darkModeTextCol !important;
+    border-color: $darkModeTextCol !important;
+    background-color: colors.$bgColDarker !important;
+  }
+
+  .horizontal-bar {
+    background-color: white;
+  }
+
+  .order_header,
+  .order_other,
+  table.order-table,
+  tr,
+  td {
+    border-color: $darkModeTextCol !important;
+  }
+}
 </style>

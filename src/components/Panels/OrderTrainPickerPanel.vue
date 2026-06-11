@@ -191,13 +191,27 @@ const sceneryTrains = computed(() => {
 });
 
 async function fetchSceneriesData() {
-  const data = (await http.get<ISceneryData[]>('api/getSceneries')).data;
+  const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/getSceneries`);
+
+  if (!response.ok) {
+    sceneriesData.value = null;
+    return;
+  }
+
+  const data: ISceneryData[] = await response.json();
 
   sceneriesData.value = data ?? null;
 }
 
 async function fetchActiveData() {
-  const data = (await http.get<API.ActiveData.Response>('api/getActiveData')).data;
+  const response = await fetch(`${import.meta.env.VITE_APP_API_URL}/getActiveData`);
+
+  if (!response.ok) {
+    activeData.value = null;
+    return;
+  }
+
+  const data: API.ActiveData.Response = await response.json();
 
   activeData.value = data ?? null;
 }

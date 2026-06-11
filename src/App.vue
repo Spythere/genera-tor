@@ -20,7 +20,6 @@
 
 <script lang="ts" setup>
 import packageInfo from '../package.json';
-import axios from 'axios';
 import { useStore } from './store/store';
 
 import UpdateCard from './components/Global/UpdateCard.vue';
@@ -35,11 +34,16 @@ const store = useStore();
 const appVersion = packageInfo.version;
 
 onMounted(() => {
-  loadLang();
   loadSettings();
+  loadLang();
+  setTheme();
   checkAppVersion();
   handleQueries();
 });
+
+function setTheme() {
+  document.documentElement.setAttribute('data-theme', store.orderDarkMode ? 'dark' : 'light');
+}
 
 function loadSettings() {
   document.title = `GeneraTOR ${appVersion}`;
@@ -60,9 +64,13 @@ async function checkAppVersion() {
   const storageVersion = StorageManager.getStringValue(STORAGE_VERSION_KEY);
 
   try {
-    const releaseData = await (
-      await axios.get('https://api.github.com/repos/Spythere/genera-tor/releases/latest')
-    ).data;
+    const releaseResponse = await fetch(
+      'https://api.github.com/repos/Spythere/genera-tor/releases/latest'
+    );
+
+    if (!releaseResponse.ok) return;
+
+    const releaseData = await releaseResponse.json();
 
     if (!releaseData) return;
 
