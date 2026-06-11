@@ -27,6 +27,8 @@ const instructionObject = computed(() => store.orderData.instructions[props.rowI
 </script>
 
 <style lang="scss" scoped>
+@use '@/styles/colors';
+
 .order-instruction-checkbox {
   display: block;
   position: relative;
@@ -52,7 +54,7 @@ const instructionObject = computed(() => store.orderData.instructions[props.rowI
 
     &:focus-visible ~ .text {
       text-decoration: underline;
-      outline: 1px solid black;
+      color: colors.$accentCol;
     }
   }
 
