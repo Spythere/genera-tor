@@ -92,7 +92,7 @@ import { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave } from 'lucide-vu
 import { useStore } from '../../store/store';
 import { IOrderHeader, IOrderFooter, IStorageOrderData } from '../../types/orderTypes';
 import StorageManager from '../../managers/storageManager';
-import { getOrderFullId } from '../../utils/orderUtils';
+import { createOrderDataObject, getOrderFullId } from '../../utils/orderUtils';
 
 type TActionMonitType = 'warning' | 'info' | 'success';
 
@@ -381,26 +381,28 @@ function updateOrder() {
 }
 
 function resetOrder() {
+  const initOrderObject = createOrderDataObject();
+
   Object.keys(store.orderData.header).forEach((k) => {
-    store.orderData['header'][k as keyof IOrderHeader] = '';
+    store.orderData['header'][k as keyof IOrderHeader] = initOrderObject.header[k as keyof IOrderHeader];
   });
 
   Object.keys(store.orderData.footer).forEach((k) => {
-    store.orderData['footer'][k as keyof IOrderFooter] = '';
+    store.orderData['footer'][k as keyof IOrderFooter] = initOrderObject.footer[k as keyof IOrderFooter]
   });
 
-  store.orderData.instructions.forEach((instruction) => {
+  store.orderData.instructions.forEach((instruction, i) => {
     instruction.active = false;
 
     Object.keys(instruction.inputFields).forEach((k) => {
-      instruction.inputFields[k] = '';
+      instruction.inputFields[k] = initOrderObject.instructions[i].inputFields[k];
     });
 
     if (instruction.listFields) {
-      instruction.listFields.forEach((field) => {
+      instruction.listFields.forEach((field, j) => {
         Object.keys(field.values).forEach((k) => {
           field.active = false;
-          field.values[k] = '';
+          field.values[k] = initOrderObject.instructions[i].inputFields[j];
         });
       });
     }
