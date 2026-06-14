@@ -1,32 +1,33 @@
 <template>
-  <div id="app_wrapper">
-    <transition name="slide-anim">
-      <UpdateCard />
-    </transition>
+  <transition name="slide-anim">
+    <UpdateCard />
+  </transition>
 
-    <transition name="slide-anim">
-      <UpdatePrompt />
-    </transition>
+  <transition name="slide-anim">
+    <UpdatePrompt />
+  </transition>
 
-    <div class="app-body">
-      <Navbar />
+  <GlobalPopup />
 
-      <main>
-        <RouterView />
-      </main>
-    </div>
+  <div class="app-body">
+    <AppNavbar />
+
+    <main>
+      <RouterView />
+    </main>
   </div>
 </template>
 
 <script lang="ts" setup>
 import packageInfo from '../package.json';
 import { useStore } from './store/store';
+import { onMounted } from 'vue';
 
 import UpdateCard from './components/Global/UpdateCard.vue';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
 import StorageManager from './managers/storageManager';
-import { onMounted } from 'vue';
-import Navbar from './components/App/Navbar.vue';
+import GlobalPopup from './components/Global/GlobalPopup.vue';
+import AppNavbar from './components/App/AppNavbar.vue';
 
 const STORAGE_VERSION_KEY = 'app_version';
 

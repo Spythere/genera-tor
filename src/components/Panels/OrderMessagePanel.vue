@@ -9,12 +9,12 @@
 
     <div class="message_actions">
       <button class="g-button action icon" @click="saveOrder">
-        <LucideSave />
+        <Save />
         {{ $t('order-message.button-save') }}
       </button>
 
       <button class="g-button action icon" @click="copyMessage">
-        <LucideCopy />
+        <Copy />
         {{ $t('order-message.button-copy') }}
       </button>
 
@@ -23,7 +23,7 @@
         :data-disabled="!store.chosenLocalOrderId"
         @click="updateOrder"
       >
-        <LucidePencil />
+        <Pencil />
         {{ $t('order-message.button-update') }}
         <span class="text--accent">
           {{ store.chosenLocalOrderId && `#${store.chosenLocalOrderId.split('-')[2]}` }}
@@ -31,7 +31,7 @@
       </button>
 
       <button class="g-button action icon" @click="resetOrder">
-        <LucideRotateCcw />
+        <RotateCcw />
         {{ $t('order-message.button-reset') }}
       </button>
     </div>
@@ -71,7 +71,7 @@
       </label>
     </div>
 
-    <transition name="monit-anim">
+    <!-- <transition name="monit-anim">
       <div
         class="action_monit"
         v-if="actionMonit.content"
@@ -80,37 +80,24 @@
           'text--warn': actionMonit.type == 'warning'
         }"
       ></div>
-    </transition>
+    </transition> -->
   </section>
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, Reactive, reactive, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
-import { LucideCopy, LucidePencil, LucideRotateCcw, LucideSave } from 'lucide-vue-next';
 import { useStore } from '../../store/store';
 import { IOrderHeader, IOrderFooter, IStorageOrderData } from '../../types/orderTypes';
 import StorageManager from '../../managers/storageManager';
 import { createOrderDataObject, getOrderFullId } from '../../utils/orderUtils';
-
-type TActionMonitType = 'warning' | 'info' | 'success';
-
-interface IActionMonit {
-  type: TActionMonitType;
-  content: string;
-  timeoutId: number | null;
-}
+import { usePopupStore } from '../../store/popup';
+import { Copy, Pencil, RotateCcw, Save } from '@lucide/vue';
 
 const { t } = useI18n();
 const store = useStore();
-
-const actionMonit: Reactive<IActionMonit> = reactive({
-  visible: false,
-  type: 'info',
-  content: '',
-  timeoutId: null
-});
+const popupStore = usePopupStore();
 
 const incrementOnSave = ref(true);
 const incrementOnCopy = ref(true);
@@ -140,41 +127,13 @@ function onCheckboxChange(e: Event) {
   StorageManager.setBooleanValue(checkbox.id, checkbox.checked);
 }
 
-function showActionMonit(content: string, type: TActionMonitType) {
-  if (actionMonit.timeoutId != null) {
-    actionMonit.content = '';
-
-    clearTimeout(actionMonit.timeoutId);
-
-    setTimeout(() => {
-      actionMonit.content = content;
-      actionMonit.type = type;
-
-      actionMonit.timeoutId = window.setTimeout(() => {
-        actionMonit.content = '';
-        actionMonit.timeoutId = null;
-      }, 5000);
-    }, 100);
-
-    return;
-  }
-
-  actionMonit.content = content;
-  actionMonit.type = type;
-
-  actionMonit.timeoutId = window.setTimeout(() => {
-    actionMonit.content = '';
-    actionMonit.timeoutId = null;
-  }, 5000);
-}
-
 function checkConflicts() {
   if (
     store.orderData.instructions
       .filter((i) => i.key == '2110' || i.key == '2115')
       .every((i) => i.active)
   ) {
-    showActionMonit(
+    popupStore.showPopup(
       t('order-message.warning-conflicting-instructions', ['21.10', '21.15']),
       'warning'
     );
@@ -205,7 +164,8 @@ function areOrderFieldsCorrect() {
 
   // Header & footer fields check
   if (fieldsToCorrect.length > 0) {
-    showActionMonit(t('order-message.warning-fill-missing'), 'warning');
+    console.log(fieldsToCorrect);
+    popupStore.showPopup(t('order-message.warning-fill-missing'), 'warning');
     return false;
   }
 
@@ -258,12 +218,12 @@ function areOrderFieldsCorrect() {
 
   // Active instructions check
   if (hasNoActiveInstructions) {
-    showActionMonit(t('order-message.warning-add-instruction'), 'warning');
+    popupStore.showPopup(t('order-message.warning-add-instruction'), 'warning');
     return false;
   }
 
   if (!hasAllInputsFilled) {
-    showActionMonit(t('order-message.warning-fill-inputs'), 'warning');
+    popupStore.showPopup(t('order-message.warning-fill-inputs'), 'warning');
     return false;
   }
 
@@ -289,7 +249,7 @@ function incrementOrderNo() {
 
 function copyMessage() {
   if (!navigator.clipboard)
-    return showActionMonit(t('order-message.warning-outdated-clipboard'), 'warning');
+    return popupStore.showPopup(t('order-message.warning-outdated-clipboard'), 'warning');
 
   const areFieldsCorrect = areOrderFieldsCorrect();
 
@@ -301,12 +261,12 @@ function copyMessage() {
 
   if (incrementOnCopy.value) incrementOrderNo();
 
-  showActionMonit(t('order-message.success-copy-html'), 'success');
+  popupStore.showPopup(t('order-message.success-copy-html'), 'success');
 }
 
 function saveOrder() {
   if (!hasHeaderFieldsComplete()) {
-    showActionMonit(`${t('order-message.warning-fill-top-save')}`, 'warning');
+    popupStore.showPopup(`${t('order-message.warning-fill-top-save')}`, 'warning');
     return;
   }
 
@@ -328,7 +288,7 @@ function saveOrder() {
       const prevOrderObj = JSON.parse(prevLocalOrder) as IStorageOrderData;
 
       if (JSON.stringify(prevOrderObj.orderData) == JSON.stringify(orderDataToSave.orderData)) {
-        showActionMonit(t('order-message.warning-order-identical'), 'warning');
+        popupStore.showPopup(t('order-message.warning-order-identical'), 'warning');
         return;
       }
     } catch (error) {
@@ -346,26 +306,26 @@ function saveOrder() {
   StorageManager.setValue(nextOrderId, JSON.stringify(orderDataToSave));
 
   store.chosenLocalOrderId = nextOrderId;
-  showActionMonit(t('order-message.success-save-html'), 'success');
+  popupStore.showPopup(t('order-message.success-save-html'), 'success');
 
   if (incrementOnSave.value) incrementOrderNo();
 }
 
 function updateOrder() {
   if (!store.chosenLocalOrderId) {
-    showActionMonit(t('order-message.warning-no-order-selected'), 'warning');
+    popupStore.showPopup(t('order-message.warning-no-order-selected'), 'warning');
     return;
   }
 
   if (!hasHeaderFieldsComplete()) {
-    showActionMonit(t('order-message.warning-fill-top-update'), 'warning');
+    popupStore.showPopup(t('order-message.warning-fill-top-update'), 'warning');
     return;
   }
 
   const localOrder = window.localStorage.getItem(store.chosenLocalOrderId);
 
   if (!localOrder) {
-    showActionMonit(t('order-message.error-update'), 'warning');
+    popupStore.showPopup(t('order-message.error-update'), 'warning');
     return;
   }
 
@@ -377,18 +337,20 @@ function updateOrder() {
   };
 
   window.localStorage.setItem(store.chosenLocalOrderId, JSON.stringify(orderDataToUpdate));
-  showActionMonit(t('order-message.success-update-html'), 'success');
+  popupStore.showPopup(t('order-message.success-update-html'), 'success');
 }
 
 function resetOrder() {
   const initOrderObject = createOrderDataObject();
 
   Object.keys(store.orderData.header).forEach((k) => {
-    store.orderData['header'][k as keyof IOrderHeader] = initOrderObject.header[k as keyof IOrderHeader];
+    store.orderData['header'][k as keyof IOrderHeader] =
+      initOrderObject.header[k as keyof IOrderHeader];
   });
 
   Object.keys(store.orderData.footer).forEach((k) => {
-    store.orderData['footer'][k as keyof IOrderFooter] = initOrderObject.footer[k as keyof IOrderFooter]
+    store.orderData['footer'][k as keyof IOrderFooter] =
+      initOrderObject.footer[k as keyof IOrderFooter];
   });
 
   store.orderData.instructions.forEach((instruction, i) => {

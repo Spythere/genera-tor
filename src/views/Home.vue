@@ -13,7 +13,7 @@
             :data-active="store.panelMode == 'OrderMessagePanel'"
             @click="selectPanelMode('OrderMessagePanel')"
           >
-            <MessageSquareTextIcon :size="20" />
+            <MessageSquareText :size="20" />
             {{ t(`navbar.OrderMessagePanel`) }}
           </button>
 
@@ -23,7 +23,7 @@
             :data-active="store.panelMode == 'OrderListPanel'"
             @click="selectPanelMode('OrderListPanel')"
           >
-            <BookMarkedIcon :size="20" />
+            <BookMarked :size="20" />
             {{ t(`navbar.OrderListPanel`) }}
           </button>
 
@@ -33,7 +33,7 @@
             :data-active="store.panelMode == 'OrderTrainPickerPanel'"
             @click="selectPanelMode('OrderTrainPickerPanel')"
           >
-            <TrainFrontIcon :size="20" />
+            <TrainFront :size="20" />
             {{ t(`navbar.OrderTrainPickerPanel`) }}
           </button>
         </div>
@@ -52,12 +52,12 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from '../store/store';
+import { BookMarked, MessageSquareText, TrainFront } from '@lucide/vue';
+import { TPanel } from '../types/orderTypes';
+import Order from '../components/Order/Order.vue';
 import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
 import OrderListPanel from '../components/Panels/OrderListPanel.vue';
 import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
-import { BookMarkedIcon, MessageSquareTextIcon, TrainFrontIcon } from 'lucide-vue-next';
-import { TPanel } from '../types/orderTypes';
-import Order from '../components/Order/Order.vue';
 
 const store = useStore();
 const { t } = useI18n();
@@ -100,7 +100,7 @@ const panelComponent = computed(() => {
   padding: 1em;
   width: 100%;
 
-  @media screen and (max-width: 1150px) {
+  @media screen and (max-width: 1350px) {
     grid-template-columns: auto;
     padding: 1em 0.5em;
   }
@@ -118,7 +118,6 @@ const panelComponent = computed(() => {
   color-scheme: dark;
 
   padding: 2px;
-  max-width: 800px;
 }
 
 .panel-nav {

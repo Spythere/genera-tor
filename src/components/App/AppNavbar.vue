@@ -2,19 +2,24 @@
   <nav class="app-navbar">
     <div class="navbar-brand">
       <img src="/favicon.ico" alt="generator logo" width="30" />
-      <b>
-        Genera<span class="text--accent">TOR</span> <sup class="text--grayed">v{{ version }}</sup>
-      </b>
+      <div>
+        <b>
+          Genera<span class="text--accent">TOR</span>
+          <sup>v{{ version }}</sup>
+        </b>
+
+        <b class="brand-author">&nbsp;by Spythere</b>
+      </div>
     </div>
 
     <div class="navbar-actions">
       <button class="g-button action icon" @click="switchDarkMode">
-        <LucideMoon :size="20" v-if="store.orderDarkMode" />
-        <LucideSun :size="20" v-else />
+        <Moon :size="20" v-if="store.orderDarkMode" />
+        <Sun :size="20" v-else />
       </button>
 
       <button class="g-button action icon" @click="switchLang">
-        <LucideGlobe :size="20" />
+        <Globe :size="20" />
         <span>{{ store.currentAppLocale == 'pl' ? 'POL' : 'ENG' }}</span>
       </button>
     </div>
@@ -22,7 +27,7 @@
 </template>
 
 <script setup lang="ts">
-import { LucideGlobe, LucideMoon, LucideSun } from 'lucide-vue-next';
+import { Globe, Moon, Sun } from '@lucide/vue';
 import { version } from '../../../package.json';
 import { useStore } from '../../store/store';
 
@@ -31,6 +36,7 @@ const store = useStore();
 function switchDarkMode() {
   store.orderDarkMode = !store.orderDarkMode;
   window.localStorage.setItem('dark-mode', `${store.orderDarkMode}`);
+  document.documentElement.setAttribute('data-theme', store.orderDarkMode ? 'dark' : 'light');
 }
 
 function switchLang() {
@@ -58,6 +64,11 @@ function switchLang() {
   sup {
     font-size: 0.75em;
   }
+}
+
+.brand-author {
+  font-size: 0.8em;
+  color: #aaa;
 }
 
 .navbar-actions {
