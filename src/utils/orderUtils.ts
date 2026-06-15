@@ -30,7 +30,7 @@ export const handleOrderPlaceholders = (isRowEnabled: boolean, rowRef: HTMLTable
 };
 
 export function createOrderDataObject(): IOrderData {
-  return Object.create({
+  return {
     header: {
       A: '',
       B: '',
@@ -342,5 +342,5 @@ export function createOrderDataObject(): IOrderData {
       Y: '',
       Z: ''
     }
-  });
+  };
 }
