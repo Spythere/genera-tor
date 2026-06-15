@@ -164,7 +164,6 @@ function areOrderFieldsCorrect() {
 
   // Header & footer fields check
   if (fieldsToCorrect.length > 0) {
-    console.log(fieldsToCorrect);
     popupStore.showPopup(t('order-message.warning-fill-missing'), 'warning');
     return false;
   }
