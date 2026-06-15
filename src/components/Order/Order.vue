@@ -68,14 +68,25 @@ function generateMessage() {
         });
 
         messageHtml += '-------------<br />';
+        messageHtml += `<b>[${value.name}]</b> `;
 
-        messageHtml += `<b>[${value.name}]</b> ${t(
-          localeKey + '.message-html',
-          messageValues,
-          Object.keys(value.inputFields).filter(
-            (k) => value.optionalFieldNames.includes(k) && value.inputFields[k].trim() != ''
-          ).length
-        )}<br />`;
+        const optionalInputsActiveCount = Object.keys(value.inputFields).filter(
+          (k) => value.optionalFieldNames.includes(k) && value.inputFields[k].trim() != ''
+        ).length;
+
+        if (value.key == '2110' || value.key == '2115') {
+          messageHtml += `${t(
+            `${localeKey}.message-html${optionalInputsActiveCount ? '-' + optionalInputsActiveCount : ''}`,
+            messageValues,
+            optionalInputsActiveCount
+          )}<br />`;
+        } else {
+          messageHtml += `${t(
+            `${localeKey}.message-html`,
+            messageValues,
+            optionalInputsActiveCount
+          )}<br />`;
+        }
 
         if (value.key == '2310' && value.listFields) {
           messageHtml += '<br />';

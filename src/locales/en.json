@@ -105,7 +105,10 @@
          "signal1": "x.5 signal",
          "signal2": "x.6 signal",
          "signal3": "x.7 signal",
-         "message-html": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}"
+         "message-html": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}",
+         "message-html-1": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4}",
+         "message-html-2": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5}",
+         "message-html-3": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}"
       },
       "2115": {
          "text": "{bold1} from track no. {track1} to {signalbox1} on track no. {track2} {br} Pass signals {signal1} and {signal2} and {signal3}",
@@ -116,7 +119,10 @@
          "signal1": "x.4 signal",
          "signal2": "x.5 signal",
          "signal3": "x.6 signal",
-         "message-html": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}"
+         "message-html": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}",
+         "message-html-1": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3}",
+         "message-html-2": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4}",
+         "message-html-3": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}"
       },
       "2120": {
          "text": "From {signalbox1} to {signalbox2} on track {track1} {br} {highlight1} {br} {underline1}{highlight2}.",
