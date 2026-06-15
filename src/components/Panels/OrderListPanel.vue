@@ -30,27 +30,43 @@
 
         <div>
           {{
-            t('order-list.order-subtitle', [
-              order.orderData.instructions
-                .filter((v) => v.active)
-                .map((v) => v.name)
-                .join(', ')
-            ])
+            t(
+              'order-list.order-subtitle',
+              [
+                order.orderData.instructions
+                  .filter((v) => v.active)
+                  .map((v) => v.name)
+                  .join(', ')
+              ],
+              order.orderData.instructions.filter((v) => v.active).length
+            )
           }}
         </div>
 
-        <div>
-          {{ t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
-          {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
+        <div class="order-id" v-if="order.orderData.footer.Z">
+          ID: {{ order.orderData.footer.Z }}
+        </div>
+
+        <div class="order-date" v-if="order.createdAt">
+          {{ t('order-list.order-added') }}
+          {{ new Date(order.createdAt).toLocaleString(locale) }}
+        </div>
+
+        <div class="order-date" v-if="order.updatedAt">
+          {{ t('order-list.order-updated') }}
+          {{ new Date(order.updatedAt).toLocaleString(locale) }}
         </div>
 
         <hr />
 
         <div class="buttons">
-          <button class="g-button" @click="selectLocalOrder(order)">
+          <button class="g-button icon" @click="selectLocalOrder(order)">
+            <NotebookPen :size="25" />
             {{ t('order-list.button-order-select') }}
           </button>
-          <button class="g-button" @click="removeOrder(order.id)">
+
+          <button class="g-button icon" @click="removeOrder(order.id)">
+            <Trash :size="25" />
             {{ t('order-list.button-order-remove') }}
           </button>
         </div>
@@ -65,8 +81,9 @@ import { useI18n } from 'vue-i18n';
 import { useStore } from '../../store/store';
 import { IStorageOrderData, LocalStorageOrderLegacy } from '../../types/orderTypes';
 import StorageManager from '../../managers/storageManager';
+import { NotebookPen, Trash } from '@lucide/vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const store = useStore();
 const storageOrderList = reactive<Reactive<IStorageOrderData[]>>([]);
 
@@ -214,6 +231,15 @@ li {
   }
 }
 
+.order-date {
+  color: #aaa;
+}
+
+.order-id {
+  color: #ccc;
+  margin-top: 0.5em;
+}
+
 .wrong-order-indicator {
   color: colors.$accentCol;
   padding: 0 0.25em;
@@ -226,6 +252,8 @@ li {
   button {
     padding: 0.5em;
     background-color: colors.$bgColLighter;
+    gap: 0.5em;
+
 
     &:hover {
       background-color: #666;
