@@ -15,7 +15,7 @@ export const usePopupStore = defineStore('popup', () => {
 
       setTimeout(() => {
         showPopup(content, type, timeoutMs);
-      }, 100);
+      }, 200);
 
       return;
     }
