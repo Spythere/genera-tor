@@ -70,17 +70,6 @@
         <span>{{ $t('order-options.update-hours') }}</span>
       </label>
     </div>
-
-    <!-- <transition name="monit-anim">
-      <div
-        class="action_monit"
-        v-if="actionMonit.content"
-        v-html="actionMonit.content"
-        :class="{
-          'text--warn': actionMonit.type == 'warning'
-        }"
-      ></div>
-    </transition> -->
   </section>
 </template>
 
@@ -104,9 +93,7 @@ const incrementOnCopy = ref(true);
 const updateDate = ref(true);
 
 onMounted(() => {
-  incrementOnSave.value = StorageManager.getBooleanValue('save-increment');
-  incrementOnCopy.value = StorageManager.getBooleanValue('copy-increment');
-  updateDate.value = StorageManager.getBooleanValue('update-date');
+  loadCheckboxSettings();
 });
 
 const orderMessagePreview = computed(() => store.orderMessage);
@@ -121,6 +108,20 @@ watch(orderMessagePreview, () => {
     });
   }
 });
+
+function loadCheckboxSettings() {
+  if (StorageManager.isRegistered('save-increment')) {
+    incrementOnSave.value = StorageManager.getBooleanValue('save-increment');
+  }
+
+  if (StorageManager.isRegistered('copy-increment')) {
+    incrementOnCopy.value = StorageManager.getBooleanValue('copy-increment');
+  }
+
+  if (StorageManager.isRegistered('update-date')) {
+    updateDate.value = StorageManager.getBooleanValue('update-date');
+  }
+}
 
 function onCheckboxChange(e: Event) {
   const checkbox = e.target as HTMLInputElement;
