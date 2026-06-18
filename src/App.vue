@@ -35,19 +35,18 @@ const store = useStore();
 const appVersion = packageInfo.version;
 
 onMounted(() => {
-  loadSettings();
-  loadLang();
   setTheme();
+  loadLang();
   checkAppVersion();
   handleQueries();
 });
 
 function setTheme() {
-  document.documentElement.setAttribute('data-theme', store.orderDarkMode ? 'dark' : 'light');
-}
+  store.orderDarkMode = !StorageManager.getStringValue('appTheme')
+    ? window.matchMedia('(prefers-color-scheme: dark)').matches
+    : StorageManager.getStringValue('appTheme') == 'dark';
 
-function loadSettings() {
-  store.orderDarkMode = StorageManager.getBooleanValue('dark-mode');
+  StorageManager.setStringValue('appTheme', store.orderDarkMode ? 'dark' : 'light');
 }
 
 function handleQueries() {

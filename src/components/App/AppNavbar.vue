@@ -30,13 +30,17 @@
 import { Globe, Moon, Sun } from '@lucide/vue';
 import { version } from '../../../package.json';
 import { useStore } from '../../store/store';
+import StorageManager from '../../managers/storageManager';
 
 const store = useStore();
 
 function switchDarkMode() {
   store.orderDarkMode = !store.orderDarkMode;
-  window.localStorage.setItem('dark-mode', `${store.orderDarkMode}`);
-  document.documentElement.setAttribute('data-theme', store.orderDarkMode ? 'dark' : 'light');
+
+  const appTheme = store.orderDarkMode ? 'dark' : 'light';
+
+  StorageManager.setStringValue('appTheme', appTheme);
+  document.documentElement.setAttribute('data-theme', appTheme);
 }
 
 function switchLang() {
