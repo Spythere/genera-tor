@@ -47,7 +47,6 @@ function setTheme() {
 }
 
 function loadSettings() {
-  document.title = `GeneraTOR ${appVersion}`;
   store.orderDarkMode = StorageManager.getBooleanValue('dark-mode');
 }
 
