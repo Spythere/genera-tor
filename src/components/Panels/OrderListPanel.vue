@@ -196,6 +196,9 @@ hr {
 ul {
   overflow: hidden;
   position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 h3 {
@@ -253,7 +256,6 @@ li {
     padding: 0.5em;
     background-color: colors.$bgColLighter;
     gap: 0.5em;
-
 
     &:hover {
       background-color: #666;

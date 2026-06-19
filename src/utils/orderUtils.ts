@@ -139,7 +139,7 @@ export function createOrderDataObject(): IOrderData {
           km1: '',
           other1: ''
         },
-        optionalFieldNames: ['signalbox2'],
+        optionalFieldNames: ['signalbox2', 'km1'],
         textDirectives: ['bold1']
       },
       {

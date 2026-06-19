@@ -313,6 +313,7 @@ function handleQueries() {
 
 ul.train-list {
   padding: 1px;
+  list-style: none;
 
   li.no-trains {
     font-weight: bold;

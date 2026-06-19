@@ -291,22 +291,72 @@
 
     "instructions": {
       "22": {
-        "description": "Dotyczy jazd z toru lewego i na tor lewy. Instrukcja dla wjazdów, wyjazdów oraz kontynuacji jazdy po zatrzymaniu z i na tor lewy w kierunku przeciwnym do zasadniczego.",
+        "description": "Dotyczy jazd z toru lewego i na tor lewy. Instrukcja dla wjazdów, wyjazdów oraz kontynuacji jazdy po zatrzymaniu z toru lewego / na tor lewy w kierunku przeciwnym do zasadniczego.",
         "warnings": "Instrukcja <b>22</b> używana jest łącznie z instrukcją <b>21.10</b>, <b>21.15</b> lub <b>21.35</b>."
       },
       "99": {
         "description": "Instrukcja służąca do odwołania wcześniej wydanego rozkazu pisemnego.",
-        "warnings": "-"
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Identyfikator rozkazu (z jego pola \"Z\"), który ma zostać odwołany"
+        }
       },
       "2110": {
         "description": "Wyjazd (wyprawienie pociągu) z posterunku lub przejazd w obrębie posterunku w przypadku:<ul><li>braku możliwości podania sygnału zezwalającego na semaforze lub semaforach wyjazdowych, wyjazdowych grupowych drogowskazowych, drogowskazowych grupowych</li><li>braku semafora wyjazdowego przy torze, z którego ma być wyprawiony pociąg w kierunku szlaku</li><li>braku semafora drogowskazowego lub drogowskazowego grupowego przy torze, z którego ma się odbyć przejazd w obrębie posterunku</li></ul>",
         "warnings": "W przypadku wydania instrukcji <b>21.10</b>, nie można wydać jednocześnie instrukcji <b>21.15</b>. Na jednym druku można wydać zezwolenie na pominięcie do trzech sygnalizatorów (lub tarczy zatrzymania D1) nie nadających zezwolenia na jazdę.",
         "fields": {
-            "21.10.1": "Numer toru, z którego wyjeżdża pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
-            "21.10.2": "Nazwa posterunku, z którego wyprawiany jest pociąg",
-            "21.10.3": "Numer toru szlakowego lub stacyjnego, na który wyprawiany jest pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 1, 101a)",
-            "21.10.4": "Nazwa posterunku, w kierunku którego wyprawiany jest pociąg",
-            "21.10.5.6.7": "Oznaczenie sygnalizatorów, których sygnał nie zezwala na jazdę, a na pominięcie których wydawany jest rozkaz pisemny. Dla semaforów oznaczenia literowe lub literowo/liczbowe, dla innych sygnałów typ sygnału i lokalizacje w kilometrach (np. D1/73,200)."
+          "x1": "<b>x.1</b>: Numer toru, z którego wyjeżdża pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
+          "x2": "<b>x.2</b>: Nazwa posterunku, z którego wyprawiany jest pociąg",
+          "x3": "<b>x.3</b>: Numer toru szlakowego lub stacyjnego, na który wyprawiany jest pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 1, 101a)",
+          "x4": "<b>x.4</b>: Nazwa posterunku, w kierunku którego wyprawiany jest pociąg",
+          "x5-7": "<b>x.5, x.6, x.7</b>: Oznaczenia sygnalizatorów, których sygnał nie zezwala na jazdę, a na pominięcie których wydawany jest rozkaz pisemny. Dla semaforów oznaczenia literowe lub literowo/liczbowe, dla innych sygnałów typ sygnału i lokalizacje w kilometrach (np. D1/73,200)."
+        }
+      },
+      "2115": {
+        "description": "Wjazd (przyjęcie pociągu) na posterunek lub przejazd w obrębie posterunku w przypadku: <ul><li>braku możliwości podania sygnału zezwalającego na semaforze lub semaforach drogowskazowych, drogowskazowych grupowych</li><li>braku semafora wjazdowego</li><li>wjazdu z zamkniętego toru szlakowego przy którym nie ma semafora wjazdowego</li><li>braku możliwości podania sygnału zezwalającego na obsługiwanym semaforze odstępowym (w tym APO)</li></ul>",
+        "warnings": "W przypadku wydania instrukcji <b>21.15</b>, nie można wydać jednocześnie instrukcji <b>21.10</b>. Na jednym druku można wydać zezwolenie na pominięcie do trzech sygnalizatorów (lub tarczy zatrzymania D1) nie nadających zezwolenia na jazdę.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer toru, z którego wjeżdża pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
+          "x2": "<b>x.2</b>: Nazwa posterunku, na który przyjmowany jest pociąg",
+          "x3": "<b>x.3</b>: Numer toru, na który przyjmowany jest pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
+          "x4-6": "<b>x.4, x.5, x.6</b>: Oznaczenia sygnalizatorów, których sygnał nie zezwala na jazdę, a na pominięcie których wydawany jest rozkaz pisemny. Dla semaforów oznaczenia literowe lub literowo/liczbowe, dla innych sygnałów typ sygnału i lokalizacje w kilometrach (np. D1/73,200)."
+        }
+      },
+      "2120": {
+        "description": "W przypadku: <ul><li>unieważnienia wskazań sygnałów semaforów odstępowych na samoczynnej blokadzie liniowej (SBL)</li><li>usterki blokady SBL</li><li>zajętości trzech lub więcej odcinków na szlaku przy SBL</li><li>wprowadzenia telefonicznego zapowiadania pociągów na szlakach z SBL</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, z którego wyprawiany jest pociąg",
+          "x2": "<b>x.2</b>: Nazwa posterunku, do którego wyprawiany jest pociąg",
+          "x3": "<b>x.3</b>: Numer toru szlakowego, dla którego unieważnione są wskazania semaforów SBL (oznaczenie liczbowe lub liczbowo/literowe np. 1, 3Ł)"
+        }
+      },
+      "2125": {
+        "description": "W przypadku zezwolenia na jazdę manewrową taboru w kierunku szlaku poza ustaloną wskaźnikiem W5 granicę przetaczania lub gdy brak jest tego wskaźnika za ostatni rozjazd, gdy jazda odbywa się na szlak jednotorowy lub w kierunku przeciwnym do zasadniczego na szlaku dwutorowym.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, z którego mają odbywać się manewry",
+          "x2": "<b>x.2</b>: Numer toru, po którym manewry wyjadą poza granicę przetaczania (oznaczenie liczbowe lub liczbowo/literowe, np. 1, 3Ł)",
+          "x3": "<b>x.3</b>: Lokalizacja w kilometrach, do której może odbyć się jazda manewrowa",
+          "x4": "<b>x.4</b>: Godzina zakończenia manewrów"
+        }
+      },
+      "2135": {
+        "description": "W przypadku: <ul><li>zezwolenia na jazdę, gdy pojazd kolejowy znajduje się za semaforem wskazującym sygnał zezwalający, którego maszynista nie widzi</li><li>zezwolenia na dalszą jazdę zatrzymanego pociągu skierowanego na tor prawy, gdy jego czoło minęło semafor z wyświetlonym wskaźnikiem W 24</li><li>zezwolenia na dalszą jazdę pociągu zatrzymanego za obsługiwanym semaforem, na którym nastąpiła już zmiana sygnału zezwalającego na sygnał S1 „Stój” lub stało się to, zanim czoło pociągu minęło ten semafor</li><li>potrzeby wydania zgody/polecenia rozpoczęcia/kontynuacji jazdy w przypadku zaistniałych zdarzeń i sytuacji potencjalnie niebezpiecznych</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer toru, przy którym znajduje się sygnalizator na którym nastąpiła zmiana sygnału zezwalającego na sygnał Stój lub którego nie widzi maszynista (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d).",
+          "x2": "<b>x.2</b>: W przypadku wjazdu na posterunek - nazwa tego posterunku; W przypadku wyjazdu na szlak - nazwa następnego posterunku, w kierunku którego odbywa się jazda"
+        }
+      },
+      "2140": {
+        "description": "W przypadku: <ul><li>polecenia zatrzymania pociągu, niemającego rozkładowego postoju na stacji lub przystanku osobowym</li><li>polecenia nieprzewidzianego wewnętrznym rozkładem jazdy zatrzymania na szlaku pociągu, z określeniem celu i czasu postoju</li></ul>",
+        "warnings": "Dla każdego dodatkowego zatrzymania należy wystawić osobny rozkaz pisemny.",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, na którym ma się odbyć zatrzymanie - w przypadku zatrzymania na szlaku wpisać nazwę posterunku na początku tego szlaku",
+          "x2": "<b>x.2</b>: Nazwa posterunku na końcu szlaku, na którym ma się odbyć zatrzymanie - w przypadku zatrzymania na posterunku pole zostaje niewypełnione",
+          "x3": "<b>x.3</b>: Lokalizacja zatrzymania w kilometrach - w przypadku zatrzymania na szlaku obowiązkowo wypełnić; w przypadku zatrzymania na posterunku może pozostać niewypełnione (wpisać myślnik)",
+          "x96": "<b>x.96</b>: Przyczyna zatrzymania"
         }
       }
     }

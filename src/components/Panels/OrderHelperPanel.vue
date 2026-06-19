@@ -4,10 +4,39 @@
       <HelpCircle :size="30" />
       <span>Pomocnik rozkazów</span>
     </h2>
-    <p>Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu</p>
 
-    <div>
-      Zaznaczone instrukcje: <b>{{ selectedInstructions.map((i) => i.key).join(', ') }}</b>
+    <p class="helper-p">Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu</p>
+
+    <div class="helper-list">
+      <div
+        v-for="[instructionKey, helperInfo] in selectedInstructionsInfo"
+        :key="instructionKey"
+        class="instruction-info"
+      >
+        <h3>Instrukcja {{ helperInfo.name }}</h3>
+
+        <h4>Zastosowanie:</h4>
+
+        <div
+          v-html="$t(`helper.instructions.${instructionKey}.description`)"
+          class="description"
+        ></div>
+
+        <div class="helper-fields" v-if="helperInfo.fields">
+          <h4>Pola do uzupełnienia:</h4>
+
+          <ul v-if="helperInfo.fields" class="fields-list">
+            <li v-for="fieldKey in helperInfo.fields" :key="fieldKey">
+              <span v-html="$t(`helper.instructions.${instructionKey}.fields.${fieldKey}`)"></span>
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="helperInfo.hasWarnings" class="warnings">
+          <h4>Uwagi:</h4>
+          <div v-html="$t(`helper.instructions.${instructionKey}.warnings`)"></div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -19,8 +48,59 @@ import { computed } from 'vue';
 
 const store = useStore();
 
-const selectedInstructions = computed(() => {
-  return store.orderData.instructions.filter((i) => i.active);
+interface HelperItem {
+  name: string;
+  hasWarnings: boolean;
+  fields: string[] | null;
+}
+
+const helperData: Record<string, HelperItem> = {
+  '22': {
+    name: '22',
+    hasWarnings: true,
+    fields: null
+  },
+  '99': {
+    name: '99',
+    hasWarnings: false,
+    fields: ['x1']
+  },
+  '2110': {
+    name: '21.10',
+    hasWarnings: true,
+    fields: ['x1', 'x2', 'x3', 'x4', 'x5-7']
+  },
+  '2115': {
+    name: '21.15',
+    hasWarnings: true,
+    fields: ['x1', 'x2', 'x3', 'x4-6']
+  },
+  '2120': {
+    name: '21.20',
+    hasWarnings: false,
+    fields: ['x1', 'x2', 'x3']
+  },
+  '2125': {
+    name: '21.25',
+    hasWarnings: false,
+    fields: ['x1', 'x2', 'x3', 'x4']
+  },
+  '2135': {
+    name: '21.35',
+    hasWarnings: false,
+    fields: ['x1', 'x2']
+  },
+  '2140': {
+    name: '21.40',
+    hasWarnings: true,
+    fields: ['x1', 'x2', 'x3', 'x96']
+  }
+};
+
+const selectedInstructionsInfo = computed(() => {
+  return Object.entries(helperData).filter(([key]) =>
+    store.orderData.instructions.some((i) => i.active && i.key == key)
+  );
 });
 </script>
 
@@ -28,7 +108,6 @@ const selectedInstructions = computed(() => {
 @use '../../styles/colors';
 
 .order-helper-panel {
-  text-align: center;
   padding: 0 0.5em;
 }
 
@@ -39,5 +118,34 @@ const selectedInstructions = computed(() => {
   justify-content: center;
   align-items: center;
   gap: 0.25em;
+}
+
+p.helper-p {
+  text-align: center;
+}
+
+.description,
+.fields-list {
+  line-height: 1.5em;
+  text-align: justify;
+}
+
+.instruction-info {
+  h3 {
+    text-align: center;
+  }
+}
+
+.helper-fields {
+  margin-top: 1em;
+}
+
+.warnings,
+.fields-list {
+  text-align: justify;
+}
+
+.warnings {
+  color: colors.$warnCol;
 }
 </style>
