@@ -47,6 +47,7 @@ function setTheme() {
     : StorageManager.getStringValue('appTheme') == 'dark';
 
   StorageManager.setStringValue('appTheme', store.orderDarkMode ? 'dark' : 'light');
+  document.documentElement.setAttribute('data-theme', StorageManager.getStringValue('appTheme'));
 }
 
 function handleQueries() {
