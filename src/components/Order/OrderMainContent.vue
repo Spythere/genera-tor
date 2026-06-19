@@ -3,7 +3,7 @@
     <tbody>
       <!-- First row - 22 & 99 instructions -->
       <tr>
-        <td width="10%" class="order-instruction-number">
+        <td width="10%" class="order-instruction-number" data-instruction-key="22">
           <OrderRowCheckbox :row-index="0" />
         </td>
 
@@ -13,7 +13,7 @@
           </b>
         </td>
 
-        <td width="5%" class="order-instruction-number">
+        <td width="5%" class="order-instruction-number" data-instruction-key="99">
           <OrderRowCheckbox :row-index="1" />
         </td>
 
@@ -39,6 +39,7 @@
           'bg-lighter': instruction.key.startsWith('218'),
           dark: store.orderDarkMode
         }"
+        :data-instruction-key="instruction.key"
       >
         <td width="10%" class="order-instruction-number">
           <OrderRowCheckbox :row-index="i + 2" />

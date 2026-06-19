@@ -2,9 +2,8 @@ import { defineStore } from 'pinia';
 
 import StorageManager from '../managers/storageManager';
 import i18n from '../i18n';
-import { TPanelMode } from '../types/dataTypes';
 import { createOrderDataObject } from '../utils/orderUtils';
-
+import { TPanel } from '../types/orderTypes';
 
 export const useStore = defineStore('store', {
   state: () => {
@@ -22,7 +21,7 @@ export const useStore = defineStore('store', {
       helperModalOpen: false,
       orderDarkMode: false,
 
-      panelMode: 'OrderMessagePanel' as TPanelMode,
+      panelMode: 'OrderMessagePanel' as TPanel,
 
       chosenLocalOrderId: '',
 

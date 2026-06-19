@@ -33,5 +33,3 @@ export interface ISceneryData {
   signalType: string;
   url: string;
 }
-
-export type TPanelMode = 'OrderListPanel' | 'OrderMessagePanel' | 'OrderTrainPickerPanel';

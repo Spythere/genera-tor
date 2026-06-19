@@ -36,6 +36,16 @@
             <TrainFront :size="20" />
             {{ t(`navbar.OrderTrainPickerPanel`) }}
           </button>
+
+          <button
+            key="OrderHelperPanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderHelperPanel'"
+            @click="selectPanelMode('OrderHelperPanel')"
+          >
+            <HelpCircle :size="20" />
+            {{ t(`navbar.OrderHelperPanel`) }}
+          </button>
         </div>
 
         <transition name="order-anim" mode="out-in">
@@ -52,12 +62,13 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from '../store/store';
-import { BookMarked, MessageSquareText, TrainFront } from '@lucide/vue';
+import { BookMarked, HelpCircle, MessageSquareText, TrainFront } from '@lucide/vue';
 import { TPanel } from '../types/orderTypes';
 import Order from '../components/Order/Order.vue';
 import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
 import OrderListPanel from '../components/Panels/OrderListPanel.vue';
 import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
+import OrderHelperPanel from '../components/Panels/OrderHelperPanel.vue';
 
 const store = useStore();
 const { t } = useI18n();
@@ -72,6 +83,8 @@ const panelComponent = computed(() => {
       return OrderListPanel;
     case 'OrderTrainPickerPanel':
       return OrderTrainPickerPanel;
+    case 'OrderHelperPanel':
+      return OrderHelperPanel;
     case 'OrderMessagePanel':
     default:
       return OrderMessagePanel;
@@ -94,13 +107,13 @@ const panelComponent = computed(() => {
 
 .home-container {
   display: grid;
-  grid-template-columns: 800px 500px;
+  grid-template-columns: 800px minmax(auto, 600px);
   justify-content: center;
   gap: 2em 1em;
   padding: 1em;
   width: 100%;
 
-  @media screen and (max-width: 1350px) {
+  @media screen and (max-width: 1300px) {
     grid-template-columns: auto;
     padding: 1em 0.5em;
   }
@@ -136,7 +149,6 @@ const panelComponent = computed(() => {
   justify-content: center;
   align-items: center;
   gap: 0.5em;
-  min-width: 8em;
   padding: 0.25em 0.5em;
 
   &:focus-visible {

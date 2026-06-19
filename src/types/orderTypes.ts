@@ -1,5 +1,9 @@
 export type TOrder = 'orderO' | 'orderS' | 'orderN';
-export type TPanel = 'OrderMessagePanel' | 'OrderListPanel' | 'OrderTrainPickerPanel';
+export type TPanel =
+  | 'OrderMessagePanel'
+  | 'OrderListPanel'
+  | 'OrderTrainPickerPanel'
+  | 'OrderHelperPanel';
 
 export interface LocalStorageOrderLegacy {
   id: string;

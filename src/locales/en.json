@@ -6,7 +6,8 @@
    "navbar": {
       "OrderMessagePanel": "MESSAGE",
       "OrderListPanel": "SAVED",
-      "OrderTrainPickerPanel": "TRAINS"
+      "OrderTrainPickerPanel": "TRAINS",
+      "OrderHelperPanel": "HELP"
    },
    "update": {
       "update-available-text": "New GeneraTOR version is available!",
