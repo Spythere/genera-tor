@@ -58,7 +58,7 @@ function switchLang() {
 
   width: 100%;
   height: 40px;
-  padding: 0.25em;
+  padding: 0.5em;
   background-color: #1c1c1c;
 }
 
@@ -67,7 +67,7 @@ function switchLang() {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1300px;
+  max-width: 1400px;
 }
 
 .navbar-brand {
