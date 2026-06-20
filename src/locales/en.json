@@ -35,9 +35,9 @@
       "warning-no-order-selected": "Choose the already saved order first!",
       "warning-conflicting-instructions": "Instruction {0} and {1} can't be on the same order!",
       "error-update": "An error occurred while saving this order! :/",
-      "success-update-html": "Updated this <b class=\"text--accent\">order's</b> message!",
-      "success-save-html": "Saved <b class=\"text--accent\">order's</b> message in the browser memory!",
-      "success-copy-html": "<b class=\"text--accent\">Success!</b> You may paste the order message in the simulator's chatbox now!"
+      "success-update-html": "<b>Order with ID: {0} has been updated</b>",
+      "success-save-html": "<b>New order with ID: {0} has been saved</b><br />It is now available in the <b>SAVED</b> tab!",
+      "success-copy-html": "<b>Successfully copied the message of the order with ID: {0}!</b><br />You may now paste it in the simulator's chatbox!"
    },
    "order-footer": {
       "field-stationName": "station",

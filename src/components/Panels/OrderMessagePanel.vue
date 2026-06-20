@@ -261,7 +261,7 @@ function copyMessage() {
 
   if (incrementOnCopy.value) incrementOrderNo();
 
-  popupStore.showPopup(t('order-message.success-copy-html'), 'success');
+  popupStore.showPopup(t('order-message.success-copy-html', [store.orderData.footer.Z]), 'success');
 }
 
 function saveOrder() {
@@ -283,6 +283,10 @@ function saveOrder() {
 
   const prevLocalOrder = StorageManager.getValue(`order-v3-${localOrderCount}`);
 
+  const nextOrderCount = localOrderCount + 1;
+  const nextOrderId = `order-v3-${nextOrderCount}`;
+  orderDataToSave['id'] = nextOrderId;
+
   if (prevLocalOrder) {
     try {
       const prevOrderObj = JSON.parse(prevLocalOrder) as IStorageOrderData;
@@ -298,15 +302,11 @@ function saveOrder() {
     }
   }
 
-  const nextOrderCount = localOrderCount + 1;
-  const nextOrderId = `order-v3-${nextOrderCount}`;
-  orderDataToSave['id'] = nextOrderId;
-
   StorageManager.setNumericValue('orderCountV3', nextOrderCount);
   StorageManager.setValue(nextOrderId, JSON.stringify(orderDataToSave));
 
   store.chosenLocalOrderId = nextOrderId;
-  popupStore.showPopup(t('order-message.success-save-html'), 'success');
+  popupStore.showPopup(t('order-message.success-save-html', [store.orderData.footer.Z]), 'success');
 
   if (incrementOnSave.value) incrementOrderNo();
 }
@@ -337,7 +337,11 @@ function updateOrder() {
   };
 
   window.localStorage.setItem(store.chosenLocalOrderId, JSON.stringify(orderDataToUpdate));
-  popupStore.showPopup(t('order-message.success-update-html'), 'success');
+
+  popupStore.showPopup(
+    t('order-message.success-update-html', [store.orderData.footer.Z]),
+    'success'
+  );
 }
 
 function resetOrder() {

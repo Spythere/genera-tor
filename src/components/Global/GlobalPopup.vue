@@ -1,16 +1,17 @@
 <template>
   <transition name="popup-anim">
-    <div v-if="popupStore.isVisible" class="g-popup" :data-type="popupStore.popupType">
+    <button
+      v-if="popupStore.isVisible"
+      class="g-popup"
+      :data-type="popupStore.popupType"
+      @click="popupStore.hidePopup()"
+    >
       <span v-html="popupStore.htmlContent"></span>
-      <button class="g-button popup-exit" @click="popupStore.hidePopup">
-        <X :width="20" />
-      </button>
-    </div>
+    </button>
   </transition>
 </template>
 
 <script setup lang="ts">
-import { X } from '@lucide/vue';
 import { usePopupStore } from '../../store/popup';
 
 const popupStore = usePopupStore();
@@ -27,12 +28,13 @@ const popupStore = usePopupStore();
   width: 95%;
   max-width: 400px;
 
-  padding: 0.5em 1.5em 0.5em 0.5em;
+  padding: 0.5em;
   border-radius: 0.5em;
 
   font-size: 1.2em;
-
   text-align: center;
+  user-select: none;
+  -moz-user-select: none;
 
   &[data-type='info'] {
     color: white;
@@ -44,7 +46,7 @@ const popupStore = usePopupStore();
   }
 
   &[data-type='success'] {
-    background-color: rgba(9, 229, 57, 0.9);
+    background-color: rgba(0, 195, 42, 0.9);
   }
 }
 
