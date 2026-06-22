@@ -358,6 +358,129 @@
           "x3": "<b>x.3</b>: Lokalizacja zatrzymania w kilometrach - w przypadku zatrzymania na szlaku obowiązkowo wypełnić; w przypadku zatrzymania na posterunku może pozostać niewypełnione (wpisać myślnik)",
           "x96": "<b>x.96</b>: Przyczyna zatrzymania"
         }
+      },
+      "2145": {
+        "description": "W przypadku: <ul><li>polecenia zatrzymania pociągu przed uszkodzonym obsługiwanym semaforem</li><li>informacji o nieważności na semaforze sygnału zezwalającego na jazdę pociągu</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, na którym znajduje się uszkodzony semafor obsługiwany lub z nieważnym sygnałem zezwalającym na jazdę",
+          "x2": "<b>x.2</b>: Nazwa sygnalizatora, do którego odnosi się rozkaz (oznaczenie liczbowe lub liczbowo/literowe, np. A, B2)"
+        }
+      },
+      "2150": {
+        "description": "W przypadku informacji o unieważnieniu wskazań tarcz ostrzegawczych przejazdowych odnoszących się do obsługiwanych przejazdów kolejowo– drogowych i przejść, na których zapewniono kierowanie ruchem drogowym.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, w rejonie którego znajdują się tarcze ostrzegawcze; w przypadku, gdy tarcze znajdują się na szlaku w tym polu wpisać posterunek początkowy tego szlaku (zgodnie z kierunkiem jazdy pociągu)",
+          "x2": "<b>x.2</b>: Nazwa posterunku na końcu szlaku; w przypadku gdy tarcze ostrzegawcze znajdują się w obrębie posterunku - zostawić niewypełnione",
+          "x3": "<b>x.3</b>: Lokalizacja w kilometrach osi przejazdu kolejowo-drogowego, do którego odnoszą się tarcze ostrzegawcze, których wskazania są unieważniane"
+        }
+      },
+      "2155": {
+        "description": "W przypadku informacji o uszkodzeniu przytorowych urządzeń kontroli prowadzenia pociągów SHP.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, w rejonie którego znajdują się uszkodzone urządzenia SHP; w przypadku, gdy urządzenia znajdują się na szlaku w tym polu wpisać posterunek początkowy tego szlaku (zgodnie z kierunkiem jazdy pociągu)",
+          "x2": "<b>x.2</b>: Nazwa posterunku na końcu szlaku; w przypadku gdy urządzenia SHP znajdują się w obrębie posterunku - zostawić niewypełnione",
+          "x3": "<b>x.3</b>: Oznaczenie sygnalizatora do którego odnosi się rezonator SHP. Oznaczenie sygnalizatora literowe lub liczbowo/literowe, np. A, J105"
+        }
+      },
+      "2160": {
+        "description": "W przypadku informacji o jeździe pociągu w innym kierunku niż przewidziany w wewnętrznym rozkładzie jazdy.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, od którego następuje zmiana trasy dla pociągu",
+          "x2": "<b>x.2</b>: Nazwa posterunku, do którego pociąg będzie jechać trasą zmienioną",
+          "x3": "<b>x.3</b>: Nazwa posterunku, przez który nastąpi jazda pociągu po zmienionej trasie",
+          "x4": "<b>x.4</b>: Numer linii, po której/których będzie odbywać się jazda zmienioną trasą, oddzielone przecinkiem (w przypadku symulatora mogą być to nazwy szlaków)",
+          "x5": "<b>x.5</b>: Prędkość z jaką może jechać pociąg na zmienionej trasie - w przypadku znajomości odcinka/odcinków przez drużynę pociągową zostawić niewypełnione"
+        }
+      },
+      "2165": {
+        "description": "W przypadku informacji o konieczności opuszczenia pantografów.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Lokalizacja w kilometrach miejsca, od którego należy jechać z opuszczonymi pantografami",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach miejsca, do którego należy jechać z opuszczonymi pantografami"
+        }
+      },
+      "2170": {
+        "description": "W przypadku polecenia zmiany rodzaju łączności GSM-R na łączność analogową na wskazanym odcinku.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, od którego następuje zmiana łączności",
+          "x2": "<b>x.2</b>: Nazwa posterunku, do którego obowiązuje łączność analogowa",
+          "x3": "<b>x.3</b>: Numer linii, na której/których będzie obowiązywać łączność analogowa (oddzielone przecinkiem)"
+        }
+      },
+      "2180": {
+        "description": "W przypadku wyprawiania pociągu na tor zamknięty.",
+        "warnings": "W przypadku wydania instrukcji <b>21.80</b> wraz z <b>21.81</b>, nie można wydać instrukcji <b>21.82</b>.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer zamkniętego toru szlakowego, po którym odbędzie się jazda pociągu roboczego",
+          "x2": "<b>x.2</b>: Nazwa posterunku, w kierunku którego wyprawiany jest pociąg",
+          "x3": "<b>x.3</b>: Lokalizacja w kilometrach, do której może dojechać pociąg",
+          "x4": "<b>x.4</b>: Nazwa posterunku, do którego zjechać ma pociąg po zakończonej pracy",
+          "x5": "<b>x.5</b>: Godzina, do której pociąg ma zjechać do posterunku"
+        }
+      },
+      "2181": {
+        "description": "W przypadku gdy na torze zamkniętym nie ma innych pociągów i nie zostaną wyprawione inne pociągi. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku wydania instrukcji <b>21.81</b> wraz z <b>21.80</b>, nie można wydać instrukcji <b>21.82</b>."
+      },
+      "2182": {
+        "description": "W przypadku gdy na torze zamkniętym pracuje inny pociąg / pociągi. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku wydania instrukcji <b>21.82</b> wraz z <b>21.80</b>, nie można wydać instrukcji <b>21.81</b>. W przypadku gdy na szlaku znajduje się więcej niż jeden pociąg roboczy, wpisać tylko określenie najbliższego pociągu (bezpośrednio przed/za wyprawianym).",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer pociągu roboczego, który pracuje na torze bezpośrednio przed wyprawianym pociągiem",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach pociągu roboczego, który pracuje na torze zamkniętym"
+        }
+      },
+      "2183": {
+        "description": "W przypadku gdy za wyprawianym pociągiem roboczym zostanie wyprawiony kolejny pociąg na tor zamknięty. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku gdy na szlaku znajduje się więcej niż jeden pociąg roboczy, wpisać tylko określenie najbliższego pociągu (bezpośrednio przed/za wyprawianym).",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer pociągu roboczego, który zostanie wyprawiony na tor bezpośrednio za pociągiem wyprawianym",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach do jakiej zostanie wyprawiony pociąg wyprawiany"
+        }
+      },
+      "2185": {
+        "description": "W przypadku zezwolenia na wstawienie pojazdu szynowo-drogowego (PSD), który może poruszać się po drogach kołowych lub torach. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku wstawiania PSD na torze stacyjnym nie wystawiamy rozkazu pisemnego. Miejsce planowego wystawienia PSD z toru zamkniętego zapisujemy w instrukcji <b>21.80</b> w polu <b>x.4</b>.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer zamkniętego toru szlakowego, na który ma wstawić się PSD",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach, gdzie ma nastąpić wstawienie pojazdu",
+          "x3": "<b>x.3</b>: Nazwa posterunku początkowego dla szlaku, na którym ma wstawić się pojazd",
+          "x4": "<b>x.4</b>: Nazwa posterunku na końcu szlaku, na którym ma wstawić się pojazd"
+        }
+      },
+      "2310": {
+        "description": "W przypadku konieczności zachowania szczególnej ostrożności i ograniczenia prędkości jazdy.",
+        "warnings": "W ramach jednego rozkazu pisemnego można uzupełnić do trzech ograniczeń prędkości. Zaznaczyć pole wyboru pierwszego, drugiego i/lub trzeciego ograniczenia i uzupełnić dotyczące je pola tekstowe.",
+        "fields": {
+          "x1": "<b>x.1, x.7, x.13</b>: Nazwa posterunku początkowego dla szlaku, na którym obowiązuje ograniczenie prędkości; w przypadku ograniczenia w granicach posterunku - wpisać jego nazwę",
+          "x2": "<b>x.2, x.8, x.14</b>: Nazwa posterunku na końcu szlaku, na którym obowiązuje ograniczenie prędkości; w przypadku ograniczenia w granicach posterunku - pozostawić niewypełnione",
+          "x3": "<b>x.3, x.9, x.15</b>: Numer toru, po którym obowiązuje ograniczenie prędkości jazdy",
+          "x4": "<b>x.4, x.10, x.16</b>: Maksymalna dozwolona prędkość w km/h wynikająca z ograniczenia prędkości",
+          "x5": "<b>x.5, x.11, x.17</b>: Lokalizacja w kilometrach, od której zaczyna obowiązywać ograniczenie",
+          "x6": "<b>x.6, x.12, x.18</b>: Lokalizacja w kilometrach, w której kończy obowiązywać ograniczenie",
+          "x91": "<b>x.91, x.92, x.93</b>: Przyczyna ograniczenia prędkości"
+        }
+      },
+      "2311": {
+        "description": "W przypadku gdy maszynista pojazdu kolejowego jadącego przez odcinki ograniczenia prędkości ma podawać sygnał dźwiękowy \"Baczność\". Stosować z instrukcją <b>23.10</b>.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer pociągu roboczego, który zostanie wyprawiony na tor bezpośrednio za pociągiem wyprawianym",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach do jakiej zostanie wyprawiony pociąg wyprawiany"
+        }
+      },
+      "2320": {
+        "description": "W przypadku przekazania zezwoleń, poleceń oraz informacji innych niż umieszczone w formularzu.",
+        "warnings": "-",
+        "fields": {
+          "x96": "<b>x.96</b>: Wszelkie zezwolenia, polecenia oraz informacje nieujęte w treści formularza, a wymagane do przejazdu pociągu"
+        }
       }
     }
   }
