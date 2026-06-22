@@ -1,288 +1,487 @@
 {
-   "locale": {
-      "pl": "POL",
-      "en": "ENG"
-   },
-   "navbar": {
-      "OrderMessagePanel": "MESSAGE",
-      "OrderListPanel": "SAVED",
-      "OrderTrainPickerPanel": "TRAINS",
-      "OrderHelperPanel": "HELP"
-   },
-   "update": {
-      "update-available-text": "New GeneraTOR version is available!",
-      "update-available-underline": "Click here to update!",
-      "title": "GeneraTOR update!",
-      "confirm": "ROGER THAT!",
-      "no-data": "No changelog available!",
-      "info-1": "This changelog will be available to see once again after clicking the version number in the footer",
-      "info-2": "The full app changelog available on <a href='https://github.com/Spythere/genera-tor' target='_blank'>the project's GitHub</a>"
-   },
-   "order-message": {
-      "title": "Message to display in the simulator's chatbox:",
-      "info": "Copy or save the content of the generated train order using buttons below:",
-      "button-save": "Save as new",
-      "button-copy": "Copy the message",
-      "button-update": "Update",
-      "button-reset": "Reset",
-      "warning-outdated-clipboard": "Oops! Your browser may be a little bit depraceted since it's not supporting saving data to the clipboard! :/",
-      "warning-fill-inputs": "Fill all the empty fields before copying the order!",
-      "warning-add-instruction": "Add at least one order instruction before copying the order!",
-      "warning-fill-missing": "Fill rows in the order's header and footer before copying it!",
-      "warning-fill-top-save": "Fill at least fields A, B, C and D in the order's header before saving it!",
-      "warning-fill-top-update": "Fill at least fields A, B, C and D in the order's header before updating it!",
-      "warning-order-identical": "Last saved order is identical as the current one!",
-      "warning-no-order-selected": "Choose the already saved order first!",
-      "warning-conflicting-instructions": "Instruction {0} and {1} can't be on the same order!",
-      "error-update": "An error occurred while saving this order! :/",
-      "success-update-html": "<b>Order with ID: {0} has been updated</b>",
-      "success-save-html": "<b>New order with ID: {0} has been saved</b><br />It is now available in the <b>SAVED</b> tab!",
-      "success-copy-html": "<b>Successfully copied the message of the order with ID: {0}!</b><br />You may now paste it in the simulator's chatbox!"
-   },
-   "order-footer": {
-      "field-stationName": "station",
-      "field-checkpointName": "checkpoint",
-      "field-hour": "hour",
-      "field-minutes": "minute",
-      "field-dispatcherName": "dispatcher",
-      "field-secondaryDispatcherName": "ordering dispatcher",
-      "field-dispatcherOrSecondaryName": "dispatcher (or ordering dispatcher)"
-   },
-   "order-options": {
-      "dark-mode": "Order dark theme",
-      "update-number-on-copy": "Update order number on copy",
-      "update-number-on-save": "Update order number on save",
-      "update-hours": "Update order hour on edit"
-   },
-   "order-list": {
-      "title": "Saved train orders",
-      "order-title": "Train order for no. {trainNo}",
-      "order-subtitle": "Selected instructions: - | Selected instruction: {0} | Selected instructions: {0}",
-      "no-saved-orders": "No saved orders!",
-      "order-added": "Added:",
-      "order-updated": "Updated:",
-      "button-order-select": "Select",
-      "button-order-remove": "Remove",
-      "warning-deprecated-version": "Deprecated version of the order - may generate incorrect information!",
-      "warning-removed-deprecated-orders": "Removed deprecated train orders ({count}) due to their replacement with a new format in Polish railway!"
-   },
-   "order-train-picker": {
-      "placeholder-scenery-name": "Scenery name",
-      "placeholder-region-name": "Region",
-      "placeholder-checkpoint-name": "Checkpoint name",
-      "autofill-checkpoint-id": "Autofill checkpoint's abbreviation",
-      "info": "Select scenery name to display active trains",
-      "title": "Active timetables and trains on the scenery",
-      "subtitle": "Click on the user below to fill the current order with their information",
-      "no-trains": "No trains to display"
-   },
-   "order": {
-      "title": "Polish Railway Train Order",
-      "header": {
-         "A": "A Train No {'|'} Shunting composition No",
-         "A-placeholder": "Train / shunting composition number",
-         "B": "B Date",
-         "C": "C Location of train {'|'} Location of shunting composition",
-         "C-placeholder": "Name of the post / line / scenery",
-         "D": "D Location of issuer",
-         "D-placeholder": "Name of the post / scenery"
-      },
+  "locale": {
+    "pl": "POL",
+    "en": "ENG"
+  },
+  "navbar": {
+    "OrderMessagePanel": "MESSAGE",
+    "OrderListPanel": "SAVED",
+    "OrderTrainPickerPanel": "TRAINS",
+    "OrderHelperPanel": "HELP"
+  },
+  "update": {
+    "update-available-text": "New GeneraTOR version is available!",
+    "update-available-underline": "Click here to update!",
+    "title": "GeneraTOR update!",
+    "confirm": "ROGER THAT!",
+    "no-data": "No changelog available!",
+    "info-1": "This changelog will be available to see once again after clicking the version number in the footer",
+    "info-2": "The full app changelog available on <a href='https://github.com/Spythere/genera-tor' target='_blank'>the project's GitHub</a>"
+  },
+  "order-message": {
+    "title": "Message to display in the simulator's chatbox:",
+    "info": "Copy or save the content of the generated train order using buttons below:",
+    "button-save": "Save as new",
+    "button-copy": "Copy the message",
+    "button-update": "Update",
+    "button-reset": "Reset",
+    "warning-outdated-clipboard": "Oops! Your browser may be a little bit depraceted since it's not supporting saving data to the clipboard! :/",
+    "warning-fill-inputs": "Fill all the empty fields before copying the order!",
+    "warning-add-instruction": "Add at least one order instruction before copying the order!",
+    "warning-fill-missing": "Fill rows in the order's header and footer before copying it!",
+    "warning-fill-top-save": "Fill at least fields A, B, C and D in the order's header before saving it!",
+    "warning-fill-top-update": "Fill at least fields A, B, C and D in the order's header before updating it!",
+    "warning-order-identical": "Last saved order is identical as the current one!",
+    "warning-no-order-selected": "Choose the already saved order first!",
+    "warning-conflicting-instructions": "Instruction {0} and {1} can't be on the same order!",
+    "error-update": "An error occurred while saving this order! :/",
+    "success-update-html": "<b>Order with ID: {0} has been updated</b>",
+    "success-save-html": "<b>New order with ID: {0} has been saved</b><br />It is now available in the <b>SAVED</b> tab!",
+    "success-copy-html": "<b>Successfully copied the message of the order with ID: {0}!</b><br />You may now paste it in the simulator's chatbox!"
+  },
+  "order-footer": {
+    "field-stationName": "station",
+    "field-checkpointName": "checkpoint",
+    "field-hour": "hour",
+    "field-minutes": "minute",
+    "field-dispatcherName": "dispatcher",
+    "field-secondaryDispatcherName": "ordering dispatcher",
+    "field-dispatcherOrSecondaryName": "dispatcher (or ordering dispatcher)"
+  },
+  "order-options": {
+    "dark-mode": "Order dark theme",
+    "update-number-on-copy": "Update order number on copy",
+    "update-number-on-save": "Update order number on save",
+    "update-hours": "Update order hour on edit"
+  },
+  "order-list": {
+    "title": "Saved train orders",
+    "order-title": "Train order for no. {trainNo}",
+    "order-subtitle": "Selected instructions: - | Selected instruction: {0} | Selected instructions: {0}",
+    "no-saved-orders": "No saved orders!",
+    "order-added": "Added:",
+    "order-updated": "Updated:",
+    "button-order-select": "Select",
+    "button-order-remove": "Remove",
+    "warning-deprecated-version": "Deprecated version of the order - may generate incorrect information!",
+    "warning-removed-deprecated-orders": "Removed deprecated train orders ({count}) due to their replacement with a new format in Polish railway!"
+  },
+  "order-train-picker": {
+    "placeholder-scenery-name": "Scenery name",
+    "placeholder-region-name": "Region",
+    "placeholder-checkpoint-name": "Checkpoint name",
+    "autofill-checkpoint-id": "Autofill checkpoint's abbreviation",
+    "info": "Select scenery name to display active trains",
+    "title": "Active timetables and trains on the scenery",
+    "subtitle": "Click on the user below to fill the current order with their information",
+    "no-trains": "No trains to display"
+  },
+  "order": {
+    "title": "Polish Railway Train Order",
+    "header": {
+      "A": "A Train No {'|'} Shunting composition No",
+      "A-placeholder": "Train / shunting composition number",
+      "B": "B Date",
+      "C": "C Location of train {'|'} Location of shunting composition",
+      "C-placeholder": "Name of the post / line / scenery",
+      "D": "D Location of issuer",
+      "D-placeholder": "Name of the post / scenery"
+    },
+    "22": {
+      "text": "Applies to left-track traffic",
+      "message-html": "<b>Applies to left-track traffic</b>"
+    },
+    "99": {
+      "text": "Revoke the train order",
+      "x1": "x.1 Train order identifier",
+      "message-html": "<b>Revoke the train order</b> {0}"
+    },
+    "2110": {
+      "text": "{bold1} from track no. {track1} from {signalbox1} {br} to track no. {track2} in the direction of {signalbox2} {br} Pass Stop signals {signal1} and {signal2} and {signal3}",
+      "bold1": "Is allowed to exit",
+      "track1": "x.1 track",
+      "signalbox1": "x.2 signalbox",
+      "track2": "x.3 track",
+      "signalbox2": "x.4 signalbox",
+      "signal1": "x.5 signal",
+      "signal2": "x.6 signal",
+      "signal3": "x.7 signal",
+      "message-html": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}",
+      "message-html-1": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4}",
+      "message-html-2": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5}",
+      "message-html-3": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}"
+    },
+    "2115": {
+      "text": "{bold1} from track no. {track1} to {signalbox1} on track no. {track2} {br} Pass signals {signal1} and {signal2} and {signal3}",
+      "bold1": "Is allowed to enter",
+      "track1": "x.1 track",
+      "signalbox1": "x.2 signalbox",
+      "track2": "x.3 track",
+      "signal1": "x.4 signal",
+      "signal2": "x.5 signal",
+      "signal3": "x.6 signal",
+      "message-html": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}",
+      "message-html-1": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3}",
+      "message-html-2": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4}",
+      "message-html-3": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}"
+    },
+    "2120": {
+      "text": "From {signalbox1} to {signalbox2} on track {track1} {br} {highlight1} {br} {underline1}{highlight2}.",
+      "highlight1": "SBL signalling indications are to be ignored.",
+      "underline1": "Stay alert after passing the signal with indicator",
+      "highlight2": " W18",
+      "signalbox1": "x.1 signalbox",
+      "signalbox2": "x.2 signalbox",
+      "track1": "x.3 track no",
+      "message-html": "From {0} to {1} on track {2} <b>SBL signals are to be ignored.</b> Stay alert after passing the signal with indicator <b>W18.</b>"
+    },
+    "2125": {
+      "text": "Is allowed to pass {select1} in the direction of {signalbox1} on track {track1} to km {km1} to hour {hour1}.",
+      "select1-a": "indicator W5",
+      "select1-b": "last switch",
+      "signalbox1": "x.1 signalbox",
+      "track1": "x.2 track",
+      "km1": "x.3 km",
+      "hour1": "x.4 hour",
+      "message-html": "Is allowed to pass {0} in the direction of {1} on track {2} to km {3} to hour {4}."
+    },
+    "2135": {
+      "text": "{bold1} on track no. {track1} in the direction of {signalbox1}.",
+      "bold1": "Is allowed to proceed",
+      "track1": "x.1 track",
+      "signalbox1": "x.2 signalbox",
+      "message-html": "<b>Is allowed to proceed</b> on track no. {0} in the direction of {1}"
+    },
+    "2140": {
+      "text": "{bold1} at post/line {signalbox1}{'|'}{signalbox2} at km {km1} for {other1}",
+      "bold1": "Train halt",
+      "signalbox1": "x.1 signalbox",
+      "signalbox2": "x.2 signalbox",
+      "km1": "x.3 km",
+      "other1": "x.96 cause",
+      "message-html": "<b>Train halt</b> at post {0} at km {2} for {3} | <b>Train halt</b> on line {0} {'|'} {1} at km {2} for {3} | <b>Train halt</b> on line {0} {'|'} {1} at km {2} for {3}"
+    },
+    "2145": {
+      "text": "At {signalbox1} the clear signal {signal1}{br}{bold1}",
+      "bold1": "is invalid. Stop the train before this signal.",
+      "signalbox1": "x.1 signalbox",
+      "signal1": "x.2 signal",
+      "message-html": "At {0} the clear signal {1} <b>is invalid, stop the train before this signal.</b>"
+    },
+    "2150": {
+      "text": "{bold1} at post/line {br} {signalbox1} / {signalbox2} referring to level crossing at km {km1}{br}{bold2}",
+      "bold1": "Level crossing distant signals (TOP)",
+      "bold2": "are to be ignored. Proceed with timetable speed.",
+      "signalbox1": "x.1 signalbox",
+      "signalbox2": "x.2 signalbox",
+      "km1": "x.3 km",
+      "message-html": "<b>Level crossing distant signals (TOP)</b> at post {0} referring to level crossing at km {1} <b>are to be ignored. Proceed with timetable speed.</b> | <b>Wskazania tarcz ostrzegawczych</b> na line {0} / {1} referring to level crossing at km {2} <b>are to be ignored. Proceed with timetable speed.</b> | <b>Wskazania tarcz ostrzegawczych</b> na line {0} / {1} referring to level crossing at km {2} <b>are to be ignored. Proceed with timetable speed.</b>"
+    },
+    "2155": {
+      "text": "{bold1} at post/line {signalbox1}{'|'}{signalbox2} referring to signal {signal1}.",
+      "bold1": "Damaged SHP device",
+      "signalbox1": "x.1 signalbox",
+      "signalbox2": "x.2 signalbox",
+      "signal1": "x.3 signal",
+      "message-html": "<b>Damaged SHP device</b> at post {0} referring to signal {2}|<b>Damaged SHP device</b> on line {0} {'|'} {1} referring to signal {2}|<b>Uszkodzone urządzenia SHP</b> on line {0} {'|'} {1} referring to signal {2}"
+    },
+    "2160": {
+      "text": "{bold1} from {signalbox1} to {signalbox2}, rerouted via {signalbox3} by line {line1} with the speed of {vmax1}.",
+      "bold1": "Route change",
+      "signalbox1": "x.1 signalbox",
+      "signalbox2": "x.2 signalbox",
+      "signalbox3": "x.3 signalbox",
+      "line1": "x.4 line",
+      "vmax1": "x.5 km/h",
+      "message-html": "<b>Route change</b> from {0} to {1}, rerouted via {2} by line {3} with the speed of {4}."
+    },
+    "2165": {
+      "text": "{bold1} from {km1} to {km2}.",
+      "bold1": "Run with lowered pantographs",
+      "km1": "x.1 km",
+      "km2": "x.2 km",
+      "message-html": "<b>Run with lowered pantographs</b> from {0} to {1}."
+    },
+    "2170": {
+      "text": "{bold1} {signalbox1} and {signalbox2} of the line no. {line1}{br}{bold2}",
+      "bold1": "At section between",
+      "bold2": "ride with the analog contact.",
+      "signalbox1": "x.1 signalbox",
+      "signalbox2": "x.2 signalbox",
+      "line1": "x.3 line",
+      "message-html": "<b>At section between</b> {0} and {1} of the line no. {2} <b>ride with the analog contact.</b>"
+    },
+    "2180": {
+      "text": "{bold1} no. {track1} in the directon of {signalbox1} to km {km1} turning to {signalbox2} until hour {hour1}",
+      "bold1": "Run on the closed track",
+      "track1": "x.1 tor",
+      "signalbox1": "x.2 signalbox",
+      "km1": "x.3 km",
+      "signalbox2": "x.4 signalbox",
+      "hour1": "x.5 hour",
+      "message-html": "<b>Run on the closed track</b> no. {0} in the directon of {1} to km {2} turning to {3} until hour {4}"
+    },
+    "2181": {
+      "text": "{bold1}",
+      "bold1": "Track is closed with no rolling stock",
+      "message-html": "<b>Track is closed with no rolling stock</b> "
+    },
+    "2182": {
+      "text": "Train {train1} {bold1} at km {km1}",
+      "bold1": "is working on track",
+      "train1": "x.1 train no.",
+      "km1": "x.2 km",
+      "message-html": "Train {0} <b>is working on track</b> at km {1}"
+    },
+    "2183": {
+      "text": "Train {train1} {bold1} to km {km1}",
+      "bold1": "will be dispatched",
+      "train1": "x.1 train no.",
+      "km1": "x.2 km",
+      "message-html": "Train {0} <b>will be dispatched</b> to km {1}"
+    },
+    "2185": {
+      "text": "{bold1} on track no. {track1} at km {km1} on line {signalbox1} {'|'} {signalbox2}",
+      "bold1": "Is allowed to insert a PSD vehicle",
+      "track1": "x.1 track",
+      "km1": "x.2 km",
+      "signalbox1": "x.3 signalbox",
+      "signalbox2": "x.4 signalbox",
+      "message-html": "<b>Is allowed to insert a PSD vehicle</b> on track no. {0} at km {1} on line {2} {'|'} {3}"
+    },
+    "2310": {
+      "text": "{bold1}{br}{text-list}",
+      "bold1": "Do not exceed the speed and stay alert:",
+      "text-list": "{bold} {signalbox1}/{signalbox2} track no. {track1} {v} {vmax1} from {km1} to {km2}  {other1}",
+      "bold": "{0}. On post/line",
+      "signalbox1": "x.{0} signalbox",
+      "signalbox2": "x.{0} signalbox",
+      "track1": "x.{0} track",
+      "vmax1": "x.{0} km/h",
+      "km1": "x.{0} km",
+      "km2": "x.{0} km",
+      "other1": "x.{1} cause",
+      "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
+      "message-html-list": "<b>{0}. On post</b> {1} track no. {3} v{4}km/h from {5}km to {6}km - cause: {7}|<b>{0}. On post</b> {1} tor nr {3} v{4} from {5}km to {6}km - cause: {7}|<b>{0}. On line</b> {1}/{2} tor nr {3} v{4} from {5}km to {6}km - cause: {7}"
+    },
+    "2311": {
+      "text": "{bold1}",
+      "bold1": "Use „Baczność” signal multiple times",
+      "message-html": "<b>Use „Baczność” signal multiple times</b>"
+    },
+    "2320": {
+      "text": "{other2320}",
+      "other2320": "x.96 other",
+      "message-html": "Other: {0}"
+    },
+    "footer": {
+      "V": "V Driver identifier",
+      "V-placeholder": "Driver nickname",
+      "W": "W Issuer identifier",
+      "W-placeholder": "Dispatcher nickname",
+      "Y": "Y Hour",
+      "Y-placeholder": "HH:MM, e.g. 09:25",
+      "Z": "Z Train order identifier",
+      "Z-placeholder": "RD-(order no.)-(sc. hash)-(2 last year digits)"
+    }
+  },
+  "helper": {
+    "header": "Train orders helper",
+    "paragraph-1": "Check the order's instructions to display help about them",
+
+    "instructions": {
       "22": {
-         "text": "Applies to left-track traffic",
-         "message-html": "<b>Applies to left-track traffic</b>"
+        "description": "Applies to movements from and onto the wrong-direction line. Instruction for arrivals, departures and continuation of movement after stopping from/on the wrong-direction line.",
+        "warnings": "Instruction <b>22</b> shall be issued together with instruction <b>21.10</b>, <b>21.15</b> or <b>21.35</b>."
       },
       "99": {
-         "text": "Revoke the train order",
-         "x1": "x.1 Train order identifier",
-         "message-html": "<b>Revoke the train order</b> {0}"
+        "description": "Instruction used to cancel a previously issued written order.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Identifier of the written order (from its \"Z\" field) to be cancelled"
+        }
       },
       "2110": {
-         "text": "{bold1} from track no. {track1} from {signalbox1} {br} to track no. {track2} in the direction of {signalbox2} {br} Pass Stop signals {signal1} and {signal2} and {signal3}",
-         "bold1": "Is allowed to exit",
-         "track1": "x.1 track",
-         "signalbox1": "x.2 signalbox",
-         "track2": "x.3 track",
-         "signalbox2": "x.4 signalbox",
-         "signal1": "x.5 signal",
-         "signal2": "x.6 signal",
-         "signal3": "x.7 signal",
-         "message-html": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}",
-         "message-html-1": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4}",
-         "message-html-2": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5}",
-         "message-html-3": "<b>Is allowed to exit</b> from track no. {0} from {1} to track no. {2} in the direction of {3}. Pass Stop signals {4} and {5} and {6}"
+        "description": "Departure (dispatching a train) from a signalling location or movement within a signalling location in the following cases:<ul><li>it is not possible to display a proceed aspect on the departure signal(s), group departure route signal(s), route signal(s) or group route signal(s)</li><li>no departure signal is provided for the track from which the train is to depart onto the line section</li><li>no route signal or group route signal is provided for the track from which the movement is to take place within the signalling location</li></ul>",
+        "warnings": "When instruction <b>21.10</b> is issued, instruction <b>21.15</b> must not be issued simultaneously. One form may authorise passing up to three signals (or a D1 stop board) that are not displaying a proceed aspect.",
+        "fields": {
+          "x1": "<b>x.1</b>: Track number from which the train departs (numeric or alphanumeric designation, e.g. 2, 3d)",
+          "x2": "<b>x.2</b>: Name of the signalling location from which the train is dispatched",
+          "x3": "<b>x.3</b>: Running line or station track number to which the train is dispatched (numeric or alphanumeric designation, e.g. 1, 101a)",
+          "x4": "<b>x.4</b>: Name of the signalling location towards which the train is dispatched",
+          "x5-7": "<b>x.5, x.6, x.7</b>: Identification of signals displaying no proceed aspect and authorised to be passed under this written order. For main signals use letter or alphanumeric designations; for other signals specify the signal type and kilometre location (e.g. D1/73.200)."
+        }
       },
       "2115": {
-         "text": "{bold1} from track no. {track1} to {signalbox1} on track no. {track2} {br} Pass signals {signal1} and {signal2} and {signal3}",
-         "bold1": "Is allowed to enter",
-         "track1": "x.1 track",
-         "signalbox1": "x.2 signalbox",
-         "track2": "x.3 track",
-         "signal1": "x.4 signal",
-         "signal2": "x.5 signal",
-         "signal3": "x.6 signal",
-         "message-html": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}",
-         "message-html-1": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3}",
-         "message-html-2": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4}",
-         "message-html-3": "<b>Is allowed to enter</b> from track no. {0} to {1} on track no. {2}. Pass signals {3} and {4} and {5}"
+        "description": "Arrival (receiving a train) at a signalling location or movement within a signalling location in the following cases:<ul><li>it is not possible to display a proceed aspect on route signal(s) or group route signal(s)</li><li>no home signal is provided</li><li>arrival from a blocked line without a home signal</li><li>it is not possible to display a proceed aspect on a controlled block signal (including APO)</li></ul>",
+        "warnings": "When instruction <b>21.15</b> is issued, instruction <b>21.10</b> must not be issued simultaneously. One form may authorise passing up to three signals (or a D1 stop board) that are not displaying a proceed aspect.",
+        "fields": {
+          "x1": "<b>x.1</b>: Track number from which the train arrives (numeric or alphanumeric designation, e.g. 2, 3d)",
+          "x2": "<b>x.2</b>: Name of the signalling location receiving the train",
+          "x3": "<b>x.3</b>: Track number on which the train is received (numeric or alphanumeric designation, e.g. 2, 3d)",
+          "x4-6": "<b>x.4, x.5, x.6</b>: Identification of signals displaying no proceed aspect and authorised to be passed under this written order. For main signals use letter or alphanumeric designations; for other signals specify the signal type and kilometre location (e.g. D1/73.200)."
+        }
       },
       "2120": {
-         "text": "From {signalbox1} to {signalbox2} on track {track1} {br} {highlight1} {br} {underline1}{highlight2}.",
-         "highlight1": "SBL signalling indications are to be ignored.",
-         "underline1": "Stay alert after passing the signal with indicator",
-         "highlight2": " W18",
-         "signalbox1": "x.1 signalbox",
-         "signalbox2": "x.2 signalbox",
-         "track1": "x.3 track no",
-         "message-html": "From {0} to {1} on track {2} <b>SBL signals are to be ignored.</b> Stay alert after passing the signal with indicator <b>W18.</b>"
+        "description": "Used in the following cases:<ul><li>cancellation of aspects displayed by automatic block signals (ABS)</li><li>failure of the ABS system</li><li>occupation of three or more block sections on a line equipped with ABS</li><li>introduction of train reporting by telephone on lines equipped with ABS</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location from which the train is dispatched",
+          "x2": "<b>x.2</b>: Name of the signalling location to which the train is dispatched",
+          "x3": "<b>x.3</b>: Running line number for which the indications of the ABS signals are cancelled (numeric or alphanumeric designation, e.g. 1, 3Ł)"
+        }
       },
       "2125": {
-         "text": "Is allowed to pass {select1} in the direction of {signalbox1} on track {track1} to km {km1} to hour {hour1}.",
-         "select1-a": "indicator W5",
-         "select1-b": "last switch",
-         "signalbox1": "x.1 signalbox",
-         "track1": "x.2 track",
-         "km1": "x.3 km",
-         "hour1": "x.4 hour",
-         "message-html": "Is allowed to pass {0} in the direction of {1} on track {2} to km {3} to hour {4}."
+        "description": "Authorisation for a shunting movement beyond the W5 shunting limit board, or beyond the last turnout where no W5 board is provided, when the movement is onto a single-track line or against the normal direction on a double-track line.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location from which shunting movements are to take place",
+          "x2": "<b>x.2</b>: Track number over which the shunting movement will pass beyond the shunting limit (numeric or alphanumeric designation, e.g. 1, 3Ł)",
+          "x3": "<b>x.3</b>: Kilometre location up to which the shunting movement may proceed",
+          "x4": "<b>x.4</b>: Time at which shunting movements must be completed"
+        }
       },
       "2135": {
-         "text": "{bold1} on track no. {track1} in the direction of {signalbox1}.",
-         "bold1": "Is allowed to proceed",
-         "track1": "x.1 track",
-         "signalbox1": "x.2 signalbox",
-         "message-html": "<b>Is allowed to proceed</b> on track no. {0} in the direction of {1}"
+        "description": "Used in the following cases:<ul><li>authorisation to proceed when the rail vehicle is beyond a signal displaying a proceed aspect which the driver cannot see</li><li>authorisation for a stopped train routed onto the normal-direction line to continue after its front end has passed a signal displaying indicator W24</li><li>authorisation for a train stopped beyond a controlled signal where the proceed aspect has already changed to S1 'Stop', or changed before the front of the train passed the signal</li><li>the need to issue authorisation/instructions to start or continue movement following incidents or potentially unsafe situations</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Track number adjacent to the signal whose proceed aspect changed to Stop or which is not visible to the driver (numeric or alphanumeric designation, e.g. 2, 3d)",
+          "x2": "<b>x.2</b>: For arrival at a signalling location – the name of that signalling location; for departure onto a line section – the name of the next signalling location towards which the movement is taking place"
+        }
       },
       "2140": {
-         "text": "{bold1} at post/line {signalbox1}{'|'}{signalbox2} at km {km1} for {other1}",
-         "bold1": "Train halt",
-         "signalbox1": "x.1 signalbox",
-         "signalbox2": "x.2 signalbox",
-         "km1": "x.3 km",
-         "other1": "x.96 cause",
-         "message-html": "<b>Train halt</b> at post {0} at km {2} for {3} | <b>Train halt</b> on line {0} {'|'} {1} at km {2} for {3} | <b>Train halt</b> on line {0} {'|'} {1} at km {2} for {3}"
+        "description": "Used in the following cases:<ul><li>ordering a train to stop at a station or passenger stop where it has no scheduled stop</li><li>ordering an unscheduled stop on a line section, specifying the purpose and duration of the stop</li></ul>",
+        "warnings": "A separate written order shall be issued for each additional stop.",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location where the stop is to take place; for a stop on a line section enter the name of the signalling location at the beginning of that section",
+          "x2": "<b>x.2</b>: Name of the signalling location at the end of the line section where the stop is to take place; leave blank for a stop at a signalling location",
+          "x3": "<b>x.3</b>: Kilometre location of the stop; mandatory for a stop on a line section, optional for a stop at a signalling location (enter a dash if not used)",
+          "x96": "<b>x.96</b>: Reason for the stop"
+        }
       },
       "2145": {
-         "text": "At {signalbox1} the clear signal {signal1}{br}{bold1}",
-         "bold1": "is invalid. Stop the train before this signal.",
-         "signalbox1": "x.1 signalbox",
-         "signal1": "x.2 signal",
-         "message-html": "At {0} the clear signal {1} <b>is invalid, stop the train before this signal.</b>"
+        "description": "Used in the following cases:<ul><li>ordering a train to stop before a defective controlled signal</li><li>advising that a proceed aspect displayed on a signal is invalid</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location where the defective signal or signal displaying an invalid proceed aspect is located",
+          "x2": "<b>x.2</b>: Designation of the signal to which the order applies (letter or alphanumeric designation, e.g. A, B2)"
+        }
       },
       "2150": {
-         "text": "{bold1} at post/line {br} {signalbox1} / {signalbox2} referring to level crossing at km {km1}{br}{bold2}",
-         "bold1": "Level crossing distant signals (TOP)",
-         "bold2": "are to be ignored. Proceed with timetable speed.",
-         "signalbox1": "x.1 signalbox",
-         "signalbox2": "x.2 signalbox",
-         "km1": "x.3 km",
-         "message-html": "<b>Level crossing distant signals (TOP)</b> at post {0} referring to level crossing at km {1} <b>are to be ignored. Proceed with timetable speed.</b> | <b>Wskazania tarcz ostrzegawczych</b> na line {0} / {1} referring to level crossing at km {2} <b>are to be ignored. Proceed with timetable speed.</b> | <b>Wskazania tarcz ostrzegawczych</b> na line {0} / {1} referring to level crossing at km {2} <b>are to be ignored. Proceed with timetable speed.</b>"
+        "description": "Used to advise that the indications of level crossing warning boards associated with controlled level crossings and pedestrian crossings, where road traffic control is provided, are cancelled.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location in whose area the warning boards are located; if the boards are located on a line section, enter the name of the signalling location at the beginning of that section (according to the direction of travel)",
+          "x2": "<b>x.2</b>: Name of the signalling location at the end of the line section; if the warning boards are located within a signalling location, leave blank",
+          "x3": "<b>x.3</b>: Kilometre location of the axis of the level crossing to which the warning boards with cancelled indications apply"
+        }
       },
       "2155": {
-         "text": "{bold1} at post/line {signalbox1}{'|'}{signalbox2} referring to signal {signal1}.",
-         "bold1": "Damaged SHP device",
-         "signalbox1": "x.1 signalbox",
-         "signalbox2": "x.2 signalbox",
-         "signal1": "x.3 signal",
-         "message-html": "<b>Damaged SHP device</b> at post {0} referring to signal {2}|<b>Damaged SHP device</b> on line {0} {'|'} {1} referring to signal {2}|<b>Uszkodzone urządzenia SHP</b> on line {0} {'|'} {1} referring to signal {2}"
+        "description": "Used to advise of a failure of trackside SHP train protection equipment.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location in whose area the defective SHP equipment is located; if the equipment is located on a line section, enter the name of the signalling location at the beginning of that section (according to the direction of travel)",
+          "x2": "<b>x.2</b>: Name of the signalling location at the end of the line section; if the SHP equipment is located within a signalling location, leave blank",
+          "x3": "<b>x.3</b>: Designation of the signal associated with the SHP balise/resonator. Use a letter or alphanumeric signal designation, e.g. A, J105"
+        }
       },
       "2160": {
-         "text": "{bold1} from {signalbox1} to {signalbox2}, rerouted via {signalbox3} by line {line1} with the speed of {vmax1}.",
-         "bold1": "Route change",
-         "signalbox1": "x.1 signalbox",
-         "signalbox2": "x.2 signalbox",
-         "signalbox3": "x.3 signalbox",
-         "line1": "x.4 line",
-         "vmax1": "x.5 km/h",
-         "message-html": "<b>Route change</b> from {0} to {1}, rerouted via {2} by line {3} with the speed of {4}."
+        "description": "Used to advise that a train will operate over a route different from that specified in the working timetable.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location from which the route alteration begins",
+          "x2": "<b>x.2</b>: Name of the signalling location up to which the train will operate over the altered route",
+          "x3": "<b>x.3</b>: Name of the signalling location through which the train will pass on the altered route",
+          "x4": "<b>x.4</b>: Line number(s) over which the train will operate on the altered route, separated by commas (in a simulation environment, route section names may be used)",
+          "x5": "<b>x.5</b>: Maximum permitted speed for the altered route; leave blank if the train crew is familiar with the route section(s)"
+        }
       },
       "2165": {
-         "text": "{bold1} from {km1} to {km2}.",
-         "bold1": "Run with lowered pantographs",
-         "km1": "x.1 km",
-         "km2": "x.2 km",
-         "message-html": "<b>Run with lowered pantographs</b> from {0} to {1}."
+        "description": "Used to advise of the requirement to lower pantographs.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Kilometre location from which operation with lowered pantographs is required",
+          "x2": "<b>x.2</b>: Kilometre location up to which operation with lowered pantographs is required"
+        }
       },
       "2170": {
-         "text": "{bold1} {signalbox1} and {signalbox2} of the line no. {line1}{br}{bold2}",
-         "bold1": "At section between",
-         "bold2": "ride with the analog contact.",
-         "signalbox1": "x.1 signalbox",
-         "signalbox2": "x.2 signalbox",
-         "line1": "x.3 line",
-         "message-html": "<b>At section between</b> {0} and {1} of the line no. {2} <b>ride with the analog contact.</b>"
+        "description": "Used to instruct a change from GSM-R communications to analogue radio communications over a specified section.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Name of the signalling location from which the communication change applies",
+          "x2": "<b>x.2</b>: Name of the signalling location up to which analogue communications shall be used",
+          "x3": "<b>x.3</b>: Line number(s) on which analogue communications shall apply, separated by commas"
+        }
       },
       "2180": {
-         "text": "{bold1} no. {track1} in the directon of {signalbox1} to km {km1} turning to {signalbox2} until hour {hour1}",
-         "bold1": "Run on the closed track",
-         "track1": "x.1 tor",
-         "signalbox1": "x.2 signalbox",
-         "km1": "x.3 km",
-         "signalbox2": "x.4 signalbox",
-         "hour1": "x.5 hour",
-         "message-html": "<b>Run on the closed track</b> no. {0} in the directon of {1} to km {2} turning to {3} until hour {4}"
+        "description": "Used when dispatching a train onto a blocked line.",
+        "warnings": "If instruction <b>21.80</b> is issued together with <b>21.81</b>, instruction <b>21.82</b> must not be issued.",
+        "fields": {
+          "x1": "<b>x.1</b>: Number of the blocked running line over which the engineering train will operate",
+          "x2": "<b>x.2</b>: Name of the signalling location towards which the train is dispatched",
+          "x3": "<b>x.3</b>: Kilometre location up to which the train may proceed",
+          "x4": "<b>x.4</b>: Name of the signalling location to which the train must return after completion of work",
+          "x5": "<b>x.5</b>: Time by which the train must clear the blocked line and return to the signalling location"
+        }
       },
       "2181": {
-         "text": "{bold1}",
-         "bold1": "Track is closed with no rolling stock",
-         "message-html": "<b>Track is closed with no rolling stock</b> "
+        "description": "Used when there are no other trains on the blocked line and no additional trains will be dispatched onto it. Issued together with instruction <b>21.80</b>.",
+        "warnings": "If instruction <b>21.81</b> is issued together with <b>21.80</b>, instruction <b>21.82</b> must not be issued."
       },
       "2182": {
-         "text": "Train {train1} {bold1} at km {km1}",
-         "bold1": "is working on track",
-         "train1": "x.1 train no.",
-         "km1": "x.2 km",
-         "message-html": "Train {0} <b>is working on track</b> at km {1}"
+        "description": "Used when another engineering train or trains are already operating on the blocked line. To be issued together with instruction <b>21.80</b>.",
+        "warnings": "If instruction <b>21.82</b> is issued together with <b>21.80</b>, instruction <b>21.81</b> must not be issued. If more than one engineering train is present on the line section, specify only the nearest train (immediately ahead of or behind the train being dispatched).",
+        "fields": {
+          "x1": "<b>x.1</b>: Train number of the engineering train operating on the blocked line immediately ahead of the train being dispatched",
+          "x2": "<b>x.2</b>: Kilometre location of the engineering train operating on the blocked line"
+        }
       },
       "2183": {
-         "text": "Train {train1} {bold1} to km {km1}",
-         "bold1": "will be dispatched",
-         "train1": "x.1 train no.",
-         "km1": "x.2 km",
-         "message-html": "Train {0} <b>will be dispatched</b> to km {1}"
+        "description": "Used when another train will be dispatched onto the blocked line behind the engineering train being dispatched. To be issued together with instruction <b>21.80</b>.",
+        "warnings": "If more than one engineering train is present on the line section, specify only the nearest train (immediately ahead of or behind the train being dispatched).",
+        "fields": {
+          "x1": "<b>x.1</b>: Train number of the engineering train that will be dispatched onto the blocked line immediately behind the train being dispatched",
+          "x2": "<b>x.2</b>: Kilometre location up to which the dispatched train is authorised to proceed"
+        }
       },
       "2185": {
-         "text": "{bold1} on track no. {track1} at km {km1} on line {signalbox1} {'|'} {signalbox2}",
-         "bold1": "Is allowed to insert a PSD vehicle",
-         "track1": "x.1 track",
-         "km1": "x.2 km",
-         "signalbox1": "x.3 signalbox",
-         "signalbox2": "x.4 signalbox",
-         "message-html": "<b>Is allowed to insert a PSD vehicle</b> on track no. {0} at km {1} on line {2} {'|'} {3}"
+        "description": "Used to authorise the placement of a road-rail vehicle (RRV) capable of operating both on roads and railway tracks. To be issued together with instruction <b>21.80</b>.",
+        "warnings": "No written order is required when placing an RRV onto a station track. The planned location where the RRV will leave the blocked line shall be entered in instruction <b>21.80</b>, field <b>x.4</b>.",
+        "fields": {
+          "x1": "<b>x.1</b>: Number of the blocked running line onto which the RRV is to be placed",
+          "x2": "<b>x.2</b>: Kilometre location where the vehicle is to be placed on the line",
+          "x3": "<b>x.3</b>: Name of the signalling location at the beginning of the line section where the vehicle is to be placed",
+          "x4": "<b>x.4</b>: Name of the signalling location at the end of the line section where the vehicle is to be placed"
+        }
       },
       "2310": {
-         "text": "{bold1}{br}{text-list}",
-         "bold1": "Do not exceed the speed and stay alert:",
-         "text-list": "{bold} {signalbox1}/{signalbox2} track no. {track1} {v} {vmax1} from {km1} to {km2}  {other1}",
-         "bold": "{0}. On post/line",
-         "signalbox1": "x.{0} signalbox",
-         "signalbox2": "x.{0} signalbox",
-         "track1": "x.{0} track",
-         "vmax1": "x.{0} km/h",
-         "km1": "x.{0} km",
-         "km2": "x.{0} km",
-         "other1": "x.{1} cause",
-         "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
-         "message-html-list": "<b>{0}. On post</b> {1} track no. {3} v{4}km/h from {5}km to {6}km - cause: {7}|<b>{0}. On post</b> {1} tor nr {3} v{4} from {5}km to {6}km - cause: {7}|<b>{0}. On line</b> {1}/{2} tor nr {3} v{4} from {5}km to {6}km - cause: {7}"
+        "description": "Used when special caution is required and a speed restriction must be observed.",
+        "warnings": "Up to three speed restrictions may be specified in a single written order. Select the first, second and/or third restriction and complete the corresponding fields.",
+        "fields": {
+          "x1": "<b>x.1, x.7, x.13</b>: Name of the signalling location at the beginning of the line section where the speed restriction applies; if the restriction is within a signalling location, enter its name",
+          "x2": "<b>x.2, x.8, x.14</b>: Name of the signalling location at the end of the line section where the speed restriction applies; if the restriction is within a signalling location, leave blank",
+          "x3": "<b>x.3, x.9, x.15</b>: Track number on which the speed restriction applies",
+          "x4": "<b>x.4, x.10, x.16</b>: Maximum permitted speed in km/h under the restriction",
+          "x5": "<b>x.5, x.11, x.17</b>: Kilometre location at which the restriction begins",
+          "x6": "<b>x.6, x.12, x.18</b>: Kilometre location at which the restriction ends",
+          "x91": "<b>x.91, x.92, x.93</b>: Reason for the speed restriction"
+        }
       },
       "2311": {
-         "text": "{bold1}",
-         "bold1": "Use „Baczność” signal multiple times",
-         "message-html": "<b>Use „Baczność” signal multiple times</b>"
+        "description": "Used when the driver of a rail vehicle passing through a speed restriction section is required to sound the 'Attention' warning horn signal. To be issued together with instruction <b>23.10</b>.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Kilometre location at which the requirement to sound the warning horn begins",
+          "x2": "<b>x.2</b>: Kilometre location at which the requirement to sound the warning horn ends"
+        }
       },
       "2320": {
-         "text": "{other2320}",
-         "other2320": "x.96 other",
-         "message-html": "Other: {0}"
-      },
-      "footer": {
-         "V": "V Driver identifier",
-         "V-placeholder": "Driver nickname",
-         "W": "W Issuer identifier",
-         "W-placeholder": "Dispatcher nickname",
-         "Y": "Y Hour",
-         "Y-placeholder": "HH:MM, e.g. 09:25",
-         "Z": "Z Train order identifier",
-         "Z-placeholder": "RD-(order no.)-(sc. hash)-(2 last year digits)"
+        "description": "Used to communicate authorisations, instructions and information not otherwise covered by the standard form.",
+        "warnings": "-",
+        "fields": {
+          "x96": "<b>x.96</b>: Any authorisations, instructions or information not included elsewhere in the form but required for the safe operation of the train"
+        }
       }
-   }
+    }
+  }
 }
