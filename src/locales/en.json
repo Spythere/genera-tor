@@ -287,7 +287,11 @@
   },
   "helper": {
     "header": "Train orders helper",
-    "paragraph-1": "Check the order's instructions to display help about them",
+    "paragraph-1": "Select instructions in the order to display help on how to complete them",
+    "instruction-title": "Instruction",
+    "instruction-usage-desc": "Usage",
+    "instruction-fields": "Fields to fill in",
+    "instruction-warnings": "Warnings",
 
     "instructions": {
       "22": {

@@ -288,6 +288,10 @@
   "helper": {
     "header": "Pomocnik rozkazów",
     "paragraph-1": "Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu",
+    "instruction-title": "Instrukcja",
+    "instruction-usage-desc": "Zastosowanie",
+    "instruction-fields": "Pola do wypełnienia",
+    "instruction-warnings": "Uwagi",
 
     "instructions": {
       "22": {

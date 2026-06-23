@@ -2,10 +2,10 @@
   <div class="order-helper-panel">
     <h2 class="header">
       <HelpCircle :size="30" />
-      <span>Pomocnik rozkazów</span>
+      <span>{{ $t('helper.header') }}</span>
     </h2>
 
-    <p class="helper-p">Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu</p>
+    <p class="helper-p">{{ $t('helper.paragraph-1') }}</p>
 
     <div class="helper-list">
       <div
@@ -13,9 +13,9 @@
         :key="instructionKey"
         class="instruction-info"
       >
-        <h3>Instrukcja {{ helperInfo.name }}</h3>
+        <h3>{{ $t('helper.instruction-title') }} {{ helperInfo.name }}</h3>
 
-        <h4>Zastosowanie:</h4>
+        <h4>{{ $t('helper.instruction-usage-desc') }}</h4>
 
         <div
           v-html="$t(`helper.instructions.${instructionKey}.description`)"
@@ -23,7 +23,7 @@
         ></div>
 
         <div class="helper-fields" v-if="helperInfo.fields">
-          <h4>Pola do uzupełnienia:</h4>
+          <h4>{{ $t('helper.instruction-fields') }}</h4>
 
           <ul v-if="helperInfo.fields" class="fields-list">
             <li v-for="fieldKey in helperInfo.fields" :key="fieldKey">
@@ -33,7 +33,7 @@
         </div>
 
         <div v-if="helperInfo.hasWarnings" class="warnings">
-          <h4>Uwagi:</h4>
+          <h4>{{ $t('helper.instruction-warnings') }}</h4>
           <div v-html="$t(`helper.instructions.${instructionKey}.warnings`)"></div>
         </div>
       </div>
@@ -191,6 +191,7 @@ const selectedInstructionsInfo = computed(() => {
 }
 
 p.helper-p {
+  color: #ccc;
   text-align: center;
 }
 
