@@ -178,6 +178,8 @@ const selectedInstructionsInfo = computed(() => {
 @use '../../styles/colors';
 
 .order-helper-panel {
+  overflow: auto;
+
   padding: 0 0.5em;
 }
 
