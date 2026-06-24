@@ -3,6 +3,7 @@
     <input
       type="checkbox"
       v-model="instructionObject.active"
+      @change="onCheckboxChange"
       :id="`instruction-checkbox-${instructionObject.name}`"
     />
     <div class="checkmark" :class="{ dark: store.orderDarkMode }"></div>
@@ -24,6 +25,12 @@ const props = defineProps({
 });
 
 const instructionObject = computed(() => store.orderData.instructions[props.rowIndex]);
+
+function onCheckboxChange() {
+  if (instructionObject.value.active) {
+    store.lastEnabledInstructionKey = instructionObject.value.key;
+  }
+}
 </script>
 
 <style lang="scss" scoped>

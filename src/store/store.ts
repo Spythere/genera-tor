@@ -22,6 +22,7 @@ export const useStore = defineStore('store', {
       orderDarkMode: false,
 
       panelMode: 'OrderMessagePanel' as TPanel,
+      lastEnabledInstructionKey: null as string | null,
 
       chosenLocalOrderId: '',
 

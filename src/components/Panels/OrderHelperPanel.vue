@@ -1,5 +1,5 @@
 <template>
-  <div class="order-helper-panel" ref="panel">
+  <div class="order-helper-panel">
     <div class="header-box">
       <h2 class="header">
         <HelpCircle :size="30" />
@@ -9,10 +9,11 @@
       <div class="header-sub">{{ $t('helper.paragraph-1') }}</div>
     </div>
 
-    <div class="helper-list">
+    <div class="helper-list" ref="list">
       <div
         v-for="([instructionKey, helperInfo], i) in selectedInstructionsInfo"
         :key="instructionKey"
+        :data-key="instructionKey"
         class="instruction-info"
       >
         <hr v-if="i > 0" />
@@ -54,7 +55,7 @@ import { useStore } from '../../store/store';
 import { computed, nextTick, useTemplateRef, watch } from 'vue';
 
 const store = useStore();
-const panelRef = useTemplateRef<HTMLElement>('panel');
+const listRef = useTemplateRef<HTMLElement>('list');
 
 interface HelperItem {
   name: string;
@@ -181,16 +182,27 @@ const selectedInstructionsInfo = computed(() => {
   );
 });
 
-watch(selectedInstructionsInfo, () => {
-  nextTick(() => {
-    if (!panelRef.value) return;
+// Scrolling to the last enabled instruction
+watch(
+  computed(() => store.lastEnabledInstructionKey),
+  () => {
+    nextTick(() => {
+      if (!listRef.value) return;
 
-    panelRef.value.scrollTo({
-      top: panelRef.value.scrollHeight,
-      behavior: 'smooth'
+      listRef.value.childNodes.forEach((node) => {
+        if (
+          node instanceof HTMLElement &&
+          node.getAttribute('data-key') == store.lastEnabledInstructionKey
+        ) {
+          node.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
     });
-  });
-});
+  }
+);
 </script>
 
 <style lang="scss" scoped>
