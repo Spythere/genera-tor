@@ -1,19 +1,26 @@
 <template>
   <div class="order-helper-panel">
-    <h2 class="header">
-      <HelpCircle :size="30" />
-      <span>{{ $t('helper.header') }}</span>
-    </h2>
+    <div class="header-box">
+      <h2 class="header">
+        <HelpCircle :size="30" />
+        <span>{{ $t('helper.header') }}</span>
+      </h2>
 
-    <p class="helper-p">{{ $t('helper.paragraph-1') }}</p>
+      <div class="header-sub">{{ $t('helper.paragraph-1') }}</div>
+    </div>
 
     <div class="helper-list">
       <div
-        v-for="[instructionKey, helperInfo] in selectedInstructionsInfo"
+        v-for="([instructionKey, helperInfo], i) in selectedInstructionsInfo"
         :key="instructionKey"
         class="instruction-info"
       >
-        <h3>{{ $t('helper.instruction-title') }} {{ helperInfo.name }}</h3>
+        <hr v-if="i > 0" />
+
+        <h2>
+          {{ $t('helper.instruction-title') }}
+          <span class="text--accent">{{ helperInfo.name }}</span>
+        </h2>
 
         <h4>{{ $t('helper.instruction-usage-desc') }}</h4>
 
@@ -183,38 +190,49 @@ const selectedInstructionsInfo = computed(() => {
   padding: 0 0.5em;
 }
 
-.header {
-  margin: 0;
+.header-box {
+  background-color: colors.$bgColDarker;
+  padding: 0.75em;
+}
 
+.header {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 0.25em;
+  
+  margin: 0;
 }
 
-p.helper-p {
+.header-sub {
   color: #ccc;
   text-align: center;
-}
-
-.description,
-.fields-list {
-  line-height: 1.5em;
-  text-align: justify;
+  margin-top: 0.5em;
 }
 
 .instruction-info {
-  h3 {
-    text-align: center;
-  }
+  margin-top: 2em;
+}
+
+.instruction-info h2 {
+  text-align: center;
+}
+
+.description {
+  line-height: 1.5em;
+  text-align: justify;
 }
 
 .helper-fields {
   margin-top: 1em;
 }
 
-.warnings,
 .fields-list {
+  line-height: 1.5em;
+  text-align: justify;
+}
+
+.warnings {
   text-align: justify;
 }
 
