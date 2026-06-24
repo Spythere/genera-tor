@@ -1,5 +1,5 @@
 <template>
-  <div class="order-helper-panel">
+  <div class="order-helper-panel" ref="panel">
     <div class="header-box">
       <h2 class="header">
         <HelpCircle :size="30" />
@@ -51,9 +51,10 @@
 <script setup lang="ts">
 import { HelpCircle } from '@lucide/vue';
 import { useStore } from '../../store/store';
-import { computed } from 'vue';
+import { computed, nextTick, useTemplateRef, watch } from 'vue';
 
 const store = useStore();
+const panelRef = useTemplateRef<HTMLElement>('panel');
 
 interface HelperItem {
   name: string;
@@ -179,6 +180,17 @@ const selectedInstructionsInfo = computed(() => {
     store.orderData.instructions.some((i) => i.active && i.key == key)
   );
 });
+
+watch(selectedInstructionsInfo, () => {
+  nextTick(() => {
+    if (!panelRef.value) return;
+
+    panelRef.value.scrollTo({
+      top: panelRef.value.scrollHeight,
+      behavior: 'smooth'
+    });
+  });
+});
 </script>
 
 <style lang="scss" scoped>
@@ -200,7 +212,7 @@ const selectedInstructionsInfo = computed(() => {
   justify-content: center;
   align-items: center;
   gap: 0.25em;
-  
+
   margin: 0;
 }
 
