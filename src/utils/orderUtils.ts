@@ -287,7 +287,8 @@ export function createOrderDataObject(): IOrderData {
               km1: '',
               km2: '',
               other1: ''
-            }
+            },
+            optionalFieldNames: ['signalbox2']
           },
           {
             active: false,
@@ -299,7 +300,8 @@ export function createOrderDataObject(): IOrderData {
               km1: '',
               km2: '',
               other1: ''
-            }
+            },
+            optionalFieldNames: ['signalbox2']
           },
           {
             active: false,
@@ -311,7 +313,8 @@ export function createOrderDataObject(): IOrderData {
               km1: '',
               km2: '',
               other1: ''
-            }
+            },
+            optionalFieldNames: ['signalbox2']
           }
         ],
         optionalFieldNames: [],

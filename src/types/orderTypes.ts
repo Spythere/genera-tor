@@ -46,6 +46,7 @@ export interface IOrderFooter {
 export interface IOrderFieldItem {
   active: false;
   values: Record<string, string>;
+  optionalFieldNames: string[];
 }
 
 export interface IOrderInstruction {

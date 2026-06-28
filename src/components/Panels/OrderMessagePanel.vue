@@ -226,7 +226,7 @@ function areOrderFieldsCorrect() {
         for (const fieldKey in listField.values) {
           const fieldValue = listField.values[fieldKey];
 
-          if (fieldValue.trim() == '') {
+          if (fieldValue.trim() == '' && !listField.optionalFieldNames.includes(fieldKey)) {
             hasAllInputsFilled = false;
             break;
           }
