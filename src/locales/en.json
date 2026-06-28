@@ -34,6 +34,8 @@
     "warning-order-identical": "Last saved order is identical as the current one!",
     "warning-no-order-selected": "Choose the already saved order first!",
     "warning-conflicting-instructions": "Instruction {0} and {1} can't be on the same order!",
+    "warning-instruction-22": "Instruction 22 must be issued together with 21.10, 21.15 or 21.35!",
+    "warning-instruction-2180": "Instructions from 21.81 to 21.85 must be issued together with 21.80!",
     "error-update": "An error occurred while saving this order! :/",
     "success-update-html": "<b>Order with ID: {0} has been updated</b>",
     "success-save-html": "<b>New order with ID: {0} has been saved</b><br />It is now available in the <b>SAVED</b> tab!",

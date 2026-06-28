@@ -34,6 +34,8 @@
     "warning-order-identical": "Ostatni zapisany rozkaz jest identyczny z obecnym!",
     "warning-no-order-selected": "Wybierz rozkaz, który chcesz zaktualizować!",
     "warning-conflicting-instructions": "Instrukcje {0} i {1} nie mogą znajdować się na tym samym rozkazie jednocześnie!",
+    "warning-instruction-22": "Instrukcja 22 musi być wydana razem z 21.10, 21.15 lub 21.35!",
+    "warning-instruction-2180": "Instrukcje od 21.81 do 21.85 muszą być wydane razem z instrukcją 21.80!",
     "error-update": "Wystąpił błąd podczas aktualizowania tego rozkazu! :/",
     "success-update-html": "<b>Zaktualizowano zapisany rozkaz o identyfikatorze: {0}</b>",
     "success-save-html": "<b>Zapisano nowy rozkaz o identyfikatorze: {0}</b><br />Jest on teraz dostępny w zakładce <b>ZAPISANE</b>!",

@@ -129,15 +129,39 @@ function onCheckboxChange(e: Event) {
 }
 
 function checkConflicts() {
+  const activeInstructionKeys = store.orderData.instructions
+    .filter((i) => i.active)
+    .map((i) => i.key);
+
   if (
-    store.orderData.instructions
-      .filter((i) => i.key == '2110' || i.key == '2115')
-      .every((i) => i.active)
+    activeInstructionKeys.includes('22') &&
+    !activeInstructionKeys.some((k) => k == '2110' || k == '2115' || k == '2135')
   ) {
+    popupStore.showPopup(t('order-message.warning-instruction-22'), 'warning');
+    return true;
+  }
+
+  if (activeInstructionKeys.includes('2110') && activeInstructionKeys.includes('2115')) {
     popupStore.showPopup(
       t('order-message.warning-conflicting-instructions', ['21.10', '21.15']),
       'warning'
     );
+    return true;
+  }
+
+  if (activeInstructionKeys.includes('2181') && activeInstructionKeys.includes('2182')) {
+    popupStore.showPopup(
+      t('order-message.warning-conflicting-instructions', ['21.81', '21.82']),
+      'warning'
+    );
+    return true;
+  }
+
+  if (
+    !activeInstructionKeys.includes('2180') &&
+    activeInstructionKeys.some((k) => k == '2181' || k == '2182' || k == '2183' || k == '2185')
+  ) {
+    popupStore.showPopup(t('order-message.warning-instruction-2180'), 'warning');
     return true;
   }
 
