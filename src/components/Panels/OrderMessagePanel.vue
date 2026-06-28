@@ -390,9 +390,10 @@ function resetOrder() {
 
     if (instruction.listFields) {
       instruction.listFields.forEach((field, j) => {
+        field.active = false;
+
         Object.keys(field.values).forEach((k) => {
-          field.active = false;
-          field.values[k] = initOrderObject.instructions[i].inputFields[j];
+          field.values[k] = initOrderObject.instructions[i].listFields![j].values[k];
         });
       });
     }
