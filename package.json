@@ -8,6 +8,7 @@
     "deploy": "yarn build && firebase deploy --only hosting",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
+    "deploy:dev": "yarn build && firebase hosting:channel:deploy dev --expires 7d",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
