@@ -82,7 +82,7 @@
     "title": "Train Order",
     "header": {
       "A": "A Number of the",
-       "train": "train",
+      "train": "train",
       "shunt": "shunting unit",
       "A-placeholder": "Train / shunting unit number",
       "B": "B Date",
@@ -291,12 +291,31 @@
     }
   },
   "helper": {
-    "header": "Train orders helper",
-    "paragraph-1": "Select instructions in the order to display help on how to complete them",
+    "title": "Train orders helper",
+    "subtitle": "Information that may be useful for completing the header, footer and instruction fields of new train orders",
+    "reminder": "Select instructions in the order to display help on how to complete them below",
     "instruction-title": "Instruction",
     "instruction-usage-desc": "Usage",
     "instruction-fields": "Fields to fill in",
     "instruction-warnings": "Warnings",
+
+    "header": {
+      "name": "Order's header",
+      "A": "train or shunting unit number",
+      "B": "date the train order was issued (DD.MM.YYYY format)",
+      "C": "name of the station / signal box / line where the vehicle receiving the order is located",
+      "D": "name of the signal box issuing the train order"
+    },
+    "footer": {
+      "name": "Order's footer",
+      "V": "driver's name (nickname)",
+      "W": "dispatcher's name (nickname)",
+      "Y": "time the train order was issued",
+      "Z": "train order identifier; RD indicates that the order is issued as a printed form (for simulator purposes it's not editable) - to be completed:",
+      "Z-1": "order number (arbitrary, default starting from 0)",
+      "Z-2": "scenery identifier (for simulator purposes this may be the telegraphic shortcut of the scenery, its hash, etc.)",
+      "Z-3": "last two digits of the calendar year (2026 - 26, 2027 - 27, etc.)"
+    },
 
     "instructions": {
       "22": {

@@ -292,12 +292,32 @@
     }
   },
   "helper": {
-    "header": "Pomocnik rozkazów",
-    "paragraph-1": "Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu",
+    "title": "Pomocnik rozkazów",
+    "subtitle": "Informacje pomocne przy uzupełnianiu nagłówka, stopki oraz instrukcji nowych rozkazów pisemnych",
+    "reminder": "Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu poniżej",
     "instruction-title": "Instrukcja",
     "instruction-usage-desc": "Zastosowanie",
     "instruction-fields": "Pola do wypełnienia",
     "instruction-warnings": "Uwagi",
+
+    "header": {
+      "name": "Nagłówek rozkazu",
+      "A": "numer pociągu lub numer składu manewrowego",
+      "B": "data (w formacie DD.MM.RRRR) przekazania rozkazu pisemnego",
+      "C": "nazwa stacji / posterunku / szlaku, na której znajduje się pojazd kolejowy który otrzymuje rozkaz pisemny",
+      "D": "nazwa posterunku, z którego wydawany jest rozkaz pisemny"
+    },
+
+    "footer": {
+      "name": "Stopka rozkazu",
+      "V": "nazwa maszynisty (nick)",
+      "W": "nazwa dyżurnego ruchu (nick)",
+      "Y": "godzina przekazania rozkazu",
+      "Z": "identyfikator rozkazu pisemnego; RD oznacza, że jest to rozkaz przekazywany w druku (na potrzeby symulatora bez możliwości edycji) - do uzupełnienia:",
+      "Z-1": "numer rozkazu (dowolny, domyślnie od 0)",
+      "Z-2": "identyfikator scenerii (na potrzeby symulatora może to być skrót telegraficzny posterunku, hash scenerii itp.)",
+      "Z-3": "końcówka roku kalendarzowego (2026 - 26, 2027 - 27 itd.)"
+    },
 
     "instructions": {
       "22": {

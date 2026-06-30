@@ -3,11 +3,47 @@
     <div class="header-box">
       <h2 class="header">
         <HelpCircle :size="30" />
-        <span>{{ $t('helper.header') }}</span>
+        <span>{{ $t('helper.title') }}</span>
       </h2>
-
-      <div class="header-sub">{{ $t('helper.paragraph-1') }}</div>
+      
+      <div class="subtitle">{{ $t('helper.subtitle') }}</div>
     </div>
+
+    <div class="helper-header static-info">
+      <h2>{{ $t('helper.header.name') }}</h2>
+
+      <ul>
+        <li><b>A</b> - {{ $t('helper.header.A') }}</li>
+        <li><b>B</b> - {{ $t('helper.header.B') }}</li>
+        <li><b>C</b> - {{ $t('helper.header.C') }}</li>
+        <li><b>D</b> - {{ $t('helper.header.D') }}</li>
+      </ul>
+    </div>
+
+    <div class="helper-footer static-info">
+      <h2>{{ $t('helper.footer.name') }}</h2>
+
+      <ul>
+        <li><b>V</b> - {{ $t('helper.footer.V') }}</li>
+        <li><b>W</b> - {{ $t('helper.footer.W') }}</li>
+        <li><b>Y</b> - {{ $t('helper.footer.Y') }}</li>
+        <li>
+          <b>Z</b> - {{ $t('helper.footer.Z') }}
+
+          <ul>
+            <li>{{ $t('helper.footer.Z-1') }}</li>
+            <li>
+              {{ $t('helper.footer.Z-2') }}
+            </li>
+            <li>{{ $t('helper.footer.Z-3') }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <hr />
+
+    <p class="helper-reminder">{{ $t('helper.reminder') }}</p>
 
     <div class="helper-list" ref="list">
       <div
@@ -228,16 +264,23 @@ watch(
   margin: 0;
 }
 
-.header-sub {
+.subtitle {
   color: #ccc;
-  text-align: center;
   margin-top: 0.5em;
+  text-align: center;
+}
+
+.helper-reminder {
+  font-weight: bold;
+  text-align: center;
+  color: colors.$accentCol;
 }
 
 .instruction-info {
   margin-top: 2em;
 }
 
+.static-info h2,
 .instruction-info h2 {
   text-align: center;
 }
