@@ -1,7 +1,7 @@
 import { IOrderData } from '../types/orderTypes';
 
-export const getOrderFullId = (orderNumber: number, sceneryHash: string) => {
-  return `RD-${orderNumber}-${sceneryHash}-${new Date().getUTCFullYear().toString().slice(2)}`;
+export const getOrderFullId = (footerData: IOrderData['footer']) => {
+  return `RD-${footerData.orderNo}-${footerData.sceneryId}-${footerData.orderYear}`;
 };
 
 export const handleOrderPlaceholders = (isRowEnabled: boolean, rowRef: HTMLTableElement) => {
@@ -344,7 +344,9 @@ export function createOrderDataObject(): IOrderData {
       V: '',
       W: '',
       Y: '',
-      Z: ''
+      sceneryId: '',
+      orderNo: 0,
+      orderYear: 26
     }
   };
 }

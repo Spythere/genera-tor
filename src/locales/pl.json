@@ -287,7 +287,8 @@
       "Y": "Y Godzina",
       "Y-placeholder": "Godzina w formacie HH:MM np. 09:25",
       "Z": "Z Identyfikator rozkazu pisemnego",
-      "Z-placeholder": "RD-(nr rozkazu)-(hash sc.)-(2 ostatnie cyfry roku)"
+      "Z-placeholder": "Identyfikator scenerii (np. hash)",
+      "Z-help-tooltip": "Informacje o uzupełnianiu danych dostępne w zakładce \"Pomoc\""
     }
   },
   "helper": {

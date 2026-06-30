@@ -43,14 +43,43 @@
         </td>
         <td>
           <div>
-            <input
-              type="text"
-              class="order-input"
-              id="footer-Z"
-              v-model="store.orderData.footer.Z"
-              :placeholder="t('order.footer.Z-placeholder')"
-            />
-            <label class="order-input-label" for="footer-Z">{{ t('order.footer.Z') }}</label>
+            <div class="id-input-box">
+              <span>RD-</span>
+
+              <input
+                type="number"
+                class="order-input"
+                id="footer-Z"
+                v-model="store.orderData.footer.orderNo"
+                min="0"
+              />
+
+              <span>-</span>
+
+              <input
+                type="text"
+                class="order-input"
+                id="footer-Z"
+                v-model="store.orderData.footer.sceneryId"
+                :placeholder="t('order.footer.Z-placeholder')"
+              />
+
+              <span>-</span>
+
+              <input
+                type="number"
+                class="order-input"
+                id="footer-Z"
+                v-model="store.orderData.footer.orderYear"
+                min="26"
+              />
+            </div>
+
+            <label class="order-input-label" for="footer-Z">
+              {{ t('order.footer.Z') }}
+
+              <span :title="t('order.footer.Z-help-tooltip')">(?)</span>
+            </label>
           </div>
         </td>
       </tr>
@@ -67,15 +96,23 @@ const { t } = useI18n();
 const store = useStore();
 </script>
 
-<style scoped>
-.order-input {
+<style lang="scss" scoped>
+.order-input[type='text'] {
   max-width: 100%;
   width: 100%;
   text-align: left;
 }
 
+.order-input[type='number'] {
+  max-width: 50px;
+}
+
 .order-table > tbody > tr > td > div {
   width: 100%;
   padding: 0.5em 1rem;
+}
+
+.id-input-box {
+  display: flex;
 }
 </style>

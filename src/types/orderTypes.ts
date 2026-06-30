@@ -41,7 +41,9 @@ export interface IOrderFooter {
   V: string;
   W: string;
   Y: string;
-  Z: string;
+  sceneryId: string;
+  orderNo: number;
+  orderYear: number;
 }
 
 export interface IOrderFieldItem {

@@ -119,7 +119,7 @@ function generateMessage() {
   messageHtml += `${t('order.footer.V')}: ${footerData['V'] || '---'}<br />`;
   messageHtml += `${t('order.footer.W')}: ${footerData['W'] || '---'}<br />`;
   messageHtml += `${t('order.footer.Y')}: ${footerData['Y'] || '---'}<br />`;
-  messageHtml += `${t('order.footer.Z')}: ${footerData['Z'] || '---'}<br />`;
+  messageHtml += `${t('order.footer.Z')}: RD-${footerData['orderNo'] ?? '?'}-${footerData['sceneryId'] || '?'}-${footerData['orderYear'] || ' '}<br />`;
 
   store.orderMessage = messageHtml;
 }

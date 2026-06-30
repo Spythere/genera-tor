@@ -105,7 +105,6 @@ import { useStore } from '../../store/store';
 import { API } from '../../types/apiTypes';
 import { ISceneryData } from '../../types/dataTypes';
 import { getRegionNameById } from '../../utils/sceneryUtils';
-import { getOrderFullId } from '../../utils/orderUtils';
 
 const store = useStore();
 const regions = ['eu', 'cae', 'usw', 'us', 'ru'];
@@ -233,13 +232,9 @@ function fillOrderData(train: API.ActiveTrains.Data) {
   store.orderData.footer.V = train.driverName;
   store.orderData.footer.W = scenery.dispatcherName;
 
-  const idData = store.orderData.footer.Z.split('-');
-
-  if (idData.length != 4) {
-    store.orderData.footer.Z = getOrderFullId(0, scenery.stationHash);
-  } else {
-    store.orderData.footer.Z = getOrderFullId(Number(idData[1]) || 0, scenery.stationHash);
-  }
+  // store.orderData.footer.orderNo = store.orderData.footer.orderNo;
+  store.orderData.footer.sceneryId = scenery.stationHash;
+  store.orderData.footer.orderYear = Number(new Date().getUTCFullYear().toString().slice(2));
 
   store.panelMode = 'OrderMessagePanel';
 }

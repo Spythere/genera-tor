@@ -178,7 +178,7 @@ function areOrderFieldsCorrect() {
   }
 
   for (let footerKey in store.orderData.footer) {
-    if (store.orderData.footer[footerKey as keyof IOrderFooter].trim() == '') {
+    if (store.orderData.footer[footerKey as keyof IOrderFooter].toString().trim() == '') {
       fieldsToCorrect.push(footerKey);
     }
   }
@@ -261,14 +261,7 @@ function hasHeaderFieldsComplete() {
 }
 
 function incrementOrderNo() {
-  const idData = store.orderData.footer.Z.split('-');
-
-  if (idData.length == 4) {
-    const sceneryHash = idData[2];
-    let orderNumber = Number(idData[1]) || 0;
-
-    store.orderData.footer.Z = getOrderFullId(++orderNumber, sceneryHash);
-  }
+  store.orderData.footer.orderNo += 1;
 }
 
 function copyMessage() {
@@ -285,7 +278,10 @@ function copyMessage() {
 
   if (incrementOnCopy.value) incrementOrderNo();
 
-  popupStore.showPopup(t('order-message.success-copy-html', [store.orderData.footer.Z]), 'success');
+  popupStore.showPopup(
+    t('order-message.success-copy-html', [getOrderFullId(store.orderData.footer)]),
+    'success'
+  );
 }
 
 function saveOrder() {
@@ -330,7 +326,10 @@ function saveOrder() {
   StorageManager.setValue(nextOrderId, JSON.stringify(orderDataToSave));
 
   store.chosenLocalOrderId = nextOrderId;
-  popupStore.showPopup(t('order-message.success-save-html', [store.orderData.footer.Z]), 'success');
+  popupStore.showPopup(
+    t('order-message.success-save-html', [getOrderFullId(store.orderData.footer)]),
+    'success'
+  );
 
   if (incrementOnSave.value) incrementOrderNo();
 }
@@ -363,7 +362,7 @@ function updateOrder() {
   window.localStorage.setItem(store.chosenLocalOrderId, JSON.stringify(orderDataToUpdate));
 
   popupStore.showPopup(
-    t('order-message.success-update-html', [store.orderData.footer.Z]),
+    t('order-message.success-update-html', [getOrderFullId(store.orderData.footer)]),
     'success'
   );
 }
@@ -371,16 +370,20 @@ function updateOrder() {
 function resetOrder() {
   const initOrderObject = createOrderDataObject();
 
+  // Header Data
   store.orderData.header['A'] = initOrderObject.header['A'];
   store.orderData.header['AType'] = initOrderObject.header['AType'];
   store.orderData.header['B'] = initOrderObject.header['B'];
   store.orderData.header['C'] = initOrderObject.header['C'];
   store.orderData.header['D'] = initOrderObject.header['D'];
 
-  Object.keys(store.orderData.footer).forEach((k) => {
-    store.orderData['footer'][k as keyof IOrderFooter] =
-      initOrderObject.footer[k as keyof IOrderFooter];
-  });
+  // Footer Data
+  store.orderData.footer['V'] = initOrderObject.footer['V'];
+  store.orderData.footer['W'] = initOrderObject.footer['W'];
+  store.orderData.footer['Y'] = initOrderObject.footer['Y'];
+  store.orderData.footer['orderNo'] = initOrderObject.footer['orderNo'];
+  store.orderData.footer['orderYear'] = initOrderObject.footer['orderYear'];
+  store.orderData.footer['sceneryId'] = initOrderObject.footer['sceneryId'];
 
   store.orderData.instructions.forEach((instruction, i) => {
     instruction.active = false;
