@@ -21,6 +21,7 @@
   "order-message": {
     "title": "Message to display in the simulator's chatbox:",
     "info": "Copy or save the content of the generated train order using buttons below:",
+    "hint": "Using the \"Trains\" tab, you can automatically fill the details of the train on your scenery, as well as the header (fields A, B, C, D) and footer (fields V, W, Y, Z) of the train order.",
     "button-save": "Save as new",
     "button-copy": "Copy the message",
     "button-update": "Update",

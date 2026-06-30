@@ -21,6 +21,7 @@
   "order-message": {
     "title": "Wiadomość do wyświetlenia na czacie symulatora:",
     "info": "Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej:",
+    "hint": " Za pomocą zakładki \"Pociągi\" możesz automatycznie uzupełnić dane dla aktywnego pociągu na twojej scenerii i informacje z nagłówka (pola A, B, C, D) oraz stopki (pola V, W, Y, Z)!",
     "button-save": "Zapisz nowy",
     "button-copy": "Skopiuj treść",
     "button-update": "Zaktualizuj",

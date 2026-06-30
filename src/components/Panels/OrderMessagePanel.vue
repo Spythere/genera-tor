@@ -3,6 +3,12 @@
     <h3>{{ $t('order-message.title') }}</h3>
 
     <div class="message_body" v-html="orderMessagePreview"></div>
+
+    <div class="message_hint">
+      <Lightbulb :size="20" />
+      {{ $t('order-message.hint') }}
+    </div>
+
     <p class="message_info">
       {{ $t('order-message.info') }}
     </p>
@@ -82,7 +88,7 @@ import { IOrderHeader, IOrderFooter, IStorageOrderData } from '../../types/order
 import StorageManager from '../../managers/storageManager';
 import { createOrderDataObject, getOrderFullId } from '../../utils/orderUtils';
 import { usePopupStore } from '../../store/popup';
-import { Copy, Pencil, RotateCcw, Save } from '@lucide/vue';
+import { Copy, Lightbulb, Pencil, RotateCcw, Save } from '@lucide/vue';
 
 const { t } = useI18n();
 const store = useStore();
@@ -430,11 +436,26 @@ function resetOrder() {
   color: white;
   text-align: justify;
 
-  border-radius: 0.5em;
+  border-radius: 0.5em 0.5em 0 0;
   padding: 0.5em;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
+}
+
+.message_hint {
+  color: colors.$accentCol;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5em;
+  background-color: colors.$bgColLighter;
+  line-height: 1.25em;
+
+  border-radius: 0 0 0.5em 0.5em;
+
+  svg {
+    vertical-align: middle;
+  }
 }
 
 .message_info {
