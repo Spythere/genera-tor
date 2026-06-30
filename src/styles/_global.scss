@@ -1,5 +1,6 @@
 @use 'fonts';
 @use 'colors';
+@use 'sass:color';
 
 [data-theme='dark'] {
   color-scheme: dark;
@@ -64,7 +65,7 @@ button.g-button {
     }
 
     &:hover:not([data-disabled='true']) {
-      background-color: colors.$bgColLighter;
+      background-color: color.adjust(colors.$bgColDarker, $lightness: 15%);
     }
   }
 
@@ -100,6 +101,11 @@ button.g-button {
     display: flex;
     justify-content: center;
     align-items: center;
+    vertical-align: middle;
+
+    &:focus-visible {
+      outline: 1px solid white;
+    }
   }
 }
 
@@ -111,6 +117,10 @@ button.g-button {
 
   &--warn {
     color: colors.$warnCol;
+  }
+
+  &--grayed {
+    color: #ccc;
   }
 }
 
@@ -143,13 +153,7 @@ option[disabled] {
 }
 
 // List style
-ul {
-  padding: 0;
-  margin: 0;
 
-  list-style: none;
-  text-align: center;
-}
 
 // Modal
 .g-modal {

@@ -1,10 +1,10 @@
 <template>
   <section class="order-list">
-    <h3>{{ $t('order-list.title') }} ({{ localOrderList.length }})</h3>
+    <h3>{{ t('order-list.title') }} ({{ storageOrderList.length }})</h3>
 
     <transition-group name="list" tag="ul">
       <li class="no-orders-warning" v-if="sortedOrderList.length == 0" :key="-1">
-        {{ $t('order-list.no-saved-orders') }}
+        {{ t('order-list.no-saved-orders') }}
       </li>
 
       <li
@@ -12,13 +12,11 @@
         :selected="order.id == store.chosenLocalOrderId"
         :key="order.id"
       >
-        <b class="text--accent">#{{ order.id.split('-')[1] }}&nbsp;</b>
+        <b class="text--accent">#{{ order.id.split('-')[2] }}&nbsp;</b>
         <b>
           {{
-            $t('order-list.order-title', {
-              orderName: getOrderName(order.orderType),
-              orderNo: order.orderBody['header']['orderNo'],
-              trainNo: order.orderBody['header']['trainNo']
+            t('order-list.order-title', {
+              trainNo: order.orderData.header.A
             })
           }}
         </b>
@@ -26,21 +24,50 @@
           v-if="!order.orderVersion || order.orderVersion != ORDER_VERSION"
           class="wrong-order-indicator"
           tabindex="0"
-          data-tooltip="Przestarzała wersja rozkazu! Może generować złe informacje!"
+          :data-tooltip="t('order-list.warning-deprecated-version')"
           >&#9888;
         </span>
-        <br />
-        {{ $t(`order-list.order-${order.createdAt ? 'added' : 'updated'}`) }}
-        {{ new Date(order.createdAt || order.updatedAt || 0).toLocaleString('pl-PL') }}
+
+        <div>
+          {{
+            t(
+              'order-list.order-subtitle',
+              [
+                order.orderData.instructions
+                  .filter((v) => v.active)
+                  .map((v) => v.name)
+                  .join(', ')
+              ],
+              order.orderData.instructions.filter((v) => v.active).length
+            )
+          }}
+        </div>
+
+        <div class="order-id" v-if="order.orderData.footer.orderNo">
+          ID: {{ getOrderFullId(order.orderData.footer) }}
+        </div>
+
+        <div class="order-date" v-if="order.createdAt">
+          {{ t('order-list.order-added') }}
+          {{ new Date(order.createdAt).toLocaleString(locale) }}
+        </div>
+
+        <div class="order-date" v-if="order.updatedAt">
+          {{ t('order-list.order-updated') }}
+          {{ new Date(order.updatedAt).toLocaleString(locale) }}
+        </div>
 
         <hr />
 
         <div class="buttons">
-          <button class="g-button" @click="selectLocalOrder(order)">
-            {{ $t('order-list.button-order-select') }}
+          <button class="g-button icon" @click="selectLocalOrder(order)">
+            <NotebookPen :size="18" />
+            {{ t('order-list.button-order-select') }}
           </button>
-          <button class="g-button" @click="removeOrder(order)">
-            {{ $t('order-list.button-order-remove') }}
+
+          <button class="g-button icon" @click="removeOrder(order.id)">
+            <Trash :size="18" />
+            {{ t('order-list.button-order-remove') }}
           </button>
         </div>
       </li>
@@ -48,67 +75,91 @@
   </section>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import orderStorageMixin from '../../mixins/orderStorageMixin';
+<script lang="ts" setup>
+import { computed, onActivated, Reactive, reactive } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useStore } from '../../store/store';
-import { LocalStorageOrder } from '../../types/orderTypes';
+import { IStorageOrderData, LocalStorageOrderLegacy } from '../../types/orderTypes';
+import StorageManager from '../../managers/storageManager';
+import { NotebookPen, Trash } from '@lucide/vue';
+import { getOrderFullId } from '../../utils/orderUtils';
 
-export default defineComponent({
-  name: 'OrderList',
-  mixins: [orderStorageMixin],
+const { t, locale } = useI18n();
+const store = useStore();
+const storageOrderList = reactive<Reactive<IStorageOrderData[]>>([]);
 
-  data() {
-    return {
-      localOrderList: [] as LocalStorageOrder[],
-      ORDER_VERSION: import.meta.env['VITE_APP_ORDER_VERSION']
-    };
-  },
+const ORDER_VERSION = import.meta.env['VITE_APP_ORDER_VERSION'];
 
-  setup() {
-    return {
-      store: useStore(),
-      localStorage: window.localStorage
-    };
-  },
+function removeOrder(orderId: string) {
+  StorageManager.removeValue(orderId);
 
-  methods: {
-    getOrderName(orderType: string) {
-      return orderType.split('order')[1];
-    },
+  if (store.chosenLocalOrderId == orderId) store.chosenLocalOrderId = '';
 
-    removeOrder(order: LocalStorageOrder) {
-      if (!order) return;
+  const orderIndex = storageOrderList.findIndex((o) => o.id == orderId);
+  if (orderIndex != -1) storageOrderList.splice(orderIndex, 1);
 
-      this.removeLocalOrder(order);
-      this.localOrderList = this.localOrderList.filter((o) => o.id != order.id);
+  if (storageOrderList.length == 0) StorageManager.setNumericValue('orderCountV3', 0);
+}
 
-      if (this.localOrderList.length == 0) this.saveOrderSetting('orderCount', 0);
+function selectLocalOrder(order: IStorageOrderData) {
+  Object.entries(order.orderData.header).forEach(([k, v]) => {
+    (store.orderData['header'] as any)[k] = v;
+  });
+
+  Object.entries(order.orderData.footer).forEach(([k, v]) => {
+    (store.orderData['footer'] as any)[k] = v;
+  });
+
+  Object.entries(order.orderData.instructions).forEach(([k, v]) => {
+    (store.orderData['instructions'] as any)[k] = v;
+  });
+
+  store.panelMode = 'OrderMessagePanel';
+  store.chosenLocalOrderId = order.id;
+}
+
+function isOrderDeprecated(
+  order: IStorageOrderData | LocalStorageOrderLegacy
+): order is LocalStorageOrderLegacy {
+  return 'orderType' in order;
+}
+
+const sortedOrderList = computed(() => {
+  return storageOrderList
+    .slice()
+    .sort((a, b) => (b.createdAt || b.updatedAt || 0) - (a.createdAt || a.updatedAt || 0));
+});
+
+onActivated(() => {
+  const localStorage = window.localStorage;
+  const orderList: IStorageOrderData[] = [];
+
+  let deprecatedOrders: string[] = [];
+  for (let key in localStorage) {
+    if (!/^order-/g.test(key)) continue;
+
+    const orderObj: IStorageOrderData | LocalStorageOrderLegacy = JSON.parse(localStorage[key]);
+    if (!orderObj) continue;
+
+    if (isOrderDeprecated(orderObj)) {
+      console.warn(`Deprecated order found with ID: ${orderObj.id}`);
+      deprecatedOrders.push(key);
+      continue;
     }
-  },
 
-  computed: {
-    sortedOrderList() {
-      return this.localOrderList
-        .slice()
-        .sort((a, b) => (b.createdAt || b.updatedAt!) - (a.createdAt || a.updatedAt!));
-    }
-  },
+    orderList.push(orderObj);
+  }
 
-  activated() {
-    const localStorage = window.localStorage;
-    const orderList = [];
+  storageOrderList.length = 0;
+  storageOrderList.push(...orderList);
 
-    for (let key in localStorage) {
-      if (!/^order-/g.test(key)) continue;
+  if (deprecatedOrders.length > 0) {
+    window.alert(
+      t('order-list.warning-removed-deprecated-orders', { count: deprecatedOrders.length })
+    );
 
-      const orderObj: LocalStorageOrder = JSON.parse(localStorage[key]);
-      if (!orderObj) continue;
-
-      orderList.push(orderObj);
-    }
-
-    this.localOrderList = orderList;
+    deprecatedOrders.forEach((orderKey) => StorageManager.removeValue(orderKey));
+    StorageManager.removeValue('orderCount');
   }
 });
 </script>
@@ -130,6 +181,7 @@ export default defineComponent({
 
   &-leave-active {
     position: absolute;
+    width: 100%;
   }
 }
 
@@ -144,6 +196,10 @@ hr {
 
 ul {
   overflow: hidden;
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 h3 {
@@ -179,6 +235,15 @@ li {
   }
 }
 
+.order-date {
+  color: #aaa;
+}
+
+.order-id {
+  color: #ccc;
+  margin-top: 0.5em;
+}
+
 .wrong-order-indicator {
   color: colors.$accentCol;
   padding: 0 0.25em;
@@ -191,6 +256,7 @@ li {
   button {
     padding: 0.5em;
     background-color: colors.$bgColLighter;
+    gap: 0.5em;
 
     &:hover {
       background-color: #666;

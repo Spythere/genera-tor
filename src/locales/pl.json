@@ -15,26 +15,32 @@
   "navbar": {
     "OrderMessagePanel": "WIADOMOŚĆ",
     "OrderListPanel": "ZAPISANE",
-    "OrderTrainPickerPanel": "POCIĄGI"
+    "OrderTrainPickerPanel": "POCIĄGI",
+    "OrderHelperPanel": "POMOC"
   },
   "order-message": {
     "title": "Wiadomość do wyświetlenia na czacie symulatora:",
     "info": "Po wygenerowaniu rozkazu skopiuj jego treść lub zapisz w pamięci przeglądarki za pomocą przycisków poniżej:",
+    "hint": " Za pomocą zakładki \"Pociągi\" możesz automatycznie uzupełnić dane dla aktywnego pociągu na twojej scenerii i informacje z nagłówka (pola A, B, C, D) oraz stopki (pola V, W, Y, Z)!",
     "button-save": "Zapisz nowy",
     "button-copy": "Skopiuj treść",
     "button-update": "Zaktualizuj",
     "button-reset": "Zresetuj",
     "warning-outdated-clipboard": "Ups! Twoja przeglądarka musi być dosyć przestarzała, ponieważ nie obsługuje zapisu do schowka! :/",
     "warning-fill-inputs": "Wypełnij puste rubryki rozkazu przed jego skopiowaniem!",
-    "warning-add-rows": "Dodaj co najmniej jedną działkę rozkazu przed jego skopiowaniem!",
-    "warning-fill-footer": "Uzupełnij następujące rubryki na dole rozkazu przed jego skopiowaniem:",
-    "warning-fill-top": "Wypełnij numer rozkazu, numer pociągu i datę zanim dodasz rozkaz!",
+    "warning-add-instruction": "Dodaj co najmniej jedną instrukcję rozkazu przed jego skopiowaniem!",
+    "warning-fill-missing": "Uzupełnij rubryki w nagłówku i stopce rozkazu przed jego skopiowaniem!",
+    "warning-fill-top-save": "Wypełnij co najmniej rubryki A, B, C i D w nagłówku rozkazu przed jego zapisaniem!",
+    "warning-fill-top-update": "Wypełnij co najmniej rubryki A, B, C i D w nagłówku rozkazu przed jego zaktualizowaniem!",
     "warning-order-identical": "Ostatni zapisany rozkaz jest identyczny z obecnym!",
     "warning-no-order-selected": "Wybierz rozkaz, który chcesz zaktualizować!",
+    "warning-conflicting-instructions": "Instrukcje {0} i {1} nie mogą znajdować się na tym samym rozkazie jednocześnie!",
+    "warning-instruction-22": "Instrukcja 22 musi być wydana razem z 21.10, 21.15 lub 21.35!",
+    "warning-instruction-2180": "Instrukcje od 21.81 do 21.85 muszą być wydane razem z instrukcją 21.80!",
     "error-update": "Wystąpił błąd podczas aktualizowania tego rozkazu! :/",
-    "success-update-html": "Zaktualizowano treść <b class=\"text--accent\">rozkazu</b>!",
-    "success-save-html": "Zapisano treść <b class=\"text--accent\">rozkazu</b> w pamięci przeglądarki!",
-    "success-copy-html": "<b class=\"text--accent\">Skopiowano!</b> Możesz teraz wkleić treść rozkazu na czacie symulatora!"
+    "success-update-html": "<b>Zaktualizowano zapisany rozkaz o identyfikatorze: {0}</b>",
+    "success-save-html": "<b>Zapisano nowy rozkaz o identyfikatorze: {0}</b><br />Jest on teraz dostępny w zakładce <b>ZAPISANE</b>!",
+    "success-copy-html": "<b >Skopiowano treść rozkazu o identyfikatorze: {0}</b> Możesz ją teraz wkleić na czacie symulatora!"
   },
   "order-footer": {
     "field-stationName": "stacja",
@@ -54,11 +60,14 @@
   "order-list": {
     "title": "Zapisane rozkazy pisemne",
     "no-saved-orders": "Brak zapisanych rozkazów!",
-    "order-title": "Rozkaz \"{orderName}\" nr {orderNo} dla pociągu nr {trainNo}",
+    "order-title": "Rozkaz pisemny dla pociągu nr {trainNo}",
+    "order-subtitle": "Zaznaczone instrukcje: - | Zaznaczona instrukcja: {0} | Zaznaczone instrukcje: {0}",
     "order-added": "Dodano:",
     "order-updated": "Zaktualizowano:",
     "button-order-select": "Wybierz",
-    "button-order-remove": "Usuń"
+    "button-order-remove": "Usuń",
+    "warning-deprecated-version": "Przestarzała wersja rozkazu! Może generować złe informacje!",
+    "warning-removed-deprecated-orders": "Usunięto nieaktualne rozkazy pisemne ({count}) w związku z wejściem w życie ich nowego formatu!"
   },
   "order-train-picker": {
     "placeholder-scenery-name": "Sceneria",
@@ -70,9 +79,440 @@
     "subtitle": "Kliknij na gracza, aby wypełnić obecny rozkaz jego danymi",
     "no-trains": "Brak pociągów do wyświetlenia"
   },
-  "migrate-info": {
-    "line-1": "GeneraTOR zostaje przeniesiony na nową domenę - {0}! Możesz korzystać z obecnej strony, jednak nie będzie ona otrzymywać już aktualizacji i w przyszłości zostanie wyłączona!",
-    "link": "https://generator-td2.spythere.eu/",
-    "accept-btn": "PRZYJĄŁEM!"
+  "order": {
+    "title": "Rozkaz pisemny",
+    "header": {
+      "A": "A Nr",
+      "train": "pociągu",
+      "shunt": "składu manewrowego",
+      "A-placeholder": "Numer pociągu lub manewru",
+      "B": "B Data",
+      "C": "C Lokalizacja",
+      "C-desc": "C Lokalizacja pociągu {'|'} składu manewrowego",
+      "C-placeholder": "Nazwa posterunku / szlaku / scenerii",
+      "D": "D Lokalizacja nadawcy",
+      "D-placeholder": "Nazwa posterunku / scenerii"
+    },
+    "22": {
+      "text": "Dotyczy jazdy torem lewym",
+      "message-html": "<b>Dotyczy jazdy torem lewym</b>"
+    },
+    "99": {
+      "text": "Odwołanie rozkazu pisemnego",
+      "x1": "x.1 Identyfikator rozkazu pisemnego",
+      "message-html": "<b>Odwołanie rozkazu pisemnego</b> {0}"
+    },
+    "2110": {
+      "text": "{bold1} z toru nr {track1} z {signalbox1} {br} na tor nr {track2} w kierunku {signalbox2} {br} Pominięcie sygnałów stój {signal1} i {signal2} i {signal3}",
+      "bold1": "Zezwalam na wyjazd",
+      "track1": "x.1 tor",
+      "signalbox1": "x.2 posterunek",
+      "track2": "x.3 tor",
+      "signalbox2": "x.4 posterunek",
+      "signal1": "x.5 sygnalizator",
+      "signal2": "x.6 sygnalizator",
+      "signal3": "x.7 sygnalizator",
+      "message-html": "<b>Zezwalam na wyjazd</b> z toru nr {0} z {1} na tor nr {2} w kierunku {3}. Pominięcie sygnałów stój {4} i {5} i {6}",
+      "message-html-1": "<b>Zezwalam na wyjazd</b> z toru nr {0} z {1} na tor nr {2} w kierunku {3}. Pominięcie sygnałów stój {4}",
+      "message-html-2": "<b>Zezwalam na wyjazd</b> z toru nr {0} z {1} na tor nr {2} w kierunku {3}. Pominięcie sygnałów stój {4} i {5}",
+      "message-html-3": "<b>Zezwalam na wyjazd</b> z toru nr {0} z {1} na tor nr {2} w kierunku {3}. Pominięcie sygnałów stój {4} i {5} i {6}"
+    },
+    "2115": {
+      "text": "{bold1} z toru nr {track1} do {signalbox1} na tor nr {track2} {br} Pominięcie sygnałów {signal1} i {signal2} i {signal3}",
+      "bold1": "Zezwalam na wjazd",
+      "track1": "x.1 tor",
+      "signalbox1": "x.2 posterunek",
+      "track2": "x.3 tor",
+      "signal1": "x.4 sygnalizator",
+      "signal2": "x.5 sygnalizator",
+      "signal3": "x.6 sygnalizator",
+      "message-html": "<b>Zezwalam na wjazd</b> z toru nr {0} do {1} na tor nr {2}. Pominięcie sygnałów {3} i {4} i {5}",
+      "message-html-1": "<b>Zezwalam na wjazd</b> z toru nr {0} do {1} na tor nr {2}. Pominięcie sygnałów {3}",
+      "message-html-2": "<b>Zezwalam na wjazd</b> z toru nr {0} do {1} na tor nr {2}. Pominięcie sygnałów {3} i {4}",
+      "message-html-3": "<b>Zezwalam na wjazd</b> z toru nr {0} do {1} na tor nr {2}. Pominięcie sygnałów {3} i {4} i {5}"
+    },
+    "2120": {
+      "text": "Od {signalbox1} do {signalbox2} po torze {track1} {br} {highlight1} {br} {underline1}{highlight2}.",
+      "highlight1": "wskazania semaforów SBL są nieważne.",
+      "underline1": "Zachować ostrożność od semafora ze wskaźnikiem",
+      "highlight2": " W18",
+      "signalbox1": "x.1 posterunek",
+      "signalbox2": "x.2 posterunek",
+      "track1": "x.3 nr toru",
+      "message-html": "Od {0} do {1} po torze {2} <b>wskazania semaforów SBL są nieważne.</b> Zachować ostrożność od semafora ze wskaźnikiem <b>W18.</b>"
+    },
+    "2125": {
+      "text": "Zezwalam przejechać za {select1} w kierunku {signalbox1} torem {track1} do km {km1} do godz. {hour1}.",
+      "select1-a": "wskaźnik W5",
+      "select1-b": "ostatni rozjazd",
+      "signalbox1": "x.1 posterunek",
+      "track1": "x.2 tor",
+      "km1": "x.3 km",
+      "hour1": "x.4 godzina",
+      "message-html": "Zezwalam przejechać za {0} w kierunku {1} torem {2} do km {3} do godz. {4}."
+    },
+    "2135": {
+      "text": "{bold1} po torze nr {track1} w kierunku {signalbox1}.",
+      "bold1": "Zezwalam na kontynuacje jazdy",
+      "track1": "x.1 tor",
+      "signalbox1": "x.2 posterunek",
+      "message-html": "<b>Zezwalam na kontynuacje jazdy</b> po torze nr {0} w kierunku {1}"
+    },
+    "2140": {
+      "text": "{bold1} na posterunku/szlaku {signalbox1}{'|'}{signalbox2} w km {km1} celem {other1}",
+      "bold1": "Zatrzymanie pociągu",
+      "signalbox1": "x.1 posterunek",
+      "signalbox2": "x.2 posterunek",
+      "km1": "x.3 km",
+      "other1": "x.96 inne",
+      "message-html": "<b>Zatrzymanie pociągu</b> na posterunku {0} w km {2} celem {3} | <b>Zatrzymanie pociągu</b> na szlaku {0} {'|'} {1} w km {2} celem {3} | <b>Zatrzymanie pociągu</b> na szlaku {0} {'|'} {1} w km {2} celem {3}"
+    },
+    "2145": {
+      "text": "Na {signalbox1} na sygnalizatorze {signal1}{br}{bold1}",
+      "bold1": "sygnał zezwalający jest nieważny, zatrzymać pociąg przed tym sygnalizatorem.",
+      "signalbox1": "x.1 posterunek",
+      "signal1": "x.2 sygnalizator",
+      "message-html": "Na {0} na sygnalizatorze {1} <b>sygnał zezwalający jest nieważny, zatrzymać pociąg przed tym sygnalizatorem.</b>"
+    },
+    "2150": {
+      "text": "{bold1} przejazdowych na posterunku/szlaku {br} {signalbox1} / {signalbox2} odnoszących się do przejazdu w km {km1}{br}{bold2}",
+      "bold1": "Wskazania tarcz ostrzegawczych",
+      "bold2": "są nieważne. Jazda z prędkością rozkładową.",
+      "signalbox1": "x.1 posterunek",
+      "signalbox2": "x.2 posterunek",
+      "km1": "x.3 km",
+      "message-html": "<b>Wskazania tarcz ostrzegawczych</b> przejazdowych na posterunku {0} odnoszących się do przejazdu w km {1} <b>są nieważne. Jazda z prędkością rozkładową.</b> | <b>Wskazania tarcz ostrzegawczych</b> przejazdowych na szlaku {0} / {1} odnoszących się do przejazdu w km {2} <b>są nieważne. Jazda z prędkością rozkładową.</b> | <b>Wskazania tarcz ostrzegawczych</b> przejazdowych na szlaku {0} / {1} odnoszących się do przejazdu w km {2} <b>są nieważne. Jazda z prędkością rozkładową.</b>"
+    },
+    "2155": {
+      "text": "{bold1} na posterunku/szlaku {signalbox1}{'|'}{signalbox2} odnoszące się do sygnalizatora {signal1}.",
+      "bold1": "Uszkodzone urządzenia SHP",
+      "signalbox1": "x.1 posterunek",
+      "signalbox2": "x.2 posterunek",
+      "signal1": "x.3 sygnalizator",
+      "message-html": "<b>Uszkodzone urządzenia SHP</b> na posterunku {0} odnoszące się do sygnalizatora {2}|<b>Uszkodzone urządzenia SHP</b> na szlaku {0} {'|'} {1} odnoszące się do sygnalizatora {2}|<b>Uszkodzone urządzenia SHP</b> na szlaku {0} {'|'} {1} odnoszące się do sygnalizatora {2}"
+    },
+    "2160": {
+      "text": "{bold1} na odcinku od {signalbox1} do {signalbox2}, jazda przez {signalbox3} linią {line1} z prędkością {vmax1}.",
+      "bold1": "Zmiana trasy",
+      "signalbox1": "x.1 posterunek",
+      "signalbox2": "x.2 posterunek",
+      "signalbox3": "x.3 posterunek",
+      "line1": "x.4 linia",
+      "vmax1": "x.5 km/h",
+      "message-html": "<b>Zmiana trasy</b> na odcinku od {0} do {1}, jazda przez {2} linią {3} z prędkością {4}."
+    },
+    "2165": {
+      "text": "{bold1} na odcinku od {km1} do {km2}.",
+      "bold1": "Jazda z opuszczonymi pantografami",
+      "km1": "x.1 km",
+      "km2": "x.2 km",
+      "message-html": "<b>Jazda z opuszczonymi pantografami</b> na odcinku od {0} do {1}."
+    },
+    "2170": {
+      "text": "{bold1} od {signalbox1} do {signalbox2} linii nr {line1}{br}{bold2}",
+      "bold1": "Na odcinku",
+      "bold2": "jazda pociągu z łącznością analogową.",
+      "signalbox1": "x.1 posterunek",
+      "signalbox2": "x.2 posterunek",
+      "line1": "x.3 linia",
+      "message-html": "<b>Na odcinku</b> na odcinku od {0} do {1} linii nr {2} <b>jazda pociągu z łącznością analogową.</b>"
+    },
+    "2180": {
+      "text": "{bold1} nr {track1} w kierunku {signalbox1} do km {km1} zjazd do {signalbox2} do godz. {hour1}",
+      "bold1": "Polecam jazdę po torze zamkniętym",
+      "track1": "x.1 tor",
+      "signalbox1": "x.2 posterunek",
+      "km1": "x.3 km",
+      "signalbox2": "x.4 posterunek",
+      "hour1": "x.5 godzina",
+      "message-html": "<b>Polecam jazdę po torze zamkniętym</b> nr {0} w kierunku {1} do km {2} zjazd do {3} do godz. {4}"
+    },
+    "2181": {
+      "text": "{bold1}",
+      "bold1": "Tor zamknięty wolny od taboru",
+      "message-html": "<b>Tor zamknięty wolny od taboru</b> "
+    },
+    "2182": {
+      "text": "{bold1} {train1} w km {km1}",
+      "bold1": "Na torze pracuje pociąg",
+      "train1": "x.1 numer pociągu",
+      "km1": "x.2 km",
+      "message-html": "<b>Na torze pracuje pociąg</b> {0} w km {1}"
+    },
+    "2183": {
+      "text": "{bold1} {train1} do km {km1}",
+      "bold1": "Na tor zostanie wyprawiony pociąg",
+      "train1": "x.1 numer pociągu",
+      "km1": "x.2 km",
+      "message-html": "<b>Na tor zostanie wyprawiony pociąg</b> {0} do km {1}"
+    },
+    "2185": {
+      "text": "{bold1} na tor nr {track1} w km {km1} na szlaku {signalbox1} {'|'} {signalbox2}",
+      "bold1": "Zezwalam na wstawienie PSD",
+      "track1": "x.1 tor",
+      "km1": "x.2 km",
+      "signalbox1": "x.3 posterunek",
+      "signalbox2": "x.4 posterunek",
+      "message-html": "<b>Zezwalam na wstawienie PSD</b> na tor nr {0} w km {1} na szlaku {2} {'|'} {3}"
+    },
+    "2310": {
+      "text": "{bold1}{br}{text-list}",
+      "bold1": "Nie przekraczać prędkości i zachować ostrożność:",
+      "text-list": "{bold} {signalbox1}/{signalbox2} tor nr {track1} {v} {vmax1} od {km1} do {km2}  {other1}",
+      "bold": "{0}. Na posterunku/szlaku",
+      "signalbox1": "x.{0} posterunek",
+      "signalbox2": "x.{0} posterunek",
+      "track1": "x.{0} tor",
+      "vmax1": "x.{0} km/h",
+      "km1": "x.{0} km",
+      "km2": "x.{0} km",
+      "other1": "x.{1} przyczyna",
+      "message-html": "<b>Nie przekraczać prędkości i zachować ostrożność:</b>",
+      "message-html-list": "<b>{0}. Na posterunku</b> {1} tor nr {3} v{4}km/h od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na posterunku</b> {1} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}|<b>{0}. Na szlaku</b> {1}/{2} tor nr {3} v{4} od {5}km do {6}km - przyczyna: {7}"
+    },
+    "2311": {
+      "text": "{bold1}",
+      "bold1": "Podawać sygnał „Baczność”",
+      "message-html": "<b>Podawać sygnał „Baczność”</b>"
+    },
+    "2320": {
+      "text": "{other2320}",
+      "other2320": "x.96 inne",
+      "message-html": "Inne: {0}"
+    },
+    "footer": {
+      "V": "V Identyfikator maszynisty",
+      "V-placeholder": "Nick maszynisty",
+      "W": "W Identyfikator nadawcy",
+      "W-placeholder": "Nick dyżurnego",
+      "Y": "Y Godzina",
+      "Y-placeholder": "Godzina w formacie HH:MM np. 09:25",
+      "Z": "Z Identyfikator rozkazu pisemnego",
+      "Z-placeholder": "Identyfikator scenerii (np. hash)",
+      "Z-help-tooltip": "Informacje o uzupełnianiu danych dostępne w zakładce \"Pomoc\""
+    }
+  },
+  "helper": {
+    "title": "Pomocnik rozkazów",
+    "subtitle": "Informacje pomocne przy uzupełnianiu nagłówka, stopki oraz instrukcji nowych rozkazów pisemnych",
+    "reminder": "Zaznacz instrukcje w rozkazie, aby wyświetlić pomoc w ich wypełnieniu poniżej",
+    "instruction-title": "Instrukcja",
+    "instruction-usage-desc": "Zastosowanie",
+    "instruction-fields": "Pola do wypełnienia",
+    "instruction-warnings": "Uwagi",
+
+    "header": {
+      "name": "Nagłówek rozkazu",
+      "A": "numer pociągu lub numer składu manewrowego",
+      "B": "data (w formacie DD.MM.RRRR) przekazania rozkazu pisemnego",
+      "C": "nazwa stacji / posterunku / szlaku, na której znajduje się pojazd kolejowy który otrzymuje rozkaz pisemny",
+      "D": "nazwa posterunku, z którego wydawany jest rozkaz pisemny"
+    },
+
+    "footer": {
+      "name": "Stopka rozkazu",
+      "V": "nazwa maszynisty (nick)",
+      "W": "nazwa dyżurnego ruchu (nick)",
+      "Y": "godzina przekazania rozkazu",
+      "Z": "identyfikator rozkazu pisemnego; RD oznacza, że jest to rozkaz przekazywany w druku (na potrzeby symulatora bez możliwości edycji) - do uzupełnienia:",
+      "Z-1": "numer rozkazu (dowolny, domyślnie od 0)",
+      "Z-2": "identyfikator scenerii (na potrzeby symulatora może to być skrót telegraficzny posterunku, hash scenerii itp.)",
+      "Z-3": "końcówka roku kalendarzowego (2026 - 26, 2027 - 27 itd.)"
+    },
+
+    "instructions": {
+      "22": {
+        "description": "Dotyczy jazd z toru lewego i na tor lewy. Instrukcja dla wjazdów, wyjazdów oraz kontynuacji jazdy po zatrzymaniu z toru lewego / na tor lewy w kierunku przeciwnym do zasadniczego.",
+        "warnings": "Instrukcja <b>22</b> używana jest łącznie z instrukcją <b>21.10</b>, <b>21.15</b> lub <b>21.35</b>."
+      },
+      "99": {
+        "description": "Instrukcja służąca do odwołania wcześniej wydanego rozkazu pisemnego.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Identyfikator rozkazu (z jego pola \"Z\"), który ma zostać odwołany"
+        }
+      },
+      "2110": {
+        "description": "Wyjazd (wyprawienie pociągu) z posterunku lub przejazd w obrębie posterunku w przypadku:<ul><li>braku możliwości podania sygnału zezwalającego na semaforze lub semaforach wyjazdowych, wyjazdowych grupowych drogowskazowych, drogowskazowych grupowych</li><li>braku semafora wyjazdowego przy torze, z którego ma być wyprawiony pociąg w kierunku szlaku</li><li>braku semafora drogowskazowego lub drogowskazowego grupowego przy torze, z którego ma się odbyć przejazd w obrębie posterunku</li></ul>",
+        "warnings": "W przypadku wydania instrukcji <b>21.10</b>, nie można wydać jednocześnie instrukcji <b>21.15</b>. Na jednym druku można wydać zezwolenie na pominięcie do trzech sygnalizatorów (lub tarczy zatrzymania D1) nie nadających zezwolenia na jazdę.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer toru, z którego wyjeżdża pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
+          "x2": "<b>x.2</b>: Nazwa posterunku, z którego wyprawiany jest pociąg",
+          "x3": "<b>x.3</b>: Numer toru szlakowego lub stacyjnego, na który wyprawiany jest pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 1, 101a)",
+          "x4": "<b>x.4</b>: Nazwa posterunku, w kierunku którego wyprawiany jest pociąg",
+          "x5-7": "<b>x.5, x.6, x.7</b>: Oznaczenia sygnalizatorów, których sygnał nie zezwala na jazdę, a na pominięcie których wydawany jest rozkaz pisemny. Dla semaforów oznaczenia literowe lub literowo/liczbowe, dla innych sygnałów typ sygnału i lokalizacje w kilometrach (np. D1/73,200)."
+        }
+      },
+      "2115": {
+        "description": "Wjazd (przyjęcie pociągu) na posterunek lub przejazd w obrębie posterunku w przypadku: <ul><li>braku możliwości podania sygnału zezwalającego na semaforze lub semaforach drogowskazowych, drogowskazowych grupowych</li><li>braku semafora wjazdowego</li><li>wjazdu z zamkniętego toru szlakowego przy którym nie ma semafora wjazdowego</li><li>braku możliwości podania sygnału zezwalającego na obsługiwanym semaforze odstępowym (w tym APO)</li></ul>",
+        "warnings": "W przypadku wydania instrukcji <b>21.15</b>, nie można wydać jednocześnie instrukcji <b>21.10</b>. Na jednym druku można wydać zezwolenie na pominięcie do trzech sygnalizatorów (lub tarczy zatrzymania D1) nie nadających zezwolenia na jazdę.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer toru, z którego wjeżdża pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
+          "x2": "<b>x.2</b>: Nazwa posterunku, na który przyjmowany jest pociąg",
+          "x3": "<b>x.3</b>: Numer toru, na który przyjmowany jest pociąg (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d)",
+          "x4-6": "<b>x.4, x.5, x.6</b>: Oznaczenia sygnalizatorów, których sygnał nie zezwala na jazdę, a na pominięcie których wydawany jest rozkaz pisemny. Dla semaforów oznaczenia literowe lub literowo/liczbowe, dla innych sygnałów typ sygnału i lokalizacje w kilometrach (np. D1/73,200)."
+        }
+      },
+      "2120": {
+        "description": "W przypadku: <ul><li>unieważnienia wskazań sygnałów semaforów odstępowych na samoczynnej blokadzie liniowej (SBL)</li><li>usterki blokady SBL</li><li>zajętości trzech lub więcej odcinków na szlaku przy SBL</li><li>wprowadzenia telefonicznego zapowiadania pociągów na szlakach z SBL</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, z którego wyprawiany jest pociąg",
+          "x2": "<b>x.2</b>: Nazwa posterunku, do którego wyprawiany jest pociąg",
+          "x3": "<b>x.3</b>: Numer toru szlakowego, dla którego unieważnione są wskazania semaforów SBL (oznaczenie liczbowe lub liczbowo/literowe np. 1, 3Ł)"
+        }
+      },
+      "2125": {
+        "description": "W przypadku zezwolenia na jazdę manewrową taboru w kierunku szlaku poza ustaloną wskaźnikiem W5 granicę przetaczania lub gdy brak jest tego wskaźnika za ostatni rozjazd, gdy jazda odbywa się na szlak jednotorowy lub w kierunku przeciwnym do zasadniczego na szlaku dwutorowym.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, z którego mają odbywać się manewry",
+          "x2": "<b>x.2</b>: Numer toru, po którym manewry wyjadą poza granicę przetaczania (oznaczenie liczbowe lub liczbowo/literowe, np. 1, 3Ł)",
+          "x3": "<b>x.3</b>: Lokalizacja w kilometrach, do której może odbyć się jazda manewrowa",
+          "x4": "<b>x.4</b>: Godzina zakończenia manewrów"
+        }
+      },
+      "2135": {
+        "description": "W przypadku: <ul><li>zezwolenia na jazdę, gdy pojazd kolejowy znajduje się za semaforem wskazującym sygnał zezwalający, którego maszynista nie widzi</li><li>zezwolenia na dalszą jazdę zatrzymanego pociągu skierowanego na tor prawy, gdy jego czoło minęło semafor z wyświetlonym wskaźnikiem W 24</li><li>zezwolenia na dalszą jazdę pociągu zatrzymanego za obsługiwanym semaforem, na którym nastąpiła już zmiana sygnału zezwalającego na sygnał S1 „Stój” lub stało się to, zanim czoło pociągu minęło ten semafor</li><li>potrzeby wydania zgody/polecenia rozpoczęcia/kontynuacji jazdy w przypadku zaistniałych zdarzeń i sytuacji potencjalnie niebezpiecznych</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer toru, przy którym znajduje się sygnalizator na którym nastąpiła zmiana sygnału zezwalającego na sygnał Stój lub którego nie widzi maszynista (oznaczenie liczbowe lub liczbowo/literowe np. 2, 3d).",
+          "x2": "<b>x.2</b>: W przypadku wjazdu na posterunek - nazwa tego posterunku; W przypadku wyjazdu na szlak - nazwa następnego posterunku, w kierunku którego odbywa się jazda"
+        }
+      },
+      "2140": {
+        "description": "W przypadku: <ul><li>polecenia zatrzymania pociągu, niemającego rozkładowego postoju na stacji lub przystanku osobowym</li><li>polecenia nieprzewidzianego wewnętrznym rozkładem jazdy zatrzymania na szlaku pociągu, z określeniem celu i czasu postoju</li></ul>",
+        "warnings": "Dla każdego dodatkowego zatrzymania należy wystawić osobny rozkaz pisemny.",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, na którym ma się odbyć zatrzymanie - w przypadku zatrzymania na szlaku wpisać nazwę posterunku na początku tego szlaku",
+          "x2": "<b>x.2</b>: Nazwa posterunku na końcu szlaku, na którym ma się odbyć zatrzymanie - w przypadku zatrzymania na posterunku pole zostaje niewypełnione",
+          "x3": "<b>x.3</b>: Lokalizacja zatrzymania w kilometrach - w przypadku zatrzymania na szlaku obowiązkowo wypełnić; w przypadku zatrzymania na posterunku może pozostać niewypełnione (wpisać myślnik)",
+          "x96": "<b>x.96</b>: Przyczyna zatrzymania"
+        }
+      },
+      "2145": {
+        "description": "W przypadku: <ul><li>polecenia zatrzymania pociągu przed uszkodzonym obsługiwanym semaforem</li><li>informacji o nieważności na semaforze sygnału zezwalającego na jazdę pociągu</li></ul>",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, na którym znajduje się uszkodzony semafor obsługiwany lub z nieważnym sygnałem zezwalającym na jazdę",
+          "x2": "<b>x.2</b>: Nazwa sygnalizatora, do którego odnosi się rozkaz (oznaczenie liczbowe lub liczbowo/literowe, np. A, B2)"
+        }
+      },
+      "2150": {
+        "description": "W przypadku informacji o unieważnieniu wskazań tarcz ostrzegawczych przejazdowych odnoszących się do obsługiwanych przejazdów kolejowo– drogowych i przejść, na których zapewniono kierowanie ruchem drogowym.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, w rejonie którego znajdują się tarcze ostrzegawcze; w przypadku, gdy tarcze znajdują się na szlaku w tym polu wpisać posterunek początkowy tego szlaku (zgodnie z kierunkiem jazdy pociągu)",
+          "x2": "<b>x.2</b>: Nazwa posterunku na końcu szlaku; w przypadku gdy tarcze ostrzegawcze znajdują się w obrębie posterunku - zostawić niewypełnione",
+          "x3": "<b>x.3</b>: Lokalizacja w kilometrach osi przejazdu kolejowo-drogowego, do którego odnoszą się tarcze ostrzegawcze, których wskazania są unieważniane"
+        }
+      },
+      "2155": {
+        "description": "W przypadku informacji o uszkodzeniu przytorowych urządzeń kontroli prowadzenia pociągów SHP.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, w rejonie którego znajdują się uszkodzone urządzenia SHP; w przypadku, gdy urządzenia znajdują się na szlaku w tym polu wpisać posterunek początkowy tego szlaku (zgodnie z kierunkiem jazdy pociągu)",
+          "x2": "<b>x.2</b>: Nazwa posterunku na końcu szlaku; w przypadku gdy urządzenia SHP znajdują się w obrębie posterunku - zostawić niewypełnione",
+          "x3": "<b>x.3</b>: Oznaczenie sygnalizatora do którego odnosi się rezonator SHP. Oznaczenie sygnalizatora literowe lub liczbowo/literowe, np. A, J105"
+        }
+      },
+      "2160": {
+        "description": "W przypadku informacji o jeździe pociągu w innym kierunku niż przewidziany w wewnętrznym rozkładzie jazdy.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, od którego następuje zmiana trasy dla pociągu",
+          "x2": "<b>x.2</b>: Nazwa posterunku, do którego pociąg będzie jechać trasą zmienioną",
+          "x3": "<b>x.3</b>: Nazwa posterunku, przez który nastąpi jazda pociągu po zmienionej trasie",
+          "x4": "<b>x.4</b>: Numer linii, po której/których będzie odbywać się jazda zmienioną trasą, oddzielone przecinkiem (w przypadku symulatora mogą być to nazwy szlaków)",
+          "x5": "<b>x.5</b>: Prędkość z jaką może jechać pociąg na zmienionej trasie - w przypadku znajomości odcinka/odcinków przez drużynę pociągową zostawić niewypełnione"
+        }
+      },
+      "2165": {
+        "description": "W przypadku informacji o konieczności opuszczenia pantografów.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Lokalizacja w kilometrach miejsca, od którego należy jechać z opuszczonymi pantografami",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach miejsca, do którego należy jechać z opuszczonymi pantografami"
+        }
+      },
+      "2170": {
+        "description": "W przypadku polecenia zmiany rodzaju łączności GSM-R na łączność analogową na wskazanym odcinku.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Nazwa posterunku, od którego następuje zmiana łączności",
+          "x2": "<b>x.2</b>: Nazwa posterunku, do którego obowiązuje łączność analogowa",
+          "x3": "<b>x.3</b>: Numer linii, na której/których będzie obowiązywać łączność analogowa (oddzielone przecinkiem)"
+        }
+      },
+      "2180": {
+        "description": "W przypadku wyprawiania pociągu na tor zamknięty.",
+        "warnings": "W przypadku wydania instrukcji <b>21.80</b> wraz z <b>21.81</b>, nie można wydać instrukcji <b>21.82</b>.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer zamkniętego toru szlakowego, po którym odbędzie się jazda pociągu roboczego",
+          "x2": "<b>x.2</b>: Nazwa posterunku, w kierunku którego wyprawiany jest pociąg",
+          "x3": "<b>x.3</b>: Lokalizacja w kilometrach, do której może dojechać pociąg",
+          "x4": "<b>x.4</b>: Nazwa posterunku, do którego zjechać ma pociąg po zakończonej pracy",
+          "x5": "<b>x.5</b>: Godzina, do której pociąg ma zjechać do posterunku"
+        }
+      },
+      "2181": {
+        "description": "W przypadku gdy na torze zamkniętym nie ma innych pociągów i nie zostaną wyprawione inne pociągi. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku wydania instrukcji <b>21.81</b> wraz z <b>21.80</b>, nie można wydać instrukcji <b>21.82</b>."
+      },
+      "2182": {
+        "description": "W przypadku gdy na torze zamkniętym pracuje inny pociąg / pociągi. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku wydania instrukcji <b>21.82</b> wraz z <b>21.80</b>, nie można wydać instrukcji <b>21.81</b>. W przypadku gdy na szlaku znajduje się więcej niż jeden pociąg roboczy, wpisać tylko określenie najbliższego pociągu (bezpośrednio przed/za wyprawianym).",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer pociągu roboczego, który pracuje na torze bezpośrednio przed wyprawianym pociągiem",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach pociągu roboczego, który pracuje na torze zamkniętym"
+        }
+      },
+      "2183": {
+        "description": "W przypadku gdy za wyprawianym pociągiem roboczym zostanie wyprawiony kolejny pociąg na tor zamknięty. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku gdy na szlaku znajduje się więcej niż jeden pociąg roboczy, wpisać tylko określenie najbliższego pociągu (bezpośrednio przed/za wyprawianym).",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer pociągu roboczego, który zostanie wyprawiony na tor bezpośrednio za pociągiem wyprawianym",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach do jakiej zostanie wyprawiony pociąg wyprawiany"
+        }
+      },
+      "2185": {
+        "description": "W przypadku zezwolenia na wstawienie pojazdu szynowo-drogowego (PSD), który może poruszać się po drogach kołowych lub torach. Stosować z instrukcją <b>21.80</b>.",
+        "warnings": "W przypadku wstawiania PSD na torze stacyjnym nie wystawiamy rozkazu pisemnego. Miejsce planowego wystawienia PSD z toru zamkniętego zapisujemy w instrukcji <b>21.80</b> w polu <b>x.4</b>.",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer zamkniętego toru szlakowego, na który ma wstawić się PSD",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach, gdzie ma nastąpić wstawienie pojazdu",
+          "x3": "<b>x.3</b>: Nazwa posterunku początkowego dla szlaku, na którym ma wstawić się pojazd",
+          "x4": "<b>x.4</b>: Nazwa posterunku na końcu szlaku, na którym ma wstawić się pojazd"
+        }
+      },
+      "2310": {
+        "description": "W przypadku konieczności zachowania szczególnej ostrożności i ograniczenia prędkości jazdy.",
+        "warnings": "W ramach jednego rozkazu pisemnego można uzupełnić do trzech ograniczeń prędkości. Zaznaczyć pole wyboru pierwszego, drugiego i/lub trzeciego ograniczenia i uzupełnić dotyczące je pola tekstowe.",
+        "fields": {
+          "x1": "<b>x.1, x.7, x.13</b>: Nazwa posterunku początkowego dla szlaku, na którym obowiązuje ograniczenie prędkości; w przypadku ograniczenia w granicach posterunku - wpisać jego nazwę",
+          "x2": "<b>x.2, x.8, x.14</b>: Nazwa posterunku na końcu szlaku, na którym obowiązuje ograniczenie prędkości; w przypadku ograniczenia w granicach posterunku - pozostawić niewypełnione",
+          "x3": "<b>x.3, x.9, x.15</b>: Numer toru, po którym obowiązuje ograniczenie prędkości jazdy",
+          "x4": "<b>x.4, x.10, x.16</b>: Maksymalna dozwolona prędkość w km/h wynikająca z ograniczenia prędkości",
+          "x5": "<b>x.5, x.11, x.17</b>: Lokalizacja w kilometrach, od której zaczyna obowiązywać ograniczenie",
+          "x6": "<b>x.6, x.12, x.18</b>: Lokalizacja w kilometrach, w której kończy obowiązywać ograniczenie",
+          "x91": "<b>x.91, x.92, x.93</b>: Przyczyna ograniczenia prędkości"
+        }
+      },
+      "2311": {
+        "description": "W przypadku gdy maszynista pojazdu kolejowego jadącego przez odcinki ograniczenia prędkości ma podawać sygnał dźwiękowy \"Baczność\". Stosować z instrukcją <b>23.10</b>.",
+        "warnings": "-",
+        "fields": {
+          "x1": "<b>x.1</b>: Numer pociągu roboczego, który zostanie wyprawiony na tor bezpośrednio za pociągiem wyprawianym",
+          "x2": "<b>x.2</b>: Lokalizacja w kilometrach do jakiej zostanie wyprawiony pociąg wyprawiany"
+        }
+      },
+      "2320": {
+        "description": "W przypadku przekazania zezwoleń, poleceń oraz informacji innych niż umieszczone w formularzu.",
+        "warnings": "-",
+        "fields": {
+          "x96": "<b>x.96</b>: Wszelkie zezwolenia, polecenia oraz informacje nieujęte w treści formularza, a wymagane do przejazdu pociągu"
+        }
+      }
+    }
   }
 }
