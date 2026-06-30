@@ -43,8 +43,8 @@
           }}
         </div>
 
-        <div class="order-id" v-if="order.orderData.footer.Z">
-          ID: {{ order.orderData.footer.Z }}
+        <div class="order-id" v-if="order.orderData.footer.orderNo">
+          ID: {{ getOrderFullId(order.orderData.footer) }}
         </div>
 
         <div class="order-date" v-if="order.createdAt">
@@ -82,6 +82,7 @@ import { useStore } from '../../store/store';
 import { IStorageOrderData, LocalStorageOrderLegacy } from '../../types/orderTypes';
 import StorageManager from '../../managers/storageManager';
 import { NotebookPen, Trash } from '@lucide/vue';
+import { getOrderFullId } from '../../utils/orderUtils';
 
 const { t, locale } = useI18n();
 const store = useStore();
