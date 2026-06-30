@@ -1,9 +1,9 @@
 <template>
-  <!-- <OrderHelper v-if="store.helperModalOpen" /> -->
-
   <div class="home">
     <div class="home-container">
-      <Order />
+      <div class="order-container">
+        <Order />
+      </div>
 
       <div class="panel-container">
         <div class="panel-nav">
@@ -13,7 +13,7 @@
             :data-active="store.panelMode == 'OrderMessagePanel'"
             @click="selectPanelMode('OrderMessagePanel')"
           >
-            <MessageSquareTextIcon :size="20" />
+            <MessageSquareText :size="20" />
             {{ t(`navbar.OrderMessagePanel`) }}
           </button>
 
@@ -23,7 +23,7 @@
             :data-active="store.panelMode == 'OrderListPanel'"
             @click="selectPanelMode('OrderListPanel')"
           >
-            <BookMarkedIcon :size="20" />
+            <BookMarked :size="20" />
             {{ t(`navbar.OrderListPanel`) }}
           </button>
 
@@ -33,8 +33,18 @@
             :data-active="store.panelMode == 'OrderTrainPickerPanel'"
             @click="selectPanelMode('OrderTrainPickerPanel')"
           >
-            <TrainFrontIcon :size="20" />
+            <TrainFront :size="20" />
             {{ t(`navbar.OrderTrainPickerPanel`) }}
+          </button>
+
+          <button
+            key="OrderHelperPanel"
+            class="g-button"
+            :data-active="store.panelMode == 'OrderHelperPanel'"
+            @click="selectPanelMode('OrderHelperPanel')"
+          >
+            <HelpCircle :size="20" />
+            {{ t(`navbar.OrderHelperPanel`) }}
           </button>
         </div>
 
@@ -52,13 +62,13 @@
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useStore } from '../store/store';
+import { BookMarked, HelpCircle, MessageSquareText, TrainFront } from '@lucide/vue';
+import { TPanel } from '../types/orderTypes';
+import Order from '../components/Order/Order.vue';
 import OrderMessagePanel from '../components/Panels/OrderMessagePanel.vue';
 import OrderListPanel from '../components/Panels/OrderListPanel.vue';
 import OrderTrainPickerPanel from '../components/Panels/OrderTrainPickerPanel.vue';
-import SideBar from '../components/App/SideBar.vue';
-import Order from '../components/Orders/Order.vue';
-import { BookMarkedIcon, MessageSquareTextIcon, TrainFrontIcon } from 'lucide-vue-next';
-import { TPanel } from '../types/orderTypes';
+import OrderHelperPanel from '../components/Panels/OrderHelperPanel.vue';
 
 const store = useStore();
 const { t } = useI18n();
@@ -73,6 +83,8 @@ const panelComponent = computed(() => {
       return OrderListPanel;
     case 'OrderTrainPickerPanel':
       return OrderTrainPickerPanel;
+    case 'OrderHelperPanel':
+      return OrderHelperPanel;
     case 'OrderMessagePanel':
     default:
       return OrderMessagePanel;
@@ -95,16 +107,22 @@ const panelComponent = computed(() => {
 
 .home-container {
   display: grid;
-  grid-template-columns: 600px 500px;
+  grid-template-columns: 800px minmax(auto, 600px);
   justify-content: center;
   gap: 2em 1em;
   padding: 1em;
   width: 100%;
 
-  @media screen and (max-width: 1150px) {
+  @media screen and (max-width: 1300px) {
     grid-template-columns: auto;
     padding: 1em 0.5em;
   }
+}
+
+.order-container,
+.panel-container {
+  height: calc(100vh - 5em);
+  overflow: auto;
 }
 
 .panel-container {
@@ -113,9 +131,6 @@ const panelComponent = computed(() => {
   color-scheme: dark;
 
   padding: 2px;
-  max-width: 800px;
-  height: calc(100vh - 5em);
-  overflow: auto;
 }
 
 .panel-nav {
@@ -134,7 +149,6 @@ const panelComponent = computed(() => {
   justify-content: center;
   align-items: center;
   gap: 0.5em;
-  min-width: 8em;
   padding: 0.25em 0.5em;
 
   &:focus-visible {

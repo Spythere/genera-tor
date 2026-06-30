@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Firebase
 .firebase
+
+#Yarn lock files
+yarn.lock
