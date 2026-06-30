@@ -83,13 +83,13 @@
     "header": {
       "A": "A Number of the",
        "train": "train",
-      "shunt": "shunting composition",
-      "A-placeholder": "Train / shunting composition number",
+      "shunt": "shunting unit",
+      "A-placeholder": "Train / shunting unit number",
       "B": "B Date",
       "C": "C Location of the",
-      "C-desc": "C Location of the train {'|'} shunting composition",
+      "C-desc": "C Location of the train {'|'} shunting unit",
       "C-placeholder": "Name of the post / line / scenery",
-      "D": "D Location of issuer",
+      "D": "D Location of the issuer",
       "D-placeholder": "Name of the post / scenery"
     },
     "22": {
