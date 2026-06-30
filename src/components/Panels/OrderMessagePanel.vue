@@ -282,12 +282,12 @@ function copyMessage() {
 
   navigator.clipboard.writeText(simulatorChatMessage);
 
-  if (incrementOnCopy.value) incrementOrderNo();
-
   popupStore.showPopup(
     t('order-message.success-copy-html', [getOrderFullId(store.orderData.footer)]),
     'success'
   );
+
+  if (incrementOnCopy.value) incrementOrderNo();
 }
 
 function saveOrder() {
