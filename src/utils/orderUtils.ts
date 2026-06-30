@@ -346,7 +346,7 @@ export function createOrderDataObject(): IOrderData {
       Y: '',
       sceneryId: '',
       orderNo: 0,
-      orderYear: 26
+      orderYear: Number(new Date().getUTCFullYear().toString().slice(2))
     }
   };
 }
