@@ -22,8 +22,8 @@
               &nbsp;
               <select
                 class="order-select"
-                name="header-A"
-                id="header-A"
+                name="select-header-A"
+                id="select-header-A"
                 v-model="store.orderData.header.AType"
               >
                 <option value="train">{{ t('order.header.train') }}</option>
