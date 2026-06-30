@@ -61,12 +61,12 @@
 
         <div class="buttons">
           <button class="g-button icon" @click="selectLocalOrder(order)">
-            <NotebookPen :size="25" />
+            <NotebookPen :size="18" />
             {{ t('order-list.button-order-select') }}
           </button>
 
           <button class="g-button icon" @click="removeOrder(order.id)">
-            <Trash :size="25" />
+            <Trash :size="18" />
             {{ t('order-list.button-order-remove') }}
           </button>
         </div>
