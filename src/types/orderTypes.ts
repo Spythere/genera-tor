@@ -31,6 +31,7 @@ export interface IOrderData {
 
 export interface IOrderHeader {
   A: string;
+  AType: 'train' | 'shunt';
   B: string;
   C: string;
   D: string;

@@ -371,10 +371,11 @@ function updateOrder() {
 function resetOrder() {
   const initOrderObject = createOrderDataObject();
 
-  Object.keys(store.orderData.header).forEach((k) => {
-    store.orderData['header'][k as keyof IOrderHeader] =
-      initOrderObject.header[k as keyof IOrderHeader];
-  });
+  store.orderData.header['A'] = initOrderObject.header['A'];
+  store.orderData.header['AType'] = initOrderObject.header['AType'];
+  store.orderData.header['B'] = initOrderObject.header['B'];
+  store.orderData.header['C'] = initOrderObject.header['C'];
+  store.orderData.header['D'] = initOrderObject.header['D'];
 
   Object.keys(store.orderData.footer).forEach((k) => {
     store.orderData['footer'][k as keyof IOrderFooter] =

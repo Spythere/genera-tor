@@ -79,12 +79,15 @@
     "no-trains": "No trains to display"
   },
   "order": {
-    "title": "Polish Railway Train Order",
+    "title": "Train Order",
     "header": {
-      "A": "A Train No {'|'} Shunting composition No",
+      "A": "A Number of the",
+       "train": "train",
+      "shunt": "shunting composition",
       "A-placeholder": "Train / shunting composition number",
       "B": "B Date",
-      "C": "C Location of train {'|'} Location of shunting composition",
+      "C": "C Location of the",
+      "C-desc": "C Location of the train {'|'} shunting composition",
       "C-placeholder": "Name of the post / line / scenery",
       "D": "D Location of issuer",
       "D-placeholder": "Name of the post / scenery"

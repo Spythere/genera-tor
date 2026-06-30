@@ -33,6 +33,7 @@ export function createOrderDataObject(): IOrderData {
   return {
     header: {
       A: '',
+      AType: 'train',
       B: '',
       C: '',
       D: ''

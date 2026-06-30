@@ -81,10 +81,13 @@
   "order": {
     "title": "Rozkaz pisemny",
     "header": {
-      "A": "A Nr pociągu {'|'} składu manewrowego",
+      "A": "A Nr",
+      "train": "pociągu",
+      "shunt": "składu manewrowego",
       "A-placeholder": "Numer pociągu lub manewru",
       "B": "B Data",
-      "C": "C Lokalizacja pociągu {'|'} składu manewrowego",
+      "C": "C Lokalizacja",
+      "C-desc": "C Lokalizacja pociągu {'|'} składu manewrowego",
       "C-placeholder": "Nazwa posterunku / szlaku / scenerii",
       "D": "D Lokalizacja nadawcy",
       "D-placeholder": "Nazwa posterunku / scenerii"

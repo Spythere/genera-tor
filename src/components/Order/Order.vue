@@ -49,9 +49,9 @@ function generateMessage() {
       })
     : '';
 
-  messageHtml += `${t('order.header.A')}: ${headerData['A'] || '---'}<br />`;
+  messageHtml += `${t('order.header.A')} ${t('order.header.' + headerData['AType'])}: ${headerData['A'] || '---'}<br />`;
   messageHtml += `${t('order.header.B')}: ${headerDateString || '---'}<br />`;
-  messageHtml += `${t('order.header.C')}: ${headerData['C'] || '---'}<br />`;
+  messageHtml += `${t('order.header.C')} ${t('order.header.' + headerData['AType'])}: ${headerData['C'] || '---'}<br />`;
   messageHtml += `${t('order.header.D')}: ${headerData['D'] || '---'}<br />`;
 
   const instructions = store.orderData['instructions'];
