@@ -5,7 +5,7 @@
       <div>
         <b>
           Genera<span class="text--accent">TOR</span>
-          <sup class="text--grayed">v{{ version }}</sup>
+          <sup class="text--grayed">Archive</sup>
         </b>
 
         <b class="brand-author">&nbsp;by Spythere</b>
@@ -13,6 +13,10 @@
     </div>
 
     <div class="navbar-actions">
+      <button class="g-button action icon" @click="showArchiveDisclaimer">
+        <LucideTriangleAlert :size="20" v-if="store.orderDarkMode" />
+      </button>
+
       <button class="g-button action icon" @click="switchDarkMode">
         <LucideMoon :size="20" v-if="store.orderDarkMode" />
         <LucideSun :size="20" v-else />
@@ -27,8 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { LucideGlobe, LucideMoon, LucideSun } from 'lucide-vue-next';
-import { version } from '../../../package.json';
+import { LucideGlobe, LucideMoon, LucideSun, LucideTriangleAlert } from 'lucide-vue-next';
 import { useStore } from '../../store/store';
 
 const store = useStore();
@@ -41,6 +44,10 @@ function switchDarkMode() {
 
 function switchLang() {
   store.changeLang(store.currentAppLocale == 'pl' ? 'en' : 'pl');
+}
+
+function showArchiveDisclaimer() {
+  store.updateCardOpen = true;
 }
 </script>
 

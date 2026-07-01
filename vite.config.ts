@@ -6,7 +6,8 @@ import path from 'path';
 
 export default defineConfig({
   server: {
-    port: 8081,
+    port: 8088,
+    open: false
   },
   css: {
     preprocessorOptions: {

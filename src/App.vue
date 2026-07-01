@@ -24,12 +24,9 @@ import UpdateCard from './components/Global/UpdateCard.vue';
 import orderStorageMixin from './mixins/orderStorageMixin';
 import { useStore } from './store/store';
 import packageInfo from '../package.json';
-import axios from 'axios';
 import StorageManager from './managers/storageManager';
 import Navbar from './components/App/Navbar.vue';
 import UpdatePrompt from './components/Global/UpdatePrompt.vue';
-
-const STORAGE_VERSION_KEY = 'app_version';
 
 export default defineComponent({
   components: { UpdateCard, UpdatePrompt, Navbar },
@@ -49,7 +46,7 @@ export default defineComponent({
       this.loadLang();
       this.setupDarkMode();
       this.loadSettings();
-      this.checkAppVersion();
+      this.showArchiveDisclaimer();
       this.handleQueries();
     },
 
@@ -65,7 +62,10 @@ export default defineComponent({
       }
 
       this.store.orderDarkMode = this.getOrderSetting('dark-mode') === 'true';
-      document.documentElement.setAttribute('data-theme', this.store.orderDarkMode ? 'dark' : 'light');
+      document.documentElement.setAttribute(
+        'data-theme',
+        this.store.orderDarkMode ? 'dark' : 'light'
+      );
     },
 
     handleQueries() {
@@ -78,28 +78,11 @@ export default defineComponent({
       }
     },
 
-    async checkAppVersion() {
-      const storageVersion = StorageManager.getStringValue(STORAGE_VERSION_KEY);
+    async showArchiveDisclaimer() {
+      const isArchiveInfoSeen = StorageManager.getBooleanValue('archiveInfoSeen');
 
-      try {
-        const releaseData = await (
-          await axios.get('https://api.github.com/repos/Spythere/genera-tor/releases/latest')
-        ).data;
-
-        if (!releaseData) return;
-
-        this.store.appUpdateData.version = this.appVersion;
-        this.store.appUpdateData.changelog = releaseData.body;
-        this.store.appUpdateData.releaseURL = releaseData.html_url;
-
-        this.store.updateCardOpen =
-          (storageVersion != '' && storageVersion != this.appVersion) ||
-          import.meta.env.VITE_UPDATE_TEST === 'test';
-      } catch (error) {
-        console.error(`Wystąpił błąd podczas pobierania danych z API GitHuba: ${error}`);
-      }
-
-      StorageManager.setStringValue(STORAGE_VERSION_KEY, this.appVersion);
+      this.store.updateCardOpen =
+        !isArchiveInfoSeen || import.meta.env.VITE_ARCHIVE_INFO === '1';
     },
 
     changeLang(lang: string) {

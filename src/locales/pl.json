@@ -6,11 +6,11 @@
   "update": {
     "update-available-text": "Nowa wersja GeneraTORa dostępna!",
     "update-available-underline": "Kliknij, aby odświeżyć aplikację!",
-    "title": "Aktualizacja GeneraTORa!",
-    "no-data": "Brak dostępnego changelogu!",
-    "confirm": "Przyjąłem!",
-    "info-1": "Ten changelog będzie zawsze dostępny po kliknięciu numeru wersji w stopce strony",
-    "info-2": "Pełny changelog dostępny na <a href='https://github.com/Spythere/genera-tor' target='_blank'>GitHubie projektu</a>"
+    "title": "Informacja o stronie archiwalnej",
+    "contentHTML": "Jesteś na archiwalnej stronie GeneraTORa, która zawiera nieużywany już w sieci PLK (oraz symulatorze) format rozkazów pisemnych! Używaj tych rozkazów w symulatorze tylko w sytuacji, gdy chcesz odwzorować organizację ruchu <b>sprzed 1 lipca 2026 roku</b>, np. na sesji ze starymi sceneriami!",
+    "disclaimerHTML": " Ta strona nie jest aktualizowana pod kątem nowych funkcjonalności ani łatek bezpieczeństwa - używasz na własną odpowiedzialność!",
+    "linkHTML": "Link do strony z nowym formatem rozkazów pisemnych, obecnie wykorzystywanych w sieci kolei polskich: <a href=\"https://generator-td2.spythere.eu/\">GeneraTOR</a>",
+    "confirm": "Przyjąłem!"
   },
   "navbar": {
     "OrderMessagePanel": "WIADOMOŚĆ",

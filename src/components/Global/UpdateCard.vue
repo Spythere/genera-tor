@@ -1,31 +1,32 @@
 <template>
-  <div class="update-card" v-if="store.updateCardOpen" @toggle-card="toggleCard(false)">
+  <div class="update-card" v-if="store.updateCardOpen">
     <div class="card-background"></div>
     <div class="card-content">
-      <h1 style="margin-bottom: 0.5em">🚀 {{ $t('update.title') }}</h1>
+      <h1 style="margin-bottom: 0.5em">
+        <TriangleAlertIcon :size="35" style="vertical-align: text-bottom" />&nbsp;{{
+          $t('update.title')
+        }}
+      </h1>
 
-      <div class="changelog" v-if="htmlChangelog != ''" v-html="htmlChangelog"></div>
-      <div class="no-features" v-else>{{ $t('update.no-data') }}</div>
+      <div class="content-info">
+        <div v-html="$t('update.contentHTML')"></div>
+        <div style="margin-top: 1em" v-html="$t('update.disclaimerHTML')"></div>
+        <div style="margin-top: 1em" v-html="$t('update.linkHTML')"></div>
+      </div>
 
-      <button class="g-button action btn-confirm" ref="confirmButtonEl" @click="toggleCard(false)">
+      <button class="g-button action btn-confirm" ref="confirmButtonEl" @click="confirm">
         {{ $t('update.confirm') }}
       </button>
-
-      <p class="bottom-info">
-        {{ $t('update.info-1') }}
-        <br />
-        <span v-html="$t('update.info-2')"></span>
-      </p>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
-import { Converter } from 'showdown';
 import { useStore } from '../../store/store';
+import { TriangleAlertIcon } from 'lucide-vue-next';
+import StorageManager from '../../managers/storageManager';
 
-const converter = new Converter();
 const store = useStore();
 const confirmButtonEl = ref<HTMLButtonElement | null>(null);
 
@@ -38,36 +39,13 @@ watch(
   }
 );
 
-const htmlChangelog = computed(() => {
-  if (store.appUpdateData.changelog == '') return '';
-
-  return converter.makeHtml(store.appUpdateData.changelog);
-});
-
-function toggleCard(value: boolean) {
-  store.updateCardOpen = value;
+function confirm() {
+  store.updateCardOpen = false;
+  StorageManager.setBooleanValue('archiveInfoSeen', true);
 }
 </script>
 
 <style lang="scss" scoped>
-// Converter styles
-::v-deep(h1) {
-  text-align: center;
-  color: var(--clr-primary);
-}
-
-::v-deep(h2) {
-  padding: 0.25em 0;
-  border-bottom: 1px solid #aaa;
-}
-
-::v-deep(ul) {
-  list-style: disc;
-  padding: 1em;
-  line-height: 1.5em;
-  text-align: justify;
-}
-
 .update-card {
   position: fixed;
   top: 0;
@@ -98,7 +76,7 @@ function toggleCard(value: boolean) {
 .card-content {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 0.5em;
+  gap: 1em;
 
   margin: 1em;
 
@@ -112,32 +90,19 @@ function toggleCard(value: boolean) {
   overflow: auto;
 
   padding: 1em;
-  min-height: 700px;
   overflow: auto;
   max-width: 700px;
+
+  text-align: center;
 
   z-index: 300;
 }
 
-.no-features {
-  text-align: center;
-}
-
-.changelog {
-  text-align: left;
-}
-
-button.btn-confirm {
-  padding: 0.5em 0.75em;
+.content-info {
   font-size: 1.1em;
 }
 
-p.bottom-info {
-  text-align: center;
-  color: #ccc;
-}
-
-a {
+::v-deep(a) {
   text-decoration: underline;
 }
 </style>
