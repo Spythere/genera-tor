@@ -43,9 +43,7 @@
           }}
         </div>
 
-        <div class="order-id" v-if="order.orderData.footer.orderNo">
-          ID: {{ getOrderFullId(order.orderData.footer) }}
-        </div>
+        <div class="order-id">ID: {{ getOrderFullId(order.orderData.footer) }}</div>
 
         <div class="order-date" v-if="order.createdAt">
           {{ t('order-list.order-added') }}
