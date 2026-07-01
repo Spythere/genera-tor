@@ -45,13 +45,8 @@ export default defineComponent({
     init() {
       this.loadLang();
       this.setupDarkMode();
-      this.loadSettings();
       this.showArchiveDisclaimer();
       this.handleQueries();
-    },
-
-    loadSettings() {
-      document.title = `GeneraTOR ${this.appVersion}`;
     },
 
     setupDarkMode() {
@@ -81,8 +76,7 @@ export default defineComponent({
     async showArchiveDisclaimer() {
       const isArchiveInfoSeen = StorageManager.getBooleanValue('archiveInfoSeen');
 
-      this.store.updateCardOpen =
-        !isArchiveInfoSeen || import.meta.env.VITE_ARCHIVE_INFO === '1';
+      this.store.updateCardOpen = !isArchiveInfoSeen || import.meta.env.VITE_ARCHIVE_INFO === '1';
     },
 
     changeLang(lang: string) {
